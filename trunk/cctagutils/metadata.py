@@ -10,9 +10,12 @@ __license__ = 'licensed under the GNU GPL2'
 
 # use the bundled version of PyTagger,
 # which contains our fixes.
+
+### TODO: Merge back changes from metadata on 1.0 branch
+
 #import tagger
 import eyeD3
-import cctag.const as const
+import cctagutils.const as const
 
 class AudioMetadata:
     def __init__(self, filename):

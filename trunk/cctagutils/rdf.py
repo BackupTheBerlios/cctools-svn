@@ -8,9 +8,9 @@ __license__ = 'licensed under the GNU GPL2'
 
 import re
 import urllib
-import cctag.base32 as base32
+import cctagutils.base32 as base32
 import sha
-from cctag.metadata import metadata
+from cctagutils.metadata import metadata
 
 def getLicense(license_url):
 	"""Extract license RDF from a given url; if an error occurs
