@@ -50,8 +50,12 @@ class ArchiveItem:
         self.metadata['runtime'] = runtime
         self.metadata['adder'] = adder
         self.metadata['license'] = license
-        
-        self.server = 'audio-uploads.archive.org'
+
+        if collection = pyarchive.const.OPENSOURCE_AUDIO:
+            self.server = 'audio-uploads.archive.org'
+        elif collection = pyarchive.const.OPENSOURCE_MOVIES:
+            self.server = 'movies-uploads.archive.org'
+            
         self.archive_url = None
 
     def __setitem__(self, key, value):
@@ -246,7 +250,7 @@ class ArchiveFile:
             except NotImplementedError, e:
                 pass
             
-        if self.__claim
+        if self.__claim:
             result = result + '<license>%s</license>\n' % \
                      xml.sax.saxutils.escape(self.__claim)
             
