@@ -31,7 +31,7 @@ class FTP(ftplib.FTP):
             if not buf: break
             conn.send(buf)
 
-            callback(conn)
+            callback(bytes=blocksize)
 
         conn.close()
         return self.voidresp()

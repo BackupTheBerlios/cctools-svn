@@ -128,26 +128,40 @@ class ArchiveItem:
 
         # make sure we're ready to submit
         self.sanityCheck()
+
+        # reset the status
+        callback.reset(steps=10)
         
         # connect to the FTP server
+        callback.increment(status='connecting to archive.org...')
+        
         ftp = cb_ftp.FTP(self.server)
         ftp.login(username, password)
 
         # create a new folder for the submission
+        callback.increment(status='creating folder for uploads...')
+
         ftp.mkd(self.identifier)
         ftp.cwd(self.identifier)
 
         # upload the XML files
+        callback.increment(status='uploading metadata...')
+
         ftp.storlines("STOR %s_meta.xml" % self.identifier,
                       self.metaxml())
         ftp.storlines("STOR %s_files.xml" % self.identifier,
                       self.filesxml())
 
         # upload each file
+        callback.increment(status='uploading files...')
+
         for archivefile in self.files:
             # determine the local path name and switch directories
             localpath, fname = os.path.split(archivefile.filename)
             os.chdir(localpath)
+
+            # reset the gauge for this file
+            callback.reset(filename=fname)
             
             ftp.storbinary("STOR %s" % fname, file(fname, 'rb'),
                            callback=callback)
@@ -155,11 +169,14 @@ class ArchiveItem:
         ftp.quit()
         
         # call the import url, check the return result
+        callback.reset(steps=3)
+        callback.increment(status='finishing submission...')
         importurl = "http://www.archive.org/services/contrib-submit.php?" \
                     "user_email=%s&server=%s&dir=%s" % (
                     username, self.server, self.identifier)
         response = urllib2.urlopen(importurl)
                     
+        callback.increment(status='checking response...')
         response_dom = xml.dom.minidom.parse(response)
         result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
 
@@ -172,6 +189,7 @@ class ArchiveItem:
                                     response_dom.getElementsByTagName("result")[0].getAttribute("code"),
                                     response_dom.getElementsByTagName("message")[0].nodeValue
                                 ))
+        callback.finish()
            
         return self.archive_url
         
