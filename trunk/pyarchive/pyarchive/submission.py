@@ -19,6 +19,7 @@ import xml.dom.minidom
 import xml.sax.saxutils
 import os.path
 import string
+import types
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
@@ -60,7 +61,12 @@ class ArchiveItem:
         self.archive_url = None
 
     def __setitem__(self, key, value):
-        self.metadata[key] = value
+        if key == 'subjects':
+            subjects = [n.strip() for n in value.split(',')]
+            self.metadata['subject'] = subjects
+            
+        else:
+            self.metadata[key] = value
 
     def __getitem__(self, key):
         return self.metadata[key]
@@ -96,12 +102,24 @@ class ArchiveItem:
         # write any additional metadata
         for key in self.metadata:
             if self.metadata[key] is not None:
-                result.write('<%s>%s</%s>\n' % (key,
-                                                xml.sax.saxutils.escape(
-                    self.metadata[key]),
-                                                key) )
-        
-        result.write('</metadata>')
+                value = self.metadata[key]
+
+                # check if value is a list
+                if type(value) in [types.ListType, types.TupleType]:
+                    # this is a sequence
+                    for n in value:
+                        result.write('<%s>%s</%s>\n' % (
+                                           key,
+                                           xml.sax.saxutils.escape(n),
+                                           key)
+                                     )
+                else:
+                    result.write('<%s>%s</%s>\n' % (
+                                           key,
+                                           xml.sax.saxutils.escape(value),
+                                           key) )
+
+        result.write('</metadata>\n')
 
         result.seek(0)
         return result
@@ -273,8 +291,9 @@ class ArchiveFile:
             raise MissingParameterException
 
     def archiveFilename(self):
-        localpath, fname = os.path.split(self.filename)
-
+        localpath, fname = os.path.splt(self.filename)
+        
+        fname = fname.replace(' ', '_')
         chars = [n for n in fname if n in
                  (string.ascii_letters + string.digits + '._')]
         
