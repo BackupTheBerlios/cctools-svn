@@ -89,17 +89,17 @@ class XrcWiz(wx.Frame):
    addCurrent = __addCurrent
 
    def __updateNavBtns(self, event=None):
-       cur_page = self.pages[self.cur_page]
-
-       if cur_page.GetNext() is None:
-	   XRCCTRL(self, "CMD_NEXT").SetLabel('Quit')
+       
+       if (len(self.pages) == self.cur_page + 1) or \
+           (self.pages[self.cur_page + 1] is None):
+            XRCCTRL(self, "CMD_NEXT").SetLabel('Quit')
        else:
-	   XRCCTRL(self, "CMD_NEXT").SetLabel('Next')
+            XRCCTRL(self, "CMD_NEXT").SetLabel('Next')
 
-       if cur_page.GetPrev() is None:
-	   XRCCTRL(self, "CMD_PREV").Disable()
+       if self.cur_page == 0 or self.pages[self.cur_page - 1] is None:
+           XRCCTRL(self, "CMD_PREV").Disable()
        else:
-	   XRCCTRL(self, "CMD_PREV").Enable()
+	       XRCCTRL(self, "CMD_PREV").Enable()
 
        XRCCTRL(self, "CMD_NEXT").Enable()
        
@@ -108,15 +108,12 @@ class XrcWiz(wx.Frame):
       
    def getPage(self, xrcid):
       """Returns the child page with the specified XRC ID.""" 
-      return [n for n in self.pages if n.xrcid == xrcid][0]
+      return [n for n in self.pages if getattr(n, 'xrcid', None) == xrcid][0]
 
    def setPage(self, xrcid):
       """Sets the current page to the specified XRCID."""
-      #self.Freeze()
       
-      page = [n for n in self.pages if n.xrcid == xrcid]
-      if len(page) > 0:
-         page = page[0]
+      page = self.getPage(xrcid)
 
       self.__detachCurrent()
 
@@ -124,9 +121,7 @@ class XrcWiz(wx.Frame):
       self.__addCurrent()
 
       # refresh the window
-      #self.Thaw()
-      self.GetSizer().Layout()
-      
+      self.GetSizer().Layout()      
       self.Refresh()
 
    def onNext(self, event):
@@ -140,11 +135,14 @@ class XrcWiz(wx.Frame):
           return False
 
        # check for Finish instead of next
-       if self.pages[self.cur_page].GetNext() is None:
+       if (self.cur_page == len(self.pages) - 1) or \
+          (self.pages[self.cur_page + 1] is None):
+          # either at the end of the list of pages, or we've hit a None 
+          # (which flags for stop)
           self.Close()
           return
 
-       self.setPage(self.pages[self.cur_page].GetNext().xrcid)
+       self.setPage(self.pages[self.cur_page + 1].xrcid)
        
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
                                      self.pages[self.cur_page].GetId(), 
@@ -165,7 +163,7 @@ class XrcWiz(wx.Frame):
        if not change_event.IsAllowed():
           return False
 
-       self.setPage(self.pages[self.cur_page].GetPrev().xrcid)
+       self.setPage(self.pages[self.cur_page - 1].xrcid)
 
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
                                      self.pages[self.cur_page].GetId(), 
@@ -173,12 +171,12 @@ class XrcWiz(wx.Frame):
                                      page=self.pages[self.cur_page])
        self.GetEventHandler().ProcessEvent(change_event)
 
-   def chainPages(self, start=0):
-      """Chain the pages together in a simple sequence."""
-      
-      for i in range(start, len(self.pages) - 1):
-         self.pages[i].SetNext(self.pages[i+1])
-         self.pages[i+1].SetPrev(self.pages[i])
+   #def chainPages(self, start=0):
+   #   """Chain the pages together in a simple sequence."""
+   #   
+   #   for i in range(start, len(self.pages) - 1):
+   #      self.pages[i].SetNext(self.pages[i+1])
+   #      self.pages[i+1].SetPrev(self.pages[i])
 
    def OnPageChanged(self, event):
        pass
@@ -192,7 +190,6 @@ class XrcWizPage(wx.PyPanel):
       self.xrcid = xrcid
       self.parent = parent
       
-      self.prev = self.next = None
       self.headline = headline
       
       # create the frame's skeleton
@@ -215,18 +212,6 @@ class XrcWizPage(wx.PyPanel):
       self.Hide()
       
       self.publisher = self.parent.publisher
-
-   def SetNext(self, next):
-      self.next = next
-
-   def GetNext(self):
-      return self.next
-
-   def SetPrev(self, prev):
-      self.prev = prev
-
-   def GetPrev(self):
-      return self.prev
 
    def validate(self, event):
       return True
