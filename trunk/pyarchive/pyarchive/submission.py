@@ -14,8 +14,11 @@ __license__ = 'licensed under the GNU GPL2'
 
 import cStringIO as StringIO
 import ftplib
+import urllib2
+import xml.dom.minidom
 
 from pyarchive.exceptions import MissingParameterException
+from pyarchive.exceptions import SubmissionError
 
 class ArchiveItem:
     """
@@ -43,6 +46,7 @@ class ArchiveItem:
         self.metadata['license'] = license
         
         self.server = 'audio-uploads.archive.org'
+        self.archive_url = None
 
     def __setitem__(self, key, value):
         self.metadata[key] = value
@@ -146,7 +150,30 @@ class ArchiveItem:
         ftp.quit()
         
         # call the import url, check the return result
-
+        importurl = "http://www.archive.org/services/contrib-submit.php?" \
+                    "user_email=%s&server=%s&dir=%s" % (
+                    username, self.server, self.identifier)
+        response = urllib2.urlopen(importurl)
+                    
+        response_dom = xml.dom.minidom.parse(response)
+        result_type = str(response_dom.getElementsByTagName("result")[0].getAttribute("type"))
+        
+        print result_type
+        
+        if result_type == 'success':
+           print "success"
+           # extract the URL element and store it
+           self.archive_url = response_dom.getElementsByTagName("url")[0].nodeValue
+        else:
+           # an error occured; raise an exception
+           print "awww..."
+           raise SubmissionError("%s: %s" % (
+                                    response_dom.getElementsByTagName("result")[0].getAttribute("code"),
+                                    response_dom.getElementsByTagName("message")[0].nodeValue
+                                ))
+           
+        return self.archive_url
+        
 class ArchiveFile:
     def __init__(self, filename):
         self.filename = filename
