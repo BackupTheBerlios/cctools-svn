@@ -145,14 +145,17 @@ class ArchiveItem:
 
         # upload each file
         for archivefile in self.files:
-            ftp.storbinary("STOR %s" % archivefile.filename,
-                           file(archivefile.filename, 'rb'),
+            # determine the local path name and switch directories
+            localpath, fname = os.path.split(archivefile.filename)
+            os.chdir(localpath)
+            
+            ftp.storbinary("STOR %s" % fname, file(fname, 'rb'),
                            callback=callback)
 
         ftp.quit()
         
         # call the import url, check the return result
-        importurl = "http://www-jon.archive.org/services/contrib-submit.php?" \
+        importurl = "http://www.archive.org/services/contrib-submit.php?" \
                     "user_email=%s&server=%s&dir=%s" % (
                     username, self.server, self.identifier)
         response = urllib2.urlopen(importurl)
@@ -200,7 +203,7 @@ class ArchiveFile:
     def sanityCheck(self):
         """Perform simple sanity checks before uploading."""
         # make sure the file exists
-        if not(os.path.exists(filename)):
+        if not(os.path.exists(self.filename)):
             # can not find the file; raise an exception
             raise IOError
 
