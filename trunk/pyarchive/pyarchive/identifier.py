@@ -14,6 +14,7 @@ __license__ = 'licensed under the GNU GPL2'
 
 import urllib2
 import xml.dom.minidom
+import string
 
 import exceptions
 
@@ -42,3 +43,21 @@ def available(identifier):
         return True
 
     return False
+
+def munge(identifier):
+    """Takes a string identifier and returns it, appropriatly munged
+    (ie, no spaces, slashes, etc); useful for converting a title to an
+    identifier."""
+
+    letters = [n for n in identifier if
+               n in string.letters or
+               n in string.digits]
+
+    return "".join(letters)
+
+def verify_url(collection, identifier):
+    """Takes an archive.org identifier and returns the verification URL."""
+
+    return "http://www.archive.org/audio/audio-details-db.php?"\
+           "collection=%s&collectionid=%s" % (collection, identifier)
+
