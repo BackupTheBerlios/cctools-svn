@@ -156,17 +156,13 @@ class ArchiveItem:
         response = urllib2.urlopen(importurl)
                     
         response_dom = xml.dom.minidom.parse(response)
-        result_type = str(response_dom.getElementsByTagName("result")[0].getAttribute("type"))
-        
-        print result_type
-        
+        result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
+
         if result_type == 'success':
-           print "success"
            # extract the URL element and store it
-           self.archive_url = response_dom.getElementsByTagName("url")[0].nodeValue
+           self.archive_url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
         else:
            # an error occured; raise an exception
-           print "awww..."
            raise SubmissionError("%s: %s" % (
                                     response_dom.getElementsByTagName("result")[0].getAttribute("code"),
                                     response_dom.getElementsByTagName("message")[0].nodeValue
