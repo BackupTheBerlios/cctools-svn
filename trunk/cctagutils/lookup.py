@@ -8,8 +8,8 @@ __license__ = 'licensed under the GNU GPL2'
 import ccrdf
 import ccrdf.rdfextract as rdfextract
 
-import cctag.rdf
-from cctag.metadata import metadata
+import cctagutils.rdf
+from cctagutils.metadata import metadata
 
 def parseClaim(claim):
     results = {}
