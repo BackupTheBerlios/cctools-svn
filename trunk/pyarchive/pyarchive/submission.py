@@ -16,6 +16,7 @@ import cStringIO as StringIO
 import ftplib
 import urllib2
 import xml.dom.minidom
+import os.path
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
@@ -150,7 +151,7 @@ class ArchiveItem:
         ftp.quit()
         
         # call the import url, check the return result
-        importurl = "http://www.archive.org/services/contrib-submit.php?" \
+        importurl = "http://www-jon.archive.org/services/contrib-submit.php?" \
                     "user_email=%s&server=%s&dir=%s" % (
                     username, self.server, self.identifier)
         response = urllib2.urlopen(importurl)
@@ -172,12 +173,19 @@ class ArchiveItem:
         
 class ArchiveFile:
     def __init__(self, filename, source = None, format = None):
+        # make sure the file exists
+        if not(os.path.exists(filename)):
+            # can not find the file; raise an exception
+            raise IOError
+        
+        # set object properties from suppplied parameters
         self.filename = filename
         self.runtime = None
         self.source = source
         self.format = format
 
     def fileNode(self):
+        """Generates the XML to represent this file in files.xml."""
         result = '<file name="%s" source="%s">\n' % (
             self.filename, self.source)
         
@@ -190,6 +198,12 @@ class ArchiveFile:
     
     def sanityCheck(self):
         """Perform simple sanity checks before uploading."""
+        # make sure the file exists
+        if not(os.path.exists(filename)):
+            # can not find the file; raise an exception
+            raise IOError
+
+        # ensure necessary parameters have been supplied
         if None in (self.filename, self.source, self.format):
             raise MissingParameterException
         
