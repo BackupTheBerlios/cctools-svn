@@ -202,7 +202,7 @@ class ArchiveItem:
         return self.archive_url
         
 class ArchiveFile:
-    def __init__(self, filename, source = None, format = None):
+    def __init__(self, filename, source = None, format = None, claim = None):
         # make sure the file exists
         if not(os.path.exists(filename)):
             # can not find the file; raise an exception
@@ -213,12 +213,13 @@ class ArchiveFile:
         self.runtime = None
         self.source = source
         self.format = format
+        self.__claim = claim
 
         if self.format is None:
             self.__detectFormat()
 
     def __detectFormat(self):
-        info = pyarchive.utils.getFileInfo(os.path.split(self.filename), [1],
+        info = pyarchive.utils.getFileInfo(os.path.split(self.filename)[1],
                                            self.filename)
 
         bitrate = info[2]
@@ -239,11 +240,15 @@ class ArchiveFile:
         if self.runtime is not None:
             result = result + '<runtime>%s</runtime>\n' % self.runtime
 
-        license = metadata(self.filename).getClaim()
-        
-        if license:
+        if self.__claim is None:
+            try:
+                self.__claim = metadata(self.filename).getClaim()
+            except NotImplementedError, e:
+                pass
+            
+        if self.__claim
             result = result + '<license>%s</license>\n' % \
-                     xml.sax.saxutils.escape(license)
+                     xml.sax.saxutils.escape(self.__claim)
             
         result = result + '<format>%s</format>\n</file>\n' % \
                  xml.sax.saxutils.escape(self.format)
