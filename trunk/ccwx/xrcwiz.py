@@ -171,13 +171,6 @@ class XrcWiz(wx.Frame):
                                      page=self.pages[self.cur_page])
        self.GetEventHandler().ProcessEvent(change_event)
 
-   #def chainPages(self, start=0):
-   #   """Chain the pages together in a simple sequence."""
-   #   
-   #   for i in range(start, len(self.pages) - 1):
-   #      self.pages[i].SetNext(self.pages[i+1])
-   #      self.pages[i+1].SetPrev(self.pages[i])
-
    def OnPageChanged(self, event):
        pass
 
