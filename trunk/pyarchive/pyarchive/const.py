@@ -21,11 +21,86 @@ MOVIE = VIDEO = 'movies'
 OPENSOURCE_AUDIO = 'opensource_audio'
 
 # meta keywords
-# For movies these include: date, producer, production_company, director, contact, sponsor, description, runtime, color, sound, shotlist, segments, credits, and country. For audio these include: creator, description, taper, source, runtime, date, and notes.
+VALID_META = {}
+
+DATE = 'date'
+PRODUCER = 'producer'
+PROD_COMPANY = 'production_company'
+DIRECTOR = 'director'
+CONTACT = 'contact'
+SPONSOR = 'sponsor'
+DESC = 'description'
+RUNTIME = 'runtime'
+COLOR = 'color'
+SOUND = 'sound'
+SHOTLIST = 'shotlist'
+SEGMENTS = 'segments'
+CREDITS = 'credits'
+COUNTRY = 'country'
+
+CREATOR = 'creator'
+TAPER = 'taper'
+SOURCE = 'source'
+NOTES = 'notes'
+
+VALID_META[MOVIES] = [DATE, PRODUCER, PROD_COMPANY, DIRECTOR, CONTACT, SPONSOR,
+                      DESC, RUNTIME, COLOR, SOUND, SHOTLIST, SEGMENTS, CREDITS,
+                      COUNTRY]
+
+VALID_META[AUDIO] = [CREATOR, DESC, TAPER, SOURCE, RUNTIME, DATE, NOTES]
 
 # files keywords
 FORMAT = 'format'
-RUNTIME = 'runtime'
+# RUNTIME is also for files metadata
 
 # format names
-# WAVE, 64Kbps MP3, 128Kbps MP3, 256Kbps MP3, VBR MP3, 96Kbps MP3, 160Kbps MP3, 192Kbps MP3, Ogg Vorbis, Shorten, Flac, 24bit Flac, 64Kbps M3U, VBR M3U, 64Kbps MP3 ZIP, VBR ZIP, Shorten ZIP, Flac ZIP, Checksums, MPEG2, MPEG1, 64Kb MPEG4, 256Kb MPEG4, MPEG4, 56Kb QuickTime, 64Kb QuickTime, 256Kb QuickTime, QuickTime, DivX, IV50, Windows Media, Cinepack, Animated GIF, Thumbnail, JPEG, Single Page Original TIFF, Single Page Processed TIFF, Multi Page Original TIFF, Multi Page Processed TIFF, DjVu, Text, Single Book Page Text, TGZiped Text Files, Book Cover, DAT, ARC, Metadata, Files Metadata, Item Metadata, Book Metadata
+WAVE = 'WAVE'
+MP3_64K = '64Kbps MP3'
+MP3_128K = '128Kbps MP3'
+MP3_256K = '256Kbps MP3'
+MP3_VBR = 'VBR MP3'
+MP3_96K = '96Kbps MP3'
+MP3_160K = '160Kbps MP3'
+MP3_192K = '192Kbps MP3'
+OGG_VORBIS = 'Ogg Vorbis'
+SHORTEN = 'Shorten'
+FLAC = 'Flac'
+FLAC_24b = '24bit Flac'
+M3U_64K = '64Kbps M3U'
+M3U_VBR = 'VBR M3U'
+MP3_64K_ZIP = '64Kbps MP3 ZIP'
+VBR_ZIP = 'VBR ZIP'
+SHORTEN_ZIP = 'Shorten ZIP'
+FLAC_ZIP = 'Flac ZIP'
+CHECKSUMS = 'Checksums'
+MPEG2 = 'MPEG2'
+MPEG1 = 'MPEG1'
+MPEG4_64K = '64Kb MPEG4'
+MPEG4_256K = '256Kb MPEG4'
+MPEG4 = 'MPEG4'
+QT_56K = '56Kb QuickTime'
+QT_64K = '64Kb QuickTime'
+QT_256K = '256Kb QuickTime'
+QT = 'QuickTime'
+DIVX = 'DivX'
+IV50 = 'IV50'
+WINDOWS_MEDIA = 'Windows Media'
+CINEPACK = 'Cinepack'
+ANIM_GIF = 'Animated GIF'
+THUMBNAIL = 'Thumbnail'
+JPEG = 'JPEG'
+TIFF_SINGLE_ORIG = 'Single Page Original TIFF'
+TIFF_SINGLE_PROC = 'Single Page Processed TIFF'
+TIFF_MULTI_ORIG = 'Multi Page Original TIFF'
+TIFF_MULTI_PROC = 'Multi Page Processed TIFF'
+DJVU = 'DjVu'
+TEXT = 'Text'
+TEXT_PAGE = 'Single Book Page Text'
+TEXT_TGZ = 'TGZiped Text Files'
+BOOK_COVER = 'Book Cover'
+DAT = 'DAT'
+ARC = 'ARC'
+META = 'Metadata'
+FILES_META = 'Files Metadata'
+ITEM_META = 'Item Metadata'
+BOOK_META = 'Book Metadata'
