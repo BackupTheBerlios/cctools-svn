@@ -21,6 +21,8 @@ import os.path
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
+import pyarchive.utils
+import pyarchive.const
 
 from cctag.metadata import metadata
 
@@ -58,8 +60,8 @@ class ArchiveItem:
     def __getitem__(self, key):
         return self.metadata[key]
     
-    def addFile(self, filename, source, format):
-        self.files.append(ArchiveFile(filename, source, format))
+    def addFile(self, filename, source, format=None):
+        self.files.append(ArchiveFile(filename, source))
 
         # set the running time to defaults
         self.files[-1].runtime = self.metadata['runtime']
@@ -212,6 +214,23 @@ class ArchiveFile:
         self.source = source
         self.format = format
 
+        if self.format is None:
+            self.__detectFormat()
+
+    def __detectFormat(self):
+        info = pyarchive.utils.getFileInfo(os.path.split(self.filename), [1],
+                                           self.filename)
+
+        bitrate = info[2]
+        if bitrate is None:
+            # assume 128k mp3
+            self.format = pyarchive.const.MP3_128K
+        else:
+            if bitrate[1]:
+                self.format = pyarchvie.const.MP3['VBR']
+            else:
+                self.format = pyarchive.const.MP3[bitrate[0]]
+                
     def fileNode(self):
         """Generates the XML to represent this file in files.xml."""
         result = '<file name="%s" source="%s">\n' % (

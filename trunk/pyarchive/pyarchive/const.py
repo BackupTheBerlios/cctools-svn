@@ -63,6 +63,16 @@ MP3_VBR = 'VBR MP3'
 MP3_96K = '96Kbps MP3'
 MP3_160K = '160Kbps MP3'
 MP3_192K = '192Kbps MP3'
+
+MP3 = {64: MP3_64K,
+       128: MP3_128K,
+       256: MP3_256K,
+       'VBR': MP3_VBR,
+       96: MP3_96K,
+       160: MP3_160K,
+       192: MP3_192K
+       }
+
 OGG_VORBIS = 'Ogg Vorbis'
 SHORTEN = 'Shorten'
 FLAC = 'Flac'
