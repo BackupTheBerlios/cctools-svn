@@ -74,7 +74,7 @@ class ArchiveItem:
         # return the added file object
         return self.files[-1]
     
-    def metaxml(self):
+    def metaxml(self, username=None):
         """Generates _meta.xml to use in submission;
         returns a file-like object."""
 
@@ -87,7 +87,11 @@ class ArchiveItem:
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
+        <upload_application appid="ccpublisher" version="0.9.7" />
         """ % (self.title, self.collection, self.mediatype) )
+
+        if username is not None:
+            result.write("<uploader>%s</uploader>\n" % username)
         
         # write any additional metadata
         for key in self.metadata:
@@ -161,7 +165,7 @@ class ArchiveItem:
         callback.increment(status='uploading metadata...')
 
         ftp.storlines("STOR %s_meta.xml" % self.identifier,
-                      self.metaxml())
+                      self.metaxml(username))
         ftp.storlines("STOR %s_files.xml" % self.identifier,
                       self.filesxml())
 
@@ -272,7 +276,7 @@ class ArchiveFile:
         localpath, fname = os.path.split(self.filename)
 
         chars = [n for n in fname if n in
-                 (string.ascii_letters + string.digits)]
+                 (string.ascii_letters + string.digits + '._')]
         
         return "".join(chars)
     
