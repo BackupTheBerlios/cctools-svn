@@ -432,7 +432,7 @@ class Tag:
       fileName = "";
       if isinstance(f, file):
          fileName = f.name;
-      elif isinstance(f, str):
+      elif isinstance(f, (str, unicode)):
          fileName = f;
       else:
          raise TagException("Invalid type passed to Tag.link: " + 
@@ -1130,7 +1130,7 @@ class Tag:
    # Returns >= 0 to indicate the padding size of the read frame; -1 returned
    # when not tag was found.
    def __loadV2Tag(self, f):
-      if isinstance(f, str):
+      if isinstance(f, (str, unicode)):
          fp = file(f, "rb")
          closeFile = 1;
       else:
