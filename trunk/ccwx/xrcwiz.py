@@ -213,6 +213,8 @@ class XrcWizPage(wx.PyPanel):
       
       self.Fit()
       self.Hide()
+      
+      self.publisher = self.parent.publisher
 
    def SetNext(self, next):
       self.next = next
@@ -228,4 +230,11 @@ class XrcWizPage(wx.PyPanel):
 
    def validate(self, event):
       return True
+      
+   def onChanging(self, event):
+       pass
+       
+   def onChanged(self, event):
+       pass
+       
   
