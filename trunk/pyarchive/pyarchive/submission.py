@@ -26,7 +26,7 @@ from pyarchive.exceptions import SubmissionError
 import pyarchive.utils
 import pyarchive.const
 
-from cctag.metadata import metadata
+# from cctag.metadata import metadata
 
 class ArchiveItem:
     """
@@ -264,11 +264,12 @@ class ArchiveFile:
         if self.runtime is not None:
             result = result + '<runtime>%s</runtime>\n' % self.runtime
 
-        if self.__claim is None:
-            try:
-                self.__claim = metadata(self.filename).getClaim()
-            except NotImplementedError, e:
-                pass
+        # removing metadata dependency for stand-alone-ish-ness
+        #if self.__claim is None:
+        #    try:
+        #        self.__claim = metadata(self.filename).getClaim()
+        #    except NotImplementedError, e:
+        #        pass
             
         if self.__claim:
             result = result + '<license>%s</license>\n' % \
