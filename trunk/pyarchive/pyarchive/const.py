@@ -19,6 +19,7 @@ MOVIE = VIDEO = 'movies'
 
 # collection names
 OPENSOURCE_AUDIO = 'opensource_audio'
+OPENSOURCE_MOVIES = 'opensource_movies'
 
 # meta keywords
 VALID_META = {}
@@ -115,3 +116,55 @@ META = 'Metadata'
 FILES_META = 'Files Metadata'
 ITEM_META = 'Item Metadata'
 BOOK_META = 'Book Metadata'
+
+VALID_FORMATS = (WAVE,
+                 MP3_64K,
+                 MP3_128K,
+                 MP3_256K,
+                 MP3_VBR,
+                 MP3_96K,
+                 MP3_160K,
+                 MP3_192K,
+                 OGG_VORBIS,
+                 SHORTEN,
+                 FLAC,
+                 FLAC_24b,
+                 M3U_64K,
+                 M3U_VBR,
+                 MP3_64K_ZIP,
+                 VBR_ZIP,
+                 SHORTEN_ZIP,
+                 FLAC_ZIP,
+                 CHECKSUMS,
+                 MPEG2,
+                 MPEG1,
+                 MPEG4_64K,
+                 MPEG4_256K,
+                 MPEG4,
+                 QT_56K,
+                 QT_64K,
+                 QT_256K,
+                 QT,
+                 DIVX,
+                 IV50,
+                 WINDOWS_MEDIA,
+                 CINEPACK,
+                 ANIM_GIF,
+                 THUMBNAIL,
+                 JPEG,
+                 TIFF_SINGLE_ORIG,
+                 TIFF_SINGLE_PROC,
+                 TIFF_MULTI_ORIG,
+                 TIFF_MULTI_PROC,
+                 DJVU,
+                 TEXT,
+                 TEXT_PAGE,
+                 TEXT_TGZ,
+                 BOOK_COVER,
+                 DAT,
+                 ARC,
+                 META,
+                 FILES_META,
+                 ITEM_META,
+                 BOOK_META
+                 )
