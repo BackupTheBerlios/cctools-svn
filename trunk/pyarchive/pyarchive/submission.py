@@ -21,6 +21,8 @@ import os.path
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
 
+from cctag.metadata import metadata
+
 class ArchiveItem:
     """
     <metadata>
@@ -213,6 +215,11 @@ class ArchiveFile:
         
         if self.runtime is not None:
             result = result + '<runtime>%s</runtime>\n' % self.runtime
+
+        license = metadata(self.filename).getClaim()
+        
+        if license:
+            result = result + '<license>%s</license>\n' % license
             
         result = result + '<format>%s</format>\n</file>\n' % self.format
 
