@@ -64,8 +64,8 @@ class ArchiveItem:
     def __getitem__(self, key):
         return self.metadata[key]
     
-    def addFile(self, filename, source, format=None):
-        self.files.append(ArchiveFile(filename, source, format))
+    def addFile(self, filename, source, format=None, claim=None):
+        self.files.append(ArchiveFile(filename, source, format, claim))
 
         # set the running time to defaults
         self.files[-1].runtime = self.metadata['runtime']
@@ -146,7 +146,7 @@ class ArchiveItem:
         
         # connect to the FTP server
         callback.increment(status='connecting to archive.org...')
-        
+
         ftp = cb_ftp.FTP(self.server)
         ftp.login(username, password)
 
@@ -227,10 +227,7 @@ class ArchiveFile:
                                            self.filename)
 
         bitrate = info[2]
-        if bitrate is None:
-            # assume 128k mp3
-            self.format = pyarchive.const.MP3_128K
-        else:
+        if bitrate is not None:
             if bitrate[1]:
                 self.format = pyarchive.const.MP3['VBR']
             else:
