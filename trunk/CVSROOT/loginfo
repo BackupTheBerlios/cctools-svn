@@ -28,3 +28,4 @@
 CVSROOT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} nyergler@users.sourceforge.net
 DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} cctools-cvs@lists.sourceforge.net
 
+
