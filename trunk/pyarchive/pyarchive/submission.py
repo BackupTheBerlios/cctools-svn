@@ -175,8 +175,8 @@ class ArchiveItem:
             # reset the gauge for this file
             callback.reset(filename=fname)
             
-            ftp.storbinary("STOR %s" % fname, file(fname, 'rb'),
-                           callback=callback)
+            ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
+                           file(fname, 'rb'), callback=callback)
 
         ftp.quit()
         
@@ -236,7 +236,7 @@ class ArchiveFile:
     def fileNode(self):
         """Generates the XML to represent this file in files.xml."""
         result = '<file name="%s" source="%s">\n' % (
-            os.path.split(self.filename)[1], self.source)
+            self.archiveFilename(), self.source)
         
         if self.runtime is not None:
             result = result + '<runtime>%s</runtime>\n' % self.runtime
@@ -266,6 +266,15 @@ class ArchiveFile:
         # ensure necessary parameters have been supplied
         if None in (self.filename, self.source, self.format):
             raise MissingParameterException
+
+    def archiveFilename(self):
+        localpath, fname = os.path.split(self.filename)
+
+        chars = [n for n in fname if n in
+                 (string.ascii_letters + string.digits)]
+        
+        return "".join(chars)
+    
         
         
         
