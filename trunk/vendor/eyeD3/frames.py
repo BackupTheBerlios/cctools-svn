@@ -621,6 +621,10 @@ class DateFrame(TextFrame):
                               self.header.id);
    
    def setDate(self, d):
+      # NRY 02-21-2005
+      # strip the incoming date to avoid nasty assertion problems.
+      d = d.strip()
+
       if not d:
          self.date = None;
          self.date_str = u"";
@@ -632,7 +636,7 @@ class DateFrame(TextFrame):
                self.date_str = unicode(time.strftime(fmt, d));
                self.date = d;
             else:
-               assert(isinstance(d, unicode));
+               # assert(isinstance(d, unicode));
                d = d.strip("\x00");
 
                # Witnessed oddball tags with NULL bytes (ozzy.tag from id3lib)
