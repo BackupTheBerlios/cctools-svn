@@ -54,8 +54,8 @@ class ArchiveItem:
     def __getitem__(self, key):
         return self.metadata[key]
     
-    def addFile(self, filename):
-        self.files.append(ArchiveFile(filename))
+    def addFile(self, filename, source, format):
+        self.files.append(ArchiveFile(filename, source, format))
 
         # set the running time to defaults
         self.files[-1].runtime = self.metadata['runtime']
@@ -171,23 +171,26 @@ class ArchiveItem:
         return self.archive_url
         
 class ArchiveFile:
-    def __init__(self, filename):
+    def __init__(self, filename, source = None, format = None):
         self.filename = filename
         self.runtime = None
-        self.source = None
-        self.format = None
+        self.source = source
+        self.format = format
 
     def fileNode(self):
-        return """
-        <file name="%s" source="%s">
-          <runtime>%s</runtime>
-          <format>%s</format>
-        </file>
-        """ % (self.filename, self.source, self.runtime, self.format)
+        result = '<file name="%s" source="%s">\n' % (
+            self.filename, self.source)
+        
+        if self.runtime is not None:
+            result = result + '<runtime>%s</runtime>\n' % self.runtime
+            
+        result = result + '<format>%s</format>\n</file>\n' % self.format
 
+        return result
+    
     def sanityCheck(self):
         """Perform simple sanity checks before uploading."""
-        if None in (self.filename, self.runtime, self.source, self.format):
+        if None in (self.filename, self.source, self.format):
             raise MissingParameterException
         
         
