@@ -209,7 +209,7 @@ class ArchiveFile:
     def fileNode(self):
         """Generates the XML to represent this file in files.xml."""
         result = '<file name="%s" source="%s">\n' % (
-            self.filename, self.source)
+            os.path.split(self.filename)[1], self.source)
         
         if self.runtime is not None:
             result = result + '<runtime>%s</runtime>\n' % self.runtime
