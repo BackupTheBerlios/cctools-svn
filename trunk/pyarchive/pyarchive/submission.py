@@ -18,6 +18,7 @@ import urllib2
 import xml.dom.minidom
 import xml.sax.saxutils
 import os.path
+import string
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
