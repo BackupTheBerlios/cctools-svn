@@ -61,7 +61,7 @@ class ArchiveItem:
         return self.metadata[key]
     
     def addFile(self, filename, source, format=None):
-        self.files.append(ArchiveFile(filename, source))
+        self.files.append(ArchiveFile(filename, source, format))
 
         # set the running time to defaults
         self.files[-1].runtime = self.metadata['runtime']
