@@ -20,6 +20,7 @@ import xml.sax.saxutils
 import os.path
 import string
 import types
+import codecs
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
@@ -86,20 +87,21 @@ class ArchiveItem:
         """Generates _meta.xml to use in submission;
         returns a file-like object."""
 
-        result = StringIO.StringIO()
+        meta_out = StringIO.StringIO()
+        result = codecs.getwriter('UTF-8')(meta_out)
 
         result.write('<metadata>')
 
         # write the required keys
-        result.write("""
+        result.write(u"""
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
-        <upload_application appid="ccpublisher" version="0.9.7" />
+        <upload_application appid="ccpublisher" version="1.0.6" />
         """ % (self.title, self.collection, self.mediatype) )
 
         if username is not None:
-            result.write("<uploader>%s</uploader>\n" % username)
+            result.write(u"<uploader>%s</uploader>\n" % username)
         
         # write any additional metadata
         for key in self.metadata:
@@ -110,21 +112,26 @@ class ArchiveItem:
                 if type(value) in [types.ListType, types.TupleType]:
                     # this is a sequence
                     for n in value:
-                        result.write('<%s>%s</%s>\n' % (
+                        result.write(u'<%s>%s</%s>\n' % (
                                            key,
                                            xml.sax.saxutils.escape(n),
                                            key)
                                      )
                 else:
-                    result.write('<%s>%s</%s>\n' % (
+                    result.write(u'<%s>%s</%s>\n' % (
                                            key,
                                            xml.sax.saxutils.escape(value),
                                            key) )
 
-        result.write('</metadata>\n')
+        result.write(u'</metadata>\n')
 
         result.seek(0)
-        return result
+
+        meta_out.seek(0)
+        print meta_out.getvalue()
+        meta_out.seek(0)
+        
+        return meta_out
         
     def filesxml(self):
         """Generates _files.xml to use in submission;
@@ -224,7 +231,7 @@ class ArchiveItem:
            # an error occured; raise an exception
            raise SubmissionError("%s: %s" % (
                                     response_dom.getElementsByTagName("result")[0].getAttribute("code"),
-                                    response_dom.getElementsByTagName("message")[0].nodeValue
+                                    response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
                                 ))
         callback.finish()
            
@@ -300,7 +307,14 @@ class ArchiveFile:
         chars = [n for n in fname if n in
                  (string.ascii_letters + string.digits + '._')]
         
-        return "".join(chars)
+        result = "".join(chars)
+        if result[0] == '.':
+            # the first character is a dot,
+            # indicating there's nothing before the extension.
+            result = '%s%s' % (hash(result), result)
+
+        return result
+    
     
         
         
