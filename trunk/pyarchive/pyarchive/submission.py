@@ -13,7 +13,7 @@ __copyright__ = '(c) 2004, Creative Commons, Nathan R. Yergler'
 __license__ = 'licensed under the GNU GPL2'
 
 import cStringIO as StringIO
-import ftplib
+import cb_ftp
 import urllib2
 import xml.dom.minidom
 import os.path
@@ -116,7 +116,7 @@ class ArchiveItem:
             archivefile.sanityCheck()
         
         
-    def submit(self, username, password, server=None):
+    def submit(self, username, password, server=None, callback=None):
         """Submit the files to archive.org"""
 
         # set the server/adder (if necessary)
@@ -130,7 +130,7 @@ class ArchiveItem:
         self.sanityCheck()
         
         # connect to the FTP server
-        ftp = ftplib.FTP(self.server)
+        ftp = cb_ftp.FTP(self.server)
         ftp.login(username, password)
 
         # create a new folder for the submission
@@ -146,7 +146,8 @@ class ArchiveItem:
         # upload each file
         for archivefile in self.files:
             ftp.storbinary("STOR %s" % archivefile.filename,
-                           file(archivefile.filename, 'rb'))
+                           file(archivefile.filename, 'rb'),
+                           callback=callback)
 
         ftp.quit()
         
