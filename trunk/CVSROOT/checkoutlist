@@ -11,7 +11,4 @@
 #	[<whitespace>]<filename><whitespace><error message><end-of-line>
 #
 # comment lines begin with '#'
-record_lastdir.rb
-collect_diffs.rb
-cvsspam.rb
 
