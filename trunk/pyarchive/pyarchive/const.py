@@ -51,6 +51,7 @@ VALID_META[AUDIO] = [CREATOR, DESC, TAPER, SOURCE, RUNTIME, DATE, NOTES]
 
 # files keywords
 FORMAT = 'format'
+
 # RUNTIME is also for files metadata
 
 # format names
