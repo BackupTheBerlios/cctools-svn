@@ -16,6 +16,7 @@ import cStringIO as StringIO
 import cb_ftp
 import urllib2
 import xml.dom.minidom
+import xml.sax.saxutils
 import os.path
 
 from pyarchive.exceptions import MissingParameterException
@@ -84,7 +85,10 @@ class ArchiveItem:
         # write any additional metadata
         for key in self.metadata:
             if self.metadata[key] is not None:
-                result.write('<%s>%s</%s>\n' % (key, self.metadata[key], key) )
+                result.write('<%s>%s</%s>\n' % (key,
+                                                xml.sax.saxutils.escape(
+                    self.metadata[key]),
+                                                key) )
         
         result.write('</metadata>')
 
@@ -219,9 +223,11 @@ class ArchiveFile:
         license = metadata(self.filename).getClaim()
         
         if license:
-            result = result + '<license>%s</license>\n' % license
+            result = result + '<license>%s</license>\n' % \
+                     xml.sax.saxutils.escape(license)
             
-        result = result + '<format>%s</format>\n</file>\n' % self.format
+        result = result + '<format>%s</format>\n</file>\n' % \
+                 xml.sax.saxutils.escape(self.format)
 
         return result
     
