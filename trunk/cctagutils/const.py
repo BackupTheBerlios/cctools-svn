@@ -5,8 +5,10 @@ __version__ = "$Revision$"
 __copyright__ = '(c) 2004, Creative Commons, Nathan R. Yergler'
 __license__ = 'licensed under the GNU GPL2'
 
-CCT_VERSION = '1.0.0'
-
+def version():
+	v = file('version.txt').read().strip()
+	return v
+	
 TAG_MAP = {
 	'UFI':'UFID',
 	'BUF':'RBUF',
