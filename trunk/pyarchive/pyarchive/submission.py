@@ -227,7 +227,7 @@ class ArchiveFile:
             self.format = pyarchive.const.MP3_128K
         else:
             if bitrate[1]:
-                self.format = pyarchvie.const.MP3['VBR']
+                self.format = pyarchive.const.MP3['VBR']
             else:
                 self.format = pyarchive.const.MP3[bitrate[0]]
                 
