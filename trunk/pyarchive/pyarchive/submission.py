@@ -57,6 +57,8 @@ class ArchiveItem:
             self.server = 'audio-uploads.archive.org'
         elif collection == pyarchive.const.OPENSOURCE_MOVIES:
             self.server = 'movies-uploads.archive.org'
+        else:
+            self.server = 'items-uploads.archive.org'
             
         self.archive_url = None
 

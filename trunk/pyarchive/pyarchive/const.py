@@ -20,6 +20,7 @@ MOVIE = VIDEO = 'movies'
 # collection names
 OPENSOURCE_AUDIO = 'opensource_audio'
 OPENSOURCE_MOVIES = 'opensource_movies'
+OPENSOURCE_MEDIA = 'opensource_media'
 
 # meta keywords
 VALID_META = {}
