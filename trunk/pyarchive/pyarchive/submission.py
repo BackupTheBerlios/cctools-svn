@@ -291,7 +291,7 @@ class ArchiveFile:
             raise MissingParameterException
 
     def archiveFilename(self):
-        localpath, fname = os.path.splt(self.filename)
+        localpath, fname = os.path.split(self.filename)
         
         fname = fname.replace(' ', '_')
         chars = [n for n in fname if n in
