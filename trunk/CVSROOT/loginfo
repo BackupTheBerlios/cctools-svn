@@ -26,4 +26,5 @@
 #DEFAULT (echo ""; id; echo %{sVv}; date; cat) >> $CVSROOT/CVSROOT/commitlog
 
 DEFAULT /cvsroot/cctools/CVSROOT/collect_diffs.rb --to nathan@yergler.net %{sVv}
+DEFAULT echo "hello world."
 
