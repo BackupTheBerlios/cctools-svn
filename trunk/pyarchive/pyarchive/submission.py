@@ -51,9 +51,9 @@ class ArchiveItem:
         self.metadata['adder'] = adder
         self.metadata['license'] = license
 
-        if collection = pyarchive.const.OPENSOURCE_AUDIO:
+        if collection == pyarchive.const.OPENSOURCE_AUDIO:
             self.server = 'audio-uploads.archive.org'
-        elif collection = pyarchive.const.OPENSOURCE_MOVIES:
+        elif collection == pyarchive.const.OPENSOURCE_MOVIES:
             self.server = 'movies-uploads.archive.org'
             
         self.archive_url = None
