@@ -954,7 +954,7 @@ class Tag:
 
    # Returns false when an ID3 v1 tag is not present, or contains no data.
    def __loadV1Tag(self, f):
-      if isinstance(f, str):
+      if isinstance(f, (str, unicode)):
          fp = file(f, "rb")
          closeFile = 1;
       else:
