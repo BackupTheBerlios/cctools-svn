@@ -70,9 +70,9 @@ def generate(files, claim_url, license, year, holder,
 		if work_meta['format']:
 			out += '\t<dc:type rdf:resource="http://purl.org/dc/dcmitype/%s" />\n' % work_meta['format']
 			
-		if 'source' in work_meta:
+		if 'sourceurl' in work_meta:
 			out += '\t<dc:source rdf:resource="%s" />\n' % (
-				work_meta['source'])
+				work_meta['sourceurl'])
 		out += '\t<license rdf:resource="'+license+'" />\n'
 		out += '</Work>\n'
 
