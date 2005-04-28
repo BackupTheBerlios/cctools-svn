@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="p6"
+    >
+
+  <adapter
+      for="p6.metadata.license.ILicenseGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.license.page_ILicenseGroup"
+      />
+
+  <subscriber
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.page_IWork"
+      />
+
+  <subscriber
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.page_IWorkItem"
+      />
+
+</configure>
