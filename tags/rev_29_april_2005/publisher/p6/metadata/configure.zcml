@@ -1,0 +1,28 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="p6"
+    >
+
+  <adapter
+      name="MetaGroupToXml"
+      for=".interfaces.IMetadataGroup"
+      provides=".interfaces.IXmlString"
+      factory=".adapters.groupToXml"
+      />
+
+  <adapter
+      for=".types.ITextField"
+      provides="p6.ui.interfaces.IEntryWidget"
+      factory=".types.textField"
+      />
+
+
+  <adapter
+      for=".types.ISelectionField"
+      provides="p6.ui.interfaces.IEntryWidget"
+      factory=".types.comboField"
+      />
+
+
+</configure>
