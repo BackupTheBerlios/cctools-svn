@@ -19,12 +19,13 @@ class StorageDirective(object):
 class MGroupDirective(object):
     """A metadata group."""
 
-    def __init__(self, _context, id, title, for_):
+    def __init__(self, _context, id, title, for_, factory=None):
 
         self.fields = []
         self.appliesTo = for_
         self.id = id
         self.title = title
+        self.factory = factory or metadatagroup
 
         print 'adding mgroup action...'
         _context.action(discriminator=('MetadataGroup', self.id),
@@ -44,7 +45,7 @@ class MGroupDirective(object):
         """Add the group to the groups stack once configuration is complete."""
         print self.id
         p6.getApp().groups.append(
-            metadatagroup(self.appliesTo)(self.id, self.title,
+            self.factory(self.appliesTo)(self.id, self.title,
                                           self.fields)
             )
         

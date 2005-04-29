@@ -45,6 +45,12 @@ class IMdataGroupDirective(zope.interface.Interface):
         required=True,
         )
 
+    factory = zope.configuration.fields.GlobalObject(
+        title=u"",
+        description=u"",
+        required=False,
+        )
+
 class IMetadataFieldSubdirective(zope.interface.Interface):
     """  """
 
