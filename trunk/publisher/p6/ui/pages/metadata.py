@@ -141,13 +141,13 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
 </resource>
     """
 
-def page_IWork(metaGroup):
+def page_IWork(metaGroup, appliesTo):
     """Subscription adapter to adapt a metadata group to a wizard page."""
     if metaGroup.appliesTo != p6.storage.interfaces.IWork:
         return None
     return lambda x: MetadataPage(x, metaGroup)
 
-def page_IWorkItem(metaGroup):
+def page_IWorkItem(metaGroup, appliesTo):
     """Subscription adapter to adapt a metadata group to a wizard page."""
     if metaGroup.appliesTo != p6.storage.interfaces.IWorkItem:
         return None
@@ -165,16 +165,22 @@ def generatePages(parentFrame,
 
         for group in [n for n in p6.getApp().groups
                       if n.appliesTo == itemType]:
-            
-            # XXX check for empty list or len>1 here
-            page = [n(parentFrame)
-                    for n in
-                    zope.component.subscribers([group],
-                                               p6.ui.interfaces.IWizardPage)
-                    if n]
 
+            # check for an adapter which will adapt our metadata group
+            # to an IWizardPage; first check for an adapter that adapts the
+            # group alone (ie, for a specialized group implementation), and
+            # then check for dual adaptation (ie, for the more generic
+            # implementation of our base metadata group class whose display
+            # varies depending on what it "applies" to.
 
-            page = p6.nearest(page, group)
-            pages.append(page)
+            page = zope.component.queryMultiAdapter(
+                (group,),
+                p6.ui.interfaces.IWizardPage) or \
+                zope.component.queryMultiAdapter(
+                (group,group),
+                p6.ui.interfaces.IWizardPage)
+
+            if page:
+                pages.append(page(parentFrame))
 
     return pages
