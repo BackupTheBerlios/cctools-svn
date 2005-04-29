@@ -5,6 +5,7 @@ import zope.interface
 import metadata
 import ui
 import storage
+import configure
 
 def deinstify(func):
     def foo(*args, **kwargs):
