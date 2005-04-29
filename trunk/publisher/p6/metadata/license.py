@@ -8,5 +8,8 @@ import p6.storage
 class ILicenseGroup(interfaces.IMetadataGroup):
     pass
 
-class LicenseGroup(base.metadatagroup(p6.storage.interfaces.IWork)):
-    zope.interface.implements(ILicenseGroup, )
+def licensemetadatagroup(appliesTo=p6.storage.interfaces.IWork):
+    class LicenseGroup(base.metadatagroup(appliesTo)):
+        zope.interface.implements(ILicenseGroup, )
+
+    return LicenseGroup
