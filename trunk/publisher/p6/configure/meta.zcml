@@ -4,6 +4,11 @@
 
   <meta:directives namespace="http://namespaces.zope.org/zope">
 
+    <meta:complexDirective
+        name="storage"
+	schema="p6.configure.metadirectives.IStorageDirective"
+	handler="p6.configure.metaconfigure.StorageDirective"
+        />
    
     <meta:complexDirective
         name="metadatagroup"

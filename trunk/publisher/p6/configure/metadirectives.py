@@ -10,6 +10,20 @@ import zope.schema
 
 _ = unicode
 
+class IStorageDirective(zope.interface.Interface):
+    """Storage instantiation."""
+    name = zope.configuration.fields.MessageID(
+        title=u"Name.",
+        description=u"",
+        required=True,
+        )
+
+    factory = zope.configuration.fields.GlobalObject(
+        title=u"Storage Factory callable",
+        description=u"",
+        required=True,
+        )
+    
 class IMdataGroupDirective(zope.interface.Interface):
     """Metadata grouping."""
 

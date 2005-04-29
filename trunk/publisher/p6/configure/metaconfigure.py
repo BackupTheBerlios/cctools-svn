@@ -2,6 +2,20 @@ import p6
 import p6.ui.pages
 from p6.metadata.base import metadatafield, metadatagroup
 
+class StorageDirective(object):
+    """A storage declaration."""
+
+    def __init__(self, _context, name, factory):
+
+        app = p6.getApp()
+        if getattr(app, 'storage', None) is None:
+            app.storage = []
+
+        _context.action(discriminator=None,
+                        callable=lambda x: app.storage.append(x()),
+                        args=(factory,),
+                        )
+        
 class MGroupDirective(object):
     """A metadata group."""
 
@@ -16,7 +30,6 @@ class MGroupDirective(object):
         _context.action(discriminator=('MetadataGroup', self.id),
                         callable=self.__addGroup,
                         args=[],
-                        order=-10
                         )
 
     def field(self, _context, id, type, label='', choices=[]):
