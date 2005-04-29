@@ -7,7 +7,12 @@
 
   <!-- Application specific configuration -->
 
- <metadatagroup
+  <storage
+     name="NoOp Storage"
+     factory="p6.storage.basic.BasicStorage"
+     />
+
+  <metadatagroup
      id="itemmeta"
      title="Item Specific Metadata"
      for="p6.storage.interfaces.IWork"

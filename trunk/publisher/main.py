@@ -11,16 +11,9 @@ import p6.metadata.base as md
 import p6.storage
 import p6.ui.wizard
 
-import ccp_pages
-
 class P6(p6.ui.wizard.WizFrame):
     def __init__(self, app):
         p6.ui.wizard.WizFrame.__init__(self, 'FRM_MAIN', app)
-
-        p6.getApp().groups = ccp_pages.metafields()
-        self.storage = p6.storage.basic.BasicStorage()
-        
-        self.setPages(ccp_pages.all_pages(self))
 
 class CcPublisher(p6.ui.wizard.WizApp):
     pass
@@ -32,6 +25,7 @@ def main(argv=[]):
    #wxsupportwiz.wxAddExceptHook('http://api.creativecommons.org/traceback.py',
    #                             cctagutils.const.version())
 
+   # XXX Move these options to ZCML
    app = CcPublisher(appname = 'ccPublisher',
                      filename= 'err.log',
                      xrcfile = os.path.join('resources', 'wizard.xrc'),
