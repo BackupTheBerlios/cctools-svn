@@ -8,23 +8,20 @@ import p6.metadata
 import p6.metadata.types as metatypes
 import p6.storage
 
-from p6.metadata.base import metadatafield, MetadataGroup
+from p6.metadata.base import metadatafield, metadatagroup
 
 def metafields():
-    return [MetadataGroup('itemmeta',
+    return [metadatagroup(p6.storage.interfaces.IWork)('itemmeta',
                           fields=[
         metadatafield(p6.metadata.types.ITextField)('bar', 'bar'),
         metadatafield(p6.metadata.types.ISelectionField)('b','xyz',
-                                                    choices=['a','b','c']),],
-                          appliesTo=p6.storage.interfaces.IWork),
-            MetadataGroup('workmeta',
+                                                    choices=['a','b','c']),],),
+        metadatagroup(p6.storage.interfaces.IWorkItem)('workmeta',
                           fields=[
-        metadatafield(metatypes.ITextField)('foo', 'foo'),],
-                          appliesTo=p6.storage.interfaces.IWorkItem),
+        metadatafield(metatypes.ITextField)('foo', 'foo'),],),
             p6.metadata.license.LicenseGroup('licenseinfo',
                                 fields=[
-        metadatafield(metatypes.ITextField)('license','license'),],
-                                appliesTo=p6.storage.interfaces.IWork),
+        metadatafield(metatypes.ITextField)('license','license'),]),
             ]
         
 def all_pages(frame):
