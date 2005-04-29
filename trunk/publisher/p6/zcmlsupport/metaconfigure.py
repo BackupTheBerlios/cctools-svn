@@ -143,6 +143,8 @@ def subscriber(_context, for_=None, factory=None, handler=None, provides=None,
 def adapter(_context, factory, provides=None, for_=None, permission=None,
             name='', trusted=False):
 
+    print _context
+    
     if for_ is None:
         if len(factory) == 1:
             for_ = component.adaptedBy(factory[0])
