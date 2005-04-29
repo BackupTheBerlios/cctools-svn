@@ -17,11 +17,22 @@
       factory=".types.textField"
       />
 
+  <adapter
+      for=".types.IPasswordField"
+      provides="p6.ui.interfaces.IEntryWidget"
+      factory=".types.passwordField"
+      />
 
   <adapter
       for=".types.ISelectionField"
       provides="p6.ui.interfaces.IEntryWidget"
       factory=".types.comboField"
+      />
+
+  <adapter
+      for=".types.IBooleanField"
+      provides="p6.ui.interfaces.IEntryWidget"
+      factory=".types.checkField"
       />
 
 

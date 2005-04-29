@@ -14,9 +14,22 @@ class ITextField(zope.interface.Interface):
 class ISelectionField(zope.interface.Interface):
     pass
 
+class IPasswordField(zope.interface.Interface):
+    pass
+
+class IBooleanField(zope.interface.Interface):
+    pass
+
 # Field type to Entry Widget Adapters
 def textField(field):
     return wx.TextCtrl
+
+def passwordField(field):
+    class ProxiedPasswordField(wx.TextCtrl):
+        def __init__(self, parent):
+            wx.TextCtrl.__init__(self, parent, style=wx.TE_PASSWORD)
+
+    return ProxiedPasswordField
 
 def comboField(field):
     class ProxiedCombo(wx.ComboBox):
@@ -28,4 +41,5 @@ def comboField(field):
 
     return ProxiedCombo
 
-
+def checkField(field):
+    return wx.CheckBox
