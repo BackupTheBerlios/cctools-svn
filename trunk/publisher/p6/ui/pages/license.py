@@ -294,10 +294,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
 </resource>
     """
 
-@zope.interface.implementer(p6.ui.interfaces.IWizardPage)
-@zope.component.adapter(p6.metadata.license.ILicenseGroup)
 def page_ILicenseGroup(metaGroup):
     return lambda x: LicenseChooserPage(x, metaGroup)
 
-zope.component.provideSubscriptionAdapter(page_ILicenseGroup)
+#zope.component.provideSubscriptionAdapter(page_ILicenseGroup)
 
