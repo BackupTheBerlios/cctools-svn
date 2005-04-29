@@ -13,24 +13,77 @@
      />
 
   <metadatagroup
-     id="itemmeta"
-     title="Item Specific Metadata"
+     id="workinfo"
+     title="Tell Us About Your File"
      for="p6.storage.interfaces.IWork"
      >
 
-     <field id="bar"
-            label="Bar"
+     <field id="holder"
+            label="Copyright Holder"
             type="p6.metadata.types.ITextField"
             />
 
-     <field id="foo"
-            label="Foo"
+     <field id="year"
+            label="Copyright Year"
+            type="p6.metadata.types.ITextField"
+            />
+
+     <field id="title"
+            label="Title of Work"
+            type="p6.metadata.types.ITextField"
+            />
+
+     <field id="format"
+            label="Work Format"
             type="p6.metadata.types.ISelectionField"
-            choices="a b c"
+            choices="Other Audio Video Image Text Interactive"
+            />
+
+     <field id="description"
+            label="Description"
+            type="p6.metadata.types.ITextField"
+            />
+
+     <field id="keywords"
+            label="Keywords"
+            type="p6.metadata.types.ITextField"
             />
 
   </metadatagroup>
 
+  <metadatagroup
+     id="license"
+     title="Choose Your License"
+     for="p6.storage.interfaces.IWork"
+     factory="p6.metadata.license.licensemetadatagroup"
+     >
+
+     <field id="license"
+            label="License"
+            type="p6.metadata.types.ITextField"
+            />
+
+  </metadatagroup>
+
+  <metadatagroup
+     id="Login"
+     title="Log in to the Archive"
+     for="p6.storage.interfaces.IWork"
+     >
+
+     <field id="username"
+            label="Email Address"
+            type="p6.metadata.types.ITextField"
+            />
+
+     <field id="password"
+            label="Email Address"
+            type="p6.metadata.types.IPasswordField"
+            />
+
+  </metadatagroup>
+
+    
   <pages appid="ccpublisher">
 
     <xrcpage
