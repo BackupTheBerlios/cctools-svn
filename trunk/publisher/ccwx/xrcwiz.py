@@ -196,7 +196,7 @@ class XrcWizPage(wx.PyPanel):
 
       # load the actual definition from the XRC
       # check if we were passed a filename, XRC fragment or XmlResource
-      if isinstance(xrc, str):
+      if isinstance(xrc, (str, unicode)):
          if os.path.exists(xrc):
             # the string is a filename
             res = wx.xrc.XmlResource(xrc)
