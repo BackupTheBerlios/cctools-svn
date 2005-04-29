@@ -1,8 +1,47 @@
-<configure xmlns="http://namespaces.zope.org/zope">
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="p6">
 
+  <!-- P6 package must be included in order to support app configuration -->
   <include package="p6" />
 
-  <!-- Provide local overrides of standard configurations-->
-  <!-- <includeOverrides file="overrides.zcml" /> -->
+  <!-- Application specific configuration -->
 
+ <metadatagroup
+     id="itemmeta"
+     title="Item Specific Metadata"
+     for="p6.storage.interfaces.IWork"
+     >
+
+     <field id="bar"
+            label="Bar"
+            type="p6.metadata.types.ITextField"
+            />
+
+     <field id="foo"
+            label="Foo"
+            type="p6.metadata.types.ISelectionField"
+            choices="a b c"
+            />
+
+  </metadatagroup>
+
+  <pages appid="ccpublisher">
+
+    <xrcpage
+        title="Welcome"
+        xrcfile="resources/wizard.xrc"
+        xrcid="CCTAG_WELCOME"
+        />
+
+    <metadatapages 
+	for="p6.storage.interfaces.IWork
+             p6.storage.interfaces.IWorkItem"  />
+
+    <storepage  />
+    <xmlpage />
+
+  </pages>
+
+ 
 </configure>
