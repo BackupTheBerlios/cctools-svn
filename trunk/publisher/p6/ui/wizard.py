@@ -38,17 +38,18 @@ class WizApp(wx.App):
         # initialize the metadata group list
         self.groups = []
 
-        # load your configuration
-        self.context = zope.configuration.xmlconfig.file(confFile)
-        
         self.appname = appname
         self.errlog = filename
         self.xrcfile = xrcfile
         self.__frameclass = frameclass
+        self.confFile = confFile
 
         wx.App.__init__(self, filename=self.errlog)
 
     def OnInit(self):
+        # load your configuration
+        self.context = zope.configuration.xmlconfig.file(self.confFile)
+        
         self.SetAppName(self.appname)
 
         wx.InitAllImageHandlers()
