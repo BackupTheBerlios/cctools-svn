@@ -153,8 +153,7 @@ def page_IWorkItem(metaGroup, appliesTo):
         return None
     return lambda x: ItemMetadataPage(x, metaGroup)
 
-def generatePages(parentFrame,
-                  itemInterfaces=[p6.storage.interfaces.IWork,
+def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
                                   p6.storage.interfaces.IWorkItem]
                   ):
     """Returns a list of page objects, automatically generated from the
@@ -163,9 +162,11 @@ def generatePages(parentFrame,
     pages = []
     for itemType in itemInterfaces:
 
+        print 'finding for...', itemType
         for group in [n for n in p6.getApp().groups
                       if n.appliesTo == itemType]:
 
+            print group
             # check for an adapter which will adapt our metadata group
             # to an IWizardPage; first check for an adapter that adapts the
             # group alone (ie, for a specialized group implementation), and
@@ -181,6 +182,6 @@ def generatePages(parentFrame,
                 p6.ui.interfaces.IWizardPage)
 
             if page:
-                pages.append(page(parentFrame))
+                pages.append(page)
 
     return pages
