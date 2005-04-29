@@ -5,6 +5,7 @@ import zope.interface
 import zope.configuration.xmlconfig
 import ccwx.xrcwiz
 
+import p6
 import interfaces
 
 class WizFrame(ccwx.xrcwiz.XrcWiz):
@@ -12,6 +13,7 @@ class WizFrame(ccwx.xrcwiz.XrcWiz):
         ccwx.xrcwiz.XrcWiz.__init__(self, app, app.xrcfile, xrcid)
 
         self.app = app
+        self.setPages([n(self) for n in p6.getApp().pages])
 
     def setPages(self, pages):
         self.pages = pages
