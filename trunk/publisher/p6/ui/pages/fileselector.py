@@ -3,12 +3,11 @@ import wx
 import wx.xrc
 from wx.xrc import XRCCTRL
 
-import p6
-import p6.storage
 import zope.interface
-import p6.ui.wizard
 import ccwx.xrcwiz
-import p6.ui.interfaces
+
+import p6
+import p6.api
 
 class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
@@ -23,11 +22,11 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
         # listen for item addition events
         zope.component.provideHandler(
             zope.component.adapter(p6.storage.events.IItemSelected)(
-                p6.deinstify(self.selectItem))
+                p6.api.deinstify(self.selectItem))
             )
 
     @zope.component.adapter(p6.storage.events.IItemSelected)
-    @p6.deinstify
+    @p6.api.deinstify
     def selectItem(self, event):
         XRCCTRL(self, "LST_FILES").\
                       InsertImageStringItem(0, event.item.getIdentifier(), 0)

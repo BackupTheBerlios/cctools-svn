@@ -1,5 +1,6 @@
 import p6
-import p6.ui.pages
+import p6.api
+
 from p6.metadata.base import metadatafield, metadatagroup
 
 class StorageDirective(object):
@@ -7,7 +8,7 @@ class StorageDirective(object):
 
     def __init__(self, _context, name, factory):
 
-        app = p6.getApp()
+        app = p6.api.getApp()
         if getattr(app, 'storage', None) is None:
             app.storage = []
 
@@ -44,7 +45,7 @@ class MGroupDirective(object):
     def __addGroup(self):
         """Add the group to the groups stack once configuration is complete."""
         print self.id
-        p6.getApp().groups.append(
+        p6.api.getApp().groups.append(
             self.factory(self.appliesTo)(self.id, self.title,
                                           self.fields)
             )
@@ -54,10 +55,10 @@ class PagesDirective(object):
 
     def __init__(self, _context, appid):
         # register the App ID
-        p6.getApp().appid = appid
+        p6.api.getApp().appid = appid
 
         # initialize the page registry
-        p6.getApp().pages = []
+        p6.api.getApp().pages = []
         
     def page(self, _context, type_, title=''):
         pass
@@ -70,19 +71,19 @@ class PagesDirective(object):
 
     def __generatePages(self, for_):
         for page in p6.ui.pages.metadata.generatePages(for_):
-            p6.getApp().pages.append(page)
+            p6.api.getApp().pages.append(page)
             
     def storepage(self, _context):
         _context.action(discriminator=('RegisterPage', 'StorePage',
                                        p6.ui.pages.StorePage),
-                        callable=p6.getApp().pages.append,
+                        callable=p6.api.getApp().pages.append,
                         args=(p6.ui.pages.StorePage,),
                         )
 
     def xmlpage(self, _context):
         _context.action(discriminator=('RegisterPage', 'XmlDisplayPage',
                                        p6.ui.pages.XmlMetadataPage),
-                        callable=p6.getApp().pages.append,
+                        callable=p6.api.getApp().pages.append,
                         args=(p6.ui.pages.XmlMetadataPage,),
                         )
 
@@ -90,7 +91,7 @@ class PagesDirective(object):
     def xrcpage(self, _context, title, xrcfile, xrcid):
         _context.action(discriminator=('RegisterPage', xrcid,
                                        p6.ui.pages.XrcPage),
-                        callable=p6.getApp().pages.append,
+                        callable=p6.api.getApp().pages.append,
                         args=(p6.ui.pages.xrcpage(title, xrcfile, xrcid),),
                         )
 

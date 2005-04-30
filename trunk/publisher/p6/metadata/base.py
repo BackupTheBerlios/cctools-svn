@@ -2,7 +2,7 @@ import zope.component
 import zope.interface
 
 import p6
-import p6.storage.interfaces
+import p6.api
 import interfaces
 import events
 
@@ -55,7 +55,7 @@ def metadatagroup(appliesTo):
             # register an event handler for metadata field collection
             zope.component.provideHandler(
                 zope.component.adapter(events.ICollectGroups)(
-                    p6.deinstify(self.handleGetGroups))
+                    p6.api.deinstify(self.handleGetGroups))
                 )
 
         def handleGetGroups(self, event):

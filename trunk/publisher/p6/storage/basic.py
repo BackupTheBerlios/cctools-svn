@@ -2,7 +2,7 @@ import zope.interface
 import zope.component
 
 import p6
-import p6.storage
+import p6.api
 import interfaces
 
 class BasicStorage:
@@ -12,12 +12,12 @@ class BasicStorage:
         
         zope.component.provideHandler(
             zope.component.adapter(p6.storage.events.IValidate)(
-                p6.deinstify(self.validate))
+                p6.api.deinstify(self.validate))
             )
 
         zope.component.provideHandler(
             zope.component.adapter(p6.storage.events.IStore)(
-                p6.deinstify(self.store))
+                p6.api.deinstify(self.store))
             )
 
     def validate(self, event=None):

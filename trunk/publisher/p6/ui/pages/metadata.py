@@ -6,9 +6,8 @@ import ccwx
 import zope.component
 import zope.interface
 
-import p6.storage
-import p6.metadata.events
-import p6.metadata.interfaces
+import p6
+import p6.api
 
 import license
 
@@ -163,7 +162,7 @@ def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
     for itemType in itemInterfaces:
 
         print 'finding for...', itemType
-        for group in [n for n in p6.getApp().groups
+        for group in [n for n in p6.api.getApp().groups
                       if n.appliesTo == itemType]:
 
             print group

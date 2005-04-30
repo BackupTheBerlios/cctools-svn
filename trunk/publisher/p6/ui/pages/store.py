@@ -6,8 +6,7 @@ import ccwx.xrcwiz
 import zope.component
 
 import p6
-import p6.storage
-import p6.ui
+import p6.api
 
 class StorePage(ccwx.xrcwiz.XrcWizPage):
     """Displays a page which validates and stores the item."""
@@ -21,12 +20,12 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         # register event handlers
         zope.component.provideHandler(
             zope.component.adapter(p6.storage.events.IStored)(
-                p6.deinstify(self.postStore))
+                p6.api.deinstify(self.postStore))
             )
 
         zope.component.provideHandler(
             zope.component.adapter(p6.ui.events.IUpdateStatus)(
-                p6.deinstify(self.updateStatus))
+                p6.api.deinstify(self.updateStatus))
             )
 
     def onChanged(self, event):
