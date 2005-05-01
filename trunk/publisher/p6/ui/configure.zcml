@@ -11,17 +11,9 @@
       />
 
   <adapter
-      for="p6.metadata.interfaces.IMetadataGroup
-           p6.storage.interfaces.IWork"
+      for="p6.metadata.interfaces.IMetadataGroup"
       provides=".interfaces.IWizardPage"
-      factory=".pages.metadata.page_IWork"
-      />
-
-  <adapter
-      for="p6.metadata.interfaces.IMetadataGroup
-           p6.storage.interfaces.IWorkItem"
-      provides=".interfaces.IWizardPage"
-      factory=".pages.metadata.page_IWorkItem"
+      factory=".pages.metadata.metaGroupWizPage"
       />
 
 </configure>

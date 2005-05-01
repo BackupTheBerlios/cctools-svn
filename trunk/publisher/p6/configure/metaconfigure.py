@@ -1,7 +1,7 @@
 import p6
 import p6.api
 
-from p6.metadata.base import metadatafield, metadatagroup
+from p6.metadata.base import metadatafield, MetadataGroup
 
 class StorageDirective(object):
     """A storage declaration."""
@@ -26,9 +26,8 @@ class MGroupDirective(object):
         self.appliesTo = for_
         self.id = id
         self.title = title
-        self.factory = factory or metadatagroup
+        self.factory = factory or MetadataGroup
 
-        print 'adding mgroup action...'
         _context.action(discriminator=('MetadataGroup', self.id),
                         callable=self.__addGroup,
                         args=[],
@@ -44,9 +43,8 @@ class MGroupDirective(object):
 
     def __addGroup(self):
         """Add the group to the groups stack once configuration is complete."""
-        print self.id
         p6.api.getApp().groups.append(
-            self.factory(self.appliesTo)(self.id, self.title,
+            self.factory(self.id, self.appliesTo, self.title,
                                           self.fields)
             )
         

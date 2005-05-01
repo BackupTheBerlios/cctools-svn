@@ -40,29 +40,26 @@ def metadatafield(fieldType):
     return MetadataField
 
 
-def metadatagroup(appliesTo):
-    class MetadataGroup:
-        zope.interface.implements(interfaces.IMetadataGroup, appliesTo)
+class MetadataGroup:
+    zope.interface.implements(interfaces.IMetadataGroup)
 
-        def __init__(self, id, title='', fields=[]):
+    def __init__(self, id, appliesTo, title='', fields=[]):
 
-            self.id = id
-            self.title = title or self.id
+        self.id = id
+        self.title = title or self.id
 
-            self.fields = fields
-            self.appliesTo = appliesTo
+        self.fields = fields
+        self.appliesTo = appliesTo
 
-            # register an event handler for metadata field collection
-            zope.component.provideHandler(
-                zope.component.adapter(events.ICollectGroups)(
-                    p6.api.deinstify(self.handleGetGroups))
-                )
+        # register an event handler for metadata field collection
+        zope.component.provideHandler(
+            zope.component.adapter(events.ICollectGroups)(
+                p6.api.deinstify(self.handleGetGroups))
+            )
 
-        def handleGetGroups(self, event):
-            if event.itemType == self.appliesTo or event.itemType is None:
-                event.addGroup(self)
+    def handleGetGroups(self, event):
+        if event.itemType == self.appliesTo or event.itemType is None:
+            event.addGroup(self)
 
-        def getFields(self):
-            return self.fields
-
-    return MetadataGroup
+    def getFields(self):
+        return self.fields

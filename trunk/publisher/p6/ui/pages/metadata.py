@@ -140,17 +140,9 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
 </resource>
     """
 
-def page_IWork(metaGroup, appliesTo):
+def metaGroupWizPage(metaGroup):
     """Subscription adapter to adapt a metadata group to a wizard page."""
-    if metaGroup.appliesTo != p6.storage.interfaces.IWork:
-        return None
     return lambda x: MetadataPage(x, metaGroup)
-
-def page_IWorkItem(metaGroup, appliesTo):
-    """Subscription adapter to adapt a metadata group to a wizard page."""
-    if metaGroup.appliesTo != p6.storage.interfaces.IWorkItem:
-        return None
-    return lambda x: ItemMetadataPage(x, metaGroup)
 
 def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
                                   p6.storage.interfaces.IWorkItem]
@@ -165,7 +157,6 @@ def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
         for group in [n for n in p6.api.getApp().groups
                       if n.appliesTo == itemType]:
 
-            print group
             # check for an adapter which will adapt our metadata group
             # to an IWizardPage; first check for an adapter that adapts the
             # group alone (ie, for a specialized group implementation), and
@@ -175,9 +166,6 @@ def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
 
             page = zope.component.queryMultiAdapter(
                 (group,),
-                p6.ui.interfaces.IWizardPage) or \
-                zope.component.queryMultiAdapter(
-                (group,group),
                 p6.ui.interfaces.IWizardPage)
 
             if page:
