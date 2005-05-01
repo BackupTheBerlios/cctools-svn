@@ -80,6 +80,12 @@ class PagesDirective(object):
                         args=(p6.ui.pages.StorePage,),
                         )
 
+    def fileselector(self, _context):
+        _context.action(discriminator=('RegisterPage', 'FileSelector'),
+                        callable=p6.api.getApp().pages.append,
+                        args=(p6.ui.pages.FileSelectorPage,),
+                        )
+
     def xmlpage(self, _context):
         _context.action(discriminator=('RegisterPage', 'XmlDisplayPage',
                                        p6.ui.pages.XmlMetadataPage),

@@ -111,6 +111,9 @@ class IMetadataPagesSubdirective(zope.interface.Interface):
         value_type=zope.configuration.fields.GlobalInterface(),
         )
 
+class IFileSelectorSubdirective(zope.interface.Interface):
+    """File selector page."""
+    
 class IStorePageSubdirective(zope.interface.Interface):
     """A generic storage page which is able to emit and handle the
     appropriate events."""

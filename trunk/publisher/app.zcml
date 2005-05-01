@@ -12,6 +12,11 @@
      factory="p6.storage.basic.BasicStorage"
      />
 
+  <storage
+     name="Archive.org Storage"
+     factory="ccpublisher.storage.ArchiveStorage"
+     />
+
   <metadatagroup
      id="workinfo"
      title="Tell Us About Your File"
@@ -91,6 +96,8 @@
         xrcfile="resources/wizard.xrc"
         xrcid="CCTAG_WELCOME"
         />
+
+    <fileselector />
 
     <metadatapages 
 	for="p6.storage.interfaces.IWork
