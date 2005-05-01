@@ -32,34 +32,3 @@ class WizFrame(ccwx.xrcwiz.XrcWiz):
         """Return the object which should serve as parent for page objects."""
         return wx.xrc.XRCCTRL(self, "PNL_BODY")
     
-class WizApp(wx.App):
-    zope.interface.implements(interfaces.IWizardApp)
-    def __init__(self, appname=None, filename=None,
-                 xrcfile=None, frameclass=WizFrame,
-                 confFile='app.zcml'):
-
-        # initialize the metadata group list
-        self.groups = []
-
-        self.appname = appname
-        self.errlog = filename
-        self.xrcfile = xrcfile
-        self.__frameclass = frameclass
-        self.confFile = confFile
-
-        wx.App.__init__(self, filename=self.errlog)
-
-    def OnInit(self):
-        # load your configuration
-        self.context = zope.configuration.xmlconfig.file(self.confFile)
-        
-        self.SetAppName(self.appname)
-
-        wx.InitAllImageHandlers()
-
-        self.main = self.__frameclass(self)
-        self.main.Show(True)
-
-        self.SetTopWindow(self.main)
-
-        return True

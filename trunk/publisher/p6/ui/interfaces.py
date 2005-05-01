@@ -4,10 +4,6 @@ import zope.interface
 class IEntryWidget(zope.interface.Interface):
     pass
 
-class IWizardApp(zope.interface.Interface):
-    groups = zope.interface.Attribute("Metadata groups.")
-    appname = zope.interface.Attribute("")
-    
 class IWizardPage(zope.interface.Interface):
     
     headline = zope.interface.Attribute("Text displayed at the top of the window.")
