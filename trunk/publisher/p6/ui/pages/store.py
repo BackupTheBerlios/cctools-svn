@@ -30,7 +30,9 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
 
     def onChanged(self, event):
         # disable the next button during the storage process
+        # and use busy cursor
         XRCCTRL(wx.GetApp().GetTopWindow(), "CMD_NEXT").Disable()
+        wx.BeginBusyCursor()
 
         wx.YieldIfNeeded()
         self.validateItem()
@@ -56,6 +58,7 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         zope.component.handle(event)
         
         XRCCTRL(wx.GetApp().GetTopWindow(), "CMD_NEXT").Enable()
+        wx.EndBusyCursor()
 
         self.Refresh()
 
