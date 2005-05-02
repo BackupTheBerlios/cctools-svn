@@ -6,16 +6,14 @@ import wx
 import ccwx.xrcwiz
 
 import p6
-import p6.metadata
 import p6.metadata.base as md
 import p6.storage
-import p6.ui.wizard
 
 class P6(p6.ui.wizard.WizFrame):
     def __init__(self, app):
         p6.ui.wizard.WizFrame.__init__(self, 'FRM_MAIN', app)
 
-class CcPublisher(p6.ui.wizard.WizApp):
+class CcPublisher(p6.app.wxpy.WizApp):
     pass
 
 def main(argv=[]):
