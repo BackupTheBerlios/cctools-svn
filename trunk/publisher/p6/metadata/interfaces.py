@@ -1,5 +1,16 @@
 import zope.interface
 
+class IMetadataDict(zope.interface.Interface):
+    """A dictionary-like interface to metadata.  Does not understand
+    "appliesTo", but instead provides a simple interface for the metadata of
+    a specific, singular item."""
+
+    def keys():
+        """Returns a sequence of key values."""
+
+    def get(key):
+        """Returns a specific value for the given key.  Throws an exception
+        if key is not a valid key."""
 
 class IMetadataGroup(zope.interface.Interface):
     id = zope.interface.Attribute("")
@@ -16,6 +27,7 @@ class IMetadataGroup(zope.interface.Interface):
 
 class IMetadataField(zope.interface.Interface):
     id = zope.interface.Attribute("")
+    key = zope.interface.Attribute("A fully qualified key for this field.")
     label = zope.interface.Attribute("")
     type = zope.interface.Attribute("")
     appliesTo = zope.interface.Attribute("")
