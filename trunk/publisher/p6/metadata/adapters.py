@@ -4,8 +4,6 @@ import zope.component
 import p6
 import interfaces
 
-#@zope.interface.implementer(interfaces.IXmlString)
-#@zope.component.adapter(interfaces.IMetadataGroup)
 def groupToXml(metaGroup):
     if metaGroup.appliesTo is not None:
         # != p6.storage.interfaces.IWork:
@@ -15,4 +13,22 @@ def groupToXml(metaGroup):
     else:
         return None
 
-#zope.component.provideAdapter(groupToXml)
+def itemMetadata(mGroup, item):
+    result = {}
+    
+    if mGroup.appliesTo not in zope.interface.implementedBy(item.__class__):
+        return None
+    else:
+        for field in mGroup.getFields():
+            f_key = field.id or field.key
+            f_value = field()
+
+            if isinstance(f_value, dict):
+                if item.getIdentifier() in f_value:
+                    f_value = f_value[item.getIdentifier()]
+                else:
+                    f_value = f_value[p6.metadata.base.DEFAULT_KEY]
+
+            result[f_key] = f_value
+
+    return result

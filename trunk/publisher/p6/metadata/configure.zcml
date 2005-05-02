@@ -12,6 +12,14 @@
       />
 
   <adapter
+      name="ItemMetadataAdapter"
+      for="p6.metadata.interfaces.IMetadataGroup
+           p6.storage.interfaces.IItem"
+      provides="p6.metadata.interfaces.IMetadataDict"
+      factory=".adapters.itemMetadata"
+      />
+
+  <adapter
       for=".types.ITextField"
       provides="p6.ui.interfaces.IEntryWidget"
       factory=".types.textField"
