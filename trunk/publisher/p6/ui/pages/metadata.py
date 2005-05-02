@@ -76,7 +76,7 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
         # bind P6 events
         zope.component.provideHandler(
             zope.component.adapter(p6.storage.events.IItemSelected)(
-                p6.deinstify(self.onItemSelected))
+                p6.api.deinstify(self.onItemSelected))
             )
         
         # bind wx events
@@ -140,9 +140,20 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
 </resource>
     """
 
-def metaGroupWizPage(metaGroup):
+def work_metaGroupWizPage(metaGroup):
     """Subscription adapter to adapt a metadata group to a wizard page."""
-    return lambda x: MetadataPage(x, metaGroup)
+    if metaGroup.appliesTo == p6.storage.interfaces.IWork:
+        return lambda x: MetadataPage(x, metaGroup)
+    else:
+        return None
+
+def item_metaGroupWizPage(metaGroup):
+    """Subscription adapter to adapt a metadata group to a wizard page."""
+    
+    if metaGroup.appliesTo == p6.storage.interfaces.IWorkItem:
+        return lambda x: ItemMetadataPage(x, metaGroup)
+    else:
+        return None
 
 def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
                                   p6.storage.interfaces.IWorkItem]
@@ -164,11 +175,11 @@ def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
             # implementation of our base metadata group class whose display
             # varies depending on what it "applies" to.
 
-            page = zope.component.queryMultiAdapter(
+            page = zope.component.getGlobalSiteManager().getAdapters(
                 (group,),
                 p6.ui.interfaces.IWizardPage)
 
             if page:
-                pages.append(page)
+                pages.append(page[0][1])
 
     return pages

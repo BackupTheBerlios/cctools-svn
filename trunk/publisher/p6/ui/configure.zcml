@@ -11,9 +11,17 @@
       />
 
   <adapter
+      name="WorkToPage"
       for="p6.metadata.interfaces.IMetadataGroup"
       provides=".interfaces.IWizardPage"
-      factory=".pages.metadata.metaGroupWizPage"
+      factory=".pages.metadata.work_metaGroupWizPage"
+      />
+
+  <adapter
+      name="WorkItemToPage"
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.item_metaGroupWizPage"
       />
 
 </configure>
