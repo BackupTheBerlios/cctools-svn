@@ -14,7 +14,9 @@ def metadatafield(fieldType):
         zope.interface.implements(interfaces.IMetadataField, fieldType)
 
         
-        def __init__(self, id, label='', choices=[], default=''):
+        def __init__(self, id, label='',
+                     choices=[], default='',
+                     description='', tip=''):
 
             # store the default values
             self.id = id
@@ -22,6 +24,8 @@ def metadatafield(fieldType):
             self.choices = choices
             self.default = default
             self.type = fieldType
+            self.tip = tip
+            self.description = description
 
             # value is stored as a dict to support per-item metadata;
             # in the event the value is set without specifying an item

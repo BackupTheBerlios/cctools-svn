@@ -50,6 +50,8 @@
      <field id="keywords"
             label="Keywords"
             type="p6.metadata.types.ITextField"
+            description="(separated with a comma)"
+            tip="Keywords help users find works by topic."
             />
 
   </metadatagroup>

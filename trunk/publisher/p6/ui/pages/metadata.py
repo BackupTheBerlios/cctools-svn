@@ -51,6 +51,16 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
             
             sizer.Add(widget, flag=wx.EXPAND)
 
+            # check for a tooltip
+            if field.tip:
+                widget.SetToolTip(wx.ToolTip(field.tip))
+
+            # check for a description
+            if field.description:
+                sizer.Add((5,5))
+                desc_label = wx.StaticText(self, label=field.description)
+                sizer.Add(desc_label, flag=wx.EXPAND)
+
     def onChanging(self, event):
         """Perform storage of field values back to metadata framework."""
         

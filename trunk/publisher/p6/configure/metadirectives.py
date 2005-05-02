@@ -78,6 +78,18 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         required=False,
         )
 
+    description = zope.configuration.fields.MessageID(
+        title=u"",
+        description=u"",
+        required=False,
+        )
+
+    tip = zope.configuration.fields.MessageID(
+        title=u"",
+        description=u"",
+        required=False,
+        )
+
     choices = zope.configuration.fields.Tokens(
         title=u"",
         description=u"",
