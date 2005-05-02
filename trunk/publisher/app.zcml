@@ -7,14 +7,11 @@
 
   <!-- Application specific configuration -->
 
+  <include package="ccpublisher" />
+
   <storage
      name="NoOp Storage"
      factory="p6.storage.basic.BasicStorage"
-     />
-
-  <storage
-     name="Archive.org Storage"
-     factory="ccpublisher.storage.ArchiveStorage"
      />
 
   <metadatagroup
@@ -62,7 +59,7 @@
      for="p6.storage.interfaces.IWorkItem"
      >
 
-     <field id="fileformat"
+     <field id="format"
             label="File Format"
             type="p6.metadata.types.ITextField"
             />
