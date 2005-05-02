@@ -24,4 +24,11 @@
       factory=".pages.metadata.item_metaGroupWizPage"
       />
 
+  <adapter
+      name="StorageMetaItemToPage"
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.storage_metaGroupWizPage"
+      />
+
 </configure>

@@ -44,7 +44,6 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
             if widget is not None:
                 field.setValue(widget.GetValue())
-                print field()
                 
         
     PAGE_XRC = """
@@ -155,8 +154,16 @@ def item_metaGroupWizPage(metaGroup):
     else:
         return None
 
+def storage_metaGroupWizPage(metaGroup):
+    """Subscription adapter to adapt a metadata group to a wizard page."""
+    if metaGroup.appliesTo == p6.storage.interfaces.IStorage:
+        return lambda x: MetadataPage(x, metaGroup)
+    else:
+        return None
+
 def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
-                                  p6.storage.interfaces.IWorkItem]
+                                  p6.storage.interfaces.IWorkItem,
+                                  p6.storage.interfaces.IStorage]
                   ):
     """Returns a list of page objects, automatically generated from the
     supplied metadata field definitions."""
