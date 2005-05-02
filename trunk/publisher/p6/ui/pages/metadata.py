@@ -26,15 +26,30 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
     def initFields(self, metaGroup):
         """Create the user input widgets for this group."""
 
+        # see if we have a description; if so, use it to label the page
+        if metaGroup.description:
+            desc_label = wx.StaticText(self, label=metaGroup.description)
+            self.GetSizer().Add(desc_label, flag=wx.EXPAND)
+
+        # create the actual sizer to hold the labels and widgets
+        item_sizer = wx.FlexGridSizer(cols=2)
+        item_sizer.AddGrowableCol(1)
+        self.GetSizer().Add(item_sizer, flag=wx.EXPAND)
+
+        self.addFields(metaGroup, item_sizer)
+
+    def addFields(self, metaGroup, sizer):
+        """Create the user input widgets for this group."""
+
         for field in metaGroup.getFields():
 
             label = wx.StaticText(self, label=field.label)
-            self.GetSizer().Add(label)
+            sizer.Add(label)
 
             widget = p6.ui.interfaces.IEntryWidget(field)(self)
             field._widget = weakref.ref(widget)
             
-            self.GetSizer().Add(widget, flag=wx.EXPAND)
+            sizer.Add(widget, flag=wx.EXPAND)
 
     def onChanging(self, event):
         """Perform storage of field values back to metadata framework."""
@@ -50,10 +65,10 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 <resource>
   <object class="wxPanel" name="%s">
     <object class="wxFlexGridSizer">
-      <cols>2</cols>
+      <cols>1</cols>
       <vgap>5</vgap>
       <hgap>5</hgap>
-      <growablecols>1</growablecols>
+      <growablecols>0</growablecols>
     </object>
   </object>
 </resource>
@@ -90,9 +105,16 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
     def initFields(self, metaGroup):
         """Create the user input widgets for this group."""
 
+        # see if we have a description; if so, use it to label the page
+        if metaGroup.description:
+            desc_label = wx.StaticText(self, label=metaGroup.description)
+            self.GetSizer().Add(desc_label, flag=wx.EXPAND)
+
+        # reset widget references
         for field in metaGroup.getFields():
             field._widget = {}
-            
+
+        # create the widgets for each item
         for item in self.__items:
 
             # create the item label

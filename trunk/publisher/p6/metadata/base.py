@@ -43,11 +43,12 @@ def metadatafield(fieldType):
 class MetadataGroup:
     zope.interface.implements(interfaces.IMetadataGroup)
 
-    def __init__(self, id, appliesTo, title='', fields=[]):
+    def __init__(self, id, appliesTo, title='', description='', fields=[]):
 
         self.id = id
         self.title = title or self.id
-
+        self.description = description
+        
         self.fields = fields
         self.appliesTo = appliesTo
 

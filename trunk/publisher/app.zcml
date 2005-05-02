@@ -17,6 +17,7 @@
   <metadatagroup
      id="workinfo"
      title="Tell Us About Your Files"
+     description="Test description."
      for="p6.storage.interfaces.IWork"
      >
 

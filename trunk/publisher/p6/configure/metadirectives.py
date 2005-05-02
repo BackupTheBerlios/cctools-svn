@@ -39,6 +39,12 @@ class IMdataGroupDirective(zope.interface.Interface):
         required=True,
         )
 
+    description= zope.configuration.fields.MessageID(
+        title=u"Group description",
+        description=u"",
+        required=False,
+        )
+    
     for_ = zope.configuration.fields.GlobalInterface(
         title=u"",
         description=u"",

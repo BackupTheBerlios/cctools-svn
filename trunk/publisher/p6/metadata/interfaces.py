@@ -14,7 +14,8 @@ class IMetadataDict(zope.interface.Interface):
 
 class IMetadataGroup(zope.interface.Interface):
     id = zope.interface.Attribute("")
-    label = zope.interface.Attribute("")
+    title = zope.interface.Attribute("")
+    description = zope.interface.Attribute("")
 
     fields = zope.interface.Attribute("")
     appliesTo = zope.interface.Attribute("")
