@@ -82,7 +82,7 @@
   <metadatagroup
      id="Login"
      title="Log in to the Archive"
-     for="p6.storage.interfaces.IWork"
+     for="p6.storage.interfaces.IStorage"
      >
 
      <field id="username"
@@ -91,7 +91,7 @@
             />
 
      <field id="password"
-            label="Email Address"
+            label="Password"
             type="p6.metadata.types.IPasswordField"
             />
 
@@ -110,7 +110,8 @@
 
     <metadatapages 
 	for="p6.storage.interfaces.IWork
-             p6.storage.interfaces.IWorkItem"  />
+             p6.storage.interfaces.IWorkItem
+             p6.storage.interfaces.IStorage"  />
 
     <storepage  />
     <xmlpage />
