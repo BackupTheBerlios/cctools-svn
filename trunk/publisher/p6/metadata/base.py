@@ -6,9 +6,9 @@ import p6.api
 import interfaces
 import events
 
+DEFAULT_KEY = '__p6_default__'
 
 def metadatafield(fieldType):
-    DEFAULT_KEY = '__p6_default__'
     
     class MetadataField:
         zope.interface.implements(interfaces.IMetadataField, fieldType)
