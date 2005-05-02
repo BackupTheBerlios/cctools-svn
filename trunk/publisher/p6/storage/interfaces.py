@@ -1,14 +1,14 @@
 import zope.interface
 
 class IItem(zope.interface.Interface):
-    pass
+    def getIdentifier():
+        """Returns the unique identifier (filename, etc) for this item."""
 
 class IWork(IItem):
     pass
 
 class IWorkItem(IItem):
-    def getIdentifier():
-        """Returns the unique identifier (filename, etc) for this item."""
+    pass
 
 class IStorage(zope.interface.Interface):
 
