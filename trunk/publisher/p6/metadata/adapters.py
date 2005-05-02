@@ -24,9 +24,10 @@ def itemMetadata(mGroup, item):
             f_value = field()
 
             if isinstance(f_value, dict):
-                if item.getIdentifier() in f_value:
-                    f_value = f_value[item.getIdentifier()]
+                if item in f_value: #.getIdentifier() in f_value:
+                    f_value = f_value[item] #.getIdentifier()]
                 else:
+                    print f_key, f_value
                     f_value = f_value[p6.metadata.base.DEFAULT_KEY]
 
             result[f_key] = f_value
