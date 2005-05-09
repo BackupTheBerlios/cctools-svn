@@ -80,7 +80,15 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
 
        # now add the individual files to the submission
        for item in p6.api.getApp().items[1:]:
-           sub = submission.addFile(item.getIdentifier(),
+           #sub = submission.addFile(item.getIdentifier(),
+           #                         pyarchive.const.ORIGINAL,
+           #                         claim = self.__claimString(license,
+           #                                                    v_url,
+           #                                                    year,
+           #                                                    holder)
+           #                         )
+           
+           sub = submission.addItem(item,
                                     pyarchive.const.ORIGINAL,
                                     claim = self.__claimString(license,
                                                                v_url,
