@@ -27,6 +27,11 @@ from pyarchive.exceptions import SubmissionError
 import pyarchive.utils
 import pyarchive.const
 
+import interfaces
+import adapters
+
+from p6.storage.interfaces import IInputStream
+
 # from cctag.metadata import metadata
 
 class ArchiveItem:
@@ -84,7 +89,7 @@ class ArchiveItem:
         return self.files[-1]
     
     def addItem(self, item, source, format=None, claim=None):
-        self.files.append(ArchiveFile(filename, source, format, claim))
+        self.files.append(ArchiveItem(filename, source, format, claim))
 
         # set the running time to defaults
         self.files[-1].runtime = self.metadata['runtime']
@@ -217,9 +222,12 @@ class ArchiveItem:
             callback.reset(filename=fname)
 
             # get a handle to the input stream
+            uploadFile = IInputStream(archivefile)()
+            print uploadFile
             
+            # perform the upload
             ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
-                           file(fname, 'rb'), callback=callback)
+                           uploadFile, callback=callback)
 
         ftp.quit()
         
@@ -247,8 +255,65 @@ class ArchiveItem:
         callback.finish()
            
         return self.archive_url
+
+
+class ArchiveItem:
+    zope.interface.implements(interfaces.IArchiveWorkItem)
+
+    def __init__(self, item, source = None, format = None, claim = None):
+        # set object properties from suppplied parameters
+        self.item = item
+        self.runtime = None
+        self.source = source
+        self.format = format
+        self.__claim = claim
+
+    def fileNode(self):
+        """Generates the XML to represent this file in files.xml."""
+        result = '<file name="%s" source="%s">\n' % (
+            self.archiveFilename(), self.source)
         
+        if self.runtime is not None:
+            result = result + '<runtime>%s</runtime>\n' % self.runtime
+
+        if self.__claim:
+            result = result + '<license>%s</license>\n' % \
+                     xml.sax.saxutils.escape(self.__claim)
+
+        if not(self.format):
+            self.format = ' '
+        result = result + '<format>%s</format>\n</file>\n' % \
+                 xml.sax.saxutils.escape(self.format)
+
+        return result
+    
+    def sanityCheck(self):
+        """Perform simple sanity checks before uploading."""
+        
+        # ensure necessary parameters have been supplied
+        if None in (self.filename, self.source, self.format):
+            raise MissingParameterException
+
+    def archiveFilename(self):
+        fname = self.item.getIdentifier()
+        
+        fname = fname.replace(' ', '_')
+        chars = [n for n in fname if n in
+                 (string.ascii_letters + string.digits + '._')]
+        
+        result = "".join(chars)
+        if result[0] == '.':
+            # the first character is a dot,
+            # indicating there's nothing before the extension.
+            result = '%s%s' % (hash(result), result)
+
+        return result
+    
+    
+   
 class ArchiveFile:
+    zope.interface.implements(interfaces.IArchiveFile)
+    
     def __init__(self, filename, source = None, format = None, claim = None):
         # make sure the file exists
         if not(os.path.exists(filename)):
@@ -330,8 +395,3 @@ class ArchiveFile:
 
         return result
     
-    
-        
-        
-        
-
