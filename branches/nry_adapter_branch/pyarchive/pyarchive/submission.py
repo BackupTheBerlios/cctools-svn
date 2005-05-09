@@ -22,6 +22,8 @@ import string
 import types
 import codecs
 
+import zope.interface
+
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
 import pyarchive.utils
@@ -31,8 +33,6 @@ import interfaces
 import adapters
 
 from p6.storage.interfaces import IInputStream
-
-# from cctag.metadata import metadata
 
 class ArchiveItem:
     """
@@ -89,7 +89,7 @@ class ArchiveItem:
         return self.files[-1]
     
     def addItem(self, item, source, format=None, claim=None):
-        self.files.append(ArchiveItem(filename, source, format, claim))
+        self.files.append(ArchiveWorkItem(item, source, format, claim))
 
         # set the running time to defaults
         self.files[-1].runtime = self.metadata['runtime']
@@ -193,22 +193,22 @@ class ArchiveItem:
         # connect to the FTP server
         callback.increment(status='connecting to archive.org...')
 
-        ftp = cb_ftp.FTP(self.server)
-        ftp.login(username, password)
+        #ftp = cb_ftp.FTP(self.server)
+        #ftp.login(username, password)
 
         # create a new folder for the submission
         callback.increment(status='creating folder for uploads...')
 
-        ftp.mkd(self.identifier)
-        ftp.cwd(self.identifier)
+        #ftp.mkd(self.identifier)
+        #ftp.cwd(self.identifier)
 
         # upload the XML files
         callback.increment(status='uploading metadata...')
 
-        ftp.storlines("STOR %s_meta.xml" % self.identifier,
-                      self.metaxml(username))
-        ftp.storlines("STOR %s_files.xml" % self.identifier,
-                      self.filesxml())
+        #ftp.storlines("STOR %s_meta.xml" % self.identifier,
+        #              self.metaxml(username))
+        #ftp.storlines("STOR %s_files.xml" % self.identifier,
+        #              self.filesxml())
 
         # upload each file
         callback.increment(status='uploading files...')
@@ -226,10 +226,10 @@ class ArchiveItem:
             print uploadFile
             
             # perform the upload
-            ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
-                           uploadFile, callback=callback)
+            #ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
+            #               uploadFile, callback=callback)
 
-        ftp.quit()
+        #ftp.quit()
         
         # call the import url, check the return result
         callback.reset(steps=3)
@@ -237,7 +237,7 @@ class ArchiveItem:
         importurl = "http://www.archive.org/services/contrib-submit.php?" \
                     "user_email=%s&server=%s&dir=%s" % (
                     username, self.server, self.identifier)
-        response = urllib2.urlopen(importurl)
+        #response = urllib2.urlopen(importurl)
                     
         callback.increment(status='checking response...')
         response_dom = xml.dom.minidom.parse(response)
@@ -257,7 +257,7 @@ class ArchiveItem:
         return self.archive_url
 
 
-class ArchiveItem:
+class ArchiveWorkItem:
     zope.interface.implements(interfaces.IArchiveWorkItem)
 
     def __init__(self, item, source = None, format = None, claim = None):
