@@ -8,6 +8,10 @@ import events
 
 DEFAULT_KEY = '__p6_default__'
 
+def NoOp(value):
+    """A no-op validator used by default."""
+    return None
+    
 def metadatafield(fieldType):
     
     class MetadataField:
@@ -16,7 +20,8 @@ def metadatafield(fieldType):
         
         def __init__(self, id, label='',
                      choices=[], default='',
-                     description='', tip=''):
+                     description='', tip='',
+                     validator = None):
 
             # store the default values
             self.id = id
@@ -26,20 +31,7 @@ def metadatafield(fieldType):
             self.type = fieldType
             self.tip = tip
             self.description = description
-
-            # value is stored as a dict to support per-item metadata;
-            # in the event the value is set without specifying an item
-            # the DEFAULT_KEY is used.
-            self.value = {}
-            
-        def __call__(self):
-            if len(self.value) == 1 and DEFAULT_KEY in self.value:
-                return self.value[DEFAULT_KEY]
-            else:
-                return self.value
-        
-        def setValue(self, newValue, item=DEFAULT_KEY):
-            self.value[item] = newValue
+            self.validator = validator or NoOp
 
     return MetadataField
 
@@ -55,8 +47,6 @@ class MetadataGroup:
         
         self.fields = fields
         self.appliesTo = appliesTo
-
-        # register an event handler for metadata field collection
 
     def getFields(self):
         return self.fields

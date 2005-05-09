@@ -20,6 +20,7 @@ class IMetadataField(zope.interface.Interface):
     label = zope.interface.Attribute("")
     type = zope.interface.Attribute("")
     appliesTo = zope.interface.Attribute("")
+    validator = zope.interface.Attribute("An optional callable which returns a string containing an error message if the field's value does not validate.")
 
 class IMetadataStorage(zope.interface.Interface):
     # metadata interface
