@@ -34,6 +34,7 @@
      <field id="title"
             label="Title of Work"
             type="p6.metadata.types.ITextField"
+            validator="ccpublisher.validators.validateTitle"
             />
 
      <field id="format"
