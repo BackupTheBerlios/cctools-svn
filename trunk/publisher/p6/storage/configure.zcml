@@ -4,5 +4,11 @@
     i18n_domain="p6"
     >
 
+  <adapter
+      for=".interfaces.IFileItem"
+      provides=".interfaces.IInputStream"
+      factory=".items.FileItemStream"
+      />
+
 
 </configure>

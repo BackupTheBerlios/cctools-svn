@@ -10,6 +10,9 @@ class IWork(IItem):
 class IWorkItem(IItem):
     pass
 
+class IFileItem(IWorkItem):
+    pass
+
 class IStorage(zope.interface.Interface):
 
     def validate():
@@ -19,3 +22,7 @@ class IStorage(zope.interface.Interface):
     def store():
         """Perform the storage process."""
 
+
+class IInputStream(zope.interface.Interface):
+    """An interface representing a Python file-like object."""
+    
