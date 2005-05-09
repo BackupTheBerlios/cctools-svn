@@ -2,6 +2,7 @@ import zope.component
 import zope.interface
 
 import p6
+import interfaces
 
 @zope.interface.implementer(p6.storage.interfaces.IInputStream)
 @zope.component.adapter(interfaces.IArchiveFile)

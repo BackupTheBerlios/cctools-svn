@@ -11,7 +11,7 @@ class IArchiveWorkItem(zope.interface.Interface):
     def archiveFilename():
         """Return the archive.org filename for this item."""
         
-class IArchiveFile(ArchiveWorkItem):
+class IArchiveFile(IArchiveWorkItem):
     """A generic interface for a File in an archive.org submission."""
 
 
