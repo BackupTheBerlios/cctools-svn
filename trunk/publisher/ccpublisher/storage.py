@@ -29,7 +29,7 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
            self.submission_type = pyarchive.const.VIDEO
        else:
            self.archive_collection = pyarchive.const.OPENSOURCE_MEDIA
-           self.submission_type = work_type = api.findField('work_format')
+           self.submission_type = work_type = api.findField('format')
            
 
     def store(self, event=None):
@@ -42,7 +42,7 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
                                                self.submission_type)
        
        # get the copyright information fields
-       license = api.findField('licenseurl', api.getApp().items[0])
+       license = api.findField('license', api.getApp().items[0])
 
        year = api.findField('year', api.getApp().items[0])
        holder = api.findField('holder', api.getApp().items[0])
@@ -67,27 +67,15 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
        # retrieve all metadata fields for the work (the root item)
        root_item = api.getApp().items[0]
        for g in api.getApp().groups:
-           meta_dicts = [n[1] for n in
-                         zope.component.getGlobalSiteManager().getAdapters(
-               (g, root_item),
-               p6.metadata.interfaces.IMetadataDict)
-                         if n]
-
+           meta_dicts = [p6.metadata.interfaces.IMetadataStorage(root_item)]
+           
            for m in meta_dicts:
-               for k in m:
-                   submission[k] = m[k]
+               for k in m.keys():
+                   submission[k] = m.getMetaValue(k)
 
 
        # now add the individual files to the submission
        for item in p6.api.getApp().items[1:]:
-           #sub = submission.addFile(item.getIdentifier(),
-           #                         pyarchive.const.ORIGINAL,
-           #                         claim = self.__claimString(license,
-           #                                                    v_url,
-           #                                                    year,
-           #                                                    holder)
-           #                         )
-           
            sub = submission.addItem(item,
                                     pyarchive.const.ORIGINAL,
                                     claim = self.__claimString(license,
@@ -97,16 +85,12 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
                                     )
            
            for g in p6.api.getApp().groups:
-               meta_dicts = [n[1] for n in
-                             zope.component.getGlobalSiteManager().getAdapters(
-                   (g, item),
-                   p6.metadata.interfaces.IMetadataDict)
-                             if n]
+               meta_dicts = [p6.metadata.interfaces.IMetadataStorage(item)]
 
                for m in meta_dicts:
-                   for k in m:
-                       print 'setting %s to %s...' % (k, m[k])
-                       setattr(item, k, m[k] or '')
+                   for k in m.keys():
+                       print 'setting %s to %s...' % (k, m.getMetaValue(k))
+                       setattr(item, k, m.getMetaValue(k) or '')
 
        print submission.metaxml().getvalue()
        print submission.filesxml().getvalue()
