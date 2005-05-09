@@ -125,8 +125,13 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         # XXX do some sort of field name matching here?
         # update the metadata field
         for field in self.metagroup.getFields():
-            field.setValue(self.getLicenseUrl())
-
+            zope.component.handle(
+                p6.metadata.events.UpdateMetadataEvent(None,
+                                                       field.id,
+                                                       self.getLicenseUrl()
+                                                       )
+                )
+                
     def getLicenseUrl(self):
         """Extract the license URL from the returned licensing document."""
         if self._license_doc is None:
@@ -297,5 +302,4 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
 def page_ILicenseGroup(metaGroup):
     return lambda x: LicenseChooserPage(x, metaGroup)
 
-#zope.component.provideSubscriptionAdapter(page_ILicenseGroup)
 

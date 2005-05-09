@@ -68,7 +68,12 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
             widget = field._widget()
 
             if widget is not None:
-                field.setValue(widget.GetValue())
+                zope.component.handle(
+                    p6.metadata.events.UpdateMetadataEvent(None,
+                                                           field.id,
+                                                           widget.GetValue()
+                                                           )
+                    )
                 
         
     PAGE_XRC = """
@@ -150,10 +155,16 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
 
         for item in self.__items:
             for field in self.metagroup.getFields():
-                field_widget = field._widget[item]()
+                widget = field._widget[item]()
 
-                if field_widget is not None:
-                    field.setValue(field_widget.GetValue(), item=item)
+                if widget is not None:
+                    zope.component.handle(
+                        p6.metadata.events.UpdateMetadataEvent(item,
+                                                               field.id,
+                                                             widget.GetValue()
+                                                               )
+                        )
+
 
     def onChanged(self, event):
         self.initFields(self.metagroup)
