@@ -13,23 +13,18 @@ def groupToXml(metaGroup):
     else:
         return None
 
-def itemMetadata(mGroup, item):
-    result = {}
-    
-    if mGroup.appliesTo not in zope.interface.implementedBy(item.__class__):
-        return None
+
+def updateMetadata(event):
+    """Reponds to a metadata update event."""
+
+    if event.item is None:
+        # This applies to any root item
+        for i in p6.api.getApp().items:
+            if p6.storage.interfaces.IWork in \
+                   zope.interface.implementedBy(i.__class__):
+                interfaces.IMetadataStorage(i).setMetaValue(
+                    event.key, event.value)
+                
     else:
-        for field in mGroup.getFields():
-            f_key = field.id or field.key
-            f_value = field()
-
-            if isinstance(f_value, dict):
-                if item in f_value: #.getIdentifier() in f_value:
-                    f_value = f_value[item] #.getIdentifier()]
-                else:
-                    print f_key, f_value
-                    f_value = f_value[p6.metadata.base.DEFAULT_KEY]
-
-            result[f_key] = f_value
-
-    return result
+        interfaces.IMetadataStorage(event.item).setMetaValue(
+            event.key, event.value)

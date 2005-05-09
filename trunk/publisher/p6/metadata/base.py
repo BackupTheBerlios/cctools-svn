@@ -57,14 +57,38 @@ class MetadataGroup:
         self.appliesTo = appliesTo
 
         # register an event handler for metadata field collection
-        zope.component.provideHandler(
-            zope.component.adapter(events.ICollectGroups)(
-                p6.api.deinstify(self.handleGetGroups))
-            )
-
-    def handleGetGroups(self, event):
-        if event.itemType == self.appliesTo or event.itemType is None:
-            event.addGroup(self)
 
     def getFields(self):
         return self.fields
+
+class BasicMetadataStorage(object):
+    zope.interface.implements(interfaces.IMetadataStorage)
+    
+    # metadata interface
+    def __init__(self):
+        self.__meta = {}
+
+    def setMetaValue(self, key, value):
+        """Set the value of a metadata key; if the key is not previously
+        defined, create it."""
+        
+        self.__meta[key] = value
+        print self
+        print self.__meta
+        
+    def getMetaValue(key):
+        """Returns a metadata value.  If the key does not exist, raises a
+        KeyError Exception."""
+
+        return self.__meta[key]
+
+    def keys():
+        """Returns a sequence of valid metadata keys."""
+
+        return self.__meta.keys()
+
+    def metadata():
+        """Returns a dictionary-like object containing the key-value pairs
+        of metadata defined for this item."""
+
+        return self.__meta

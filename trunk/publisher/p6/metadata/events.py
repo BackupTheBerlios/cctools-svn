@@ -1,25 +1,17 @@
 import zope.interface
 
-class ICollectGroups(zope.interface.Interface):
-    itemType = zope.interface.Attribute("")
 
-    def addGroup(newGroup):
-        """Add the new group to the collection."""
-        
-    def getGroups():
-        """Returns a list of the metadata groups being provided."""
-        
-class CollectGroups:
-    zope.interface.implements(ICollectGroups)
+class IUpdateMetadataEvent(zope.interface.Interface):
+    item = zope.interface.Attribute("")
+    
+    key = zope.interface.Attribute("")
+    value = zope.interface.Attribute("")
 
-    def __init__(self, itemInterface):
-        self.itemType = itemInterface
-        self.groups = []
+class UpdateMetadataEvent(object):
+    zope.interface.implements(IUpdateMetadataEvent)
+
+    def __init__(self, item, key, value):
+        self.item = item
+        self.key = key
+        self.value = value
         
-    def addGroup(self, group):
-        self.groups.append(group)
-        
-    def getGroups(self):
-        return self.groups
-    
-    

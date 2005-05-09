@@ -1,17 +1,5 @@
 import zope.interface
 
-class IMetadataDict(zope.interface.Interface):
-    """A dictionary-like interface to metadata.  Does not understand
-    "appliesTo", but instead provides a simple interface for the metadata of
-    a specific, singular item."""
-
-    def keys():
-        """Returns a sequence of key values."""
-
-    def get(key):
-        """Returns a specific value for the given key.  Throws an exception
-        if key is not a valid key."""
-
 class IMetadataGroup(zope.interface.Interface):
     id = zope.interface.Attribute("")
     title = zope.interface.Attribute("")
@@ -32,14 +20,24 @@ class IMetadataField(zope.interface.Interface):
     label = zope.interface.Attribute("")
     type = zope.interface.Attribute("")
     appliesTo = zope.interface.Attribute("")
-    
-    def __call__():
-        """Returns the current value of the field."""
 
-    def setValue(newValue, item):
-        """Set the value for the field to a new value; the optional item
-        parameter specifies that this value is only valid for a particular
-        item.  The exact semantic is implementation specific."""
+class IMetadataStorage(zope.interface.Interface):
+    # metadata interface
+
+    def setMetaValue(key, value):
+        """Set the value of a metadata key; if the key is not previously
+        defined, create it."""
+
+    def getMetaValue(key):
+        """Returns a metadata value.  If the key does not exist, raises a
+        KeyError Exception."""
+
+    def keys():
+        """Returns a sequence of valid metadata keys."""
+
+    def metadata():
+        """Returns a dictionary-like object containing the key-value pairs
+        of metadata defined for this item."""
 
 class IXmlString(zope.interface.Interface):
     xml = zope.interface.Attribute("")

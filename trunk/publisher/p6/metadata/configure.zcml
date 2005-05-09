@@ -4,19 +4,17 @@
     i18n_domain="p6"
     >
 
+  <!-- define a handler for the UpdateMetadata Event -->
+  <subscriber
+	for=".events.IUpdateMetadataEvent"
+	handler=".adapters.updateMetadata"
+	/>
+
   <adapter
       name="MetaGroupToXml"
       for=".interfaces.IMetadataGroup"
       provides=".interfaces.IXmlString"
       factory=".adapters.groupToXml"
-      />
-
-  <adapter
-      name="ItemMetadataAdapter"
-      for="p6.metadata.interfaces.IMetadataGroup
-           p6.storage.interfaces.IItem"
-      provides="p6.metadata.interfaces.IMetadataDict"
-      factory=".adapters.itemMetadata"
       />
 
   <adapter
