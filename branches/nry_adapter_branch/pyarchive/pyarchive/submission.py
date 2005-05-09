@@ -83,6 +83,15 @@ class ArchiveItem:
         # return the added file object
         return self.files[-1]
     
+    def addItem(self, item, source, format=None, claim=None):
+        self.files.append(ArchiveFile(filename, source, format, claim))
+
+        # set the running time to defaults
+        self.files[-1].runtime = self.metadata['runtime']
+
+        # return the added file object
+        return self.files[-1]
+    
     def metaxml(self, username=None):
         """Generates _meta.xml to use in submission;
         returns a file-like object."""
@@ -206,6 +215,8 @@ class ArchiveItem:
 
             # reset the gauge for this file
             callback.reset(filename=fname)
+
+            # get a handle to the input stream
             
             ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
                            file(fname, 'rb'), callback=callback)
@@ -283,7 +294,11 @@ class ArchiveFile:
         if self.__claim:
             result = result + '<license>%s</license>\n' % \
                      xml.sax.saxutils.escape(self.__claim)
-            
+
+        print self.format
+        print dir(self)
+        if not(self.format):
+            self.format = ' '
         result = result + '<format>%s</format>\n</file>\n' % \
                  xml.sax.saxutils.escape(self.format)
 
