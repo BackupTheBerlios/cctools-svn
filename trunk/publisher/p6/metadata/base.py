@@ -76,18 +76,18 @@ class BasicMetadataStorage(object):
         print self
         print self.__meta
         
-    def getMetaValue(key):
+    def getMetaValue(self, key):
         """Returns a metadata value.  If the key does not exist, raises a
         KeyError Exception."""
 
         return self.__meta[key]
 
-    def keys():
+    def keys(self):
         """Returns a sequence of valid metadata keys."""
 
         return self.__meta.keys()
 
-    def metadata():
+    def metadata(self):
         """Returns a dictionary-like object containing the key-value pairs
         of metadata defined for this item."""
 
