@@ -96,6 +96,14 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         required=False,
         value_type=zope.configuration.fields.MessageID(),
         )
+
+    validator = zope.configuration.fields.GlobalObject(
+        title=u"validator",
+        description=u"A callable which returns None if the passed value "
+                     "validates, or a String if there is an error.",
+        required=False,
+        )
+        
     
 class IPagesDirective(zope.interface.Interface):
     """Assembly of pages which defines a wizard-like application."""

@@ -36,13 +36,14 @@ class MGroupDirective(object):
                         )
 
     def field(self, _context, id, type,
-              label='', choices=[], description='', tip=''):
+              label='', choices=[], description='', tip='', validator=None):
         if label == '':
             label = id
 
         self.fields.append(
             metadatafield(type)(id, label, choices=choices,
-                                description=description, tip=tip)
+                                description=description, tip=tip,
+                                validator=validator)
             )
 
     def __addGroup(self):
