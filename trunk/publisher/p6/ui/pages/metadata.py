@@ -63,6 +63,30 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
     def onChanging(self, event):
         """Perform storage of field values back to metadata framework."""
+
+        errors = []
+
+        # validate the metadata
+        for field in self.metagroup.getFields():
+            widget = field._widget()
+
+            if widget is not None:
+                v_result = field.validator(widget.GetValue())
+                
+                if v_result is not None:
+                    errors.append(v_result)
+
+        if len(errors) > 0:
+            # display the error messages
+            wx.MessageDialog(None, "\n".join(errors),
+                             style=wx.ICON_ERROR|wx.OK).ShowModal()
+            
+            # veto the event
+            event.Veto()
+            return
+        
+
+        # the event was not vetoed; update the field values
         
         for field in self.metagroup.getFields():
             widget = field._widget()
