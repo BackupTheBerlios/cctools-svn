@@ -14,17 +14,41 @@ def groupToXml(metaGroup):
         return None
 
 
+def collectStorageAppliesTo(event):
+    """Checks if the event.item is an interface that the groups we know about
+    "appliesTo"; if so, return them."""
+
+    result = [n for n in getattr(p6.api.getApp(), 'storage', [])
+              if event.item in zope.interface.implementedBy(n.__class__)]
+
+    return result
+
+def collectRootAppliesTo(event):
+    """Checks if the event.item is an interface that the groups we know about
+    "appliesTo"; if so, return them."""
+
+    result = [n for n in p6.api.getApp().items
+              if event.item in zope.interface.implementedBy(n.__class__)]
+
+    return result
+
 def updateMetadata(event):
     """Reponds to a metadata update event."""
 
-    if event.item is None:
-        # This applies to any root item
-        for i in p6.api.getApp().items:
-            if p6.storage.interfaces.IWork in \
-                   zope.interface.implementedBy(i.__class__):
-                interfaces.IMetadataStorage(i).setMetaValue(
-                    event.key, event.value)
-                
-    else:
+    try:
         interfaces.IMetadataStorage(event.item).setMetaValue(
             event.key, event.value)
+    except TypeError, e:
+        # look for all items of a particular instance.
+        for adapted in zope.component.getGlobalSiteManager().getAdapters(
+            (event,), event.item):
+
+            for item in adapted[1]:
+                try:
+                    interfaces.IMetadataStorage(item).setMetaValue(
+                        event.key, event.value)
+                except TypeError, e:
+                    print "unable to adapt %s" % repr(item)
+                    pass
+                
+        

@@ -10,13 +10,33 @@
 	handler=".adapters.updateMetadata"
 	/>
 
+  <!-- adapters for handling metadata update event adaptation -->
+  <!-- One should be defined for circumstances where you want to
+       define metadata which applies to an interface, not to a 
+       particular instance.
+   -->
+
+  <adapter
+      for=".events.IUpdateMetadataEvent"
+      provides="p6.storage.interfaces.IStorage"
+      factory=".adapters.collectStorageAppliesTo"
+      />
+
+  <adapter
+      for=".events.IUpdateMetadataEvent"
+      provides="p6.storage.interfaces.IWork"
+      factory=".adapters.collectRootAppliesTo"
+      />
+
+<!--
   <adapter
       name="MetaGroupToXml"
       for=".interfaces.IMetadataGroup"
       provides=".interfaces.IXmlString"
       factory=".adapters.groupToXml"
       />
-
+-->
+  <!-- Metadata Type to User Interface adapters -->
   <adapter
       for=".types.ITextField"
       provides="p6.ui.interfaces.IEntryWidget"
