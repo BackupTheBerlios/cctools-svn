@@ -61,9 +61,7 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
                 desc_label = wx.StaticText(self, label=field.description)
                 sizer.Add(desc_label, flag=wx.EXPAND)
 
-    def onChanging(self, event):
-        """Perform storage of field values back to metadata framework."""
-
+    def onValidate(self, event):
         errors = []
 
         # validate the metadata
@@ -85,9 +83,12 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
             event.Veto()
             return
         
+    def onChanging(self, event):
+        """Perform storage of field values back to metadata framework."""
 
-        # the event was not vetoed; update the field values
-        
+        if event.direction:
+            self.onValidate(event)
+            
         for field in self.metagroup.getFields():
             widget = field._widget()
 
