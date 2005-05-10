@@ -23,6 +23,7 @@ import types
 import codecs
 
 import zope.interface
+import zope.component
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
@@ -32,6 +33,7 @@ import pyarchive.const
 import interfaces
 import adapters
 
+import p6
 from p6.storage.interfaces import IInputStream
 
 class ArchiveItem:
@@ -174,7 +176,7 @@ class ArchiveItem:
             archivefile.sanityCheck()
         
         
-    def submit(self, username, password, server=None, callback=None):
+    def submit(self, username, password, server=None):
         """Submit the files to archive.org"""
 
         # set the server/adder (if necessary)
@@ -188,58 +190,93 @@ class ArchiveItem:
         self.sanityCheck()
 
         # reset the status
-        callback.reset(steps=10)
+        zope.component.handle(
+            p6.ui.events.ResetStatusEvent('', 10)
+            )
+        #callback.reset(steps=10)
         
         # connect to the FTP server
-        callback.increment(status='connecting to archive.org...')
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='connecting to archive.org...')
+            )
+        #callback.increment(status='connecting to archive.org...')
 
-        #ftp = cb_ftp.FTP(self.server)
-        #ftp.login(username, password)
+        ftp = cb_ftp.FTP(self.server)
+        ftp.login(username, password)
 
         # create a new folder for the submission
-        callback.increment(status='creating folder for uploads...')
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='creating folder for uploads...')
+            )
+        #callback.increment(status='creating folder for uploads...')
 
-        #ftp.mkd(self.identifier)
-        #ftp.cwd(self.identifier)
+        ftp.mkd(self.identifier)
+        ftp.cwd(self.identifier)
 
         # upload the XML files
-        callback.increment(status='uploading metadata...')
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='uploading metadata...')
+            )
+        #callback.increment(status='uploading metadata...')
 
-        #ftp.storlines("STOR %s_meta.xml" % self.identifier,
-        #              self.metaxml(username))
-        #ftp.storlines("STOR %s_files.xml" % self.identifier,
-        #              self.filesxml())
+        ftp.storlines("STOR %s_meta.xml" % self.identifier,
+                      self.metaxml(username))
+        ftp.storlines("STOR %s_files.xml" % self.identifier,
+                      self.filesxml())
 
         # upload each file
-        callback.increment(status='uploading files...')
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='uploading files...')
+            )
+        #callback.increment(status='uploading files...')
 
         for archivefile in self.files:
             # determine the local path name and switch directories
-            localpath, fname = os.path.split(archivefile.filename)
-            os.chdir(localpath)
+            localpath, fname = os.path.split(archivefile.archiveFilename())
+            #os.chdir(localpath)
 
             # reset the gauge for this file
-            callback.reset(filename=fname)
+            zope.component.handle(
+                p6.ui.events.ResetStatusEvent(fname, 10)
+                )
+            #callback.reset(filename=fname)
 
             # get a handle to the input stream
             uploadFile = IInputStream(archivefile)()
             print uploadFile
             
             # perform the upload
-            #ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
-            #               uploadFile, callback=callback)
+            ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
+                           uploadFile) #, callback=callback)
 
-        #ftp.quit()
+        ftp.quit()
         
         # call the import url, check the return result
-        callback.reset(steps=3)
-        callback.increment(status='finishing submission...')
+        zope.component.handle(
+            p6.ui.events.ResetStatusEvent('', 3)
+            )
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='finishing submission...')
+            )
+        # callback.reset(steps=3)
+        #callback.increment(status='finishing submission...')
+        
         importurl = "http://www.archive.org/services/contrib-submit.php?" \
                     "user_email=%s&server=%s&dir=%s" % (
                     username, self.server, self.identifier)
-        #response = urllib2.urlopen(importurl)
+        response = urllib2.urlopen(importurl)
                     
-        callback.increment(status='checking response...')
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='checking response...')
+            )
+        #callback.increment(status='checking response...')
+        
         response_dom = xml.dom.minidom.parse(response)
         result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
 
@@ -252,7 +289,11 @@ class ArchiveItem:
                                     response_dom.getElementsByTagName("result")[0].getAttribute("code"),
                                     response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
                                 ))
-        callback.finish()
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='Done.')
+            )
+        #callback.finish()
            
         return self.archive_url
 
@@ -291,7 +332,7 @@ class ArchiveWorkItem:
         """Perform simple sanity checks before uploading."""
         
         # ensure necessary parameters have been supplied
-        if None in (self.filename, self.source, self.format):
+        if None in (self.source, self.format):
             raise MissingParameterException
 
     def archiveFilename(self):
