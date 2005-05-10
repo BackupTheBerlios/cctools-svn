@@ -13,7 +13,7 @@ __license__ = 'licensed under the GNU GPL2'
 
 import ftplib
 
-def noop(connection):
+def noop(*args, **kwargs):
     pass
 
 class FTP(ftplib.FTP):
