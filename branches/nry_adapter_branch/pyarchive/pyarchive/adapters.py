@@ -11,3 +11,10 @@ def ArchiveFileInputStream(archive_file):
 
 zope.component.provideAdapter(ArchiveFileInputStream)
 
+@zope.interface.implementer(p6.storage.interfaces.IInputStream)
+@zope.component.adapter(interfaces.IArchiveWorkItem)
+def ArchiveWorkInputStream(archive_item):
+    return p6.storage.interfaces.IInputStream(archive_item.item)
+
+zope.component.provideAdapter(ArchiveWorkInputStream)
+
