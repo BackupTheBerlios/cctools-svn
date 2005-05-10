@@ -26,9 +26,9 @@ class FileItem(Item):
 class FileItemStream:
     zope.interface.implements(interfaces.IInputStream)
     def __init__(self, fileitem):
-        super(self.__class__, self).__init__()
-        
-        self.__fname = fileitem.getIdentifer()
+        #super(self.__class__, self).__init__()
+        self.__item = fileitem
+        self.__fname = fileitem.getIdentifier()
 
     def __call__(self):
         return file(self.__fname)
