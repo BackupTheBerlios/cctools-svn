@@ -1,4 +1,5 @@
 import webbrowser
+import urllib2
 
 import wx
 import wx.html
@@ -100,7 +101,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         
         try:
             self.onSelectLicenseClass(None)
-            self.updateLicense(None)
+            # XXX not needed... onselect calls this...
+            # self.updateLicense(None)
         except:
             pass
         
@@ -126,7 +128,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         # update the metadata field
         for field in self.metagroup.getFields():
             zope.component.handle(
-                p6.metadata.events.UpdateMetadataEvent(None,
+                p6.metadata.events.UpdateMetadataEvent(self.metagroup.appliesTo,
                                                        field.id,
                                                        self.getLicenseUrl()
                                                        )
@@ -277,7 +279,6 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         # "You chose %s" % str(self.getLicenseName()))
                     
     def validate(self, event):
-        self.onLicense(None)
         return True
 
     REST_ROOT = 'http://api.creativecommons.org/rest'
