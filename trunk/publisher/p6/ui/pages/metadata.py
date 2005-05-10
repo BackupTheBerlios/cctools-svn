@@ -93,7 +93,7 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
             if widget is not None:
                 zope.component.handle(
-                    p6.metadata.events.UpdateMetadataEvent(None,
+                    p6.metadata.events.UpdateMetadataEvent(self.metagroup.appliesTo,
                                                            field.id,
                                                            widget.GetValue()
                                                            )
