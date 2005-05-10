@@ -28,6 +28,11 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
                 p6.api.deinstify(self.updateStatus))
             )
 
+        zope.component.provideHandler(
+            zope.component.adapter(p6.ui.events.IResetStatus)(
+                p6.api.deinstify(self.resetStatus))
+            )
+
     def onChanged(self, event):
         # disable the next button during the storage process
         # and use busy cursor
@@ -73,6 +78,13 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
 
         XRCCTRL(self, "WXG_PROGRESS").SetValue(new_value)
         XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
+
+    def resetStatus(self, event):
+        XRCCTRL(self, "WXG_PROGRESS").SetValue(0)
+        XRCCTRL(self, "WXG_PROGRESS").SetRange(event.steps)
+
+        XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
+        
 
     PAGE_XRC = """
 <resource>
