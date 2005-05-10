@@ -5,7 +5,7 @@ import p6
 import p6.api
 import interfaces
 
-class BasicStorage:
+class BasicStorage(object):
     zope.interface.implements(interfaces.IStorage)
 
     def __init__(self):
