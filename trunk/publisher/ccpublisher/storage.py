@@ -5,11 +5,20 @@ import zope.component
 
 import p6
 from p6 import api
+from p6.metadata.interfaces import IMetadataStorage
 
 class IEmbeddable(zope.interface.Interface):
     pass
 
 class ArchiveStorage(p6.storage.basic.BasicStorage):
+    zope.interface.implements(p6.metadata.interfaces.IMetadataStorage,
+                              p6.storage.interfaces.IStorage)
+
+    # metadata interface
+    def __init__(self):
+        p6.storage.basic.BasicStorage.__init__(self)
+        
+        self.__meta = {}
 
     def validate(self, event=None):
        # determine the appropriate collection
@@ -94,7 +103,11 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
 
        print submission.metaxml().getvalue()
        print submission.filesxml().getvalue()
-
+       print submission.submit(
+           IMetadataStorage(self).getMetaValue('username'),
+           IMetadataStorage(self).getMetaValue('password'),)
+       #    callback)
+       
     def __archiveId(self):
         """Generates an archive.org identifier from work metadata or
         embedded ID3 tags."""
@@ -129,6 +142,32 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
     def __claimString(self, license, verification, year, holder):
         return "%s %s. Licensed to the public under %s verify at %s" % (
             year, holder, license, verification )
+
+
+    def setMetaValue(self, key, value):
+        """Set the value of a metadata key; if the key is not previously
+        defined, create it."""
+        
+        self.__meta[key] = value
+        print self
+        print self.__meta
+        
+    def getMetaValue(self, key):
+        """Returns a metadata value.  If the key does not exist, raises a
+        KeyError Exception."""
+
+        return self.__meta[key]
+
+    def keys(self):
+        """Returns a sequence of valid metadata keys."""
+
+        return self.__meta.keys()
+
+    def metadata(self):
+        """Returns a dictionary-like object containing the key-value pairs
+        of metadata defined for this item."""
+
+        return self.__meta
 
 """
    def archive(self, event):
