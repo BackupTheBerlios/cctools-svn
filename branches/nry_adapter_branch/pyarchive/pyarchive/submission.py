@@ -14,7 +14,12 @@ __license__ = 'licensed under the GNU GPL2'
 
 import cStringIO as StringIO
 import cb_ftp
+
+import httplib
+import urllib
 import urllib2
+import urlparse
+
 import xml.dom.minidom
 import xml.sax.saxutils
 import os.path
@@ -175,14 +180,43 @@ class ArchiveItem:
         for archivefile in self.files:
             archivefile.sanityCheck()
         
+
+    def __ftpUrl(self, username, identifier):
+        """Query archive.org for the appropriate FTP url to use.
+        If successful returns a tuple containing (server, path)."""
+
+        new_url = "/newitem.php"
+        headers = {"Content-type": "application/x-www-form-urlencoded",
+                   "Accept": "text/plain"}
+        params = urllib.urlencode({'xml':1,
+                                   'user':username,
+                                   'identifier':identifier}
+                                  )
+
+        conn = httplib.HTTPConnection('www.archive.org')
+        conn.request('POST', new_url, params, headers)
+        
+        resp = conn.getresponse()
+
+        response = resp.read() 
+                    
+        response_dom = xml.dom.minidom.parseString(response)
+        result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
+
+        if result_type == "success":
+            url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+            print '\n\n\n%s\n\n\n' % url
+
+            pieces = urlparse.urlparse(url)
+            return (pieces[1].split('@')[-1], pieces[2])
+        else:
+            # some error occured; throw an exception with the message
+            raise Exception(response_dom.getElementsByTagName("message")[0])
         
     def submit(self, username, password, server=None):
         """Submit the files to archive.org"""
 
-        # set the server/adder (if necessary)
-        if server is not None:
-            self.server = server
-
+        # set the adder (if necessary)
         if self.metadata['adder'] is None:
             self.metadata['adder'] = username
 
@@ -193,34 +227,34 @@ class ArchiveItem:
         zope.component.handle(
             p6.ui.events.ResetStatusEvent('', 10)
             )
-        #callback.reset(steps=10)
+        
+        # get the FTP url
+        zope.component.handle(
+            p6.ui.events.UpdateStatusEvent(
+            message='connecting to archive.org for upload information...')
+            )
+        
+        ftp_server, ftp_path = self.__ftpUrl(username, self.identifier)
+
+        print ftp_server
+        print ftp_path
+        print
         
         # connect to the FTP server
         zope.component.handle(
             p6.ui.events.UpdateStatusEvent(
-            message='connecting to archive.org...')
+            message='connecting to the FTP server...')
             )
-        #callback.increment(status='connecting to archive.org...')
 
-        ftp = cb_ftp.FTP(self.server)
+        ftp = cb_ftp.FTP(ftp_server)
         ftp.login(username, password)
-
-        # create a new folder for the submission
-        zope.component.handle(
-            p6.ui.events.UpdateStatusEvent(
-            message='creating folder for uploads...')
-            )
-        #callback.increment(status='creating folder for uploads...')
-
-        ftp.mkd(self.identifier)
-        ftp.cwd(self.identifier)
-
+        ftp.cwd(ftp_path)
+        
         # upload the XML files
         zope.component.handle(
             p6.ui.events.UpdateStatusEvent(
             message='uploading metadata...')
             )
-        #callback.increment(status='uploading metadata...')
 
         ftp.storlines("STOR %s_meta.xml" % self.identifier,
                       self.metaxml(username))
@@ -232,7 +266,6 @@ class ArchiveItem:
             p6.ui.events.UpdateStatusEvent(
             message='uploading files...')
             )
-        #callback.increment(status='uploading files...')
 
         for archivefile in self.files:
             # determine the local path name and switch directories
@@ -243,7 +276,6 @@ class ArchiveItem:
             zope.component.handle(
                 p6.ui.events.ResetStatusEvent(fname, 10)
                 )
-            #callback.reset(filename=fname)
 
             # get a handle to the input stream
             uploadFile = IInputStream(archivefile)()
@@ -263,19 +295,14 @@ class ArchiveItem:
             p6.ui.events.UpdateStatusEvent(
             message='finishing submission...')
             )
-        # callback.reset(steps=3)
-        #callback.increment(status='finishing submission...')
-        
-        importurl = "http://www.archive.org/services/contrib-submit.php?" \
-                    "user_email=%s&server=%s&dir=%s" % (
-                    username, self.server, self.identifier)
+
+        importurl = """http://www.archive.org/done.php?xml=1&identifier=%s""" % self.identifier
         response = urllib2.urlopen(importurl)
                     
         zope.component.handle(
             p6.ui.events.UpdateStatusEvent(
             message='checking response...')
             )
-        #callback.increment(status='checking response...')
         
         response_dom = xml.dom.minidom.parse(response)
         result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
@@ -285,15 +312,18 @@ class ArchiveItem:
            self.archive_url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
         else:
            # an error occured; raise an exception
-           raise SubmissionError("%s: %s" % (
-                                    response_dom.getElementsByTagName("result")[0].getAttribute("code"),
+           raise SubmissionError("%s: %s" % (-1,
                                     response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
                                 ))
+           #raise SubmissionError("%s: %s" % (
+           #                         response_dom.getElementsByTagName("result")[0].getAttribute("code"),
+           #                         response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
+           #                     ))
+
         zope.component.handle(
             p6.ui.events.UpdateStatusEvent(
             message='Done.')
             )
-        #callback.finish()
            
         return self.archive_url
 
