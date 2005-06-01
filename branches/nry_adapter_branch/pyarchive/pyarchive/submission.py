@@ -149,7 +149,6 @@ class ArchiveItem:
         result.seek(0)
 
         meta_out.seek(0)
-        print meta_out.getvalue()
         meta_out.seek(0)
         
         return meta_out
@@ -195,8 +194,13 @@ class ArchiveItem:
 
         conn = httplib.HTTPConnection('www.archive.org')
         conn.request('POST', new_url, params, headers)
-        
-        resp = conn.getresponse()
+
+        try:
+            resp = conn.getresponse()
+        except httplib.BadStatusLine, e:
+            # retry the query
+            print 'retrying...'
+            return self.__ftpUrl(username, identifier)
 
         response = resp.read() 
                     
@@ -205,8 +209,6 @@ class ArchiveItem:
 
         if result_type == "success":
             url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
-            print '\n\n\n%s\n\n\n' % url
-
             pieces = urlparse.urlparse(url)
             return (pieces[1].split('@')[-1], pieces[2])
         else:
@@ -236,10 +238,6 @@ class ArchiveItem:
         
         ftp_server, ftp_path = self.__ftpUrl(username, self.identifier)
 
-        print ftp_server
-        print ftp_path
-        print
-        
         # connect to the FTP server
         zope.component.handle(
             p6.ui.events.UpdateStatusEvent(
@@ -279,7 +277,6 @@ class ArchiveItem:
 
             # get a handle to the input stream
             uploadFile = IInputStream(archivefile)()
-            print uploadFile
             
             # perform the upload
             ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
@@ -296,7 +293,8 @@ class ArchiveItem:
             message='finishing submission...')
             )
 
-        importurl = """http://www.archive.org/done.php?xml=1&identifier=%s""" % self.identifier
+        importurl = "http://www.archive.org/done.php?" \
+                    "xml=1&identifier=%s&user=%s" % (self.identifier, username)
         response = urllib2.urlopen(importurl)
                     
         zope.component.handle(
@@ -309,16 +307,12 @@ class ArchiveItem:
 
         if result_type == 'success':
            # extract the URL element and store it
-           self.archive_url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+           self.archive_url = "http://archive.org/details/%s" % self.identifier
         else:
            # an error occured; raise an exception
            raise SubmissionError("%s: %s" % (-1,
-                                    response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
+                                           response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
                                 ))
-           #raise SubmissionError("%s: %s" % (
-           #                         response_dom.getElementsByTagName("result")[0].getAttribute("code"),
-           #                         response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
-           #                     ))
 
         zope.component.handle(
             p6.ui.events.UpdateStatusEvent(
