@@ -14,7 +14,12 @@ __license__ = 'licensed under the GNU GPL2'
 
 import cStringIO as StringIO
 import cb_ftp
+
+import httplib
+import urllib
 import urllib2
+import urlparse
+
 import xml.dom.minidom
 import xml.sax.saxutils
 import os.path
@@ -159,14 +164,49 @@ class ArchiveItem:
         for archivefile in self.files:
             archivefile.sanityCheck()
         
+
+    def __ftpUrl(self, username, identifier):
+        """Query archive.org for the appropriate FTP url to use.
+        If successful returns a tuple containing (server, path)."""
+
+        new_url = "/newitem.php"
+        headers = {"Content-type": "application/x-www-form-urlencoded",
+                   "Accept": "text/plain"}
+        params = urllib.urlencode({'xml':1,
+                                   'user':username,
+                                   'identifier':identifier}
+                                  )
+
+        conn = httplib.HTTPConnection('www.archive.org')
+        conn.request('POST', new_url, params, headers)
+
+        try:
+            resp = conn.getresponse()
+        except httplib.BadStatusLine, e:
+            # retry the query
+            print 'retrying...'
+            return self.__ftpUrl(username, identifier)
+
+        response = resp.read() 
+                    
+        response_dom = xml.dom.minidom.parseString(response)
+        result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
+
+        if result_type == "success":
+            url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+            print url
+            #pieces = urlparse.urlparse(url)
+            #print pieces
+            
+            return url.split('/') #(pieces[1].split('@')[-1], pieces[2])
+        else:
+            # some error occured; throw an exception with the message
+            raise Exception(response_dom.getElementsByTagName("message")[0])
         
     def submit(self, username, password, server=None, callback=None):
         """Submit the files to archive.org"""
 
-        # set the server/adder (if necessary)
-        if server is not None:
-            self.server = server
-
+        # set the adder (if necessary)
         if self.metadata['adder'] is None:
             self.metadata['adder'] = username
 
@@ -176,18 +216,18 @@ class ArchiveItem:
         # reset the status
         callback.reset(steps=10)
         
+        ftp_server, ftp_path = self.__ftpUrl(username, self.identifier)
+
+        print ftp_server
+        print ftp_path
+        
         # connect to the FTP server
         callback.increment(status='connecting to archive.org...')
 
-        ftp = cb_ftp.FTP(self.server)
+        ftp = cb_ftp.FTP(ftp_server)
         ftp.login(username, password)
-
-        # create a new folder for the submission
-        callback.increment(status='creating folder for uploads...')
-
-        ftp.mkd(self.identifier)
-        ftp.cwd(self.identifier)
-
+        ftp.cwd(ftp_path)
+        
         # upload the XML files
         callback.increment(status='uploading metadata...')
 
@@ -205,7 +245,7 @@ class ArchiveItem:
             os.chdir(localpath)
 
             # reset the gauge for this file
-            callback.reset(filename=fname)
+            callback.reset(filename=archivefile.filename)
             
             ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
                            file(fname, 'rb'), callback=callback)
@@ -213,11 +253,8 @@ class ArchiveItem:
         ftp.quit()
         
         # call the import url, check the return result
-        callback.reset(steps=3)
-        callback.increment(status='finishing submission...')
-        importurl = "http://www.archive.org/services/contrib-submit.php?" \
-                    "user_email=%s&server=%s&dir=%s" % (
-                    username, self.server, self.identifier)
+        importurl = "http://www.archive.org/done.php?" \
+                    "xml=1&identifier=%s&user=%s" % (self.identifier, username)
         response = urllib2.urlopen(importurl)
                     
         callback.increment(status='checking response...')
@@ -226,12 +263,11 @@ class ArchiveItem:
 
         if result_type == 'success':
            # extract the URL element and store it
-           self.archive_url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+           self.archive_url = "http://archive.org/details/%s" % self.identifier
         else:
            # an error occured; raise an exception
-           raise SubmissionError("%s: %s" % (
-                                    response_dom.getElementsByTagName("result")[0].getAttribute("code"),
-                                    response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
+           raise SubmissionError("%s: %s" % (-1,
+                                           response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
                                 ))
         callback.finish()
            
