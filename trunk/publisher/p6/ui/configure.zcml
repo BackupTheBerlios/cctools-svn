@@ -31,4 +31,29 @@
       factory=".pages.metadata.storage_metaGroupWizPage"
       />
 
+  <!-- Metadata Type to User Interface adapters -->
+  <adapter
+      for="p6.metadata.types.ITextField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.textField"
+      />
+
+  <adapter
+      for="p6.metadata.types.IPasswordField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.passwordField"
+      />
+
+  <adapter
+      for="p6.metadata.types.ISelectionField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.comboField"
+      />
+
+  <adapter
+      for="p6.metadata.types.IBooleanField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.checkField"
+      />
+
 </configure>
