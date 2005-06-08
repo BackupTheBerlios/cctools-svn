@@ -21,7 +21,8 @@ def metadatafield(fieldType):
         def __init__(self, id, label='',
                      choices=[], default='',
                      description='', tip='',
-                     validator = None):
+                     validator = None,
+                     persist=False):
 
             # store the default values
             self.id = id
@@ -32,6 +33,7 @@ def metadatafield(fieldType):
             self.tip = tip
             self.description = description
             self.validator = validator or NoOp
+            self.persist = persist
 
     return MetadataField
 
@@ -39,7 +41,8 @@ def metadatafield(fieldType):
 class MetadataGroup:
     zope.interface.implements(interfaces.IMetadataGroup)
 
-    def __init__(self, id, appliesTo, title='', description='', fields=[]):
+    def __init__(self, id, appliesTo, title='', description='', fields=[],
+                 persistMode='always'):
 
         self.id = id
         self.title = title or self.id
@@ -47,6 +50,8 @@ class MetadataGroup:
         
         self.fields = fields
         self.appliesTo = appliesTo
+
+        self.persistMode = persistMode
 
     def getFields(self):
         return self.fields
@@ -63,14 +68,18 @@ class BasicMetadataStorage(object):
         defined, create it."""
         
         self.__meta[key] = value
-        print self
-        print self.__meta
-        
-    def getMetaValue(self, key):
+
+    def getMetaValue(self, key, default=None):
         """Returns a metadata value.  If the key does not exist, raises a
         KeyError Exception."""
 
-        return self.__meta[key]
+        if default is None:
+            return self.__meta[key]
+        else:
+            try:
+                return self.__meta[key]
+            except KeyError, e:
+                return default
 
     def keys(self):
         """Returns a sequence of valid metadata keys."""

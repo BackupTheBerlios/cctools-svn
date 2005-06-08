@@ -57,6 +57,14 @@ class IMdataGroupDirective(zope.interface.Interface):
         required=False,
         )
 
+    persistMode = zope.configuration.fields.PythonIdentifier(
+        title=u"Persistence Mode",
+        description=u"Hint to the framework on how to handle fields "
+                     "which register as available for persistence. "
+                     "Valid values are 'always', 'never', or 'prompt'. ",
+        required=False,
+        )
+
 class IMetadataFieldSubdirective(zope.interface.Interface):
     """  """
 
@@ -101,6 +109,13 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         title=u"validator",
         description=u"A callable which returns None if the passed value "
                      "validates, or a String if there is an error.",
+        required=False,
+        )
+
+    persist = zope.configuration.fields.Bool(
+        title=u"persist",
+        description=u"If true, the user-supplied value will be made "
+                     "available for persistence.",
         required=False,
         )
         

@@ -21,7 +21,7 @@ class MGroupDirective(object):
     """A metadata group."""
 
     def __init__(self, _context, id, title, for_,
-                 description='', factory=None):
+                 description='', factory=None, persistMode='always'):
 
         self.fields = []
         self.appliesTo = for_
@@ -29,21 +29,27 @@ class MGroupDirective(object):
         self.title = title
         self.factory = factory or MetadataGroup
         self.description = description
+        self.persistMode = persistMode
 
+        if persistMode not in ('always', 'never', 'prompt'):
+            # not a valid value; throw an error.
+            raise ValueError("Invalid value for persistMode.")
+        
         _context.action(discriminator=('MetadataGroup', self.id),
                         callable=self.__addGroup,
                         args=[],
                         )
 
     def field(self, _context, id, type,
-              label='', choices=[], description='', tip='', validator=None):
+              label='', choices=[], description='',
+              tip='', validator=None, persist=False):
         if label == '':
             label = id
 
         self.fields.append(
             metadatafield(type)(id, label, choices=choices,
                                 description=description, tip=tip,
-                                validator=validator)
+                                validator=validator, persist=persist)
             )
 
     def __addGroup(self):
@@ -51,7 +57,8 @@ class MGroupDirective(object):
         p6.api.getApp().groups.append(
             self.factory(self.id, self.appliesTo, self.title,
                          description = self.description,
-                         fields = self.fields)
+                         fields = self.fields,
+                         persistMode = self.persistMode)
             )
         
 class PagesDirective(object):
