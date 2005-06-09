@@ -22,12 +22,11 @@ class IMetadataField(zope.interface.Interface):
     appliesTo = zope.interface.Attribute("")
     validator = zope.interface.Attribute("An optional callable which returns a string containing an error message if the field's value does not validate.")
 
-class IMetadataStorage(zope.interface.Interface):
-    # metadata interface
+    def group():
+        """Returns a reference to the group which contains this field."""
 
-    def setMetaValue(key, value):
-        """Set the value of a metadata key; if the key is not previously
-        defined, create it."""
+class IMetadataProvider(zope.interface.Interface):
+    """MetadataProviders give read-only access to metadata attributes."""
 
     def getMetaValue(key):
         """Returns a metadata value.  If the key does not exist, raises a
@@ -40,6 +39,25 @@ class IMetadataStorage(zope.interface.Interface):
         """Returns a dictionary-like object containing the key-value pairs
         of metadata defined for this item."""
 
-class IXmlString(zope.interface.Interface):
-    xml = zope.interface.Attribute("")
-    
+class IMetadataStorage(IMetadataProvider):
+    """Implementors of IMetadataStorage give read-write access to
+    metadata attributes."""
+
+    def setMetaValue(key, value):
+        """Set the value of a metadata key; if the key is not previously
+        defined, create it."""
+
+## class IMetadataPersistance(zope.interface.Interface):
+##     """Implements metadata persistance for the framework."""
+
+##     def storeKey(item, group, field):
+##         """Store the specified group-> field for future use."""
+
+##     def loadKey(item, group, field):
+##         """Load the specified group-> field from persistant storage.
+##         If not found, raises a KeyError. """
+
+##     def loadKey(item, group, field, default):
+##         """Load the specified group-> field from persistant storage.
+##         If not found, returns the value of default."""
+
