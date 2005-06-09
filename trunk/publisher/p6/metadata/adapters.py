@@ -3,6 +3,7 @@ import zope.component
 
 import p6
 import interfaces
+import persistance
 
 def groupToXml(metaGroup):
     if metaGroup.appliesTo is not None:
@@ -34,10 +35,21 @@ def collectRootAppliesTo(event):
 
 def updateMetadata(event):
     """Reponds to a metadata update event."""
-
+    print 'in updateMetadata for ', event
     try:
+        # store the value locally
         interfaces.IMetadataStorage(event.item).setMetaValue(
-            event.key, event.value)
+            event.field, event.value)
+
+        # check for persistance
+        if event.field.persist and event.group.persistMode != 'never': 
+            # determine the item identifier
+            # (this may need to be revised at some point in the future)
+            identifier = persistance.item_id(event.item)
+            
+            persistance.store(event.field.group().id,
+                              event.field.id, event.value)
+            
     except TypeError, e:
         # look for all items of a particular instance.
         for adapted in zope.component.getGlobalSiteManager().getAdapters(
@@ -45,10 +57,33 @@ def updateMetadata(event):
 
             for item in adapted[1]:
                 try:
+                    # store the new value
                     interfaces.IMetadataStorage(item).setMetaValue(
-                        event.key, event.value)
+                        event.field, event.value)
+                    
+                    # check for persistance
+                    if event.field.persist and \
+                           event.group.persistMode != 'never': 
+                        # determine the item identifier
+                        identifier = persistance.item_id(item)
+
+                        persistance.store(str(event.field.group().id),
+                                          str(event.field.id), event.value)
+
                 except TypeError, e:
                     print "unable to adapt %s" % repr(item)
                     pass
                 
-        
+
+def loadMetadata(event):
+    """Reponds to a metadata load event."""
+
+    try:
+        value = persistance.get(str(event.field.group().id),
+                                str(event.field.id))
+        if value:
+            event.value.append(value)
+    except KeyError, e:
+        pass
+    
+    
