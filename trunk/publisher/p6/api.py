@@ -35,3 +35,10 @@ def findField(field_id, item=None):
         result = p6.metadata.interfaces.IMetadataStorage(item).getMetaValue(field_id)
 
     return result
+
+def getAppSupportDir():
+    """Returns the Application Support directory where we can store
+    preferences and persisted metadata information."""
+
+    # XXX
+    return '.'
