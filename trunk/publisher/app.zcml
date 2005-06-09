@@ -2,6 +2,10 @@
            xmlns:i18n="http://namespaces.zope.org/i18n"
            i18n_domain="p6">
 
+  <!-- ccPublisher Application Configuration          
+       (c) 2005, Nathan R. Yergler, Creative Commons  
+       licensed under the GNU GPL 2                   -->
+
   <!-- P6 package must be included in order to support app configuration -->
   <include package="p6" />
 
@@ -87,16 +91,19 @@
      id="Login"
      title="Log in to the Archive"
      for="p6.storage.interfaces.IStorage"
+     persistMode="prompt"
      >
 
      <field id="username"
             label="Email Address"
             type="p6.metadata.types.ITextField"
+            persist="True"
             />
 
      <field id="password"
             label="Password"
             type="p6.metadata.types.IPasswordField"
+            persist="True"
             />
 
   </metadatagroup>
