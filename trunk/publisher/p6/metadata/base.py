@@ -1,8 +1,11 @@
+import weakref
+
 import zope.component
 import zope.interface
 
 import p6
 import p6.api
+import persistance
 import interfaces
 import events
 
@@ -53,6 +56,11 @@ class MetadataGroup:
 
         self.persistMode = persistMode
 
+        # finalize field initialization
+        for field in self.fields:
+            # initialize the .group attribute on field
+            field.group = weakref.ref(self)
+
     def getFields(self):
         return self.fields
 
@@ -63,11 +71,12 @@ class BasicMetadataStorage(object):
     def __init__(self):
         self.__meta = {}
 
-    def setMetaValue(self, key, value):
+    def setMetaValue(self, field, value):
         """Set the value of a metadata key; if the key is not previously
         defined, create it."""
-        
-        self.__meta[key] = value
+
+        # store the value
+        self.__meta[field.id] = value
 
     def getMetaValue(self, key, default=None):
         """Returns a metadata value.  If the key does not exist, raises a
@@ -91,3 +100,44 @@ class BasicMetadataStorage(object):
         of metadata defined for this item."""
 
         return self.__meta
+
+## class BasicMetadataPersistance(object):
+##     zope.interface.implements(interfaces.IMetadataPersistance)
+
+##     def __init__(self, filename):
+##         self.shelf = shelve.open(filename, writeback=False)
+
+##     def __del__(self):
+##         self.shelf.close()
+        
+##     def storeKey(self, item, group, field):
+##         """Store the specified group-> field for future use."""
+
+##         if self.shelf.has_key(item.getIdentifier()):
+##             p_dict = self.shelf[group.id]
+##         else:
+##             p_dict = {}
+
+##         # retrieve the value
+##         p_dict.setdefault(group.id, {})[field.id] = \
+##                                     interfaces.IMetadataStorage(item).getMetaValue(field.id)
+
+##         # store the metadata back to the shelf
+##         self.shelf[item.getIdentifer()] = p_dict
+
+##     def loadKey(self, item, group, field):
+##         """Load the specified group-> field from persistant storage.
+##         If not found, raises a KeyError. """
+        
+##         return self.shelf[item.getIdentifier()][group.id][field.id]
+
+##     def loadKey(self, item, group, field, default):
+##         """Load the specified group-> field from persistant storage.
+##         If not found, returns the value of default."""
+
+##         try:
+##             return self.loadKey(item, group, field)
+##         except KeyError, e:
+##             return default
+        
+
