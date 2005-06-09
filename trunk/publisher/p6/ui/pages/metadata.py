@@ -61,6 +61,25 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
                 desc_label = wx.StaticText(self, label=field.description)
                 sizer.Add(desc_label, flag=wx.EXPAND)
 
+            # check if the field is persistant and try to load it
+            if field.persist:
+                print '... this field wants to persist...'
+                event = p6.metadata.events.LoadMetadataEvent(
+                    self.metagroup.appliesTo,
+                    self.metagroup, field,
+                    )
+
+                zope.component.handle(event)
+
+                # found a value, set it
+                if len(event.value) > 1:
+                    print 'aieee!'
+                    print event.value
+
+                print event.value
+                if len(event.value) > 0:
+                    widget.SetValue(event.value[0])
+
     def onValidate(self, event):
         errors = []
 
@@ -95,7 +114,8 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
             if widget is not None:
                 zope.component.handle(
                     p6.metadata.events.UpdateMetadataEvent(self.metagroup.appliesTo,
-                                                           field.id,
+                                                           self.metagroup,
+                                                           field,
                                                            widget.GetValue()
                                                            )
                     )
@@ -137,14 +157,25 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
         self.Bind(ccwx.xrcwiz.EVT_XRCWIZ_PAGE_CHANGED, self.onChanged)
 
     def onItemSelected(self, event):
-        self.__items.append(event.item)
+        # check if this event's item should be stored here...
+        if (self.metagroup.appliesTo in
+            zope.interface.providedBy(event.item)):
+
+            self.__items.append(event.item)
 
     def onItemDeselected(self, event):
-        del self.__items[self.__items.index(event.item)]
+        # check if this event's item should be stored here...
+        if (self.metagroup.appliesTo in
+            zope.interface.implementedBy(event.item.__class__)):
+        
+            del self.__items[self.__items.index(event.item)]
 
     def initFields(self, metaGroup):
         """Create the user input widgets for this group."""
 
+        # clear the sizer
+        self.GetSizer().Clear()
+        
         # see if we have a description; if so, use it to label the page
         if metaGroup.description:
             desc_label = wx.StaticText(self, label=metaGroup.description)
@@ -172,9 +203,41 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
                 item_sizer.Add(label)
 
                 widget = p6.ui.interfaces.IEntryWidget(field)(self)
+                
+                print zope.component.getGlobalSiteManager().getAdapters(
+                    (item,),
+                    p6.metadata.interfaces.IMetadataProvider)
+
+                value = p6.metadata.interfaces.IMetadataStorage(item).getMetaValue(field.id, '')
+                widget.SetValue(value)
+
                 field._widget[item] = weakref.ref(widget)
                 item_sizer.Add(widget, flag=wx.EXPAND)
 
+    def onValidate(self, event):
+        errors = []
+
+        # validate the metadata
+        for field in self.metagroup.getFields():
+
+            # check the widget for each item displayed
+            for widget in field._widget:
+
+                if widget is not None:
+                    v_result = field.validator(widget.GetValue())
+
+                    if v_result is not None:
+                        errors.append(v_result)
+
+        if len(errors) > 0:
+            # display the error messages
+            wx.MessageDialog(None, "\n".join(errors),
+                             style=wx.ICON_ERROR|wx.OK).ShowModal()
+            
+            # veto the event
+            event.Veto()
+            return
+        
     def onChanging(self, event):
         """Perform storage of field values back to metadata framework."""
 
@@ -185,14 +248,16 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
                 if widget is not None:
                     zope.component.handle(
                         p6.metadata.events.UpdateMetadataEvent(item,
-                                                               field.id,
+                                                               self.metagroup,
+                                                               field,
                                                              widget.GetValue()
                                                                )
                         )
 
 
     def onChanged(self, event):
-        self.initFields(self.metagroup)
+        if event.direction:
+            self.initFields(self.metagroup)
         
     PAGE_XRC = """
 <resource>
