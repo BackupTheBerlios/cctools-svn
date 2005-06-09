@@ -14,7 +14,7 @@ class RootItem(Item):
         return "ROOT"
 
 class FileItem(Item):
-    zope.interface.implements(interfaces.IFileItem)
+    zope.interface.implements(interfaces.IWorkItem, interfaces.IFileItem)
     def __init__(self, filename):
         super(self.__class__, self).__init__()
         

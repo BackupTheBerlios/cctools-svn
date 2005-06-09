@@ -10,5 +10,13 @@
       factory=".items.FileItemStream"
       />
 
+  <!-- Dummy adapter registration: IFileItem indirectly implements
+       IMetadataProvider; this explicitly lets the registry know about it -->
+
+  <adapter
+      for=".interfaces.IFileItem"
+      provides="p6.metadata.interfaces.IMetadataProvider"
+      factory=".adapters.fileItemMetadataProvider"
+      />
 
 </configure>
