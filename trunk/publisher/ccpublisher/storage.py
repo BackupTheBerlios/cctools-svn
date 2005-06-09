@@ -10,15 +10,15 @@ from p6.metadata.interfaces import IMetadataStorage
 class IEmbeddable(zope.interface.Interface):
     pass
 
-class ArchiveStorage(p6.storage.basic.BasicStorage):
+class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
+                     p6.storage.basic.BasicStorage):
     zope.interface.implements(p6.metadata.interfaces.IMetadataStorage,
                               p6.storage.interfaces.IStorage)
 
     # metadata interface
     def __init__(self):
+        p6.metadata.base.BasicMetadataStorage.__init__(self)
         p6.storage.basic.BasicStorage.__init__(self)
-        
-        self.__meta = {}
 
     def validate(self, event=None):
        # determine the appropriate collection
@@ -143,31 +143,6 @@ class ArchiveStorage(p6.storage.basic.BasicStorage):
         return "%s %s. Licensed to the public under %s verify at %s" % (
             year, holder, license, verification )
 
-
-    def setMetaValue(self, key, value):
-        """Set the value of a metadata key; if the key is not previously
-        defined, create it."""
-        
-        self.__meta[key] = value
-        print self
-        print self.__meta
-        
-    def getMetaValue(self, key):
-        """Returns a metadata value.  If the key does not exist, raises a
-        KeyError Exception."""
-
-        return self.__meta[key]
-
-    def keys(self):
-        """Returns a sequence of valid metadata keys."""
-
-        return self.__meta.keys()
-
-    def metadata(self):
-        """Returns a dictionary-like object containing the key-value pairs
-        of metadata defined for this item."""
-
-        return self.__meta
 
 """
    def archive(self, event):
