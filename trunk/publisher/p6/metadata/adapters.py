@@ -1,3 +1,8 @@
+"""
+Adapters for determining the metadata values as they apply to specific
+interfaces and objects.
+"""
+
 import zope.interface
 import zope.component
 
@@ -6,6 +11,13 @@ import interfaces
 import persistance
 
 def groupToXml(metaGroup):
+    """
+    Converts a Metadata Group to an XML string.
+    
+    @deprecated: This supported an earlier prototype; it may be revived to
+        support 3rd party extensions.
+    """
+    
     if metaGroup.appliesTo is not None:
         # != p6.storage.interfaces.IWork:
         elements = "\n".join(["<%s>%s</%s>" % (n.id, n(), n.id) for n in
@@ -16,8 +28,18 @@ def groupToXml(metaGroup):
 
 
 def collectStorageAppliesTo(event):
-    """Checks if the event.item is an interface that the groups we know about
-    "appliesTo"; if so, return them."""
+    """Adapts an IUpdateMetadataEvent to a particular interface, returning
+    a list of Storage which implement that interface.  Used for updating
+    metadata when we know the interface, but not instance we want to apply
+    the value to.
+
+    @param event: the event object to handle
+    @type event: object implementing L{p6.metadata.events.IUpdateMetadataEvent}
+
+    @return: a list of Storages which implement the interface
+        specified by event.item
+    @rtype: sequence
+    """
 
     result = [n for n in getattr(p6.api.getApp(), 'storage', [])
               if event.item in zope.interface.implementedBy(n.__class__)]
@@ -25,8 +47,18 @@ def collectStorageAppliesTo(event):
     return result
 
 def collectRootAppliesTo(event):
-    """Checks if the event.item is an interface that the groups we know about
-    "appliesTo"; if so, return them."""
+    """Adapts an IUpdateMetadataEvent to a particular interface, returning
+    a list of Items which implement that interface.  Used for updating
+    metadata when we know the interface, but not instance we want to apply
+    the value to.
+
+    @param event: the event object to handle
+    @type event: object implementing L{p6.metadata.events.IUpdateMetadataEvent}
+
+    @return: a list of Items which implement the interface
+        specified by event.item
+    @rtype: sequence
+    """
 
     result = [n for n in p6.api.getApp().items
               if event.item in zope.interface.implementedBy(n.__class__)]
@@ -34,8 +66,14 @@ def collectRootAppliesTo(event):
     return result
 
 def updateMetadata(event):
-    """Reponds to a metadata update event."""
-    print 'in updateMetadata for ', event
+    """Event handler for L{p6.metadata.events.IUpdateMetadataEvent}.  Attempts
+    to adapt the event's item to IMetadataStorage and set the value.  If the
+    field is flagged for persistant storage, it's value is stored.
+
+    @param event: the event object to handle
+    @type event: object implementing L{p6.metadata.events.IUpdateMetadataEvent}
+    """
+
     try:
         # store the value locally
         interfaces.IMetadataStorage(event.item).setMetaValue(
@@ -76,7 +114,12 @@ def updateMetadata(event):
                 
 
 def loadMetadata(event):
-    """Reponds to a metadata load event."""
+    """Event handler for L{p6.metadata.events.ILoadMetadataEvent}.  Attempts
+    to load the value for the field from persistant storage.
+
+    @param event: the event object to handle
+    @type event: object implementing L{p6.metadata.events.ILoadMetadataEvent}
+    """
 
     try:
         value = persistance.get(str(event.field.group().id),

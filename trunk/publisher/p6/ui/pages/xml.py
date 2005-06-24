@@ -1,3 +1,6 @@
+"""Generic page which collects the metadata values entered and displays
+a rough XML-ish representation."""
+
 import wx
 from wx.xrc import XRCCTRL
 import ccwx

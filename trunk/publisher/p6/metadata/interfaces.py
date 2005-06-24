@@ -1,6 +1,11 @@
+"""Interfaces for metadata fields, groups and storage."""
+
 import zope.interface
 
 class IMetadataGroup(zope.interface.Interface):
+    """Collects metadata fields into a logical group which can "apply to"
+    another interface."""
+    
     id = zope.interface.Attribute("")
     title = zope.interface.Attribute("")
     description = zope.interface.Attribute("")
@@ -15,6 +20,10 @@ class IMetadataGroup(zope.interface.Interface):
         """Return a list of the field objects this group contains."""
 
 class IMetadataField(zope.interface.Interface):
+    """Abstracts a single metadata field, along with meta-information for
+    generating the user interface.
+    """
+    
     id = zope.interface.Attribute("")
     key = zope.interface.Attribute("A fully qualified key for this field.")
     label = zope.interface.Attribute("")
@@ -46,18 +55,3 @@ class IMetadataStorage(IMetadataProvider):
     def setMetaValue(key, value):
         """Set the value of a metadata key; if the key is not previously
         defined, create it."""
-
-## class IMetadataPersistance(zope.interface.Interface):
-##     """Implements metadata persistance for the framework."""
-
-##     def storeKey(item, group, field):
-##         """Store the specified group-> field for future use."""
-
-##     def loadKey(item, group, field):
-##         """Load the specified group-> field from persistant storage.
-##         If not found, raises a KeyError. """
-
-##     def loadKey(item, group, field, default):
-##         """Load the specified group-> field from persistant storage.
-##         If not found, returns the value of default."""
-

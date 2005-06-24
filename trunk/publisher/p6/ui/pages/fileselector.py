@@ -1,3 +1,4 @@
+"""Basic file selector page; published ItemSelected events."""
 
 import wx
 import wx.xrc
@@ -10,9 +11,20 @@ import p6
 import p6.api
 
 class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
+    """Page which displays a file selector and publishes events when
+    items are selected or deselected.
+    """
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, headline='Select Your Files'):
+        """
+        @param parent: Parent window
+        @type parent: L{wx.Window}
+
+        @param headline: Title to display above the wizard page
+        @type headline: String
+        """
+        
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         self.PAGE_XRC, self.XRCID, headline)
 
@@ -25,13 +37,15 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
                 p6.api.deinstify(self.selectItem))
             )
 
-    @zope.component.adapter(p6.storage.events.IItemSelected)
-    @p6.api.deinstify
     def selectItem(self, event):
+        """Responds to ItemSelected events and updates the user interface."""
         XRCCTRL(self, "LST_FILES").\
                       InsertImageStringItem(0, event.item.getIdentifier(), 0)
     
     def onBrowse(self, event):
+        """Event handler for file selection; publishes ItemSelected events
+        when the user picks one or more files."""
+        
         fileBrowser = wx.FileDialog(self.GetParent())
 
         if fileBrowser.ShowModal() == wx.ID_OK:

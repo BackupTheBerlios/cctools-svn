@@ -1,3 +1,5 @@
+"""Standard metadata page."""
+
 import weakref
 
 import wx
@@ -12,6 +14,7 @@ import p6.api
 import license
 
 class MetadataPage(ccwx.xrcwiz.XrcWizPage):
+    """Basic metadata page; generated for most metadata groups."""
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, metaGroup):
@@ -135,6 +138,10 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
     """
 
 class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
+    """Basic metadata page for groups which apply to an IItem interface;
+    this page duplicates the fields as necessary in order to show the group
+    for each item the group applies to."""
+    
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, metaGroup):
@@ -273,14 +280,24 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
     """
 
 def work_metaGroupWizPage(metaGroup):
-    """Subscription adapter to adapt a metadata group to a wizard page."""
+    """Subscription adapter to adapt a metadata group which applies to
+    L{p6.storage.interfaces.IWork} to a wizard page.
+
+    If you define your own item type, you need to register an adapter from
+    the type's interface to L{p6.ui.interfaces.IWizardPage}.
+    """
     if metaGroup.appliesTo == p6.storage.interfaces.IWork:
         return lambda x: MetadataPage(x, metaGroup)
     else:
         return None
 
 def item_metaGroupWizPage(metaGroup):
-    """Subscription adapter to adapt a metadata group to a wizard page."""
+    """Subscription adapter to adapt a metadata group which applies to
+    L{p6.storage.interfaces.IWorkItem} to a wizard page.
+
+    If you define your own item type, you need to register an adapter from
+    the type's interface to L{p6.ui.interfaces.IWizardPage}.
+    """
     
     if metaGroup.appliesTo == p6.storage.interfaces.IWorkItem:
         return lambda x: ItemMetadataPage(x, metaGroup)
@@ -288,7 +305,13 @@ def item_metaGroupWizPage(metaGroup):
         return None
 
 def storage_metaGroupWizPage(metaGroup):
-    """Subscription adapter to adapt a metadata group to a wizard page."""
+    """Subscription adapter to adapt a metadata group which applies to
+    L{p6.storage.interfaces.IStorage} to a wizard page.\
+
+    If you define your own item type, you need to register an adapter from
+    the type's interface to L{p6.ui.interfaces.IWizardPage}.
+    """
+    
     if metaGroup.appliesTo == p6.storage.interfaces.IStorage:
         return lambda x: MetadataPage(x, metaGroup)
     else:
@@ -299,7 +322,11 @@ def generatePages(itemInterfaces=[p6.storage.interfaces.IWork,
                                   p6.storage.interfaces.IStorage]
                   ):
     """Returns a list of page objects, automatically generated from the
-    supplied metadata field definitions."""
+    supplied metadata field definitions.
+
+    @param itemInterfaces: Interfaces to generate pages for.
+    @type  itemInterfaces: sequence
+    """
 
     pages = []
     for itemType in itemInterfaces:

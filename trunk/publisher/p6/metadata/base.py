@@ -1,3 +1,7 @@
+"""
+Base metadata field and group support.
+"""
+
 import weakref
 
 import zope.component
@@ -12,14 +16,17 @@ import events
 DEFAULT_KEY = '__p6_default__'
 
 def NoOp(value):
-    """A no-op validator used by default."""
+    """A no-op validator used by default when no custom
+    validator is specified."""
     return None
     
 def metadatafield(fieldType):
+    """Returns a MetadataField class object (implementing the
+    L{p6.metadata.interfaces.IMetadataField} interface) which is
+    also marked as implementing the specified fieldType."""
     
     class MetadataField:
         zope.interface.implements(interfaces.IMetadataField, fieldType)
-
         
         def __init__(self, id, label='',
                      choices=[], default='',
@@ -42,6 +49,10 @@ def metadatafield(fieldType):
 
 
 class MetadataGroup:
+    """Basic implementation of L{p6.metadata.interfaces.IMetadataGroup}.
+    Used for grouping metadata fields into logical groups.
+    """
+    
     zope.interface.implements(interfaces.IMetadataGroup)
 
     def __init__(self, id, appliesTo, title='', description='', fields=[],
@@ -62,9 +73,17 @@ class MetadataGroup:
             field.group = weakref.ref(self)
 
     def getFields(self):
+        """Returns a list of fields this group contains.
+
+        @rtype: sequence
+        """
         return self.fields
 
 class BasicMetadataStorage(object):
+    """Reference implementation of L{p6.metadata.interfaces.IMetadataStorage};
+    provides facilities for storing and retrieving metadata values.
+    """
+    
     zope.interface.implements(interfaces.IMetadataStorage)
     
     # metadata interface
@@ -72,72 +91,47 @@ class BasicMetadataStorage(object):
         self.__meta = {}
 
     def setMetaValue(self, field, value):
-        """Set the value of a metadata key; if the key is not previously
-        defined, create it."""
+        """Set the value of a metadata field.
+
+        @param field: The field to set the value for.
+        @ptype field: implements L{p6.metadata.interfaces.IMetadataField}
+
+        @param value: The new value for the field.
+        """
 
         # store the value
         self.__meta[field.id] = value
 
-    def getMetaValue(self, key, default=None):
-        """Returns a metadata value.  If the key does not exist, raises a
-        KeyError Exception."""
+    def getMetaValue(self, key, **kwargs):
+        """Returns a metadata value.  If the key does not exist and no default
+        is specified, raises a KeyError Exception.
 
-        if default is None:
+        @param key: The field to retrieve the value of.
+        @keyword default: (optional) The value to return if key is not found.
+
+        @raise KeyError: If the field is not found and no default is specified.
+        """
+
+        if 'default' not in kwargs:
             return self.__meta[key]
         else:
             try:
                 return self.__meta[key]
             except KeyError, e:
-                return default
+                return kwargs['default']
 
     def keys(self):
-        """Returns a sequence of valid metadata keys."""
+        """Returns a sequence of metadata keys which have values.
+
+        @rtype: sequence
+        """
 
         return self.__meta.keys()
 
     def metadata(self):
         """Returns a dictionary-like object containing the key-value pairs
-        of metadata defined for this item."""
+        of metadata defined for this item.
+
+        @rtype: dict"""
 
         return self.__meta
-
-## class BasicMetadataPersistance(object):
-##     zope.interface.implements(interfaces.IMetadataPersistance)
-
-##     def __init__(self, filename):
-##         self.shelf = shelve.open(filename, writeback=False)
-
-##     def __del__(self):
-##         self.shelf.close()
-        
-##     def storeKey(self, item, group, field):
-##         """Store the specified group-> field for future use."""
-
-##         if self.shelf.has_key(item.getIdentifier()):
-##             p_dict = self.shelf[group.id]
-##         else:
-##             p_dict = {}
-
-##         # retrieve the value
-##         p_dict.setdefault(group.id, {})[field.id] = \
-##                                     interfaces.IMetadataStorage(item).getMetaValue(field.id)
-
-##         # store the metadata back to the shelf
-##         self.shelf[item.getIdentifer()] = p_dict
-
-##     def loadKey(self, item, group, field):
-##         """Load the specified group-> field from persistant storage.
-##         If not found, raises a KeyError. """
-        
-##         return self.shelf[item.getIdentifier()][group.id][field.id]
-
-##     def loadKey(self, item, group, field, default):
-##         """Load the specified group-> field from persistant storage.
-##         If not found, returns the value of default."""
-
-##         try:
-##             return self.loadKey(item, group, field)
-##         except KeyError, e:
-##             return default
-        
-

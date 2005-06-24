@@ -1,8 +1,23 @@
+"""
+p6.api
+
+Collects frequently used functions in a single module.
+"""
+
 import wx
 import zope.interface
 import p6
 
 def deinstify(func):
+    """Decorator to strip an instance method of it's "self" paramter,
+    making it work properly as a non-bound function or adapter.
+
+    @param func: The instance method to decorate
+    @type func: Bound instance method (callable)
+
+    @rtype: Unbound callable
+    """
+    
     def foo(*args, **kwargs):
         func(*args, **kwargs)
         
@@ -18,11 +33,25 @@ def nearest(items, target):
     return items[-1]
 
 def getApp():
+    """Returns a reference to the current Application object.
+
+    @return: the current Application object
+    @rtype: wx.App
+    """
     return wx.GetApp()
 
 
 def findField(field_id, item=None):
+    """Returns the value of the metadata field specified.
 
+    @param field_id: the identifier of the field to retrieve
+    @type field_id: string
+    @param item: the item we want the value to apply to, or None for Work
+    @type item: None or adaptable to p6.metadata.interfaces.IMetadataStorage
+
+    @return: the value of the metadata field
+    """
+    
     if item is None:
         # This applies to any root item
         for i in p6.api.getApp().items:
@@ -38,7 +67,12 @@ def findField(field_id, item=None):
 
 def getAppSupportDir():
     """Returns the Application Support directory where we can store
-    preferences and persisted metadata information."""
+    preferences and persisted metadata information.
+
+
+    @return: path to the application directory
+    @rtype: string
+    """
 
     # XXX
     return '.'

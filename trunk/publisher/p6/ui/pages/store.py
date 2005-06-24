@@ -1,3 +1,5 @@
+"""Storage page for controlling upload process and displaying feedback."""
+
 import wx
 from wx.xrc import XRCCTRL
 
@@ -14,6 +16,14 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
     XRCID = "STORE_PROGRESS"
 
     def __init__(self, parent, headline='Uploading'):
+        """
+        @param parent: Parent window
+        @type parent: L{wx.Window}
+
+        @param headline: Title to display above the wizard page
+        @type headline: String
+        """
+        
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         self.PAGE_XRC, self.XRCID, headline)
 
@@ -34,6 +44,10 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
             )
 
     def onChanged(self, event):
+        """Event handler for onChanged events; fired by ccWx when the page is
+        displayed.  Disables the next button, and calls validate, then store.
+        """
+        
         # disable the next button during the storage process
         # and use busy cursor
         XRCCTRL(wx.GetApp().GetTopWindow(), "CMD_NEXT").Disable()
@@ -46,6 +60,10 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         self.store()
 
     def validateItem(self):
+        """Publishes a L{p6.storage.events.ValidateWork} event which allows
+        metadata providers to register errors before the upload occurs.
+        """
+        
         v_event = p6.storage.events.ValidateWork()
         
         zope.component.handle(v_event)
@@ -54,10 +72,17 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
             print 'Aieeee!'
 
     def store(self):
+        """Publishes a L{p6.storage.events.StoreWork} event; storage
+        providers should listen for this event.
+        """
+        
         event = p6.storage.events.StoreWork()
         zope.component.handle(event)
 
     def postStore(self, event):
+        """Re-enables the UI and publishes a L{p6.storage.events.PostStore}
+        event."""
+        
         # re-enable the next button
         event = p6.ui.events.UpdateStatusEvent(value=0, message='Complete.')
         zope.component.handle(event)
@@ -68,6 +93,7 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         self.Refresh()
 
     def updateStatus(self, event):
+        """Event handler for L{p6.ui.events.IUpdateStatus} events."""
         new_value = 0
         
         if event.value != 0:
@@ -80,6 +106,7 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
 
     def resetStatus(self, event):
+        """Event handler for L{p6.ui.events.IResetStatus} events."""
         XRCCTRL(self, "WXG_PROGRESS").SetValue(0)
         XRCCTRL(self, "WXG_PROGRESS").SetRange(event.steps)
 

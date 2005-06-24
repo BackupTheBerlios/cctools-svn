@@ -1,3 +1,5 @@
+"""LicenseChooser custom metadata wizard page."""
+
 import webbrowser
 import urllib2
 
@@ -17,12 +19,21 @@ import p6.ui
 import p6.metadata
 
 class WebbrowserHtml(wx.html.HtmlWindow):
+    """Proxy class for L{wx.html.HtmlWindow} which opens a web browser
+    when the user clicks a link."""
+    
     def OnLinkClicked(self, linkinfo):
+        """Respond to link click by opening a new window in the user's
+        web browser."""
+        
         webbrowser.open( linkinfo.GetHref(), True, True )
 
 BGCOLOR = "efefef"
 
 class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
+    """Custom wizard page which implements a license chooser based on
+    CC's web service interface."""
+    
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, metaGroup):
@@ -302,6 +313,9 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     """
 
 def page_ILicenseGroup(metaGroup):
+    """Adapter from L{p6.metadata.license.ILicenseGroup} to
+    L{p6.ui.interfaces.IWizardPage}.
+    """
     return lambda x: LicenseChooserPage(x, metaGroup)
 
 
