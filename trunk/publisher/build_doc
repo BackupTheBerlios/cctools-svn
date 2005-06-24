@@ -93,7 +93,7 @@ from twisted.python import reflect, util
 import epydoc
 assert epydoc.__version__[0] == '2', "You need epydoc 2.x!"
 from epydoc.cli import cli
-from epydoc.html import HTMLFormatter
+from epydoc.html import HTMLFormatter, _write_if_nonempty
 from epydoc import uid
 import epydoc.html
 
@@ -190,6 +190,49 @@ class TwistedHTMLFormatter(HTMLFormatter):
                 s = self._method_to_html(uid)
                 open(filename, 'w').write(s)
 
+    # fix barf on non-ASCII problem
+    def _write_func_details(self, public, private, container, functions,
+                        heading='Function Details'):
+
+        docmap = self._docmap
+        functions = [f for f in functions if docmap.has_key(f.target())]
+
+        cuid = container.uid()
+        if cuid.is_class():
+            # Filter out inherited methods (their details docs are
+            # listed under the class that defines them):
+            functions = [f for f in functions
+                         if f.target().cls() == cuid]
+
+            # Filter out methods that don't define or inherit docstrings;
+            # they are just listed in the summary table.
+            functions = [f for f in functions
+                         if docmap.documented_ancestor(f.target())]
+        else:
+            # Filter out functions that don't define docstrings; they
+            # are just listed in the summary table.
+            functions = [f for f in functions
+                         if docmap[f.target()].has_docstring()]
+
+        # If there are no functions left, then just return.
+        if len(functions) == 0: return
+        
+        # Divide the functions into groups
+        groups = container.by_group(functions)
+
+        # Write the table header
+        header = self._table_header(heading, 'details')+'</table>\n'
+        _write_if_nonempty(public, private, functions, header)
+
+        # Write an entry for each function.
+        for function in functions:
+            str = self._func_details_entry(function, container)
+            private.write("".join([n for n in str if ord(n) < 128]))
+            if function.target().is_public(): public.write(str)
+
+        # Write the table footer
+        _write_if_nonempty(public, private, functions, '<br />\n\n')
+
     # when doing non-full builds we need to fake epydoc in to thinking that
     # all twisted modules are being documented so that the html links
     # to the modules that aren't being documented get generated correctly
@@ -277,6 +320,7 @@ def _lookup_class_field(cls, field, base_order=None):
     pass
 objdoc._lookup_class_field = _lookup_class_field
 
+
 # HACK: Another "only doc what we tell you". We don't want epydoc to
 # automatically recurse into subdirectories: "twisted"'s presence was
 # causing "twisted/test" to be docced, even thought we explicitly
@@ -344,7 +388,7 @@ def addMod(arg, path, files):
                 modnames.append(modName)
 
 document_all = True # are we doing a full build?
-names = ['p6/', 'ccwx', 'ccwsclient', 'pyarchive', ] #default, may be overriden below
+names = ['p6/', 'zope', 'ccwx', 'ccwsclient', 'pyarchive', ] #default, may be overriden below
 
 #get list of modules/pkgs on cmd-line
 try:
