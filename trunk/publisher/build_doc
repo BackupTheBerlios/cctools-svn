@@ -65,14 +65,14 @@ def fakeOut(modname):
 #fakeOut("gnome.ui")
 #fakeOut("pygtk")
 #fakeOut("gtk")
-fakeOut("wxPython.wx")
+#fakeOut("wxPython.wx")
 #fakeOut('wx')
 sys.modules["zope.interface._zope_interface_coptimizations"] = None
 
 ## HACK: This is a nasty one! Replace TypeType with (TypeType,
 ## InterfaceClass), and dir with something that makes Interfaces look like 
 ## classes so epydoc will try to document Interfaces.
-from zope.interface.interface import InterfaceClass, Method
+from zope.interface.interface import InterfaceClass, Method, Attribute
 import types
 types.TypeType = (types.TypeType, InterfaceClass)
 _marker = object()
@@ -96,39 +96,6 @@ from epydoc.cli import cli
 from epydoc.html import HTMLFormatter
 from epydoc import uid
 import epydoc.html
-
-# HACK: unsplit moduleMovedForSplit
-def moduleMovedForSplit(origModuleName, newModuleName, moduleDesc,
-                        projectName, projectURL, globDict):
-    modoc = """
-%(moduleDesc)s
-
-This module is DEPRECATED. It has been split off into a third party
-package, Twisted %(projectName)s. Please see %(projectURL)s.
-
-This is just a place-holder that imports from the third-party %(projectName)s
-package for backwards compatibility. To use it, you need to install
-that package.
-
-This module has moved to %(newModuleName)s.
-
-""" % {'moduleDesc': moduleDesc,
-       'projectName': projectName,
-       'projectURL': projectURL,
-       'newModuleName': newModuleName}
-
-    globDict['__doc__'] = modoc
-#util.moduleMovedForSplit = moduleMovedForSplit
-
-# HACK: Force everything to be public.
-
-#def is_private(self):
-#    return False
-#def is_public(self):
-#    return True
-
-#uid.UID.is_private = is_private
-#uid.UID.is_public = is_public
 
 # HACK: More zope.interface hackery -- zope.interface.interface.Methods are
 # methods too!
@@ -161,6 +128,7 @@ def module(self):
     else:
         return module_orig(self)
 uid.ObjectUID.module = module
+
 make_uid_orig = uid.make_uid
 def make_uid(obj, base_uid=None, shortname=None):
     if isinstance(obj, Method):
@@ -173,9 +141,6 @@ def make_uid(obj, base_uid=None, shortname=None):
     else:
         return make_uid_orig(obj, base_uid, shortname)
 uid.make_uid = make_uid
-#from twisted.cred.portal import IRealm
-#print uid.ObjectUID(IRealm.requestAvatar).is_routine()
-#sys.exit()
 
 # HACK: Don't append -module and -class to the filenames, and generate
 # redirecty-files for all methods.
@@ -289,6 +254,29 @@ def _init_builtin_signature(self, func):
         return _init_builtin_signature_orig(self, func)
 objdoc.FuncDoc._init_builtin_signature = _init_builtin_signature
 
+
+### NRY 24 Jun 2005
+# make attribute introspection work
+_lookup_class_field_orig = objdoc._lookup_class_field
+
+def _lookup_class_field(cls, field, base_order=None):
+    result = _lookup_class_field_orig(cls, field, base_order)
+
+    if result[0] ==  '<Not Accessible>':
+        if isinstance(cls, InterfaceClass):
+            target = cls[field]
+            repr = result[0]
+            
+            if isinstance(target, (Attribute, Method)):
+                repr = target.getDoc()
+                
+            result = (repr, result[1])
+
+    return result
+
+    pass
+objdoc._lookup_class_field = _lookup_class_field
+
 # HACK: Another "only doc what we tell you". We don't want epydoc to
 # automatically recurse into subdirectories: "twisted"'s presence was
 # causing "twisted/test" to be docced, even thought we explicitly
@@ -356,7 +344,7 @@ def addMod(arg, path, files):
                 modnames.append(modName)
 
 document_all = True # are we doing a full build?
-names = ['p6/'] #default, may be overriden below
+names = ['p6/', 'ccwx', 'ccwsclient', 'pyarchive', ] #default, may be overriden below
 
 #get list of modules/pkgs on cmd-line
 try:
@@ -428,7 +416,7 @@ if 'twisted.test' in modnames:
 sys.argv.extend(modnames)
 import p6
 
-sys.argv[1:1] = ['-n', 'P6 %s' % p6.VERSION, '-u', 'http://wiki.creativecommons.org/wiki/Developer/']
+sys.argv[1:1] = ['-n', 'P6 %s' % p6.VERSION, '-u', 'http://wiki.creativecommons.org/wiki/Developer']
 
 # Make it easy to profile epyrun
 if 0:
