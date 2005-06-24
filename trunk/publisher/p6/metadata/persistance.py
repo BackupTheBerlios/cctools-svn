@@ -49,9 +49,9 @@ def get(group, key):
     """Load a metadata value from persistant storage.
 
     @param group: The metadata group ID this field belongs to.
-    @ptype group: String
+    @type  group: String
     @param key: The metadata field ID to be loaded.
-    @type key: String
+    @type  key: String
 
     @raise KeyError: If the group-key combination is not found in storage.
     """

@@ -94,7 +94,7 @@ class BasicMetadataStorage(object):
         """Set the value of a metadata field.
 
         @param field: The field to set the value for.
-        @ptype field: implements L{p6.metadata.interfaces.IMetadataField}
+        @type  field: implements L{p6.metadata.interfaces.IMetadataField}
 
         @param value: The new value for the field.
         """
