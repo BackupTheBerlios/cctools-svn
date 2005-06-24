@@ -1,3 +1,7 @@
+"""
+Basic implementation of backend Storage provider.
+"""
+
 import zope.interface
 import zope.component
 
@@ -21,12 +25,20 @@ class BasicStorage(object):
             )
 
     def validate(self, event=None):
+        """Handle L{p6.storage.events.IValidate} events by simply
+        updating the progress bar."""
+        
         update = p6.ui.events.UpdateStatusEvent(delta=20,
                                                 message='in Validate...')
 
         zope.component.handle(update)
 
     def store(self, event=None):
+        """Handle L{p6.storage.events.IStore} events by simply
+        updating the progress bar; fire a L{p6.storage.events.WorkStored}
+        event after the "storage" process is complete.
+        """
+        
         update = p6.ui.events.UpdateStatusEvent(delta=20,
                                                 message='in Store...')
 

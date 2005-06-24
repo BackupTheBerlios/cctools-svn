@@ -1,20 +1,25 @@
+"""Storage interfaces"""
+
 import zope.interface
 
 class IItem(zope.interface.Interface):
+    """Basic item interface; works and actual Items all implement this."""
+    
     def getIdentifier():
         """Returns the unique identifier (filename, etc) for this item."""
 
 class IWork(IItem):
-    pass
+    """Placeholder interface for root-level Work objecst."""
 
 class IWorkItem(IItem):
-    pass
+    """Placeholder interface for items which are part of a larger Work."""
 
 class IFileItem(IWorkItem):
-    pass
+    """Placeholder interface for file-based items which are part of a Work."""
 
 class IStorage(zope.interface.Interface):
-
+    """Interface for backend storage providers."""
+    
     def validate():
         """Walks through the item and metadata models, ensuring everything
         needed for the storing process is in place."""
