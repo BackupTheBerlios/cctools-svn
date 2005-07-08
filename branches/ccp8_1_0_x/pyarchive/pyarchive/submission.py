@@ -30,7 +30,9 @@ import codecs
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
 import pyarchive.utils
+import pyarchive.identifier
 import pyarchive.const
+import cctag.const
 
 # from cctag.metadata import metadata
 
@@ -92,6 +94,9 @@ class ArchiveItem:
         """Generates _meta.xml to use in submission;
         returns a file-like object."""
 
+        # define a convenience handle to XML escape routine
+        xe = xml.sax.saxutils.escape
+        
         meta_out = StringIO.StringIO()
         result = codecs.getwriter('UTF-8')(meta_out)
 
@@ -102,8 +107,13 @@ class ArchiveItem:
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
-        <upload_application appid="ccpublisher" version="1.0.6" />
-        """ % (self.title, self.collection, self.mediatype) )
+        <resource>%s</resource>
+        <upload_application appid="ccpublisher" version="%s" />
+        """ % (xe(self.title),
+               self.collection,
+               self.mediatype,
+               self.mediatype,
+               xe(cctag.const.CCT_VERSION)) )
 
         if username is not None:
             result.write(u"<uploader>%s</uploader>\n" % username)
@@ -119,13 +129,13 @@ class ArchiveItem:
                     for n in value:
                         result.write(u'<%s>%s</%s>\n' % (
                                            key,
-                                           xml.sax.saxutils.escape(n),
+                                           xe(str(n)),
                                            key)
                                      )
                 else:
                     result.write(u'<%s>%s</%s>\n' % (
                                            key,
-                                           xml.sax.saxutils.escape(value),
+                                           xe(str(value)),
                                            key) )
 
         result.write(u'</metadata>\n')
@@ -169,7 +179,7 @@ class ArchiveItem:
         """Query archive.org for the appropriate FTP url to use.
         If successful returns a tuple containing (server, path)."""
 
-        new_url = "/newitem.php"
+        new_url = "/create.php"
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "text/plain"}
         params = urllib.urlencode({'xml':1,
@@ -253,7 +263,7 @@ class ArchiveItem:
         ftp.quit()
         
         # call the import url, check the return result
-        importurl = "http://www.archive.org/done.php?" \
+        importurl = "http://www.archive.org/checkin.php?" \
                     "xml=1&identifier=%s&user=%s" % (self.identifier, username)
         response = urllib2.urlopen(importurl)
                     
@@ -263,7 +273,10 @@ class ArchiveItem:
 
         if result_type == 'success':
            # extract the URL element and store it
-           self.archive_url = "http://archive.org/details/%s" % self.identifier
+           self.archive_url = pyarchive.identifier.verify_url(self.collection,
+                                                    self.identifier,
+                                                    self.mediatype)
+           #"http://archive.org/details/%s" % self.identifier
         else:
            # an error occured; raise an exception
            raise SubmissionError("%s: %s" % (-1,
@@ -299,7 +312,10 @@ class ArchiveFile:
             if bitrate[1]:
                 self.format = pyarchive.const.MP3['VBR']
             else:
-                self.format = pyarchive.const.MP3[bitrate[0]]
+		try:
+                    self.format = pyarchive.const.MP3[bitrate[0]]
+                except KeyError, e:
+                    self.format = pyarchive.const.MP3['VBR']
                 
     def fileNode(self):
         """Generates the XML to represent this file in files.xml."""

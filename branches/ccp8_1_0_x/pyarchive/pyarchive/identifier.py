@@ -58,7 +58,10 @@ def munge(identifier):
 def verify_url(collection, identifier, mediatype):
     """Takes an archive.org identifier and returns the verification URL."""
 
-    return "http://www.archive.org/%s/%s-details-db.php?"\
-           "collection=%s&collectionid=%s" % (mediatype, mediatype,
-                                              collection, identifier)
+    if mediatype.lower() != 'audio':
+        return "http://www.archive.org/details/%s" % identifier
+    else:
+        return "http://www.archive.org/%s/%s-details-db.php?"\
+               "collection=%s&collectionid=%s" % (mediatype, mediatype,
+                                                  collection, identifier)
 
