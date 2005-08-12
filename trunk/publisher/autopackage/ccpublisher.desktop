@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=2.0
+Type=Application
+Encoding=UTF-8
+Name=ccPublisher
+Comment=The best viewer for Foo objects available!
+#TryExec=fooview
+Exec=ccpublisher.py
+Categories=Application;AudioVideo
+#Icon=fooview.png
+MimeType=image/x-foo

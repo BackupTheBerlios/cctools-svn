@@ -1,0 +1,54 @@
+# -*-shell-script-*-
+
+[Meta]
+RootName: @drop.creativecommons.org/software/publisher:1.9
+DisplayName: ccPublisher
+ShortName: ccPublisher
+Maintainer: Creative Commons <software@creativecommons.org>
+Packager: Nathan R. Yergler <nathan@creativecommons.org>
+Summary: ccPublisher.
+URL: http://www.creativecommons.org/
+License: GNU General Public License, Version 2
+SoftwareVersion: 2.0
+AutopackageTarget: 1.0
+
+# InterfaceVersion: 0.0
+
+[Description]
+Put long & detailed description here.
+
+[BuildPrepare]
+# zope setup.py should probably go here for proxy, huh?
+
+# generate a source distribution so we have a MANIFEST file
+python setup.py sdist > /dev/null 2>&1
+
+# grab all the Python files and resources
+mkdir -p $build_root/share/ccpublisher
+tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/share/ccpublisher
+
+# grab the launch script, .desktop file, etc
+cp autopackage/ccpublisher.desktop $build_root
+cp autopackage/ccpublisher.py $build_root
+
+[BuildUnprepare]
+#unprepareBuild
+
+[Imports]
+echo '*' | import
+
+[Prepare]
+# Dependency checking
+require @python.org/python 2.4
+#require @wxpython.org/wxpython 2.5
+testForPythonModule wx
+
+[Install]
+# Put your installation script here
+installData share/ccpublisher
+installExe ccpublisher.py
+installDesktop "Sound & Video" ccpublisher.desktop
+
+[Uninstall]
+# Usually just the following line is enough to uninstall everything
+uninstallFromLog
