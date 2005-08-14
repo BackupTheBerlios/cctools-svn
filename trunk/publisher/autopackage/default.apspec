@@ -18,13 +18,12 @@ AutopackageTarget: 1.0
 Put long & detailed description here.
 
 [BuildPrepare]
-# zope setup.py should probably go here for proxy, huh?
-
 # generate a source distribution so we have a MANIFEST file
-python setup.py sdist > /dev/null 2>&1
+python setup.py build build_ext
 
 # grab all the Python files and resources
 mkdir -p $build_root/share/ccpublisher
+cp -a ./build/lib*/* $build_root/share/ccpublisher
 tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/share/ccpublisher
 
 # grab the launch script, .desktop file, etc
