@@ -9,8 +9,8 @@
 
   <adapter 
      for="p6.storage.interfaces.IWorkItem"
-     provides=".interfaces.IEmbeddable"
-     factory=".adapters.EmbeddableFile"
+     provides="ccpublisher.interfaces.IEmbeddable"
+     factory="ccpublisher.adapters.EmbeddableFile"
      />
 
 </configure>
