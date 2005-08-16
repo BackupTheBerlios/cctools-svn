@@ -79,6 +79,20 @@ class MetadataGroup:
         """
         return self.fields
 
+    def get(self, fieldid):
+        """Return the field specified by fieldid.
+
+        @rtype: IMetadataField
+        """
+
+        match = [n for n in self.fields if n.id == fieldid]
+
+        if len(match) > 0:
+            return match[0]
+        else:
+            raise KeyError("Could not find fieldid.")
+        
+
 class BasicMetadataStorage(object):
     """Reference implementation of L{p6.metadata.interfaces.IMetadataStorage};
     provides facilities for storing and retrieving metadata values.
