@@ -101,7 +101,7 @@ def updateMetadata(event):
                     
                     # check for persistance
                     if event.field.persist and \
-                           event.group.persistMode != 'never': 
+                           event.field.group().persistMode != 'never': 
                         # determine the item identifier
                         identifier = persistance.item_id(item)
 
@@ -130,7 +130,6 @@ def loadMetadata(event):
         # publish an update metadata event
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
             event.item,
-            event.field.group(),
             event.field,
             value
             )
