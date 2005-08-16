@@ -1,0 +1,3 @@
+app.zcml
+include resources/*
+recursive-include . *.zcml
