@@ -126,6 +126,16 @@ def loadMetadata(event):
                                 str(event.field.id))
         if value:
             event.value.append(value)
+
+        # publish an update metadata event
+        updateEvent = p6.metadata.events.UpdateMetadataEvent(
+            event.item,
+            event.field.group(),
+            event.field,
+            value
+            )
+        zope.component.handle(updateEvent)
+        
     except KeyError, e:
         pass
     
