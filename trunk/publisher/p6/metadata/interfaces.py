@@ -30,6 +30,8 @@ class IMetadataField(zope.interface.Interface):
     type = zope.interface.Attribute("")
     appliesTo = zope.interface.Attribute("")
     validator = zope.interface.Attribute("An optional callable which returns a string containing an error message if the field's value does not validate.")
+    canonical = zope.interface.Attribute("The canonical URI of the field.")
+
 
     def group():
         """Returns a reference to the group which contains this field."""
