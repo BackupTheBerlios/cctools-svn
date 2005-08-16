@@ -19,4 +19,11 @@
       factory=".adapters.fileItemMetadataProvider"
       />
 
+  <!-- Metadata provider registrations -->
+
+  <subscriber
+        for="p6.storage.events.IItemSelected"
+        handler=".providers.id3.itemSelected"
+        />
+
 </configure>
