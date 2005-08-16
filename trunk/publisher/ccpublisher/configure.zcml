@@ -13,4 +13,12 @@
      factory="ccpublisher.adapters.EmbeddableFile"
      />
 
+  <!-- listeners for metadata provider -->
+
+  <subscriber
+        for="p6.storage.events.IItemSelected"
+        handler=".m_provider.itemSelected"
+        />
+
+
 </configure>
