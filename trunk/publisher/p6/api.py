@@ -40,6 +40,15 @@ def getApp():
     """
     return wx.GetApp()
 
+def fieldFromCanonical(canonical):
+    """Returns the field object with the canonical uri specified."""
+    for g in p6.api.getApp().groups:
+        for f in g.fields:
+            if f.canonical == canonical:
+                return f
+
+
+    return None
 
 def findField(field_id, item=None):
     """Returns the value of the metadata field specified.
