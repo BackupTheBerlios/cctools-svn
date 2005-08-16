@@ -39,6 +39,7 @@
             label="Title of Work"
             type="p6.metadata.types.ITextField"
             validator="ccpublisher.validators.validateTitle"
+	    canonical="http://purl.org/dc/elements/1.1/title"
             />
 
      <field id="format"
