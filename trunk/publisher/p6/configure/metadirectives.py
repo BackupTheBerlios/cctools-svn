@@ -118,6 +118,12 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
                      "available for persistence.",
         required=False,
         )
+
+    canonical = zope.configuration.fields.MessageID(
+        title=u"canonical",
+        description=u"The canonical URI for this field.",
+        required=False,
+        )
         
     
 class IPagesDirective(zope.interface.Interface):
