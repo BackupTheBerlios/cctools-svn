@@ -40,6 +40,12 @@ def getApp():
     """
     return wx.GetApp()
 
+def group(groupid):
+    """Convenience function for finding a metadata group by id."""
+
+    return [n for n in p6.api.getApp().groups if
+            n.id == groupid][0]
+
 def fieldFromCanonical(canonical):
     """Returns the field object with the canonical uri specified."""
     for g in p6.api.getApp().groups:
