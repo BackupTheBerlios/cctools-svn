@@ -113,5 +113,10 @@ class PagesDirective(object):
                         callable=p6.api.getApp().pages.append,
                         args=(p6.ui.pages.xrcpage(title, xrcfile, xrcid),),
                         )
-
+        
+    def page(self, _context, title, factory):
+        _context.action(discriminator=('RegisterPage', title, factory),
+                        callable=p6.api.getApp().pages.append,
+                        args=(lambda x: factory(x, title), ),
+                        )
     

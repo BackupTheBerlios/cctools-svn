@@ -29,11 +29,16 @@
         handler="p6.configure.metaconfigure.PagesDirective"
         >
 
-      <!-- generic sub page directive -->
+      <!-- generic sub page directives -->
 
       <meta:subdirective
           name="xrcpage"
           schema="p6.configure.metadirectives.IXrcPageSubdirective"
+          />
+
+      <meta:subdirective
+          name="page"
+          schema="p6.configure.metadirectives.IPageSubdirective"
           />
 
       <!-- supplied page type directives -->

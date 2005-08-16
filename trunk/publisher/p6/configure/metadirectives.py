@@ -189,3 +189,22 @@ class IXrcPageSubdirective(zope.interface.Interface):
         required=True,
         )
 
+class IPageSubdirective(zope.interface.Interface):
+    """A generic page -- total user control."""
+
+    title = zope.configuration.fields.MessageID(
+        title=u"The page title.",
+        required=True,
+        )
+
+    factory = zope.configuration.fields.PythonIdentifier(
+        title=u"Factory callable for this page.",
+
+        description=u"""Value of factory will be called with two parameters:
+        parent window and title (in that order).  Must return an object which
+        conforms to p6.ui.interfaces.IWizardPage.""",
+        
+        required=True,
+        )
+    
+
