@@ -14,10 +14,9 @@
      />
 
   <!-- listeners for metadata provider -->
-
   <subscriber
-        for="p6.storage.events.IItemSelected"
-        handler=".m_provider.itemSelected"
+        for="p6.metadata.events.IUpdateMetadataEvent"
+        handler=".metadata.updateMetadataBridge"
         />
 
 
