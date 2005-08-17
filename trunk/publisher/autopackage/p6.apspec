@@ -1,35 +1,32 @@
 # -*-shell-script-*-
 
 [Meta]
-RootName: @drop.creativecommons.org/software/publisher:1.9
-DisplayName: ccPublisher
-ShortName: ccPublisher
+RootName: @creativecommons.org/software/P6:1.9
+DisplayName: P6
+ShortName: P6
 Maintainer: Creative Commons <software@creativecommons.org>
 Packager: Nathan R. Yergler <nathan@creativecommons.org>
-Summary: ccPublisher.
+Summary: P6
 URL: http://www.creativecommons.org/
 License: GNU General Public License, Version 2
 SoftwareVersion: 1.9
 AutopackageTarget: 1.0
 
-# InterfaceVersion: 2.0
+InterfaceVersion: 2.0
 
 [Description]
 Put long & detailed description here.
 
 [BuildPrepare]
-mkdir -p $build_root/site-packages
-
 # generate a source distribution so we have a MANIFEST file
 rm -rf build
-python appsetup.py sdist -t APPMANIFEST.in -o
+python setup.py sdist -t MANFIEST.in -o
+python setup.py build build_ext
 
 # grab all the Python files and resources
+mkdir -p $build_root/site-packages/
+cp -a ./build/lib*/* $build_root/site-packages
 tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/site-packages
-
-# grab the launch script, .desktop file, etc
-cp autopackage/ccpublisher.desktop $build_root
-cp autopackage/apboot.py $build_root
 
 [BuildUnprepare]
 #unprepareBuild
@@ -39,13 +36,12 @@ echo '*' | import
 
 [Prepare]
 # Dependency checking
-require @creativecommons.org/p6 2.0
+require @python.org/python 2.4
+requireAtLeast "@wxpython.org/wxpython:2.5"
 
 [Install]
 # Put your installation script here
 installData site-packages
-installExe apboot.py
-installDesktop "Sound & Video" ccpublisher.desktop
 
 [Uninstall]
 # Usually just the following line is enough to uninstall everything
