@@ -32,4 +32,4 @@ import storage
 import configure
 import app
 
-VERSION = 0.75
+VERSION = 2.0
