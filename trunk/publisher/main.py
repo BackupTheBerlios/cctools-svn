@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import os
 
@@ -26,8 +28,11 @@ def main(argv=[]):
    # XXX Move these options to ZCML
    app = CcPublisher(appname = 'ccPublisher',
                      filename= 'err.log',
-                     xrcfile = os.path.join('resources', 'wizard.xrc'),
+                     xrcfile = os.path.join(os.path.dirname(__file__),
+                                            'resources', 'wizard.xrc'),
                      frameclass = P6,
+                     confFile = os.path.join(os.path.dirname(__file__),
+                                            'app.zcml'),
                      )
 
    app.MainLoop()
