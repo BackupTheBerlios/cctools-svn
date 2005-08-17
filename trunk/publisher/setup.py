@@ -1,7 +1,5 @@
 """
-ccTag build script
-Builds platform appropriate packages for distribution.  Takes standard
-distutils commands on non-Mac OS X platforms.  Builds a .app on Mac OS X.
+P6
 
 Nathan R. Yergler
 
@@ -25,7 +23,7 @@ extensions = [Extension('zope.proxy._zope_proxy_proxy',
                         )
               ]
 
-setup(name='ccPublisher',
+setup(name='P6',
       version=1.9,
       description = "Desktop tools for licensing works and uploading to the "
                     "Internet Archive for hosting and cataloging.",
@@ -33,25 +31,11 @@ setup(name='ccPublisher',
       url='http://creativecommons.org',
       author='Nathan R. Yergler',
       author_email='nathan@creativecommons.org',
-      classifiers= ['Development Status :: 5 - Production/Stable',
-                    'Environment :: MacOS X :: Cocoa',
-                    'Environment :: Win32 (MS Windows)',
-                    'Environment :: X11 Applications :: GTK',
-                    'Intended Audience :: End Users/Desktop',
-                    'License :: OSI Approved :: GNU General Public License (GPL)',
-                    'Natural Language :: English',
-                    'Operating System :: OS Independent',
-                    'Programming Language :: Python',
-                    'Topic :: Multimedia',
-                    'Topic :: System :: Archiving',
-    ],
       py_modules=['setup', ],
       ext_modules=extensions,
-      scripts=['main.py'],
-      packages=['ccpublisher', 'ccwsclient', 'ccwx',
-                'p6', 'p6.app', 'p6.configure',
+      packages=['p6', 'p6.app', 'p6.configure',
                 'p6.metadata', 
-                'p6.storage',
+                'p6.storage','p6.storage.providers',
                 'p6.ui', 'p6.ui.pages',
                 'p6.zcmlsupport',
                 'pyarchive', 'zope',
@@ -65,10 +49,4 @@ setup(name='ccPublisher',
                 'zope.modulealias', 'zope.proxy', 'zope.schema',
                 'zope.testing',],
       )
-
-# see if we need to make the disk image
-if 'py2app' in sys.argv:
-    # create a disk image
-    makeDmg([os.path.join('dist', 'ccPublisher.app')],
-             os.path.join('build', 'Publisher.dmg'))
     
