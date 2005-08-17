@@ -1,31 +1,44 @@
 #!/usr/bin/env python
 
-"""Semi-generic Autopackge Bootstrap Script
+"""
+Semi-generic Autopackage Bootstrap Script
 
 Sets up the Python path to point at $PREFIX/share/site-packages, and then
-runs the function specified on the commandline, passing it the
-remainder of sys.argv.  For example,
+imports the module specified on the commandline and looks for a callable
+named 'main' which is called with the remainder of sys.argv.  For example,
 
-$ apboot.py publisher.main.main
+$ apboot.py publisher.main
 
 will attempt to do the following (roughly):
 
-from publisher.main import main
-main(sys.argv)
+import publisher.main as app
+app.main(sys.argv)
+
 """
 
 import sys
 import os
-import imp
 
-SHARE_PATH = os.path.normpath(os.path.join(os.path.split(__file__)[0],
+SHARE_PATH = os.path.abspath(
+    os.path.normpath(
+    os.path.join(os.path.dirname(__file__),
                           '..',
                           'share',
                           'site-packages'
-                          ))
+                          )))
 
 sys.path.insert(0, SHARE_PATH)
 
-import main
-main.main(sys.argv)
+main = sys.argv[1]
+argv = sys.argv[:1] + sys.argv[2:]
+
+statements = """
+import p6
+import %s as main
+
+""" % main
+bootstrap = compile(statements, '<bootstrap>', 'exec')
+exec(bootstrap)
+
+main.main(argv)
 
