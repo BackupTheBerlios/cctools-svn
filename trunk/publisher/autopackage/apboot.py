@@ -16,18 +16,35 @@ app.main(sys.argv)
 
 """
 
+APPNAME = 'ccpublisher'
+
 import sys
 import os
+import platform
 
-SHARE_PATH = os.path.abspath(
-    os.path.normpath(
-    os.path.join(os.path.dirname(__file__),
-                          '..',
-                          'share',
-                          'site-packages'
-                          )))
+PLATFORM = platform.system().lower()
 
-sys.path.insert(0, SHARE_PATH)
+if PLATFORM == 'linux':
+
+    # Add the P6 path to the PYTHONPATH
+    SHARE_PATH = os.path.abspath(
+        os.path.normpath(
+        os.path.join(os.path.dirname(__file__),
+                              '..',
+                              'share',
+                              'p6', 'site-packages',
+                              )))
+    sys.path.insert(0, SHARE_PATH)
+
+    # Add the application path to the PYTHONPATH
+    SHARE_PATH = os.path.abspath(
+        os.path.normpath(
+        os.path.join(os.path.dirname(__file__),
+                              '..',
+                              'share', APPNAME, 'site-packages',
+                              )))
+    
+    sys.path.insert(0, SHARE_PATH)
 
 main = sys.argv[1]
 argv = sys.argv[:1] + sys.argv[2:]
