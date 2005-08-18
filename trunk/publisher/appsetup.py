@@ -32,6 +32,5 @@ setup(name='ccPublisher',
     ],
       py_modules=['appsetup', ],
       scripts=['main.py'],
-      packages=['ccpublisher', 'ccwsclient', 'ccwx',
-                'pyarchive', 'ccrdf', 'cctagutils'],
+      packages=['ccpublisher', ],
       )
