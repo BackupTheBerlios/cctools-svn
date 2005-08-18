@@ -1,6 +1,8 @@
 import p6
 import zope.interface
 
+# Import cctagutils first, or the ZCML engine gets quite perturbed
+import cctagutils
 from cctagutils.metadata import metadata
 
 def itemSelected(event):
