@@ -20,13 +20,13 @@ Put long & detailed description here.
 [BuildPrepare]
 # generate a source distribution so we have a MANIFEST file
 rm -rf build
-python setup.py sdist -t MANFIEST.in -o
+python setup.py sdist -t MANIFEST.in -o
 python setup.py build build_ext
 
 # grab all the Python files and resources
-mkdir -p $build_root/site-packages/
-cp -a ./build/lib*/* $build_root/site-packages
-tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/site-packages
+mkdir -p $build_root/p6/site-packages/
+cp -a ./build/lib*/* $build_root/p6/site-packages
+tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/p6/site-packages
 
 [BuildUnprepare]
 #unprepareBuild
@@ -41,7 +41,7 @@ requireAtLeast "@wxpython.org/wxpython:2.5"
 
 [Install]
 # Put your installation script here
-installData site-packages
+installData p6
 
 [Uninstall]
 # Usually just the following line is enough to uninstall everything

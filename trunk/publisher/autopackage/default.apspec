@@ -1,7 +1,7 @@
 # -*-shell-script-*-
 
 [Meta]
-RootName: @drop.creativecommons.org/software/publisher:1.9
+RootName: @creativecommons.org/tools/ccpublisher:1.9
 DisplayName: ccPublisher
 ShortName: ccPublisher
 Maintainer: Creative Commons <software@creativecommons.org>
@@ -18,14 +18,14 @@ AutopackageTarget: 1.0
 Put long & detailed description here.
 
 [BuildPrepare]
-mkdir -p $build_root/site-packages
+mkdir -p $build_root/ccpublisher/site-packages
 
 # generate a source distribution so we have a MANIFEST file
 rm -rf build
 python appsetup.py sdist -t APPMANIFEST.in -o
 
 # grab all the Python files and resources
-tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/site-packages
+tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/ccpublisher/site-packages
 
 # grab the launch script, .desktop file, etc
 cp autopackage/ccpublisher.desktop $build_root
@@ -43,7 +43,7 @@ require @creativecommons.org/p6 2.0
 
 [Install]
 # Put your installation script here
-installData site-packages
+installData ccpublisher
 installExe apboot.py
 installDesktop "Sound & Video" ccpublisher.desktop
 
