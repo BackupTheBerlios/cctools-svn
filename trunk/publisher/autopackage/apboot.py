@@ -16,13 +16,30 @@ app.main(sys.argv)
 
 """
 
-APPNAME = 'ccpublisher'
-
+APPNAME = 'ccPublisher'
 import sys
 import os
 import platform
 
 PLATFORM = platform.system().lower()
+
+# include additional dependencies that are really P6 dependencies
+# this is sort of ugly, but works
+try:
+    import wx
+    import wx.xrc
+    import weakref
+    import shelve
+    import logging
+    import sets
+    import encodings
+    import keyword
+    import __future__
+except Exception, e:
+    if PLATFORM == 'windows':
+        raise e
+    else:
+        pass
 
 if PLATFORM == 'linux':
 
@@ -45,6 +62,35 @@ if PLATFORM == 'linux':
                               )))
     
     sys.path.insert(0, SHARE_PATH)
+elif PLATFORM in ('windows', 'win32', 'win'):
+    print 'fixing path for Windows...'
+    import win32con
+    import _winreg
+
+    # Add the P6 path to the PYTHONPATH
+    KEY_PATH = [win32con.HKEY_LOCAL_MACHINE, 'SOFTWARE', 'P6', ]
+    p6key = KEY_PATH[0]
+    for k in KEY_PATH[1:]:
+        p6key = _winreg.OpenKey(p6key, k)
+
+    P6_SHARE_PATH = _winreg.QueryValueEx(p6key, 'SharedPath')[0]
+    sys.path.insert(0, P6_SHARE_PATH)
+
+    # Add the application path to the PYTHONPATH
+    KEY_PATH = [win32con.HKEY_LOCAL_MACHINE, 'SOFTWARE', APPNAME, ]
+    p6key = KEY_PATH[0]
+    for k in KEY_PATH[1:]:
+        p6key = _winreg.OpenKey(p6key, k)
+
+    P6_SHARE_PATH = _winreg.QueryValueEx(p6key, 'Path')[0]
+    sys.path.insert(0, os.path.join(P6_SHARE_PATH, 'site-packages'))
+
+elif PLATFORM == 'darwin':
+    pass
+else:
+    pass
+
+print sys.path
 
 main = sys.argv[1]
 argv = sys.argv[:1] + sys.argv[2:]
