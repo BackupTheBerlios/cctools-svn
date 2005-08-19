@@ -140,7 +140,6 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         for field in self.metagroup.getFields():
             zope.component.handle(
                 p6.metadata.events.UpdateMetadataEvent(self.metagroup.appliesTo,
-                                                       self.metagroup,
                                                        field,
                                                        self.getLicenseUrl()
                                                        )
