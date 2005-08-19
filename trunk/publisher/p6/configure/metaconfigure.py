@@ -73,9 +73,6 @@ class PagesDirective(object):
         # initialize the page registry
         p6.api.getApp().pages = []
         
-    def page(self, _context, type_, title=''):
-        pass
-
     def metadatapages(self, _context, for_):
         _context.action(discriminator=('GeneratePages',),
                         callable=self.__generatePages,
@@ -83,6 +80,16 @@ class PagesDirective(object):
                         )
 
     def __generatePages(self, for_):
+        # XXX use an anonymous function so we don't generate pages until
+        # after all the extension code has loaded
+
+        pagegen = lambda x: p6.ui.pages.metadata.generatePages(for_)
+        pagegen.expand = True
+        
+        p6.api.getApp().pages.append(pagegen)
+            
+        return
+    
         for page in p6.ui.pages.metadata.generatePages(for_):
             p6.api.getApp().pages.append(page)
             

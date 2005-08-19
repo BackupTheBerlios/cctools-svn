@@ -25,9 +25,30 @@ class WizApp(wx.App):
         wx.App.__init__(self, filename=self.errlog)
 
     def OnInit(self):
-        # load your configuration
-        self.context = zope.configuration.xmlconfig.file(self.confFile)
-        
+        # load the core configuration
+        self.context = zope.configuration.xmlconfig.file(self.confFile,
+                                                         execute=False)
+
+        # load extensions and plugins
+        for epath in p6.app.extension.extPaths():
+            for extconf in p6.app.extension.extConfs(epath):
+                print extconf
+                p6.app.extension.loadExtension(extconf, self.context)
+
+        # perform the actions specified by the configuration files
+        self.context.execute_actions()
+
+        # expand any metadata page groups
+        newpages = []
+        for page in self.pages:
+            if getattr(page, 'expand', False):
+                newpages = newpages + [n for n in page(None)]
+            else:
+                newpages.append(page)
+
+        self.pages = newpages
+        del newpages
+
         self.SetAppName(self.appname)
 
         wx.InitAllImageHandlers()
