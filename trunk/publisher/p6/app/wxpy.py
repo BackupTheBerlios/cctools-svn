@@ -1,4 +1,8 @@
+import ConfigParser
+import os
+
 import wx
+import wx.xrc
 
 import zope.interface
 import zope.component
@@ -15,6 +19,9 @@ class WizApp(wx.App):
         # initialize the metadata group list
         self.groups = []
         self.items = []
+
+        # initialize the preferences container
+        self.prefs = {}
         
         self.appname = appname
         self.errlog = filename
@@ -25,6 +32,54 @@ class WizApp(wx.App):
         wx.App.__init__(self, filename=self.errlog)
 
     def OnInit(self):
+        self.__configure()
+        self.__loadPrefs()
+        
+        self.SetAppName(self.appname)
+
+        wx.InitAllImageHandlers()
+
+        self.__initUI()
+
+        self.connectEvents()
+        
+        return True
+
+    def OnExit(self):
+        self.__savePrefs()
+
+    def __loadPrefs(self):
+        input = ConfigParser.ConfigParser()
+        input.read((os.path.join(p6.api.getAppSupportDir(),
+                                 'extprefs.conf'),))
+
+        for section in input.sections():
+            for key in input.options(section):
+                try:
+                    self.prefs[section].fields[key].value = \
+                                                          input.get(section,
+                                                                    key)
+                except KeyError, e:
+                    pass
+
+    def __savePrefs(self):
+        output = ConfigParser.ConfigParser()
+
+        for prefset in self.prefs:
+            output.add_section(prefset)
+
+            for field in self.prefs[prefset].fields:
+                output.set(prefset, field,
+                           self.prefs[prefset].fields[field].value or '')
+
+
+        output.write(file(os.path.join(p6.api.getAppSupportDir(),
+                                       'extprefs.conf'), 'w'))
+        
+    def __configure(self):
+        """Load the ZCML configuration for P6, the application and any
+        extensions."""
+
         # load the core configuration
         self.context = zope.configuration.xmlconfig.file(self.confFile,
                                                          execute=False)
@@ -49,19 +104,33 @@ class WizApp(wx.App):
         self.pages = newpages
         del newpages
 
-        self.SetAppName(self.appname)
+    def __makeMenu(self):
+        """Generate the top-level menu bar and return the MenuBar object."""
 
-        wx.InitAllImageHandlers()
+        # load the basic menu bar
+        res = wx.xrc.EmptyXmlResource()
+        res.LoadFromString(self.MENU_XRC)
+        menubar = res.LoadMenuBar('TOPMENU')
+
+        # connect menu events
+        self.Bind(wx.EVT_MENU,
+                  lambda event: p6.ui.windows.prefs.P6PrefsWindow(self.GetTopWindow()).Show(),
+                  id=wx.xrc.XRCID('MNU_PREFERENCES'))
+        
+        return menubar
+
+    def __initUI(self):
+        """Initialize any user interface elements -- in particular, the top
+        level window and global menu bar."""
 
         self.main = self.__frameclass(self)
         self.main.Show(True)
 
-        self.SetTopWindow(self.main)
-
-        self.connectEvents()
+        self.topmenu = self.__makeMenu()
+        self.main.SetMenuBar(self.topmenu)
         
-        return True
-
+        self.SetTopWindow(self.main)
+    
     def connectEvents(self):
 
         # listen for item addition events
@@ -76,3 +145,23 @@ class WizApp(wx.App):
     def selectItem(self, event):
         self.items.append(event.item)
 
+
+    MENU_XRC = """
+<resource>
+  <object class="wxMenuBar" name="TOPMENU">
+    <object class="wxMenu" name="MNU_FILE">
+      <label>&amp;File</label>
+      <object class="wxMenuItem" name="MNU_EXIT">
+        <label>&amp;Exit</label>
+      </object>
+    </object>
+    <object class="wxMenu" name="MNU_EDIT">
+      <label>&amp;Edit</label>
+      <object class="wxMenuItem" name="MNU_PREFERENCES">
+        <label>&amp;Preferences</label>
+      </object>
+    </object>
+  </object>
+</resource>
+"""
+    
