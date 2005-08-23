@@ -5,7 +5,9 @@
 #  Before running the bootstrap script must be built using py2exe; this is
 #  currently in the autopackage folder -- python setup.py py2exe
 #
-#  The zope.proxy extension module must also be built.  
+#  The zope.proxy extension module must also be built by running:
+#    > python2.4 setup.py build_ext
+#  first.
 
 Name "P6"
 
@@ -36,7 +38,7 @@ Name "P6"
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE ..\..\resources\LICENSE.txt
+!insertmacro MUI_PAGE_LICENSE "..\..\resources\LICENSE.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -65,15 +67,17 @@ ShowUninstDetails show
 Section -Main SEC0000
     SetOutPath "$INSTDIR\site-packages\"
     SetOverwrite on
+
     # core P6 files
-    File /r ..\..\zope
-    File /r ..\..\p6
+    File /r /x .svn /x CVS ..\..\zope
+    File /r /x .svn /x CVS ..\..\p6
+    File /r ..\..\build\lib.win32-2.4\*
 
     # P6 support libraries
-    File /r ..\..\ccwsclient
-    File /r ..\..\ccwx
-    #File /r ..\..\tagger
-    #File /r ..\..\eyeD3
+    File /r /x CVS ..\..\ccwsclient
+    File /r /x CVS ..\..\ccwx
+    File /r /x CVS ..\..\tagger
+    File /r /x CVS ..\..\eyeD3
 
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
 SectionEnd
