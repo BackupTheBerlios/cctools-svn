@@ -207,4 +207,34 @@ class IPageSubdirective(zope.interface.Interface):
         required=True,
         )
     
+class IPreferencesDirective(zope.interface.Interface):
+    """A container for an extension preference set."""
 
+    id = zope.configuration.fields.MessageID(
+        title=u"A unique ID for this extension/preference set.",
+        required=True,
+        )
+
+    label = zope.configuration.fields.MessageID(
+        title=u"Title used for the preferences page.",
+        required=True,
+        )
+
+class IPrefsFieldSubdirective(zope.interface.Interface):
+    """A single preference field."""
+
+    id = zope.configuration.fields.MessageID(
+        title=u"The unique identifier for this field.",
+        required=True,
+        )
+
+    type = zope.configuration.fields.GlobalObject(
+        title=u"Global factory class for this field (str, dict, etc).",
+        required=True,
+        )
+
+    label = zope.configuration.fields.MessageID(
+        title=u"Label to use in preferences UI.",
+        required=False,
+        )
+    

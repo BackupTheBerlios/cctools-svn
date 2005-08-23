@@ -64,6 +64,20 @@
 
     </meta:complexDirective>
 
+
+    <meta:complexDirective
+        name="preferences"
+        schema="p6.configure.metadirectives.IPreferencesDirective"
+        handler="p6.configure.metaconfigure.PreferencesDirective"
+        >
+
+      <meta:subdirective
+          name="field"
+          schema="p6.configure.metadirectives.IPrefsFieldSubdirective"
+          />
+
+    </meta:complexDirective>
+
   </meta:directives>
 
 </configure>

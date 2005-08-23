@@ -127,3 +127,29 @@ class PagesDirective(object):
                         args=(lambda x: factory(x, title), ),
                         )
     
+class PreferencesDirective(object):
+    """A preference set."""
+
+    def __init__(self, _context, id, label, ):
+        
+        # initialize group settings
+        self.id = id
+        self.label = label
+
+        self.__extobj = p6.app.extension.ExtensionPrefs(self.id, self.label)
+        
+        # add to the App's pref list once all the fields have been read
+        _context.action(discriminator=('ExtensionPrefs', id),
+                        callable=p6.api.getApp().prefs.__setitem__,
+                        args=(self.id, self.__extobj, ),
+                        )
+
+    def field(self, _context, id, type, label=None):
+        if label is None:
+            label = id
+
+        self.__extobj.fields[id] = p6.app.extension.ExtensionPrefField(id,
+                                                                       type,
+                                                                       label)
+    
+        
