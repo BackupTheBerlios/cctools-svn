@@ -1,5 +1,5 @@
 """
-Platform-specific application API.
+Application Extension API
 """
 
 import os
@@ -9,12 +9,43 @@ import platform
 
 import zope
 
+class ExtensionPrefField(object):
+    def __init__(self, id, type, label, value=None):
+        self.id = id
+        self.type = type
+        self.label = label
+
+        self.value = value
+        
+class ExtensionPrefs(object):
+    def __init__(self, id, label, fields={}):
+        self.id = id
+        self.label = label
+
+        self.fields = fields
+    
 def extPaths():
     """Return a list of paths to search for extensions and plugins."""
     PLATFORM = platform.system().lower()
 
     if PLATFORM == 'windows':
-        pass
+        # load paths from registry
+
+        import _winreg
+        import win32con
+
+        # Find the P6 path
+        KEY_PATH = [win32con.HKEY_LOCAL_MACHINE, 'SOFTWARE', 'P6', ]
+        p6key = KEY_PATH[0]
+        for k in KEY_PATH[1:]:
+            p6key = _winreg.OpenKey(p6key, k)
+
+        P6_SHARE_PATH = _winreg.QueryValueEx(p6key, 'SharedPath')[0]
+
+        p6_ext_path = os.path.join(P6_SHARE_PATH, 'extensions')
+        if os.path.exists(p6_ext_path):
+            results.append(p6_ext_path)
+
     elif PLATFORM == 'linux':
         # always look in the current working directory
         # XXX Should this go away? It's sorta needed for dev work
