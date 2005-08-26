@@ -21,7 +21,7 @@ class BasicStorage(object):
 
         zope.component.provideHandler(
             zope.component.adapter(p6.storage.events.IStore)(
-                p6.api.deinstify(self.store))
+                p6.api.deinstify(self.__wrapStore))
             )
 
     def validate(self, event=None):
@@ -32,6 +32,19 @@ class BasicStorage(object):
                                                 message='in Validate...')
 
         zope.component.handle(update)
+
+    def __wrapStore(self, event=None):
+        """Wraps dispatch of L{p6.storage.events.IStore} events by calling
+        self.store(self, event).  Publishes a L{p6.storage.events.WorkStored}
+        event after .store completes.
+        """
+
+        # call the store method
+        self.store(event)
+        
+        # after the storage process, publish a post-store event
+        stored_event = p6.storage.events.WorkStored()
+        zope.component.handle(stored_event)
 
     def store(self, event=None):
         """Handle L{p6.storage.events.IStore} events by simply
@@ -44,7 +57,3 @@ class BasicStorage(object):
 
         zope.component.handle(update)
 
-
-        # after the storage process, publish a post-store event
-        event = p6.storage.events.WorkStored()
-        zope.component.handle(event)
