@@ -13,6 +13,8 @@ import p6.api
 
 import license
 
+import inspect
+
 class MetadataPage(ccwx.xrcwiz.XrcWizPage):
     """Basic metadata page; generated for most metadata groups."""
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
@@ -39,8 +41,19 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
         item_sizer.AddGrowableCol(1)
         self.GetSizer().Add(item_sizer, flag=wx.EXPAND)
 
+        # register our generic update handler
+        zope.component.provideHandler(
+            zope.component.adapter(p6.metadata.events.IUpdateMetadataEvent)(
+                p6.api.deinstify(self.updateField))
+            )
+
         self.addFields(metaGroup, item_sizer)
 
+    def updateField(self, event):
+        """Generic IUpdateMetadataEvent handler that keeps the UI in sync."""
+        if self.metagroup == event.field.group():
+            event.field._widget().SetValue(event.value)
+        
     def addFields(self, metaGroup, sizer):
         """Create the user input widgets for this group."""
 
@@ -75,13 +88,13 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
                 zope.component.handle(event)
 
                 # found a value, set it
-                if len(event.value) > 1:
-                    print 'aieee!'
-                    print event.value
+                #if len(event.value) > 1:
+                #    print 'aieee!'
+                #    print event.value
 
-                print event.value
-                if len(event.value) > 0:
-                    widget.SetValue(event.value[0])
+                #print event.value
+                #if len(event.value) > 0:
+                #    widget.SetValue(event.value[0])
 
     def onValidate(self, event):
         errors = []
@@ -117,7 +130,6 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
             if widget is not None:
                 zope.component.handle(
                     p6.metadata.events.UpdateMetadataEvent(self.metagroup.appliesTo,
-                                                           self.metagroup,
                                                            field,
                                                            widget.GetValue()
                                                            )
@@ -215,7 +227,8 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
                     (item,),
                     p6.metadata.interfaces.IMetadataProvider)
 
-                value = p6.metadata.interfaces.IMetadataStorage(item).getMetaValue(field.id, '')
+                value = p6.metadata.interfaces.IMetadataStorage(item).\
+                        getMetaValue(field.id, default='')
                 widget.SetValue(value)
 
                 field._widget[item] = weakref.ref(widget)
@@ -255,7 +268,6 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
                 if widget is not None:
                     zope.component.handle(
                         p6.metadata.events.UpdateMetadataEvent(item,
-                                                               self.metagroup,
                                                                field,
                                                              widget.GetValue()
                                                                )
