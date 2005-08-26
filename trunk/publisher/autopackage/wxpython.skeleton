@@ -14,3 +14,5 @@ testForPythonModule wx
 INTERFACE_VERSIONS=`python -c 'import wx; print wx.__version__' `
 SOFTWARE_VERSIONS=$INTERFACE_VERSIONS
 
+# We should probably publish some information about what wx libraries
+# (xrc, opengl, etc) are available -- maybe next time.
