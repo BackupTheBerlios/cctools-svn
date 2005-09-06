@@ -28,10 +28,12 @@ class StoreWork:
 class IStored(zope.interface.Interface):
     """Placeholder interface for post-Storage (WorkedStored) events."""
 
+    metadata = zope.interface.Attribute("A dictionary of metadata returned by the storage provider.")
+
 class WorkStored:
     zope.interface.implements(IStored)
-    def __init__(self):
-        pass
+    def __init__(self, metadata = {}):
+        self.metadata = metadata
     
 class IItemSelected(zope.interface.Interface):
     """Interface for item selection events."""

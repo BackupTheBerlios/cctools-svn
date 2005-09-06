@@ -40,10 +40,10 @@ class BasicStorage(object):
         """
 
         # call the store method
-        self.store(event)
+        mdata = self.store(event)
         
         # after the storage process, publish a post-store event
-        stored_event = p6.storage.events.WorkStored()
+        stored_event = p6.storage.events.WorkStored(mdata)
         zope.component.handle(stored_event)
 
     def store(self, event=None):
@@ -57,3 +57,4 @@ class BasicStorage(object):
 
         zope.component.handle(update)
 
+        return {}
