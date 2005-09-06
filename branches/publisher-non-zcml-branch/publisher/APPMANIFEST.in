@@ -1,0 +1,3 @@
+include app.zcml
+include resources/*
+recursive-include ccpublisher *.zcml

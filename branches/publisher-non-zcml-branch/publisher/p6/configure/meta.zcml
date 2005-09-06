@@ -1,0 +1,83 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:meta="http://namespaces.zope.org/meta">
+
+  <meta:directives namespace="http://namespaces.zope.org/zope">
+
+    <meta:complexDirective
+        name="storage"
+	schema="p6.configure.metadirectives.IStorageDirective"
+	handler="p6.configure.metaconfigure.StorageDirective"
+        />
+   
+    <meta:complexDirective
+        name="metadatagroup"
+        schema="p6.configure.metadirectives.IMdataGroupDirective"
+        handler="p6.configure.metaconfigure.MGroupDirective"
+        >
+
+      <meta:subdirective
+          name="field"
+          schema="p6.configure.metadirectives.IMetadataFieldSubdirective"
+          />
+
+    </meta:complexDirective>
+   
+    <meta:complexDirective
+        name="pages"
+        schema="p6.configure.metadirectives.IPagesDirective"
+        handler="p6.configure.metaconfigure.PagesDirective"
+        >
+
+      <!-- generic sub page directives -->
+
+      <meta:subdirective
+          name="xrcpage"
+          schema="p6.configure.metadirectives.IXrcPageSubdirective"
+          />
+
+      <meta:subdirective
+          name="page"
+          schema="p6.configure.metadirectives.IPageSubdirective"
+          />
+
+      <!-- supplied page type directives -->
+      <meta:subdirective
+          name="fileselector"
+          schema="p6.configure.metadirectives.IFileSelectorSubdirective"
+          />
+
+      <meta:subdirective
+          name="metadatapages"
+          schema="p6.configure.metadirectives.IMetadataPagesSubdirective"
+          />
+
+      <meta:subdirective
+          name="storepage"
+          schema="p6.configure.metadirectives.IStorePageSubdirective"
+          />
+
+      <meta:subdirective
+          name="xmlpage"
+          schema="p6.configure.metadirectives.IXmldisplayPageSubdirective"
+          />
+
+    </meta:complexDirective>
+
+
+    <meta:complexDirective
+        name="preferences"
+        schema="p6.configure.metadirectives.IPreferencesDirective"
+        handler="p6.configure.metaconfigure.PreferencesDirective"
+        >
+
+      <meta:subdirective
+          name="field"
+          schema="p6.configure.metadirectives.IPrefsFieldSubdirective"
+          />
+
+    </meta:complexDirective>
+
+  </meta:directives>
+
+</configure>
