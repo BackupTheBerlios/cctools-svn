@@ -49,12 +49,11 @@ def extPaths():
     elif PLATFORM == 'linux':
         # always look in the current working directory
         # XXX Should this go away? It's sorta needed for dev work
-        result = ['.']
+        result = [os.path.dirname(__file__)]
         
         # check if the autopackage non-root share exists
         ap_local_path = os.path.join(os.path.expanduser('~'),
-                                     '.local', 'share',
-                                     'p6', 'extensions')
+                                     '.local', 'ccpublisher', 'extensions')
         if os.path.exists(ap_local_path):
             result.append(ap_local_path)
 
@@ -64,18 +63,19 @@ def extPaths():
         if os.path.exists(ap_root_path):
             result.append(ap_root_path)
 
-        return result
-    
     elif PLATFORM == 'darwin':
         pass
     else:
-        return []
+        result = []
+
+    print result
+    return result
 
 def extConfs(path):
     """Generates a list of configuration files in the specified path;
     searches path and all subfolders for 'extension.zcml'."""
     
-    for (path, dirnames, filenames) in os.walk('.'):
+    for (path, dirnames, filenames) in os.walk(path):
         for f in fnmatch.filter(filenames, 'extension.zcml'):
             yield os.path.join(path, f)
 
