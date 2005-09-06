@@ -21,7 +21,7 @@
   <metadatagroup
      id="workinfo"
      title="Tell Us About Your Files"
-     description="Test description."
+     description="Metadata helps others to find your works."
      for="p6.storage.interfaces.IWork"
      >
 
@@ -126,7 +126,6 @@
              p6.storage.interfaces.IStorage"  />
 
     <storepage  />
-    <xmlpage />
 
   </pages>
 
