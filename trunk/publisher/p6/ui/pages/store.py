@@ -80,15 +80,21 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         zope.component.handle(event)
 
     def postStore(self, event):
-        """Re-enables the UI and publishes a L{p6.storage.events.PostStore}
+        """Re-enables the UI in response to a L{p6.storage.events.Stored}
         event."""
         
         # re-enable the next button
-        event = p6.ui.events.UpdateStatusEvent(value=0, message='Complete.')
-        zope.component.handle(event)
+        up_event = p6.ui.events.UpdateStatusEvent(value=0, message='Complete.')
+        zope.component.handle(up_event)
         
         XRCCTRL(wx.GetApp().GetTopWindow(), "CMD_NEXT").Enable()
         wx.EndBusyCursor()
+
+        # check if a URI was supplied
+        if 'URI' in event.metadata:
+            XRCCTRL(wx.GetApp().GetTopWindow(), "LBL_POSTOP").SetLabel(
+                "You can find your uploaded work at %s" % event.metadata['URI']
+                )
 
         self.Refresh()
 
@@ -144,6 +150,13 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         <flag>wxEXPAND</flag>
       </object>
       
+      <object class="sizeritem">
+        <object class="wxStaticText" name="LBL_POSTOP">
+          <label/>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+
     </object>
   </object>
 
