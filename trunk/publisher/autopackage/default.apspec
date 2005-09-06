@@ -18,14 +18,16 @@ AutopackageTarget: 1.0
 Put long & detailed description here.
 
 [BuildPrepare]
-mkdir -p $build_root/ccpublisher/site-packages
 
 # generate a source distribution so we have a MANIFEST file
 rm -rf build
-python appsetup.py sdist -t APPMANIFEST.in -o
+python appsetup.py sdist -t MANIFEST.in -o
+python appsetup.py build build_ext
 
 # grab all the Python files and resources
-tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/ccpublisher/site-packages
+mkdir -p $build_root/ccpublisher
+cp -a ./build/lib*/* $build_root/ccpublisher
+tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/ccpublisher
 
 # grab the launch script, .desktop file, etc
 cp autopackage/ccpublisher.desktop $build_root
@@ -39,7 +41,11 @@ echo '*' | import
 
 [Prepare]
 # Dependency checking
-require @creativecommons.org/p6 2.0
+require @python.org/python 2.4
+requireAtLeast "@wxpython.org/wxpython:2.5"
+
+# Dependency checking
+#require @creativecommons.org/p6 2.0
 
 [Install]
 # Put your installation script here

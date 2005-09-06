@@ -23,24 +23,6 @@ import platform
 
 PLATFORM = platform.system().lower()
 
-# include additional dependencies that are really P6 dependencies
-# this is sort of ugly, but works
-try:
-    import wx
-    import wx.xrc
-    import weakref
-    import shelve
-    import logging
-    import sets
-    import encodings
-    import keyword
-    import __future__
-except Exception, e:
-    if PLATFORM == 'windows':
-        raise e
-    else:
-        pass
-
 if PLATFORM == 'linux':
 
     # Add the P6 path to the PYTHONPATH
@@ -51,14 +33,14 @@ if PLATFORM == 'linux':
                               'share',
                               'p6', 'site-packages',
                               )))
-    sys.path.insert(0, SHARE_PATH)
+    #sys.path.insert(0, SHARE_PATH)
 
     # Add the application path to the PYTHONPATH
     SHARE_PATH = os.path.abspath(
         os.path.normpath(
         os.path.join(os.path.dirname(__file__),
                               '..',
-                              'share', APPNAME, 'site-packages',
+                              'share', APPNAME.lower(),
                               )))
     
     sys.path.insert(0, SHARE_PATH)
@@ -104,4 +86,5 @@ bootstrap = compile(statements, '<bootstrap>', 'exec')
 exec(bootstrap)
 
 main.main(argv)
+
 
