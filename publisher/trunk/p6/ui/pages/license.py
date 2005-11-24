@@ -2,6 +2,7 @@
 
 import webbrowser
 import urllib2
+import thread
 
 import wx
 import wx.html
@@ -75,8 +76,9 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
                                        )
         self.lblLicenses = wx.StaticText(parent=self.pnlFields,
                                                 label='License Class:')
-        
-        wx.CallAfter(self.getLicenseClasses)
+
+        # retrieve the license classes in a background thread
+        thread.start_new_thread(self.getLicenseClasses, ())
 
         self.fieldSizer.Add(self.lblLicenses)
         self.fieldSizer.Add(self.cmbLicenses, flag=wx.EXPAND)
@@ -109,13 +111,9 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
 
         self.cmbLicenses.AppendItems(self.__l_classes.values())
         self.cmbLicenses.SetValue('Creative Commons')
-        
-        try:
-            self.onSelectLicenseClass(None)
-            # XXX not needed... onselect calls this...
-            # self.updateLicense(None)
-        except:
-            pass
+
+        # use wx.CallAfter to schedule the call (can't touch GUI in a thread)
+        wx.CallAfter(lambda: self.onSelectLicenseClass(None))
         
     def onLicense(self, event):
         """Submit selections and display license info."""
