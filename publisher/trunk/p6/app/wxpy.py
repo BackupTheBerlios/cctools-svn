@@ -116,6 +116,9 @@ class WizApp(wx.App):
         self.Bind(wx.EVT_MENU,
                   lambda event: p6.ui.windows.prefs.P6PrefsWindow(self.GetTopWindow()).Show(),
                   id=wx.xrc.XRCID('MNU_PREFERENCES'))
+        self.Bind(wx.EVT_MENU,
+                  lambda event: self.GetTopWindow().Close(),
+                  id=wx.xrc.XRCID('MNU_EXIT'))
         
         return menubar
 
