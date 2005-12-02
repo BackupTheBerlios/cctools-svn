@@ -28,6 +28,9 @@ def extPaths():
     """Return a list of paths to search for extensions and plugins."""
     PLATFORM = platform.system().lower()
 
+    # initialize the result
+    result = []
+    
     if PLATFORM == 'windows':
         # load paths from registry
 
@@ -35,17 +38,22 @@ def extPaths():
         import win32con
 
         # Find the P6 path
-        KEY_PATH = [win32con.HKEY_LOCAL_MACHINE, 'SOFTWARE', 'P6', ]
-        p6key = KEY_PATH[0]
-        for k in KEY_PATH[1:]:
-            p6key = _winreg.OpenKey(p6key, k)
-
-        P6_SHARE_PATH = _winreg.QueryValueEx(p6key, 'SharedPath')[0]
-
-        p6_ext_path = os.path.join(P6_SHARE_PATH, 'extensions')
-        if os.path.exists(p6_ext_path):
-            results.append(p6_ext_path)
-
+        try:
+            KEY_PATH = [win32con.HKEY_LOCAL_MACHINE, 'SOFTWARE', 'P6', ]
+            p6key = KEY_PATH[0]
+            for k in KEY_PATH[1:]:
+                p6key = _winreg.OpenKey(p6key, k)
+    
+            P6_SHARE_PATH = _winreg.QueryValueEx(p6key, 'SharedPath')[0]
+    
+            p6_ext_path = os.path.join(P6_SHARE_PATH, 'extensions')
+            if os.path.exists(p6_ext_path):
+                results.append(p6_ext_path)
+        except WindowsError, e:
+            # if we can't open the registry key, we're most likely running
+            # in a sand box -- and we can continue on just fine
+            pass
+        
     elif PLATFORM == 'linux':
         # always look in the current working directory
         # XXX Should this go away? It's sorta needed for dev work
@@ -66,8 +74,8 @@ def extPaths():
     elif PLATFORM == 'darwin':
         pass
     else:
-        result = []
-
+        pass
+    
     print result
     return result
 
