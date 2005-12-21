@@ -26,13 +26,16 @@ def main(argv=[]):
    #                             cctagutils.const.version())
 
    # XXX Move these options to ZCML
+   try:
+       root_dir = os.path.dirname(__file__)
+   except NameError, e:
+       root_dir = os.path.dirname(sys.executable)
+       
    app = CcPublisher(appname = 'ccPublisher',
                      filename= 'err.log',
-                     xrcfile = os.path.join(os.path.dirname(__file__),
-                                            'resources', 'wizard.xrc'),
+                     xrcfile = os.path.join( root_dir, 'resources', 'wizard.xrc'),
                      frameclass = P6,
-                     confFile = os.path.join(os.path.dirname(__file__),
-                                            'app.zcml'),
+                     confFile = os.path.join( root_dir, 'app.zcml'),
                      )
 
    app.MainLoop()
