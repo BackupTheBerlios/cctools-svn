@@ -9,6 +9,9 @@ import zope.component
 
 import p6
 import interfaces
+import bananas
+
+zope.configuration.xmlconfig.openInOrPlain = bananas.openInOrPlain
 
 class WizApp(wx.App):
     zope.interface.implements(interfaces.IWizardApp)
