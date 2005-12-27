@@ -90,6 +90,7 @@ if __name__ == '__main__':
           py_modules=['appsetup','setup' ],
           scripts=['main.py'],
           windows=['main.py'],
+          app=['main.py'],
           ext_modules=extensions,
           data_files=[('resources', 
                       ['resources/LICENSE.txt', 'resources/wizard.xrc'])] + 
@@ -97,6 +98,9 @@ if __name__ == '__main__':
           packages=packages,
           options={'py2exe':{'packages':packages,
                              'includes':['dbhash', 'encodings',]
-                             }
+                             },
+                   'py2app':{'packages':packages,
+                             'includes':['dbhash', 'encodings',]
+                             },
                    }
           )
