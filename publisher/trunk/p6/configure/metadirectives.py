@@ -105,6 +105,12 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         value_type=zope.configuration.fields.MessageID(),
         )
 
+    choicesList = zope.configuration.fields.GlobalObject(
+        title=u"Choices List",
+        description=u"A Python sequence which provides the selection choices",
+        required=False,
+        )
+
     validator = zope.configuration.fields.GlobalObject(
         title=u"validator",
         description=u"A callable which returns None if the passed value "
