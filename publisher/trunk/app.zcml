@@ -70,7 +70,8 @@
 
      <field id="format"
             label="File Format"
-            type="p6.metadata.types.ITextField"
+            type="p6.metadata.types.ISelectionField"
+            choicesList="pyarchive.const.VALID_FORMATS"
             />
   </metadatagroup>
 
