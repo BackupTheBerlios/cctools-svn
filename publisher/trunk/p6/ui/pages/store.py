@@ -88,9 +88,13 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         zope.component.handle(up_event)
         
         XRCCTRL(wx.GetApp().GetTopWindow(), "CMD_NEXT").Enable()
-        wx.EndBusyCursor()
+        try:
+            wx.EndBusyCursor()
+        except wx._core.PyAssertionError, e:
+            pass
 
         # check if a URI was supplied
+        print 'meta:', event.metadata
         if 'URI' in event.metadata:
             XRCCTRL(wx.GetApp().GetTopWindow(), "LBL_POSTOP").SetLabel(
                 "You can find your uploaded work at %s" % event.metadata['URI']
@@ -125,12 +129,12 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
     <object class="wxFlexGridSizer">
       <cols>1</cols>
       <growablecols>0</growablecols>
-      <growablerows>4</growablerows>
+      <growablerows>3</growablerows>
       <vgap>10</vgap>
       
       <object class="sizeritem">
         <object name="LBL_MACRO_TASK" class="wxStaticText">
-          <label>Validating input...</label>
+          <label>Working...</label>
         </object>
         <flag>wxEXPAND</flag>
       </object>
