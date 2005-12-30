@@ -21,6 +21,7 @@ import os.path
 import string
 import types
 import codecs
+import ftplib
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
@@ -40,6 +41,7 @@ class ArchiveItem:
     </metadata>    
     """
 
+    # XXX take the uploading application as a parameter so that it's not hard coded.
     def __init__(self, identifier, collection, mediatype,
                  title, runtime=None, adder=None, license=None):
         self.files = []
@@ -97,7 +99,7 @@ class ArchiveItem:
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
-        <upload_application appid="ccpublisher" version="1.0.6" />
+        <upload_application appid="ccpublisher" version="1.9.1" />
         """ % (self.title, self.collection, self.mediatype) )
 
         if username is not None:
@@ -179,13 +181,22 @@ class ArchiveItem:
         # connect to the FTP server
         callback.increment(status='connecting to archive.org...')
 
+        print self.server
+        print username
+        print self.identifier
+        
         ftp = cb_ftp.FTP(self.server)
         ftp.login(username, password)
 
         # create a new folder for the submission
         callback.increment(status='creating folder for uploads...')
 
-        ftp.mkd(self.identifier)
+        try:
+            ftp.mkd(self.identifier)
+        except ftplib.error_perm, (code, msg):
+            if code != 550:
+                raise ftplib.error_perm(code, msg)
+            
         ftp.cwd(self.identifier)
 
         # upload the XML files
