@@ -29,7 +29,7 @@ class BasicStorage(object):
         updating the progress bar."""
         
         update = p6.ui.events.UpdateStatusEvent(delta=20,
-                                                message='in Validate...')
+                                                message='validating submission data...')
 
         zope.component.handle(update)
 
@@ -38,6 +38,11 @@ class BasicStorage(object):
         self.store(self, event).  Publishes a L{p6.storage.events.WorkStored}
         event after .store completes.
         """
+
+        update = p6.ui.events.UpdateStatusEvent(delta=20,
+                                                message='uploading submission...')
+
+        zope.component.handle(update)
 
         # call the store method
         mdata = self.store(event)
