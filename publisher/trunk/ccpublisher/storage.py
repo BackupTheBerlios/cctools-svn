@@ -1,15 +1,44 @@
+import os
+
 import pyarchive
 
 import zope.interface
 import zope.component
 
 import p6
+import p6.ui.events
+
 from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
 
 class IEmbeddable(zope.interface.Interface):
     pass
 
+class CallbackBridge(object):
+    """Bridge pyarchive status update callbacks to P6 events."""
+    
+    def __init__(self):
+        pass
+    
+    def reset(self, steps=1, filename=None, status=''):
+        if filename is not None:
+            status = 'Uploading %s...' % filename
+            steps = os.stat(filename).st_size
+            
+        resetEvt = p6.ui.events.ResetStatusEvent(steps=steps, message=status)
+        zope.component.handle(resetEvt)
+        
+    def increment(self, status="", steps=1):
+        update = p6.ui.events.UpdateStatusEvent(delta=steps,
+                                                message=status)
+        zope.component.handle(update)
+        
+    def finish(self):
+        pass
+    
+    def __call__(self, bytes=1):
+        self.increment(steps=bytes)
+    
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
                      p6.storage.basic.BasicStorage):
     zope.interface.implements(p6.metadata.interfaces.IMetadataStorage,
@@ -85,8 +114,12 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        # now add the individual files to the submission
        for item in p6.api.getApp().items[1:]:
-           sub = submission.addFile(item,
+           # XXX we're passing in the filename instead of the item and this is really, really bad
+           # XXX we should make pyarchive interface aware, give it it's own InputItem interface
+           # XXX and then adapt our item to that.
+           sub = submission.addFile(item.getIdentifier(),
                                     pyarchive.const.ORIGINAL,
+                                    format = p6.metadata.interfaces.IMetadataProvider(item).getMetaValue("format"),
                                     claim = self.__claimString(license,
                                                                v_url,
                                                                year,
@@ -105,7 +138,8 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
        print submission.filesxml().getvalue()
        archive_URI =  submission.submit(
            IMetadataStorage(self).getMetaValue('username'),
-           IMetadataStorage(self).getMetaValue('password'),)
+           IMetadataStorage(self).getMetaValue('password'),
+           callback=CallbackBridge())
 
        return {'URI':archive_URI}
        
