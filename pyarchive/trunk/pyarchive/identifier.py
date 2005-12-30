@@ -28,9 +28,17 @@ def available(identifier):
                "identifier=%s" % identifier
 
     # make request
-    response = urllib2.urlopen(checkurl)
+    print checkurl
+    try:
+        response = urllib2.urlopen(checkurl)
+    except urllib2.URLError, (errno, strerror):
+        if errno == 10054:
+            # connection reset by peer
+            # try again
+            response = urllib2.urlopen(checkurl)
+            
     response_dom = xml.dom.minidom.parse(response)
-
+            
     # parse the response DOM
     result = response_dom.getElementsByTagName("result")[0]
     result_type = result.getAttribute("type")
