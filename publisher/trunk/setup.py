@@ -52,7 +52,7 @@ if __name__ == '__main__':
           ext_modules=extensions,
           data_files=[('resources', 
                       ['resources/LICENSE.txt', 'resources/wizard.xrc'])] + 
-                      findZcml(),
+                      findZcml(os.path.dirname(__file__) or os.getcwd()),
           packages=packages,
           package_data=packageData(packages),
           options={'py2exe':{'packages':packages,
