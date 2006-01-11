@@ -122,6 +122,12 @@ class WizApp(wx.App):
         self.Bind(wx.EVT_MENU,
                   lambda event: self.GetTopWindow().Close(),
                   id=wx.xrc.XRCID('MNU_EXIT'))
+
+        # check if any extensions were loaded
+        if len(self.prefs.keys()) == 0:
+            # hide the preferences menu
+            # XXX We currently hide the entire menu since it only has the prefs
+            menubar.EnableTop(1, False)
         
         return menubar
 
