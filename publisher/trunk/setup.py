@@ -56,7 +56,9 @@ else:
 
 # fix up the data file inclusion
 dataFiles = [(RSRC_DIR, 
-             ['resources/LICENSE.txt', 'resources/wizard.xrc', 'app.zcml'])]
+             ['resources/LICENSE.txt',
+              'resources/wizard.xrc',
+              'resources/app.zcml'])]
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
     # "compiled" platforms

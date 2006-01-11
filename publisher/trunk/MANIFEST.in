@@ -1,5 +1,4 @@
 include setup.py
-include app.zcml
 include resources/*
 recursive-include ccpublisher *.zcml
 recursive-include p6 *.zcml
