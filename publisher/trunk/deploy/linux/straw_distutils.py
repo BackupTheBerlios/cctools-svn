@@ -3,6 +3,8 @@
 # Extention of distutils for straw.
 #
 # Written by Terje Røsten <terjeros@phys.ntnu.no> Nov. 2003.
+# Extended by Nathan Yergler <nathan@yergler.net> Jan. 2006
+#   to support non-Straw builds.
 
 
 import sys
@@ -12,6 +14,7 @@ import re
 import glob
 import types
 import commands
+import shutil
 
 from distutils.core import Command
 from distutils.command.build import build
@@ -20,7 +23,7 @@ from distutils.command.install_data import install_data
 from distutils.dep_util import newer
 from distutils.dist import Distribution
 from distutils.core import setup
-
+import distutils.sysconfig
 
 try:
     from dsextras import BuildExt
@@ -115,7 +118,7 @@ class straw_install(install):
     
     def initialize_options(self):
         install.initialize_options(self)
-        self.prefix = '/usr/local'
+        self.prefix = '/usr/local/'
         # if self.sysconfdir is not a absolute path it will
         # be prefixed by self.prefix
         self.sysconfdir = 'etc'
@@ -132,6 +135,11 @@ class straw_install(install):
         
     def finalize_options(self):
 
+        print '*'*70
+        print self.prefix
+        print distutils.sysconfig.PREFIX
+        print '*'*70
+        
         if self.prefix == 'auto':
             cmd = 'pkg-config --variable=prefix libgnome2.0'
             err, val = commands.getstatusoutput(cmd)
@@ -378,14 +386,32 @@ class build_desktop(Command):
                                    ('build_base', 'build_base'))
 
     def run(self):
-        self.announce("Building straw.desktop file....")
+        self.announce("Building .desktop file....")
+        translated_files = []
+        
         dest = os.path.normpath(os.path.join(self.build_base, 'share/applications'))
         self.mkpath(dest, 1)
-        cmd = '%s -d -u po straw.desktop.in %s/straw.desktop' % (self.intl_merge, dest)
-        err, val = commands.getstatusoutput(cmd)
-        if err:
-            sys.exit('Error merging translation in straw.desktop')
-        print "%s" % val
+
+        for d_file in self.distribution.desktop_file:
+            dest_file = os.path.split(d_file)[1]
+            if (dest_file[-3:] == '.in'):
+                # strip the .in suffix
+                dest_file = dest_file[:-3]
+
+            cmd = '%s -d -u po %s %s/%s' % (
+                self.intl_merge,
+                d_file,
+                dest, dest_file)
+
+            err, val = commands.getstatusoutput(cmd)
+            if err:
+                sys.exit('Error merging translation in %s' % d_file)
+            else:
+                translated_files.append(os.path.join(dest, dest_file))
+            print "%s" % val
+
+        # replace the input parameter with the new file locations
+        self.distribution.desktop_file = translated_files
 
 
 class install_desktop(install_data):
@@ -418,12 +444,18 @@ class install_desktop(install_data):
         if not self.skip_build:
             self.run_command('build_desktop')
 
-        src = os.path.normpath(os.path.join(
-            self.build_dir, 'share/applications/straw.desktop'))
-        dest = os.path.normpath(self.install_dir + '/' + self.with_desktop_file_dir)
-        self.mkpath(dest)
-        (out, _) = self.copy_file(src, dest)
-        self.outfiles.append(out)
+        for d_file in self.distribution.desktop_file:
+            src = d_file
+            # src = os.path.normpath(os.path.join(
+            # self.build_dir, 'share/applications/ccpublisher.desktop'))
+            dest = os.path.normpath(self.install_dir + '/' + self.with_desktop_file_dir)
+            print '*'*70
+            print dest
+            print '*'*70
+            
+            self.mkpath(dest)
+            (out, _) = self.copy_file(src, dest)
+            self.outfiles.append(out)
 
     def get_outputs (self):
         return self.outfiles

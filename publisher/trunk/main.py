@@ -2,6 +2,7 @@
 
 import sys
 import os
+import platform
 
 import wx
 
@@ -10,6 +11,8 @@ import ccwx.xrcwiz
 import p6
 import p6.metadata.base as md
 import p6.storage
+
+import ccpublisher.const as const
 
 class P6(p6.ui.wizard.WizFrame):
     def __init__(self, app):
@@ -27,7 +30,10 @@ def main(argv=[]):
 
    # XXX Move these options to ZCML
    try:
-       root_dir = os.path.dirname(__file__)
+       if platform.system().lower() == 'linux':
+           root_dir = '/usr/local/%s/resources' % const.APPNAME
+       else:
+           root_dir = os.path.dirname(__file__)
    except NameError, e:
        root_dir = os.path.dirname(sys.executable)
        
