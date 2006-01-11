@@ -30,16 +30,17 @@ def main(argv=[]):
 
    # XXX Move these options to ZCML
    try:
-       if platform.system().lower() == 'linux':
+       root_dir = os.path.join( os.path.dirname(__file__), 'resources' )
+       if platform.system().lower() == 'linux' and \
+              not(os.path.exists(os.path.join(root_dir, 'app.zcml'))):
            root_dir = '/usr/local/%s/resources' % const.APPNAME
-       else:
-           root_dir = os.path.dirname(__file__)
+           
    except NameError, e:
-       root_dir = os.path.dirname(sys.executable)
+       root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
        
    app = CcPublisher(appname = 'ccPublisher',
                      filename= 'err.log',
-                     xrcfile = os.path.join( root_dir, 'resources', 'wizard.xrc'),
+                     xrcfile = os.path.join( root_dir, 'wizard.xrc'),
                      frameclass = P6,
                      confFile = os.path.join( root_dir, 'app.zcml'),
                      )

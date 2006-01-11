@@ -115,7 +115,7 @@
 
     <xrcpage
         title="Welcome"
-        xrcfile="resources/wizard.xrc"
+        xrcfile="wizard.xrc"
         xrcid="CCTAG_WELCOME"
         />
 
