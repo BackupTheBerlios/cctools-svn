@@ -491,7 +491,6 @@ to manually select your files.</label>
   <object class="wxFrame" name="FRM_MAIN">
     <title>ccPublisher</title>
     <centered>1</centered>
-    <bg>#C0C0C0</bg>
     <object class="wxFlexGridSizer">
       <cols>1</cols>
       <growablerows>1</growablerows>
