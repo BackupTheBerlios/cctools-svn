@@ -130,6 +130,7 @@ class WizApp(wx.App):
         level window and global menu bar."""
 
         self.main = self.__frameclass(self)
+        self.main.SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE))
         self.main.Show(True)
 
         self.topmenu = self.__makeMenu()
@@ -142,7 +143,8 @@ class WizApp(wx.App):
         
         
         self.SetTopWindow(self.main)
-    
+        self.main.SetSize(self.main.GetSize())
+        
     def connectEvents(self):
 
         # listen for item addition events
