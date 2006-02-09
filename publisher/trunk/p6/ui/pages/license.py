@@ -28,7 +28,7 @@ class WebbrowserHtml(wx.html.HtmlWindow):
         
         webbrowser.open( linkinfo.GetHref(), True, True )
 
-BGCOLOR = "efefef"
+BGCOLOR = hex(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE).GetRGB())[2:]  #"efefef"
 
 class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     """Custom wizard page which implements a license chooser based on
