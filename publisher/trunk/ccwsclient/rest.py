@@ -1,6 +1,5 @@
 import urllib2
-import libxml2
-import libxslt
+import elementtree.ElementTree as etree
 
 class CcRest:
     """Wrapper class to decompose REST XML responses into Python objects."""
@@ -21,13 +20,12 @@ class CcRest:
 
         # parse the document and return a dictionary
         lc = {}
-        d = libxml2.parseMemory(self.__lc_doc, len(self.__lc_doc))
-        c = d.xpathNewContext()
+        d = etree.fromstring(self.__lc_doc)
 
-        licenses = c.xpathEval('//licenses/license')
+        licenses = d.findall('license')
 
         for l in licenses:
-            lc[l.xpathEval('@id')[0].content] = l.content
+            lc[l.attrib['id']] = l.text
             
         return lc
         
@@ -39,32 +37,31 @@ class CcRest:
         # retrieve the license source document
         self.__l_doc = urllib2.urlopen(l_url).read()
 
-        d = libxml2.parseMemory(self.__l_doc, len(self.__l_doc))
-        c = d.xpathNewContext()
-        
+        d = etree.fromstring(self.__l_doc)
+
         self._cur_license = {}
         keys = []
         
-        fields = c.xpathEval('//field')
+        fields = d.findall('field')
 
         for field in fields:
-            f_id = field.xpathEval('@id')[0].content
+            f_id = field.attrib['id']
             keys.append(f_id)
             
             self._cur_license[f_id] = {}
 
-            self._cur_license[f_id]['label'] = field.xpathEval('label')[0].content
+            self._cur_license[f_id]['label'] = field.find('label').text
             self._cur_license[f_id]['description'] = \
-                              field.xpathEval('description')[0].content
-            self._cur_license[f_id]['type'] = field.xpathEval('type')[0].content
+                              field.find('description').text
+            self._cur_license[f_id]['type'] = field.find('type').text
             self._cur_license[f_id]['enum'] = {}
 
             # extract the enumerations
-            enums = field.xpathEval('enum')
+            enums = field.findall('enum')
             for e in enums:
-                e_id = e.xpathEval('@id')[0].content
+                e_id = e.attrib['id']
                 self._cur_license[f_id]['enum'][e_id] = \
-                     e.xpathEval('label')[0].content
+                     e.find('label').text
 
         self._cur_license['__keys__'] = keys
         return self._cur_license

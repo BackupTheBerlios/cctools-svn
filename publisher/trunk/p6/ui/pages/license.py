@@ -7,8 +7,7 @@ import thread
 import wx
 import wx.html
 
-import libxml2
-import libxslt
+import elementtree.ElementTree as etree
 
 import zope.interface
 import zope.component
@@ -148,13 +147,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         if self._license_doc is None:
             return None
 
-        try:
-            d = libxml2.parseMemory(self._license_doc, len(self._license_doc))
-            c = d.xpathNewContext()
-
-            uri = c.xpathEval('//result/license-uri')[0].content
-        except libxml2.parserError:
-            return None
+        d = etree.fromstring(self._license_doc)
+        uri = d.find('license-uri').text
 
         return uri
 
@@ -163,13 +157,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         if self._license_doc is None:
             return None
 
-        try:
-            d = libxml2.parseMemory(self._license_doc, len(self._license_doc))
-            c = d.xpathNewContext()
-
-            uri = c.xpathEval('//result/license-name')[0].content
-        except libxml2.parserError:
-            return None
+        d = etree.fromstring(self._license_doc)
+        uri = d.find('license-name').text
 
         return uri
     
@@ -290,7 +279,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     def validate(self, event):
         return True
 
-    REST_ROOT = 'http://api.creativecommons.org/rest'
+    REST_ROOT = 'http://api.creativecommons.org/rest/1.5'
     STR_INTRO_TEXT="""With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."""
 
     HTML_LICENSE = '<html><body bgcolor="#%s"><font size="3">You chose <a href="%s">%s</a>.</font></body></html>'
