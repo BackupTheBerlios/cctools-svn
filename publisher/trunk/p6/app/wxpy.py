@@ -123,12 +123,6 @@ class WizApp(wx.App):
                   lambda event: self.GetTopWindow().Close(),
                   id=wx.xrc.XRCID('MNU_EXIT'))
 
-        # check if any extensions were loaded
-        if len(self.prefs.keys()) == 0:
-            # hide the preferences menu
-            # XXX We currently hide the entire menu since it only has the prefs
-            menubar.EnableTop(1, False)
-        
         return menubar
 
     def __initUI(self):
@@ -140,6 +134,12 @@ class WizApp(wx.App):
 
         self.topmenu = self.__makeMenu()
         self.main.SetMenuBar(self.topmenu)
+        # check if any extensions were loaded
+        if len(self.prefs.keys()) == 0:
+            # hide the preferences menu
+            # XXX We currently hide the entire menu since it only has the prefs
+            self.topmenu.EnableTop(1, False)
+        
         
         self.SetTopWindow(self.main)
     
