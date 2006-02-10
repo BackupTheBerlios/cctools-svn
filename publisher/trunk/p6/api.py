@@ -90,7 +90,7 @@ def getAppSupportDir():
     """
 
     # XXX
-    return '.'
+    return getApp().resource_dir # '.'
 
 def updatePref(setid, fieldid, value):
     getApp().prefs[setid].fields[fieldid].value = value
