@@ -32,10 +32,11 @@ def main(argv=[]):
        root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
        
    app = CcPublisher(appname = 'ccPublisher',
+                     rsc_dir = root_dir,
                      filename= 'err.log',
-                     xrcfile = os.path.join( root_dir, 'wizard.xrc'),
+                     xrcfile = 'wizard.xrc',
                      frameclass = CcMain,
-                     confFile = os.path.join( root_dir, 'app.zcml'),
+                     confFile = 'app.zcml',
                      )
 
    app.MainLoop()

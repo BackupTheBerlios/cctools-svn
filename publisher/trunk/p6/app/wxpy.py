@@ -15,8 +15,9 @@ zope.configuration.xmlconfig.openInOrPlain = bananas.openInOrPlain
 
 class WizApp(wx.App):
     zope.interface.implements(interfaces.IWizardApp)
-    def __init__(self, appname=None, filename=None,
-                 xrcfile=None, frameclass=p6.ui.wizard.WizFrame,
+    def __init__(self, appname=None, rsc_dir='.',
+                 errlog=None, xrcfile=None,
+                 frameclass=p6.ui.wizard.WizFrame,
                  confFile='app.zcml'):
 
         # initialize the metadata group list
@@ -25,12 +26,13 @@ class WizApp(wx.App):
 
         # initialize the preferences container
         self.prefs = {}
-        
+
         self.appname = appname
-        self.errlog = filename
-        self.xrcfile = xrcfile
+        self.resource_dir = rsc_dir
+        self.errlog = errlog
+        self.xrcfile = os.path.join(self.resource_dir, xrcfile)
         self.__frameclass = frameclass
-        self.confFile = confFile
+        self.confFile = os.path.join(self.resource_dir, confFile)
 
         wx.App.__init__(self, filename=self.errlog)
 
