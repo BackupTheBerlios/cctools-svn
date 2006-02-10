@@ -23,7 +23,7 @@ class CcMain(p6.ui.wizard.WizFrame):
 
         # set the window icon
 
-        self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'cc.ico'),
+        self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'ccp8.ico'),
                              wx.BITMAP_TYPE_ICO))
         
         # attach the image list to the file selector
