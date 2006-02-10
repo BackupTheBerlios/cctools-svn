@@ -113,11 +113,7 @@
     
   <pages appid="ccpublisher">
 
-    <xrcpage
-        title="Welcome"
-        xrcfile="wizard.xrc"
-        xrcid="CCTAG_WELCOME"
-        />
+    <page factory="ccpublisher.ui.WelcomePage" />
 
     <fileselector />
 
