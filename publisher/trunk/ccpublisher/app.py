@@ -22,6 +22,9 @@ class CcMain(p6.ui.wizard.WizFrame):
         p6.ui.wizard.WizFrame.__init__(self, 'FRM_MAIN', app)
 
         # set the window icon
+
+        self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'cc.ico'),
+                             wx.BITMAP_TYPE_ICO))
         
         # attach the image list to the file selector
         self.__imgList = wx.ImageList(33,33)
