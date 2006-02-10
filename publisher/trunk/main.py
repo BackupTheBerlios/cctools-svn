@@ -13,13 +13,7 @@ import p6.metadata.base as md
 import p6.storage
 
 import ccpublisher.const as const
-
-class P6(p6.ui.wizard.WizFrame):
-    def __init__(self, app):
-        p6.ui.wizard.WizFrame.__init__(self, 'FRM_MAIN', app)
-
-class CcPublisher(p6.app.wxpy.WizApp):
-    pass
+from ccpublisher.app import CcPublisher, CcMain
 
 def main(argv=[]):
    
@@ -28,7 +22,6 @@ def main(argv=[]):
    #wxsupportwiz.wxAddExceptHook('http://api.creativecommons.org/traceback.py',
    #                             cctagutils.const.version())
 
-   # XXX Move these options to ZCML
    try:
        root_dir = os.path.join( os.path.dirname(__file__), 'resources' )
        if platform.system().lower() == 'linux' and \
@@ -41,7 +34,7 @@ def main(argv=[]):
    app = CcPublisher(appname = 'ccPublisher',
                      filename= 'err.log',
                      xrcfile = os.path.join( root_dir, 'wizard.xrc'),
-                     frameclass = P6,
+                     frameclass = CcMain,
                      confFile = os.path.join( root_dir, 'app.zcml'),
                      )
 
