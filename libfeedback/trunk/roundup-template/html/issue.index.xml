@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+       <feed version="0.3" xmlns="http://purl.org/atom/ns#"
+             xmlns:tal="http://xml.zope.org/namespaces/tal"
+             xmlns:metal="http://xml.zope.org/namespaces/metal">
+         <title>Issues - <tal:block tal:replace="config/TRACKER_NAME" /></title>
+         <link rel="alternate" type="text/html" tal:content="config/TRACKER_WEB">link</link>
+         <tal:block tal:omit-tag="" tal:repeat="i request/batch">
+           <entry>
+               <title tal:content="i/title">title</title>
+               <link rel="alternate" type="text/html" tal:content="string:${config/TRACKER_WEB}issue${i/id}">link</link>
+               <id tal:content="python:config.TRACKER_NAME.replace(' ', '_') + ':issue' + i.id">id</id>
+               <summary mode="escaped" type="text/html" tal:content="i/history"></summary>
+               <issued tal:content="i/creation">issued</issued>
+               <modified tal:content="i/activity">modified</modified>
+          </entry>
+        </tal:block>
+      </feed>

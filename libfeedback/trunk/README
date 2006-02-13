@@ -1,0 +1,49 @@
+-----------
+libfeedback
+-----------
+
+copyright 2006, Nathan R. Yergler, Creative Commons
+
+What is libfeedback?
+--------------------
+
+ libfeedback (LFB) is a Python_ library and a set of related tools which allow 
+ developers to collect feedback and crash telemetry from users.  LFB provides
+ a Roundup_ tracker template, a WSGI_ application for collecting information
+ into the tracker and Python modules for catching exceptions in certain types 
+ of applications (currently on wxPython_ based).
+
+How can libfeedback be used?
+----------------------------
+
+ libfeedback can be used in two primary ways: to collect crash telemetry and
+ to provide users with a way to communicate feature request and application
+ ideas to the developers.  Both of these methods use the autoPost.py WSGI
+ application, which takes a HTTP POST request and updates information in the 
+ Roundup tracker, returning a URL to the caller which can be used to view
+ the status of the issue. 
+
+ The difference in two applications lies in the source of the information
+ reported to autoPost.py.  In the case of user suggestions or feature 
+ requests, it is anticipated that the information would be collected by 
+ either a wizard or form.  In the case of crash telemetry, an exception
+ handler would be connected to catch problems.  An exception handler for
+ wxPython-based applications is included.
+
+Next Steps
+----------
+ libfeedback is currently being integrated with ccPublisher_ which will
+ undoubtedly provide more information on ideal usage.  You can find 
+ (possibly) more information in the Wiki_.
+
+Additional Information
+----------------------
+
+ * Subversion and Roundup Integration document
+   http://mechanicalcat.net/tech/roundup/svn-roundup
+
+.. _Python: http://www.python.org/
+.. _WSGI: http://www.python.org/peps/pep-0333.html
+.. _wxPython: http://wxpython.org
+.. _ccPublisher: http://wiki.creativecommons.org/CcPublisher
+.. _Wiki: http://wiki.creativecommons.org/libfeedback

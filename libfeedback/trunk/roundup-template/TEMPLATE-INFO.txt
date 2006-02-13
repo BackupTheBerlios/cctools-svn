@@ -1,0 +1,7 @@
+Name: cc-dev
+Description: The generic tracker, customized with subversion integration,
+ Atom feed support for issue lists and individual issues, and support for
+ tracking an "Application" and "Platform" for each issue.  The default data
+ values have also been customized.
+Intended-for: Software Developers
+
