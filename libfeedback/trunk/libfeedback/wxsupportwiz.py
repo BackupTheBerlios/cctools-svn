@@ -30,7 +30,7 @@ __copyright__ = 'Copyright 2004 Patrick Roberts'
 __license__ = 'Python'
 __version__ = '1.0'
 
-import os, platform, urllib, sys, time, traceback, urlparse, webbrowser
+import os, platform, urllib, urllib2, sys, time, traceback, urlparse, webbrowser
 import wx
 
 
@@ -46,7 +46,7 @@ def format_namespace(d, indent=''):#    '):
 
 ignored_exceptions = [] # a problem with a line in a module is only reported once per session
 
-def wxAddExceptHook(cgi_url, app_version='[No version]'):
+def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
     """
     wxMessageBox can't be called until the app's started
     - It would be nice if this used win32 directly, and didn't depend on wx being started, cuz that can't handle initial errors. Maybe have a temporary initial error handler that just uses a standard windows message dlg, then switch once wx is going.
@@ -78,44 +78,36 @@ def wxAddExceptHook(cgi_url, app_version='[No version]'):
             dlg.Destroy()
             if result == wx.ID_OK:
                 info = {
-                    'app-title' : wx.GetApp().GetAppName(), # app_title
-                    'app-version' : app_version,
-                    'wx-version' : wx.VERSION_STRING,
-                    'wx-platform' : wx.Platform,
-                    'python-version' : platform.python_version(), #sys.version.split()[0],
+                    'app_id' : app_id,
+                    'app_version' : app_version,
                     'platform' : platform.platform(),
-                    'e-type' : e_type,
-                    'e-value' : e_value,
-                    'date' : time.ctime(),
-                    'cwd' : os.getcwd(),
-                    'e-mail' : email_addr, # have to be careful about this colliding with some error.php variable; using a dash probably suffices
+                    'title' : '%s (%s)' % (e_type, e_value),
+                    'e-mail' : email_addr, 
                     }
+
                 if e_traceback:
-                    info['traceback'] = ''.join(traceback.format_tb(e_traceback)) + '%s: %s' % (e_type, e_value)
-                    last_tb = get_last_traceback(e_traceback)
-                    exception_locals = last_tb.tb_frame.f_locals # the locals at the level of the stack trace where the exception actually occurred
-                    info['locals'] = format_namespace(exception_locals)
-                    if 'self' in exception_locals:
-                        info['self'] = format_namespace(exception_locals['self'].__dict__)
-                if sys.platform == 'win32':
-                    import win32api
-                    info['user-name'] = win32api.GetUserName()
+                    info['message'] = ''.join(traceback.format_tb(e_traceback)) + '%s: %s' % (e_type, e_value)
+                    #last_tb = get_last_traceback(e_traceback)
+                    #exception_locals = last_tb.tb_frame.f_locals # the locals at the level of the stack trace where the exception actually occurred
+                    #info['locals'] = format_namespace(exception_locals)
+                    
+                    #if 'self' in exception_locals:
+                    #    info['self'] = format_namespace(exception_locals['self'].__dict__)
 
                 busy = wx.BusyCursor()
                 try:
-                    f = urllib.urlopen(cgi_url, data=urllib.urlencode(info))
-		    
-		    wx.MessageBox("Your bug report has been sent.  Thanks.",
-			     caption="ccPublisher: Report Sent",
-			     style=wx.OK, parent=None)
+                    f = urllib2.urlopen(postUrl, data=urllib.urlencode(info))
+                    bugUrl = f.read().strip()
+                    wx.MessageBox("Your crash report has been sent.\n"
+                          "You can track your particular report at\n"
+                          "%s" % bugUrl,
+                          caption="ccPublisher: Report Sent",
+                          style=wx.OK, parent=None)
                 except IOError:
                     pass
                 else:
-                    #url = f.get_url()
-                    #if url != cgi_url:
-                    url = f.readline().strip()
-                    #if url:
-                    #    webbrowser.open_new(url)
+                    webbrowser.open_new(bugUrl)
+                    
                 del busy
 
 	    sys.exit(1)
