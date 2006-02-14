@@ -1,27 +1,23 @@
 #!/usr/bin/env python
 
+# P6 Bootstrap Script
+# copyright 2005-2006, Creative Commons, Nathan R. Yergler
+#
+# licensed to the public under the GNU GPL version 2.
+# see resource/LICENSE.txt for details
+
 import sys
 import os
 import platform
 
-import wx
-
-import ccwx.xrcwiz
-
-import p6
-import p6.metadata.base as md
-import p6.storage
-
 import ccpublisher.const as const
 from ccpublisher.app import CcPublisher, CcMain
 
-def main(argv=[]):
-   
-   # create the application and execute it
-   #import wxsupportwiz
-   #wxsupportwiz.wxAddExceptHook('http://api.creativecommons.org/traceback.py',
-   #                             cctagutils.const.version())
+import libfeedback
 
+def main(argv=[]):
+
+   # determine the resource path
    try:
        root_dir = os.path.join( os.path.dirname(__file__), 'resources' )
        if platform.system().lower() == 'linux' and \
@@ -31,6 +27,7 @@ def main(argv=[]):
    except NameError, e:
        root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
        
+   # create the application and execute it
    app = CcPublisher(appname = 'ccPublisher',
                      rsc_dir = root_dir,
                      filename= 'err.log',
@@ -38,6 +35,11 @@ def main(argv=[]):
                      frameclass = CcMain,
                      confFile = 'app.zcml',
                      )
+
+   # Connect the crash-reporting handler
+   libfeedback.wxAddExceptHook('http://roundup.creativecommons.org/report/',
+                               'ccpublisher',
+                               const.version())
 
    app.MainLoop()
    
