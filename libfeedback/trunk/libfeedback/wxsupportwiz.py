@@ -61,38 +61,32 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
 
             err_msg = "%s has encountered an error. We apologize for\n"\
                       "the inconvenience.  You can help make this software\n"\
-                      "better.  Click OK to send an error report to the\n"\
-                      "Creative Commons (this may take a minute or two).\n" \
-                      "\nNo personal information will be transmitted, only \n"\
+                      "better.\n\n"\
+                      "Click OK to send an error report to Creative Commons.\n"\
+                      "No personal information will be transmitted, only \n"\
                       "information about the state of the program when it \n"\
                       "crashed.\n\n" \
-                      "If you would like to be notified when a solution is \n"\
-                      "available, please enter your e-mail address:" % (
+                      "If you choose to submit this crash report, you will\n"\
+                      "receive a URL which you can use to track the status\n"\
+                      "of your bug report." % (
                 wx.GetApp().GetAppName())
             
-            dlg = wx.TextEntryDialog(None, err_msg,
+            dlg = wx.MessageDialog(None, err_msg,
                                '%s: Unknown Error' % wx.GetApp().GetAppName(),
-                               '', wx.OK|wx.CANCEL) 
+                               wx.OK|wx.CANCEL) 
             result = dlg.ShowModal()
-            email_addr = dlg.GetValue()
             dlg.Destroy()
+            
             if result == wx.ID_OK:
                 info = {
                     'app_id' : app_id,
                     'app_version' : app_version,
                     'platform' : platform.platform(),
                     'title' : '%s (%s)' % (e_type, e_value),
-                    'e-mail' : email_addr, 
                     }
 
                 if e_traceback:
                     info['message'] = ''.join(traceback.format_tb(e_traceback)) + '%s: %s' % (e_type, e_value)
-                    #last_tb = get_last_traceback(e_traceback)
-                    #exception_locals = last_tb.tb_frame.f_locals # the locals at the level of the stack trace where the exception actually occurred
-                    #info['locals'] = format_namespace(exception_locals)
-                    
-                    #if 'self' in exception_locals:
-                    #    info['self'] = format_namespace(exception_locals['self'].__dict__)
 
                 busy = wx.BusyCursor()
                 try:
@@ -104,6 +98,8 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
                           caption="ccPublisher: Report Sent",
                           style=wx.OK, parent=None)
                 except IOError:
+                    # XXX Show yet-another-error here 
+                    # and humbly provide a way to submit a report manually
                     pass
                 else:
                     webbrowser.open_new(bugUrl)
