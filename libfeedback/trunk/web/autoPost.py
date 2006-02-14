@@ -9,11 +9,13 @@ import roundup
 import roundup.instance
 import roundup.password
 
-TRACKER_HOME = '/home/nathan/Projects/roundup-1.1.0/temp/test'
-TRACKER_USER = 'admin'
+TRACKER_HOME = '/web/roundup/trackers/ccpublisher'
+TRACKER_USER = 'nathan'
 
 DEFAULT_PRIORITY = 'critical'
 DEFAULT_TITLE = 'Autoreported crash information'
+
+DEFAULT_KEYWORD = 'autoreport'
 
 # a user who watches for new auto-submitted issues
 # and is added to their initial nosy list;
@@ -27,14 +29,14 @@ def findNode(roundupClass, filter):
                 # this isn't what we're looking for
                 continue
 
-        # we passed all keys -- this is it
-        return roundupClass.getnode(id)
+            # we passed all keys -- this is it
+            return roundupClass.getnode(id)
 
     # we didn't find it -- return none
     return None
 
 def createIssue(db, title, priority, application, platform,
-                nosy=[], messages=[]):
+                nosy=[], messages=[], topics=[]):
 
     # create a new issue in Roundup
     issues = db.getclass('issue')
@@ -45,6 +47,7 @@ def createIssue(db, title, priority, application, platform,
                   platform=[platform],
                   messages=messages,
                   nosy=nosy,
+		  topic=topics
                   )
 
     db.commit()
@@ -79,6 +82,7 @@ def cgiIssue(formFields):
                         {'identifier': formFields['platform']})
     if platform is None:
         # create the new platform, assuming 
+	p_id = formFields['platform']
         platform = r_db.getclass('platform').\
                    create(identifier=p_id, supported=True)
     else:
@@ -90,6 +94,13 @@ def cgiIssue(formFields):
                          {'username': WATCH_USER})['id']]
     else:
         nosy = []
+
+    # get a handle to a default keyword we want to assign
+    if DEFAULT_KEYWORD is not None:
+        topics = [findNode(r_db.getclass('keyword'),
+	                   {'name':DEFAULT_KEYWORD})['id']]
+    else:
+        topics=[]
 
     # add any notes to the issue as a message
     messages = []
@@ -110,7 +121,7 @@ def cgiIssue(formFields):
             
             
     issue_id = createIssue(r_db, title, priority, application,
-                           platform, nosy, messages)
+                           platform, nosy, messages, topics)
 
     return '%sissue%s' % (trackerConfig.get('tracker', 'web'),
                               issue_id)
@@ -144,4 +155,4 @@ def autoReporter (environ, start_response):
 
 if __name__ == '__main__':
     from paste import httpserver
-    httpserver.serve(autoReporter, host='127.0.0.1', port='8080')
+    httpserver.serve(autoReporter, host='127.0.0.1', port='8089')
