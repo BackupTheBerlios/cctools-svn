@@ -33,6 +33,7 @@ __version__ = '1.0'
 import os, platform, urllib, urllib2, sys, time, traceback, urlparse, webbrowser
 import wx
 
+import comm
 
 def get_last_traceback(tb):
     while tb.tb_next:
@@ -89,20 +90,22 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
                     info['message'] = ''.join(traceback.format_tb(e_traceback)) + '%s: %s' % (e_type, e_value)
 
                 busy = wx.BusyCursor()
-                try:
-                    f = urllib2.urlopen(postUrl, data=urllib.urlencode(info))
-                    bugUrl = f.read().strip()
-                    wx.MessageBox("Your crash report has been sent.\n"
+                bugUrl = comm.sendReport(postUrl, info)
+                
+                if bugUrl is not None:
+                    result = wx.MessageBox("Your crash report has been sent.\n"
                           "You can track your particular report at\n"
                           "%s" % bugUrl,
                           caption="ccPublisher: Report Sent",
-                          style=wx.OK, parent=None)
-                except IOError:
+                          style=wx.YES|wx.NO, parent=None)
+                          
+                    if result == wx.ID_YES:
+                        # open the web browser
+                        webbrowser.open_new(bugUrl)
+                else:
                     # XXX Show yet-another-error here 
                     # and humbly provide a way to submit a report manually
                     pass
-                else:
-                    webbrowser.open_new(bugUrl)
                     
                 del busy
 
