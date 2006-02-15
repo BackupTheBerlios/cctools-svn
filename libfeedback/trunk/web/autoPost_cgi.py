@@ -72,7 +72,7 @@ def cgiIssue(formFields):
             DEFAULT_TITLE
     
     priority = findNode(r_db.getclass('priority'),
-                        {'name':DEFAULT_PRIORITY})['id']
+                        {'name':(formFields.has_key('priority') and formFields['priority']) or DEFAULT_PRIORITY})['id']
 
     application = findNode(r_db.getclass('application'),
                            {'identifier': formFields['app_id'],
