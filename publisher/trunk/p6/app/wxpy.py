@@ -11,6 +11,11 @@ import p6
 import interfaces
 import bananas
 
+import ccpublisher.const
+import platform
+import libfeedback.comm
+import webbrowser
+
 zope.configuration.xmlconfig.openInOrPlain = bananas.openInOrPlain
 
 class WizApp(wx.App):
@@ -118,12 +123,24 @@ class WizApp(wx.App):
         menubar = res.LoadMenuBar('TOPMENU')
 
         # connect menu events
+        # Extension preferences
         self.Bind(wx.EVT_MENU,
                   lambda event: p6.ui.windows.prefs.P6PrefsWindow(self.GetTopWindow()).Show(),
                   id=wx.xrc.XRCID('MNU_PREFERENCES'))
+        # Exit
         self.Bind(wx.EVT_MENU,
                   lambda event: self.GetTopWindow().Close(),
                   id=wx.xrc.XRCID('MNU_EXIT'))
+                  
+        # About
+        self.Bind(wx.EVT_MENU,
+                  self.showAbout,
+                  id=wx.xrc.XRCID('MNU_ABOUT'))
+                  
+        # Report a Bug
+        self.Bind(wx.EVT_MENU,
+                  self.reportBug,
+                  id=wx.xrc.XRCID('MNU_REPORT'))
 
         return menubar
 
@@ -160,8 +177,74 @@ class WizApp(wx.App):
         
     def selectItem(self, event):
         self.items.append(event.item)
+        
+    def showAbout(self, event):
+        # load the dialog definition
+        xrc_resource = wx.xrc.XmlResource(os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
+        about = xrc_resource.LoadDialog(None, "DLG_ABOUT")
+        
+        # connect the events
+        self.Bind(wx.EVT_BUTTON,
+                  lambda event: about.Close(),
+                  id = wx.xrc.XRCID("CMD_OK")
+                  )
+                  
+        # display the dialog
+        about.ShowModal()
+    
+    def reportBug(self, event):
+        # load the dialog definition
+        xrc_resource = wx.xrc.XmlResource(os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
+        report = xrc_resource.LoadDialog(None, "DLG_BUGREPORT")
+        
+        # connect the OK button
+        self.Bind(wx.EVT_BUTTON,
+                  self.__reportBug,
+                  id = wx.xrc.XRCID("CMD_OK")
+                  )
+        
+        # connect the Cancel button
+        self.Bind(wx.EVT_BUTTON,
+                  lambda event: report.Close(),
+                  id = wx.xrc.XRCID("CMD_CANCEL")
+                  )
+                  
+        # display the dialog
+        self.__reportDlg = report
+        report.ShowModal()
 
+    def __reportBug(self, event):
+        fields = {}
+        fields['app_id'] = ccpublisher.const.REPORTING_APP
+        fields['app_version'] = ccpublisher.const.version()
+        fields['title'] = wx.xrc.XRCCTRL(self.__reportDlg, "TXT_TITLE").GetValue()
+        fields['platform'] = platform.platform()
+        if (wx.xrc.XRCCTRL(self.__reportDlg, "CMB_TYPE").GetStringSelection().lower() == "bug report"):
+            fields['priority'] = "bug"
+        else:
+            fields['priority'] = "wish"
+            
+        fields['message'] = wx.xrc.XRCCTRL(self.__reportDlg, "TXT_BODY").GetValue()
+        
+        bugUrl = libfeedback.comm.sendReport(ccpublisher.const.REPORTING_URL, fields)
+        if bugUrl is not None:
+            result = wx.MessageDialog(None, "Your crash report has been sent.\n"
+                  "You can track your report at\n"
+                  "%s\n\nDo you want to open this page in your browser now?" % bugUrl,
+                  caption="ccPublisher: Report Sent",
+                  style=wx.YES|wx.NO).ShowModal()
+                  
+            if result == wx.ID_YES:
+                # open the web browser
+                webbrowser.open_new(bugUrl)
+        else:
+            # XXX Show yet-another-error here 
+            # and humbly provide a way to submit a report manually
+            pass
 
+        self.__reportDlg.Close()
+        del self.__reportDlg
+        
     MENU_XRC = """
 <resource>
   <object class="wxMenuBar" name="TOPMENU">
@@ -175,6 +258,15 @@ class WizApp(wx.App):
       <label>&amp;Edit</label>
       <object class="wxMenuItem" name="MNU_PREFERENCES">
         <label>&amp;Preferences</label>
+      </object>
+    </object>
+    <object class="wxMenu" name="MNU_HELP">
+      <label>&amp;Help</label>
+      <object class="wxMenuItem" name="MNU_ABOUT">
+        <label>&amp;About</label>
+      </object>
+      <object class="wxMenuItem" name="MNU_REPORT">
+        <label>&amp;Report a bug</label>
       </object>
     </object>
   </object>
