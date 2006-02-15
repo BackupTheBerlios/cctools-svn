@@ -1,4 +1,6 @@
 APPNAME = 'ccpublisher'
+REPORTING_URL = 'http://roundup.creativecommons.org/autoPost_cgi.py'
+REPORTING_APP = 'ccpublisher'
 
 import os
 import p6.api
