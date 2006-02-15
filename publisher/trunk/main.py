@@ -37,8 +37,8 @@ def main(argv=[]):
                      )
 
    # Connect the crash-reporting handler
-   libfeedback.wxAddExceptHook('http://roundup.creativecommons.org/report/',
-                               'ccpublisher',
+   libfeedback.wxAddExceptHook(const.REPORTING_URL,
+                               const.REPORTING_APP,
                                const.version())
 
    app.MainLoop()
