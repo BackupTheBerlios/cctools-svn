@@ -93,11 +93,11 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
                 bugUrl = comm.sendReport(postUrl, info)
                 
                 if bugUrl is not None:
-                    result = wx.MessageBox("Your crash report has been sent.\n"
-                          "You can track your particular report at\n"
-                          "%s" % bugUrl,
+                    result = wx.MessageDialog(None, "Your crash report has been sent.\n"
+                          "You can track your report at\n"
+                          "%s\n\nDo you want to open this page in your browser now?" % bugUrl,
                           caption="ccPublisher: Report Sent",
-                          style=wx.YES|wx.NO, parent=None)
+                          style=wx.YES|wx.NO).ShowModal()
                           
                     if result == wx.ID_YES:
                         # open the web browser
