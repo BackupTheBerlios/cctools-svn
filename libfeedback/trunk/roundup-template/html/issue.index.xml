@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <feed version="0.3" xmlns="http://purl.org/atom/ns#"
+       <feed xmlns="http://www.w3.org/2005/Atom"
              xmlns:tal="http://xml.zope.org/namespaces/tal"
              xmlns:metal="http://xml.zope.org/namespaces/metal">
          <title>Issues - <tal:block tal:replace="config/TRACKER_NAME" /></title>
+	 <id></id>
+	 <updated></updated>
          <link rel="alternate" type="text/html" tal:content="config/TRACKER_WEB">link</link>
          <tal:block tal:omit-tag="" tal:repeat="i request/batch">
            <entry>
                <title tal:content="i/title">title</title>
                <link rel="alternate" type="text/html" tal:content="string:${config/TRACKER_WEB}issue${i/id}">link</link>
                <id tal:content="python:config.TRACKER_NAME.replace(' ', '_') + ':issue' + i.id">id</id>
-               <summary mode="escaped" type="text/html" tal:content="i/history"></summary>
+               <summary type="xhtml">
+ 	         <div xmlns="http://www.w3.org/1999/xhtml" >
+	           <base href="" tal:attributes="href config/TRACKER_WEB"/>
+		   <h1 tal:content="i/title" />
+		   <div tal:repeat="m i/messages/reverse">
+		     <h2 tal:content="string: ${m/author} (${m/date})" />
+		     <p tal:content="m/content" />
+		   </div>
+	           <span tal:replace="structure i/history"/>
+	         </div>
+	       </summary>
+	       <tal:block tal:repeat="c i/topic">
+	         <category tal:attributes="term  string:keyword${c/id};
+		                           label c/name;" />
+	       </tal:block>
                <issued tal:content="i/creation">issued</issued>
                <modified tal:content="i/activity">modified</modified>
           </entry>
         </tal:block>
       </feed>
+<!-- SHA: b267422a000b375a137efa89c6d03d45fc93bddf -->

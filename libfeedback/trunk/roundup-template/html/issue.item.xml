@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-       <feed version="0.3" xmlns="http://purl.org/atom/ns#"
+       <feed xmlns="http://www.w3.org/2005/Atom"
              xmlns:tal="http://xml.zope.org/namespaces/tal"
              xmlns:metal="http://xml.zope.org/namespaces/metal">
          <title><tal:block tal:replace="config/TRACKER_NAME" />: 
@@ -11,10 +11,14 @@
                <link rel="alternate" type="text/html" 
           tal:content="string:${config/TRACKER_WEB}msg${m/id}">link</link>
                <id tal:content="python:config.TRACKER_NAME.replace(' ', '_') + ':issue' + m.id">id</id>
-               <summary mode="escaped" type="text/html" 
-tal:content="m/content/hyperlinked"></summary>
+               <summary type="xhtml">
+	         <div xmlns="http://www.w3.org/1999/xhtml">
+		   <span tal:replace="structure m/content/hyperlinked" />
+		 </div>
+	       </summary>
                <issued tal:content="m/date">issued</issued>
                <modified tal:content="m/date">modified</modified>
           </entry>
         </tal:block>
       </feed>
+
