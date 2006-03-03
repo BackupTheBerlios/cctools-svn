@@ -56,8 +56,8 @@
                                                      property='blockers')" />
  <span tal:condition="context/blockers"
        tal:repeat="blk context/blockers">
-  <br>View: <a tal:attributes="href string:issue${blk/id}"
-               tal:content="blk/id"></a>
+  <br>View: <a tal:attributes="href string:issue${blk/id}">
+       <span tal:replace="blk/id" /> (<span tal:replace="blk/title"/>)</a>
  </span>
 </td>
 </tr>
@@ -68,8 +68,8 @@
   <span tal:replace="structure python:context.superseder.field(showid=1, size=20)" />
   <span tal:condition="context/is_edit_ok" tal:replace="structure python:db.issue.classhelp('id,title', property='superseder')" />
   <span tal:condition="context/superseder" tal:repeat="sup context/superseder">
-   <br><span i18n:translate="">View: <a i18n:name="link" tal:content="sup/id"
-     tal:attributes="href string:issue${sup/id}"></a></span>
+  <br>View: <a tal:attributes="href string:issue${sup/id}">
+       <span tal:replace="sup/id" /> (<span tal:replace="sup/title"/>)</a>
   </span>
  </td>
  <th i18n:translate="">Nosy List</th>
@@ -192,9 +192,8 @@ python:db.user.classhelp('username,realname,address', property='nosy', width='60
 
 <table class="messages" tal:condition="context/messages">
  <tr>
-   <th colspan="3" class="header" i18n:translate="">Messages</th>
-   <th style="text-align:right;">
-    <a tal:attributes="href string:${request/base}issue${context/id}?@template=index.xml">
+   <th colspan="4" class="header"><span i18n:translate="">Messages</span>
+    <a tal:attributes="href string:${request/base}issue${context/id}?@template=item.xml">
     <img src="@@file/feed-icon-16x16.png" border="0" /></a>
    </th>
  </tr>
@@ -237,4 +236,4 @@ python:db.user.classhelp('username,realname,address', property='nosy', width='60
 </td>
 
 </tal:block>
-<!-- SHA: f7123eb3799a6973ce27fb649406efd507fb5246 -->
+<!-- SHA: 38bed8fcbdfcd668526a075007086ca369f5d619 -->
