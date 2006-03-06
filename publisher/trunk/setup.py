@@ -59,6 +59,7 @@ dataFiles = [(RSRC_DIR,
              ['resources/LICENSE.txt',
               'resources/wizard.xrc',
               'resources/app.zcml'])]
+
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
     # "compiled" platforms
@@ -79,7 +80,6 @@ if __name__ == '__main__':
           scripts=['main.py'],
           windows=['main.py'],
           app=['main.py'],
-          ext_modules=extensions,
           data_files=dataFiles,
           packages=packages,
           package_data=pkgData,

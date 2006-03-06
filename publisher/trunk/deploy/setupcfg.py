@@ -1,13 +1,6 @@
 import os
 from distutils.core import Extension
 
-# Python C extension definitions
-extensions = [Extension('zope.proxy._zope_proxy_proxy',
-                        ['zope/proxy/_zope_proxy_proxy.c'],
-                        include_dirs=[os.path.join('.','zope','proxy')],
-                        )
-              ]
-
 # Packages to include
 packages = ['ccpublisher',
             'p6', 'p6.app', 
@@ -28,10 +21,8 @@ packages = ['ccpublisher',
             'zope.component.bbb.tests',
             'zope.configuration', 'zope.deprecation',
             'zope.event', 'zope.exceptions',
-            'zope.i18n', 'zope.i18n.interfaces', 
             'zope.i18nmessageid', 'zope.interface',
-            'zope.interface.common',
-            'zope.modulealias', 'zope.proxy', 'zope.schema',
+            'zope.interface.common', 'zope.schema',
             'zope.testing',]
 
 classifiers = ['Development Status :: 5 - Production/Stable',
