@@ -10,6 +10,14 @@ import sys
 import os
 import platform
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'basket')))
+print sys.path
+import pkg_resources
+pkg_resources.require("zope.interface")
+pkg_resources.require("zope.component")
+pkg_resources.require("zope.configuration")
+pkg_resources.require("zope.schema")
+
 import ccpublisher.const as const
 from ccpublisher.app import CcPublisher, CcMain
 
@@ -26,7 +34,7 @@ def main(argv=[]):
            
    except NameError, e:
        root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
-       
+
    # create the application and execute it
    app = CcPublisher(appname = 'ccPublisher',
                      rsc_dir = root_dir,
