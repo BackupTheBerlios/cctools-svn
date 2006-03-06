@@ -58,7 +58,11 @@ else:
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
               'resources/wizard.xrc',
-              'resources/app.zcml'])]
+              'resources/app.zcml',
+	      'resources/ccp8.ico',
+	      'resources/cc_33.gif',
+	      'resources/version.txt'])
+	     ]
 
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
