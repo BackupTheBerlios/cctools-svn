@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (C) 2002-2004  Travis Shirk <travis@pobox.com>
+#  Copyright (C) 2002-2005  Travis Shirk <travis@pobox.com>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,18 +17,12 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 ################################################################################
-from eyeD3.binfuncs import *;
-from eyeD3.utils import *;
+from binfuncs import *;
+from utils import *;
 
 #######################################################################
-class Mp3Exception:
-   msg = "";
-
-   def __init__(self, msg):
-      self.msg = msg;
-
-   def __str__(self):
-      return self.msg;
+class Mp3Exception(Exception):
+   '''Error reading mp3'''
 
 
 #                   MPEG1  MPEG2  MPEG2.5

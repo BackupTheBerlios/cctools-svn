@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (C) 2002-2004  Travis Shirk <travis@pobox.com>
+#  Copyright (C) 2002-2005  Travis Shirk <travis@pobox.com>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #
 ################################################################################
 
-eyeD3Version = "0.6.3";
+eyeD3Version = "0.6.9";
 eyeD3Maintainer = "Travis Shirk <travis@pobox.com>";
 
 # Version constants
@@ -27,7 +27,7 @@ ID3_V1              = 0x10;
 ID3_V1_0            = 0x11;
 ID3_V1_1            = 0x12;
 ID3_V2              = 0x20;
-#ID3_V2_2            = 0x21; # All versions < v2.3 are obsolete.
+ID3_V2_2            = 0x21;
 ID3_V2_3            = 0x22;
 ID3_V2_4            = 0x24;
 #ID3_V2_5            = 0x28; # This does not seem imminent.

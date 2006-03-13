@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (C) 2002-2004  Travis Shirk <travis@pobox.com>
+#  Copyright (C) 2002-2005  Travis Shirk <travis@pobox.com>
 #  Copyright (C) 2001  Ryan Finne <ryan@finnie.org>
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -82,15 +82,19 @@ def bin2dec(x):
    bits.reverse();
 
    multi = 1;
-   value = 0;
+   value = long(0);
    for b in bits:
       value += b * multi;
       multi *= 2;
    return value;
 
+def bytes2dec(bytes, sz = 8):
+    return bin2dec(bytes2bin(bytes, sz));
+
 # Convert a decimal value to an array of bits (MSB first), optionally
 # padding the overall size to p bits.
 def dec2bin(n, p = 0):
+   assert(n >= 0)
    retVal = [];
 
    while n > 0:
@@ -101,6 +105,9 @@ def dec2bin(n, p = 0):
       retVal.extend([0] * (p - len(retVal)));
    retVal.reverse();
    return retVal;
+
+def dec2bytes(n, p = 0):
+    return bin2bytes(dec2bin(n, p));
 
 # Convert a list of bits (MSB first) to a synch safe list of bits (section 6.2
 # of the ID3 2.4 spec).
@@ -121,3 +128,9 @@ def bin2synchsafe(x):
       bits = ([0] * (32 - len(x))) + bits;
 
    return bits;
+
+def bytes2str(bytes):
+    s = ""
+    for b in bytes:
+        s += ("\\x%02x" % ord(b))
+    return s
