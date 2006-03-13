@@ -1,5 +1,5 @@
 import zope.interface
-import interfaces
+import cctagutils.interfaces
 
 # use the bundled version of PyTagger, which contains our fixes.
 import tagger
@@ -8,7 +8,7 @@ import os
 import cctagutils.const as const
     
 class Metadata:
-    zope.interface.implements(interfaces.IMetadata)
+    zope.interface.implements(cctagutils.interfaces.IMetadata)
     
     def __init__(self, fileobj):
         self.__open(fileobj)
