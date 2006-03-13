@@ -34,7 +34,7 @@ def metadata(filename):
     # improvment might actually look at the file's contents.
     ext = filename.split('.')[-1].lower()
     if ext in meta_handlers:
-        return meta_handlers[ext](filename)
+        return meta_handlers[ext].openFile(filename)
     else:
         # return None if we can't find the file in our catalog
         return None
