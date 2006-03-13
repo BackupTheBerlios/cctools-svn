@@ -8,9 +8,9 @@
      />
 
   <adapter 
-     for="p6.storage.interfaces.IWorkItem"
+     for="p6.storage.interfaces.IFileItem"
      provides="ccpublisher.interfaces.IEmbeddable"
-     factory="ccpublisher.adapters.EmbeddableFile"
+     factory="ccpublisher.adapters.CcTagUtilsEmbeddable"
      />
 
   <!-- listeners for metadata provider -->
