@@ -10,7 +10,7 @@ Name "${APPNAME}"
 
 # Defines
 !define REGKEY "SOFTWARE\ccPublisher"
-!define VERSION 1.9
+!define VERSION 1.9.2
 !define COMPANY "Creative Commons"
 !define URL http://creativecommons.org
 
@@ -54,7 +54,7 @@ InstallDir $PROGRAMFILES\ccPublisher
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 1.9.0.0
+VIProductVersion 1.9.2.0
 VIAddVersionKey ProductName ccPublisher
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
@@ -67,31 +67,20 @@ ShowUninstDetails show
 
 # Installer sections
 Section -Main SEC0000
-    call DetectP6
+    # call DetectP6
     strcpy $StartMenuGroup "ccPublisher"
 
     # ccPublisher Core Files
-    SetOutPath $INSTDIR\site-packages
+    SetOutPath $INSTDIR
     SetOverwrite on
-    File ..\..\main.py
-    File ..\..\setup.py
-    File /r ..\..\ccpublisher
-
-    SetOutPath $INSTDIR\site-packages\resources
-    SetOverwrite on
-    File /r ..\..\resources\*
-
-    # ccPublisher Bootstrap
-    SetOutPath $INSTDIR\bootstrap
-    SetOverwrite On
-    File /r ..\..\autopackage\dist\*
+    File /r ..\..\dist\*
 
     # create icons
     CreateDirectory "$SMPROGRAMS\$StartMenuGroup"
     SetOutPath "$SMPROGRAMS\$StartMenuGroup"
     CreateShortCut "$SMPROGRAMS\$StartMenuGroup\ccPublisher.lnk" \
-                   "$INSTDIR\bootstrap\apboot.exe" \
-                   "main" "$INSTDIR\boostrap\apboot.exe" 0 SW_SHOWNORMAL \
+                   "$INSTDIR\main.exe" \
+                   "main" "$INSTDIR\main.exe" 0 SW_SHOWNORMAL \
                    ALT|CTRL|SHIFT|F5 "a description"
     
     WriteRegStr HKLM "${REGKEY}\Components" Main 1
