@@ -48,7 +48,10 @@ class Metadata:
         return None
 
     def _getFrameData(self, fids):
-
+        """Return the content of a frame; [fids] is a sequence of frame
+        identifiers to look for; the first one found is returned.  If none
+        are found, the method returns None."""
+        
         # retrieve the frame
         frame = self._getFrame(fids)
 
@@ -59,7 +62,31 @@ class Metadata:
               return frame.data
         
         return None
-    
+
+    def __removeFrame(self, id):
+        for f in self.__tag.frames:
+            if f.header.id == id:
+               del f
+
+    def __updateFrame(self, frame):
+        """Replace any frame with the same id with the supplied frame.  If
+        no frame with the same id is found, the frame is just appended."""
+
+        # check if an upgrade to 2.3 is needed before embedding
+        if (self._needsUpgrade()):
+            # update tags to ID3v2.3
+            self.upgrade()
+
+        # reopen the file (in case of 2.2)
+        self.__open()
+
+        # remove the frame if it exists
+        self.__removeFrame(frame.id)
+
+        # add the supplied frame
+        self.__tag.frames.append(frame)
+        self.__tag.update()
+
     def getTitle(self):
         return (self.__tag and self.__tag.getTitle()) or "";
 
@@ -68,9 +95,6 @@ class Metadata:
 
     def getYear(self):
         return self._getFrameData(('TYE', 'TYER', 'TDRC')) or ''
-
-    def getClaim(self):
-        return self._getFrameData(('TCR', 'TCOP')) or ''
     
     def _needsUpgrade(self):
         """Returns True if a file has ID3 tags of v2.2."""
@@ -139,32 +163,54 @@ class Metadata:
         
         self.__hasV1 = True
 
-    def __clearTcop(self):
-        for f in self.__tag.frames:
-            if f.header.id == 'TCOP':
-               del f
+    def getLicenseUrl(self):
+        """Return the license url this object is licensed under."""
+
+        return self._getFrameData(('WCOP',)) or ''
+
+    def setLicenseUrl(self, license):
+        """Set the URL of the license under which this file is released."""
+
+        # create the new WOAF frame
+        header = eyeD3.frames.FrameHeader()
+        header.id = 'WCOP'
+        header.compressed = 0
+        wcop = eyeD3.frames.UserURLFrame(header, url=unicode(license))
+
+        # update the file
+        self.__updateFrame(wcop)
+
+    def getMetadataUrl(self):
+        """Return the url containing the metadata for this object."""
+
+        return self._getFrameData(('WOAF',)) or ''
+
+    def setMetadataUrl(self, metadata_url):
+        """Set the URL of an external metadata store; the external metadata
+        may include license verification information."""
+
+        # create the new WOAF frame
+        header = eyeD3.frames.FrameHeader()
+        header.id = 'WOAF'
+        header.compressed = 0
+        woaf = eyeD3.frames.UserURLFrame(header, url=unicode(metadata_url))
+
+        # update the file
+        self.__updateFrame(woaf)
+
+    def getClaim(self):
+        return self._getFrameData(('TCR', 'TCOP')) or ''
 
     def setClaim(self, claim):
 
-        # check if an upgrade to 2.3 is needed before embedding
-        if (self._needsUpgrade()):
-            # update tags to ID3v2.3
-            self.upgrade()
-
-        # reopen the file (in case of 2.2)
-        self.__open()
-        print self.__tag
-
-        # set the TCOP frame
-        self.__clearTcop()
+        # create the new TCOP frame
         header = eyeD3.frames.FrameHeader()
         header.id = 'TCOP'
         header.compressed = 0
         tcop = eyeD3.frames.TextFrame(header, text=unicode(claim))
 
-        self.__tag.frames.append(tcop)
-        self.__tag.update()
-
+        # update the file
+        self.__updateFrame(tcop)
 
     def isWritable(self):
         """Returns true if the user has permission to change the metadata."""
