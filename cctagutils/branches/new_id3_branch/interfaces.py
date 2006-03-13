@@ -21,12 +21,18 @@ class IMetadata(zope.interface.Interface):
     def setClaim(claim):
         """Update embedded license claim with the specified text."""
 
+    def getLicenseUrl():
+        """Return the license url this object is licensed under."""
+
+    def setLicenseUrl(license):
+        """Set the URL of the license under which this file is released."""
+
+    def getMetadataUrl():
+        """Return the url containing the metadata for this object."""
+
     def setMetadataUrl(metadata_url):
         """Set the URL of an external metadata store; the external metadata
         may include license verification information."""
-
-    def setLicenseUrl(license_url):
-        """Set the URL of the license under which this file is released."""
         
     def isWritable():
         """Returns true if the user has permission to change the metadata."""
