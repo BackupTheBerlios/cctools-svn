@@ -29,7 +29,7 @@ class CcMain(p6.ui.wizard.WizFrame):
         # attach the image list to the file selector
         self.__imgList = wx.ImageList(33,33)
         self.__imgList.Add(
-            wx.Bitmap(os.path.join(self.app.resource_dir, 'cc_33.gif'))
+            wx.Bitmap(os.path.join(self.app.resource_dir, 'cc_doc_33.gif'))
             )
 
         XRCCTRL(self, "LST_FILES").SetImageList(self.__imgList,
