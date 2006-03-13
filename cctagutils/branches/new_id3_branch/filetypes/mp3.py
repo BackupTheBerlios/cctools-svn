@@ -1,10 +1,18 @@
-import zope.interface
-import cctagutils.interfaces
+"""
+MP3 File license metadata interface
+copyright 2005-2006, Nathan R. Yergler, Creative Commons
+licensed to the public under the MIT License.
 
-# use the bundled version of PyTagger, which contains our fixes.
-import tagger
-import eyeD3
+Wraps MP3 files, providing helper methods to set license-related fields.
+Requires eyeD3 and tagger (for upgrading from ID3v1 ot ID3v2 tags only).
+"""
+
 import os
+
+import zope.interface
+import eyeD3
+
+import cctagutils.interfaces
 import cctagutils.const as const
     
 class Metadata:
@@ -18,7 +26,7 @@ class Metadata:
     openFile = classmethod(openFile)
 
     def __open(self, fileobj=None):
-        if filename is not None:
+        if fileobj is not None:
             self.__fileobj = fileobj
 
         # create a handle for ID3v2
@@ -56,10 +64,12 @@ class Metadata:
         frame = self._getFrame(fids)
 
         if frame is not None:
-           if isinstance(frame, eyeD3.frames.DateFrame):
-              return frame.getYear()
-           else:
-              return frame.data
+            if isinstance(frame, eyeD3.frames.DateFrame):
+                return frame.getYear()
+            elif isinstance(frame, eyeD3.frames.URLFrame):
+                return frame.url
+            else:
+                return frame.data
         
         return None
 
@@ -81,11 +91,11 @@ class Metadata:
         self.__open()
 
         # remove the frame if it exists
-        self.__removeFrame(frame.id)
+        self.__removeFrame(frame.header.id)
 
         # add the supplied frame
         self.__tag.frames.append(frame)
-        self.__tag.update()
+        self.__tag.update(version=(self.__tag.getVersion() or eyeD3.ID3_V2_3))
 
     def getTitle(self):
         return (self.__tag and self.__tag.getTitle()) or "";
@@ -110,6 +120,7 @@ class Metadata:
 
     def upgrade(self):
         """Upgrades a file's ID3 tags from ID3v2.2 to ID3v2.3."""
+        import tagger
 
         # open the file using tagger
         self.__v2 = tagger.id3v2.ID3v2(self.filename,
@@ -175,7 +186,7 @@ class Metadata:
         header = eyeD3.frames.FrameHeader()
         header.id = 'WCOP'
         header.compressed = 0
-        wcop = eyeD3.frames.UserURLFrame(header, url=unicode(license))
+        wcop = eyeD3.frames.URLFrame(header, url=unicode(license))
 
         # update the file
         self.__updateFrame(wcop)
@@ -193,7 +204,7 @@ class Metadata:
         header = eyeD3.frames.FrameHeader()
         header.id = 'WOAF'
         header.compressed = 0
-        woaf = eyeD3.frames.UserURLFrame(header, url=unicode(metadata_url))
+        woaf = eyeD3.frames.URLFrame(header, url=unicode(metadata_url))
 
         # update the file
         self.__updateFrame(woaf)
