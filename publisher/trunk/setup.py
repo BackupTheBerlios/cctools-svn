@@ -90,7 +90,9 @@ if __name__ == '__main__':
           options={'py2exe':{'packages':packages,
                              'includes':['dbhash', 'encodings',]
                              },
-                   'py2app':{'packages':packages,
+                   'py2app':{'argv_emulation':True,
+			     'iconfile':os.path.join('resources', 'ccp8.icns'),
+			     'packages':packages,
                              'includes':['dbhash', 'encodings',]
                              },
                    },
