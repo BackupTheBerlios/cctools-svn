@@ -46,7 +46,6 @@ elif PLATFORM == 'linux':
     packages = packages + ['deploy', 'deploy.linux']
 
     pkgData = packageData(packages)
-    pkgData.update({'zope.proxy':['proxy.h']})
 
     RSRC_DIR = 'local/%s/resources' % APPNAME
 
@@ -58,10 +57,13 @@ else:
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
               'resources/wizard.xrc',
+	      'resources/dialogs.xrc',
               'resources/app.zcml',
 	      'resources/ccp8.ico',
 	      'resources/cc_33.gif',
-	      'resources/version.txt'])
+	      'resources/version.txt',
+	      'resources/publishguy.gif',
+	      'resources/publishguy_small.gif'])
 	     ]
 
 if PLATFORM != 'linux':
