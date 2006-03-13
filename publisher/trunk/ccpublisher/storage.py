@@ -10,9 +10,7 @@ import p6.ui.events
 
 from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
-
-class IEmbeddable(zope.interface.Interface):
-    pass
+from ccpublisher.interfaces import IEmbeddable
 
 class CallbackBridge(object):
     """Bridge pyarchive status update callbacks to P6 events."""
@@ -92,7 +90,9 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            
            if embeddable:
                for e in embeddable:
-                   e.embed(license, v_url, year, holder)
+                   # take e[1] since getAdapters returns a list of tuples --
+                   # (name, adapter)
+                   e[1].embed(license, v_url, year, holder)
 
        # create the submission object
        submission = pyarchive.submission.ArchiveItem(
@@ -140,7 +140,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            IMetadataStorage(self).getMetaValue('username'),
            IMetadataStorage(self).getMetaValue('password'),
            callback=CallbackBridge())
-
+       
        return {'URI':archive_URI}
        
     def __archiveId(self):
