@@ -22,7 +22,7 @@ class Metadata:
         self.__open(fileobj)
 
     def openFile(cls, filename):
-        return Metadata(file(filename))
+        return Metadata(file(filename, 'rw'))
     openFile = classmethod(openFile)
 
     def __open(self, fileobj=None):
@@ -73,29 +73,34 @@ class Metadata:
         
         return None
 
-    def __removeFrame(self, id):
-        for f in self.__tag.frames:
-            if f.header.id == id:
-               del f
-
     def __updateFrame(self, frame):
         """Replace any frame with the same id with the supplied frame.  If
         no frame with the same id is found, the frame is just appended."""
 
-        # check if an upgrade to 2.3 is needed before embedding
-        if (self._needsUpgrade()):
-            # update tags to ID3v2.3
-            self.upgrade()
-
+        # XXX check if an upgrade to 2.3 is needed before embedding
+        #if (self._needsUpgrade()):
+        #    # update tags to ID3v2.3
+        #    self.upgrade()
         # reopen the file (in case of 2.2)
-        self.__open()
+        #self.__open()
 
         # remove the frame if it exists
-        self.__removeFrame(frame.header.id)
+        self.__tag.frames.removeFramesByID(frame.header.id)
 
         # add the supplied frame
-        self.__tag.frames.append(frame)
-        self.__tag.update(version=(self.__tag.getVersion() or eyeD3.ID3_V2_3))
+        self.__tag.frames.addFrame(frame)
+
+        # commit the change to the file
+        try:
+            self.__tag.update(version=(self.__tag.getVersion() or eyeD3.ID3_V2_3))
+            # self.__open()
+        except IOError, e:
+            if e.errno == 13:
+                # permission denied... just ignore it
+                print "Could not write to file."
+                pass
+            else:
+                raise
 
     def getTitle(self):
         return (self.__tag and self.__tag.getTitle()) or "";
@@ -182,7 +187,7 @@ class Metadata:
     def setLicenseUrl(self, license):
         """Set the URL of the license under which this file is released."""
 
-        # create the new WOAF frame
+        # create the new WCOP frame
         header = eyeD3.frames.FrameHeader()
         header.id = 'WCOP'
         header.compressed = 0
@@ -225,4 +230,6 @@ class Metadata:
 
     def isWritable(self):
         """Returns true if the user has permission to change the metadata."""
-        return os.access(self.filename, os.W_OK)
+
+        # XXX we just return True here -- still need to catch other exceptions for file access
+        return True #('w' in getattr(self.__fileobj, 'mode', 'w'))
