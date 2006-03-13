@@ -38,9 +38,7 @@ if PLATFORM == 'windows':
     
 elif PLATFORM == 'darwin':
     import py2app
-    dataFiles = [('resources', 
-                 ['resources/LICENSE.txt', 'resources/wizard.xrc'])] + \
-                  findZcml(os.path.dirname(__file__) or os.getcwd())
+
 elif PLATFORM == 'linux':
     from deploy.linux.straw_distutils import setup
     packages = packages + ['deploy', 'deploy.linux']
@@ -57,14 +55,15 @@ else:
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
               'resources/wizard.xrc',
-	      'resources/dialogs.xrc',
+	          'resources/dialogs.xrc',
               'resources/app.zcml',
-	      'resources/ccp8.ico',
-	      'resources/cc_33.gif',
-	      'resources/version.txt',
-	      'resources/publishguy.gif',
-	      'resources/publishguy_small.gif'])
-	     ]
+	          'resources/ccp8.ico',
+	          'resources/cc_33.gif',
+              'resources/cc_doc_33.gif',
+	          'resources/version.txt',
+	          'resources/publishguy.gif',
+	          'resources/publishguy_small.gif'])
+	         ]
 
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
@@ -75,7 +74,7 @@ if PLATFORM != 'linux':
 if __name__ == '__main__':
 
     setup(name='ccPublisher',
-          version='1.9',
+          version='1.9.2',
           description = desc,
           long_description= long_desc,
           url='http://creativecommons.org',
@@ -84,17 +83,20 @@ if __name__ == '__main__':
           classifiers= classifiers,
           py_modules=[],
           scripts=['main.py'],
-          windows=['main.py'],
+          windows=[
+                   {'script':'main.py',
+                    "icon_resources": [(1, os.path.join('resources', 'ccp8.ico'))],
+                    } ],
           app=['main.py'],
           data_files=dataFiles,
           packages=packages,
           package_data=pkgData,
           options={'py2exe':{'packages':packages,
-                             'includes':['dbhash', 'encodings',]
+                             'includes':['dbhash', 'encodings',],
                              },
                    'py2app':{'argv_emulation':True,
-			     'iconfile':os.path.join('resources', 'ccp8.icns'),
-			     'packages':packages,
+                             'iconfile':os.path.join('resources', 'ccp8.icns'),
+			                 'packages':packages,
                              'includes':['dbhash', 'encodings',]
                              },
                    },
