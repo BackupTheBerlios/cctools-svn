@@ -142,6 +142,9 @@ class WizApp(wx.App):
                   self.reportBug,
                   id=wx.xrc.XRCID('MNU_REPORT'))
 
+	# connect Mac OS X handlers
+	self.SetMacAboutMenuItemId(wx.xrc.XRCID('MNU_ABOUT'))
+
         return menubar
 
     def __initUI(self):
@@ -154,15 +157,15 @@ class WizApp(wx.App):
 
         self.topmenu = self.__makeMenu()
         self.main.SetMenuBar(self.topmenu)
+
         # check if any extensions were loaded
         if len(self.prefs.keys()) == 0:
             # hide the preferences menu
             # XXX We currently hide the entire menu since it only has the prefs
             self.topmenu.EnableTop(1, False)
         
-        
         self.SetTopWindow(self.main)
-        self.main.SetSize(self.main.GetSize())
+        self.main.SetSize(self.main.GetMinSize())
         
     def connectEvents(self):
 
