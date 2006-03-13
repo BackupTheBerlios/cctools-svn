@@ -196,6 +196,12 @@ class WizApp(wx.App):
         about.ShowModal()
     
     def reportBug(self, event):
+        # open the browser window to the New Issue tracker page
+        webbrowser.open_new("http://roundup.creativecommons.org/ccpublisher/issue?@template=item")
+        
+        return
+    
+        
         # load the dialog definition
         xrc_resource = wx.xrc.XmlResource(os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
         report = xrc_resource.LoadDialog(None, "DLG_BUGREPORT")
