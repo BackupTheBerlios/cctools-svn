@@ -15,7 +15,8 @@ def itemSelected(event):
 
         try:
             id3 = metadata(event.item.getIdentifier())
-
+            if id3 is None: return
+            
             # this is a file item; try to extract ID3
             updateEvent = p6.metadata.events.UpdateMetadataEvent(
                 event.item,
