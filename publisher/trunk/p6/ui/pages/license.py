@@ -107,6 +107,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
                          caption="ccPublisher: Error.",
                          style=wx.OK|wx.ICON_ERROR, parent=self.GetParent())
             self.GetParent().Close()
+            return
 
         self.cmbLicenses.AppendItems(self.__l_classes.values())
         self.cmbLicenses.SetValue('Creative Commons')
