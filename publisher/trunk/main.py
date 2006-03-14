@@ -19,14 +19,15 @@ def main(argv=[]):
 
    # determine the resource path
    try:
-       root_dir = os.path.join( os.path.dirname(__file__), 'resources' )
+       root_dir = os.path.join( os.path.abspath(os.path.dirname(__file__)), 
+				'resources' )
        if platform.system().lower() == 'linux' and \
               not(os.path.exists(os.path.join(root_dir, 'app.zcml'))):
            root_dir = '/usr/local/%s/resources' % const.APPNAME
            
    except NameError, e:
        root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
-       
+
    # create the application and execute it
    app = CcPublisher(appname = 'ccPublisher',
                      rsc_dir = root_dir,
