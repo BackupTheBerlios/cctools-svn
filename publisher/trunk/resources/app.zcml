@@ -50,6 +50,7 @@
 
      <field id="description"
             label="Description"
+            validator="ccpublisher.validators.validateDescription"
             type="p6.metadata.types.ITextField"
             />
 
