@@ -14,3 +14,9 @@ def validateDescription(description):
     if not(description) or len(description.split()) < 5:
         return "You must supply a description of at least 5 words."
 
+
+def validateWorkFormat(format):
+    """A work format must be selected."""
+
+    if not(format):
+        return "You must select a work format."
