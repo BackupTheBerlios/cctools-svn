@@ -20,3 +20,16 @@ def validateWorkFormat(format):
 
     if not(format):
         return "You must select a work format."
+
+def validateUsername(username):
+    """A username must be specified."""
+
+    if not(username):
+        return "You must specify your archive.org username."
+
+def validatePassword(password):
+    """A password must be specified."""
+
+    if not(password):
+        return "You must specify your archive.org password."
+

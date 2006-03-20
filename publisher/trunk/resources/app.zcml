@@ -102,12 +102,14 @@
             label="Email Address"
             type="p6.metadata.types.ITextField"
             persist="True"
+            validator="ccpublisher.validators.validateUsername"
             />
 
      <field id="password"
             label="Password"
             type="p6.metadata.types.IPasswordField"
             persist="True"
+            validator="ccpublisher.validators.validatePassword"
             />
 
   </metadatagroup>
