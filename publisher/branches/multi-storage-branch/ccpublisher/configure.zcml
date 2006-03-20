@@ -1,0 +1,23 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="p6">
+
+  <storage
+     name="Archive.org Storage"
+     factory="ccpublisher.storage.ArchiveStorage"
+     />
+
+  <adapter 
+     for="p6.storage.interfaces.IFileItem"
+     provides="ccpublisher.interfaces.IEmbeddable"
+     factory="ccpublisher.adapters.CcTagUtilsEmbeddable"
+     />
+
+  <!-- listeners for metadata provider -->
+  <subscriber
+        for="p6.metadata.events.IUpdateMetadataEvent"
+        handler=".metadata.updateMetadataBridge"
+        />
+
+
+</configure>
