@@ -18,20 +18,13 @@ import shutil
 
 from distutils.core import Command
 from distutils.command.build import build
+from distutils.command.build_ext import build_ext
 from distutils.command.install import install
 from distutils.command.install_data import install_data
 from distutils.dep_util import newer
 from distutils.dist import Distribution
 from distutils.core import setup
 import distutils.sysconfig
-
-try:
-    from dsextras import BuildExt
-except ImportError:
-    try:
-        from gtk.dsextras import BuildExt
-    except ImportError:
-        sys.exit('Error: Can not find dsextras or gtk.dsextras')
 
 import msgfmt
 
@@ -529,7 +522,7 @@ class StrawDistribution(Distribution):
             'build_mo' : build_mo,
             'translate' : translate,
             'build_desktop': build_desktop,
-            'build_ext': BuildExt}
+            'build_ext': build_ext}
 
     def has_po_files(self):
         return len(self.translations) > 0
