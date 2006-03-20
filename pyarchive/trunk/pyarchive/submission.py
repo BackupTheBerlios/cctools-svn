@@ -156,7 +156,7 @@ class ArchiveItem:
             raise MissingParameterException
 
         if len(self.files) < 1:
-            raise MissingParameterException
+            raise MissingParameterException("Must include at least one file.")
 
         for archivefile in self.files:
             archivefile.sanityCheck()
