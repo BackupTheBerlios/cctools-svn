@@ -55,7 +55,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            work_type = work_type.lower()
        else:
            # no work type; can not validate
-           raise Exception()
+           raise KeyError("work_type not specified.")
 
        if work_type == 'audio':
            self.archive_collection = pyarchive.const.OPENSOURCE_AUDIO
