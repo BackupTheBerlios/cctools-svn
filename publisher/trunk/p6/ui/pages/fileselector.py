@@ -58,6 +58,10 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
                        )
                     )
 
+    def validate(self, event):
+        return XRCCTRL(self, "LST_FILES").GetItemCount() > 0
+    
+
     XRCID = "FILE_SELECTOR"
     PAGE_XRC = """
 <resource>
