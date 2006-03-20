@@ -183,8 +183,13 @@ class WizApp(wx.App):
         
     def showAbout(self, event):
         # load the dialog definition
-        xrc_resource = wx.xrc.XmlResource(os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
+        xrc_resource = wx.xrc.XmlResource(
+            os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
         about = xrc_resource.LoadDialog(None, "DLG_ABOUT")
+
+        # set the version number
+        wx.xrc.XRCCTRL(about, "LBL_VERSION").SetLabel("release %s" %
+                                                   ccpublisher.const.version())
         
         # connect the events
         self.Bind(wx.EVT_BUTTON,

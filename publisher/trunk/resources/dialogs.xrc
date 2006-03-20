@@ -7,15 +7,19 @@
     <object class="wxFlexGridSizer">
       <cols>3</cols>
       <object class="spacer">
+        
         <size>5,5</size>
       </object>
       <object class="spacer">
+        
         <size>0,0</size>
       </object>
       <object class="spacer">
+        
         <size>0,0</size>
       </object>
       <object class="spacer">
+        
         <size>5,5</size>
       </object>
       <object class="sizeritem">
@@ -23,6 +27,7 @@
           <cols>1</cols>
           <object class="sizeritem">
             <object class="wxStaticText">
+              
               <label>ccPublisher gets better with your feedback.  If you have a 
 bug to report, please enter some information about what 
 action triggers the bug and what you expect the behavior 
@@ -37,11 +42,14 @@ operating system you run will be sent to Creative Commons.
 No personal information is transmitted.  After you submit 
 your feedback you'll receive a web address you can use to 
 track your item.</label>
+              
               <style>wxALIGN_LEFT</style>
             </object>
+            
             <flag>wxALL|wxEXPAND</flag>
           </object>
           <object class="spacer">
+            
             <size>20,20</size>
           </object>
           <object class="sizeritem">
@@ -49,44 +57,58 @@ track your item.</label>
               <cols>2</cols>
               <object class="sizeritem">
                 <object class="wxStaticText">
+                  
                   <label>Title:</label>
+                  
                   <tooltip>A brief description of your bug or suggestion.</tooltip>
                 </object>
+                
                 <flag>wxRIGHT</flag>
               </object>
               <object class="sizeritem">
                 <object class="wxTextCtrl" name="TXT_TITLE"/>
+                
                 <flag>wxALL|wxEXPAND</flag>
               </object>
               <rows>2</rows>
               <growablecols>1</growablecols>
               <object class="sizeritem">
                 <object class="wxStaticText">
+                  
                   <label>Type of Report:</label>
                 </object>
+                
                 <flag>wxRIGHT</flag>
               </object>
               <object class="sizeritem">
                 <object class="wxChoice" name="CMB_TYPE">
+                  
                   <content>
                     <item>Suggestion</item>
                     <item>Bug Report</item>
                   </content>
+                  
                   <selection>0</selection>
                 </object>
+                
                 <flag>wxEXPAND</flag>
               </object>
             </object>
+            
             <flag>wxALL|wxEXPAND</flag>
           </object>
           <object class="sizeritem">
             <object class="wxTextCtrl" name="TXT_BODY">
+              
               <size>300,200</size>
+              
               <style>wxTE_MULTILINE|wxTE_WORDWRAP</style>
             </object>
+            
             <flag>wxALL|wxGROW</flag>
           </object>
           <object class="spacer">
+            
             <size>10,10</size>
           </object>
           <object class="sizeritem">
@@ -94,18 +116,24 @@ track your item.</label>
               <cols>2</cols>
               <object class="sizeritem">
                 <object class="wxButton" name="CMD_OK">
+                  
                   <label>&amp;OK</label>
+                  
                   <default>1</default>
                 </object>
+                
                 <flag>wxALIGN_CENTRE</flag>
               </object>
               <object class="sizeritem">
                 <object class="wxButton" name="CMD_CANCEL">
+                  
                   <label>&amp;Cancel</label>
                 </object>
+                
                 <flag>wxALIGN_CENTRE</flag>
               </object>
             </object>
+            
             <flag>wxALL|wxEXPAND</flag>
           </object>
           <growablecols>0</growablecols>
@@ -114,14 +142,17 @@ track your item.</label>
           <growablerows>4</growablerows>
           <growablerows>5</growablerows>
         </object>
+        
         <flag>wxALL|wxEXPAND</flag>
       </object>
       <growablerows>0</growablerows>
       <growablecols>1</growablecols>
       <object class="spacer">
+        
         <size>5,5</size>
       </object>
       <object class="spacer">
+        
         <size>5,5</size>
       </object>
     </object>
@@ -132,55 +163,73 @@ track your item.</label>
       <cols>1</cols>
       <object class="sizeritem">
         <object class="wxStaticBitmap">
+          
           <bitmap>publishguy.gif</bitmap>
         </object>
+        
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="spacer">
+        
         <size>10,10</size>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
+          
           <label>ccPublisher 2</label>
         </object>
+        
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="sizeritem">
-        <object class="wxStaticText">
+        <object class="wxStaticText" name="LBL_VERSION">
+          
           <label>release 1.9.1</label>
         </object>
+        
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="spacer">
+        
         <size>10,10</size>
       </object>
       <object class="sizeritem">
         <object class="wxStaticLine"/>
+        
         <flag>wxGROW</flag>
       </object>
       <object class="spacer">
+        
         <size>10,10</size>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
+          
           <label>copyright 2004-2006, Creative Commons</label>
         </object>
+        
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
+          
           <label>licensed under the GNU GPL version 2.0</label>
         </object>
+        
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="spacer">
+        
         <size>5,5</size>
       </object>
       <object class="sizeritem">
         <object class="wxButton" name="CMD_OK">
+          
           <label>&amp;OK</label>
+          
           <default>1</default>
         </object>
+        
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <growablecols>0</growablecols>
