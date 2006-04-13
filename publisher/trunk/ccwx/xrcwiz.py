@@ -18,6 +18,109 @@ ccEVT_XRCWIZ_PAGE_CHANGED  = wx.NewEventType()
 EVT_XRCWIZ_PAGE_CHANGING = wx.PyEventBinder(ccEVT_XRCWIZ_PAGE_CHANGING, 1)
 EVT_XRCWIZ_PAGE_CHANGED  = wx.PyEventBinder(ccEVT_XRCWIZ_PAGE_CHANGED,  1)
 
+class PageCollection(object):
+   """A collection of pages which contains support for extension points."""
+   def __init__(self, pages=[]):
+      self.pages = pages
+      self.page_stack = []
+      self.__cur_index = 0
+
+   def current(self):
+      """Returns the current page."""
+      return self.pages[self.__cur_index]
+
+   def __checkPage(self):
+      """Checks the current page to see if it's an extension point.
+      If it is, it attempts to expand it into a sequence of pages and
+      makes it active."""
+      
+      # check if the current page is an extension point
+      if (isinstance(self.pages[self.__cur_index],
+                     p6.extension.point.ExtensionPoint)):
+         # this is an extension point
+         ext_point = self.pages[self.__cur_index]
+
+         # see if anyone implements this extension point
+         implementors = ext_point.implementors()
+
+         if implementors:
+            # someone does, push the current page state and use the new one
+            self.page_stack.append( (self.pages, self.__cur_index) )
+
+            # get a handle to the parent object for realized pages
+            page_parent = p6.api.getApp().GetTopWindow().getPageParent()
+
+            # construct the pages
+            realized_pages = []
+
+            for implementor in implementors:
+               for p in implementor:
+                  realized_pages.append(p(page_parent))
+
+            self.pages = realized_pages
+            self.__cur_index = 0
+
+            # the extension point existed and was successfully expanded
+            return True
+         else:
+
+            # the e.p. existed, but is not implemented by anyone
+            return False
+
+      # no extension point
+      return True
+
+   def next(self):
+
+      self.__cur_index = self.__cur_index + 1
+      
+      # see if we're at the end of this list or at a non-expanding e.p.
+      while (self.__cur_index >= len(self.pages)) or \
+                not(self.__checkPage()):
+
+
+         if self.__cur_index >= len(self.pages):
+            # pop off the top item in the stack
+            self.pages, self.__cur_index = self.page_stack[-1]
+            del self.page_stack[-1]
+
+         # increment our old current index
+         self.__cur_index = self.__cur_index + 1
+
+   def previous(self):
+      self.__cur_index = self.__cur_index - 1
+
+      # see if we're at the top of the list
+      while (self.__cur_index < 0):
+         # pop off the top item in the stack
+         self.pages, self.__cur_index = self.page_stack[-1]
+         del self.page_stack[-1]
+
+         # decrement our old current index
+         self.__cur_index = self.__cur_index - 1
+
+   def is_first(self):
+
+      # XXX this doesn't work if the first page is actually an extension point
+      return (self.__cur_index == 0 and len(self.page_stack) == 0)
+
+   def is_last(self):
+
+      if self.__cur_index < len(self.pages) - 1:
+         # we have *at least* one more page
+         return False
+
+      # check each other item in the stack
+      for i in range(len(self.page_stack) - 1, -1, -1):
+         page_list, index = self.page_stack[i]
+         if index < len(page_list) - 1:
+            return False
+
+      return True
+
+   def __len__(self):
+      return len(self.pages)
+   
 class XrcWizardEvent(wx.PyCommandEvent):
    def __init__(self, evt_id, win_id, direction=True, page=None):
       wx.PyCommandEvent.__init__(self, evt_id, win_id)
@@ -44,8 +147,8 @@ class XrcWiz(wx.Frame):
       self.app = parent
       self.xrcid = id
 
-      self.pages = []
-      self.cur_page = -1
+      self.pages = PageCollection()
+      # self.cur_page = -1
 
       # create a handle to the XML resource file
       self.xrc = wx.xrc.EmptyXmlResource()
@@ -69,22 +172,28 @@ class XrcWiz(wx.Frame):
       self.Bind(EVT_XRCWIZ_PAGE_CHANGED,  self.OnPageChanged)
       self.Bind(EVT_XRCWIZ_PAGE_CHANGING, self.OnPageChanging)
 
+   def setPageCollection(self, new_collection):
+      self.pages = new_collection
+      
    def __detachCurrent(self, event=None):
-       # detach and hide the current page
-       XRCCTRL(self, "PNL_BODY").GetSizer().Hide(self.pages[self.cur_page])
-       XRCCTRL(self, "PNL_BODY").GetSizer().Detach(self.pages[self.cur_page])
+      """Detach and hide the current page."""
+      
+      XRCCTRL(self, "PNL_BODY").GetSizer().Hide(self.pages.current())
+      XRCCTRL(self, "PNL_BODY").GetSizer().Detach(self.pages.current())
 
    def __addCurrent(self, event=None):
+
        # add and show the new page
        XRCCTRL(self, "PNL_BODY").GetSizer().Insert(0,
-                                                   self.pages[self.cur_page],
+                                                   self.pages.current(),
                                                    flag=wx.EXPAND)
-       self.pages[self.cur_page].Show()
-       self.pages[self.cur_page].Layout()
+
+       self.pages.current().Show()
+       self.pages.current().Layout()
 
        # update the headline
        XRCCTRL(self, "LBL_HEADER_TEXT").SetLabel(
-          self.pages[self.cur_page].headline)
+          self.pages.current().headline)
        
        self.__updateNavBtns(event)
        self.Layout()
@@ -92,101 +201,56 @@ class XrcWiz(wx.Frame):
    addCurrent = __addCurrent
 
    def __updateNavBtns(self, event=None):
-       
-       if (len(self.pages) == self.cur_page + 1) or \
-           (self.pages[self.cur_page + 1] is None):
-            XRCCTRL(self, "CMD_NEXT").SetLabel('Quit')
-       else:
-            XRCCTRL(self, "CMD_NEXT").SetLabel('Next')
 
-       if self.cur_page == 0 or self.pages[self.cur_page - 1] is None:
-           XRCCTRL(self, "CMD_PREV").Disable()
-       else:
-	       XRCCTRL(self, "CMD_PREV").Enable()
+      if self.pages.is_last():
+         XRCCTRL(self, "CMD_NEXT").SetLabel('Quit')
+      else:
+         XRCCTRL(self, "CMD_NEXT").SetLabel('Next')
 
-       XRCCTRL(self, "CMD_NEXT").Enable()
+      if self.pages.is_first():
+         XRCCTRL(self, "CMD_PREV").Disable()
+      else:
+         XRCCTRL(self, "CMD_PREV").Enable()
+
+      XRCCTRL(self, "CMD_NEXT").Enable()
        
    def onCancel(self, event):
       self.Close()
-      
-   def getPage(self, xrcid):
-      """Returns the child page with the specified XRC ID.""" 
-      return [n for n in self.pages if getattr(n, 'xrcid', None) == xrcid][0]
 
-   def setPage(self, xrcid):
+   def updateLayout(self):
       """Sets the current page to the specified XRCID."""
-      
-      page = self.getPage(xrcid)
-
-      self.__detachCurrent()
-
-      self.cur_page = self.pages.index(page)
-      self.__addCurrent()
 
       # refresh the window
       self.GetSizer().Layout()      
       self.Refresh()
 
-   def __checkPage(self, index):
-      """Check if the page is an extension point; if it is, expand it and
-      replace it in the sequence.
-
-      Return True if we replaced an extension point with pages, or if there
-      was no extension point; return False if we replaced an extension point
-      with nothing -- this implies we may need to check again."""
-
-      if (isinstance(self.pages[index], p6.extension.point.ExtensionPoint)):
-         print 'is an instance'
-         print self.pages
-         
-         ext_point = self.pages[index]
-         del self.pages[index]
-
-         expanded_pages = ext_point.implementors()
-
-         if expanded_pages:
-            realized_pages = []
-            for implementor in expanded_pages:
-               for p in implementor:
-                  realized_pages.append(p(self.getPageParent()))
-                  
-            self.pages[index:index] = realized_pages
-            return True
-
-         # the extension point expanded to nothing
-         return False
-
-      # there was no extension point
-      return True
-         
    def onNext(self, event):
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGING,
-                                     self.pages[self.cur_page].GetId(), 
+                                     self.pages.current().GetId(), 
                                      direction=True, 
-                                     page=self.pages[self.cur_page])
+                                     page=self.pages.current())
        self.GetEventHandler().ProcessEvent(change_event)
 
        if not change_event.IsAllowed():
           return False
 
        # check for Finish instead of next
-       if (self.cur_page == len(self.pages) - 1) or \
-          (self.pages[self.cur_page + 1] is None):
+       if (self.pages.is_last()):
           # either at the end of the list of pages, or we've hit a None 
           # (which flags for stop)
           self.Close()
           return
 
-       while ( not( self.__checkPage(self.cur_page+1) ) and
-               (self.cur_page + 1) < len(self.pages) ):
-          pass
+       self.__detachCurrent()
+       self.pages.next()
+       self.__addCurrent()
        
-       self.setPage(self.pages[self.cur_page + 1].xrcid)
+       self.updateLayout()
        
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
-                                     self.pages[self.cur_page].GetId(), 
+                                     self.pages.current().GetId(), 
                                      direction=True, 
-                                     page=self.pages[self.cur_page])
+                                     page=self.pages.current())
        self.GetEventHandler().ProcessEvent(change_event)
 
        XRCCTRL(self, "PNL_BODY").Layout()
@@ -194,23 +258,27 @@ class XrcWiz(wx.Frame):
 
    def onPrev(self, event):
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGING,
-                                     self.pages[self.cur_page].GetId(), 
+                                     self.pages.current().GetId(), 
                                      direction=False, 
-                                     page=self.pages[self.cur_page])
+                                     page=self.pages.current())
        self.GetEventHandler().ProcessEvent(change_event)
 
        if not change_event.IsAllowed():
           return False
 
-       self.setPage(self.pages[self.cur_page - 1].xrcid)
+
+       self.__detachCurrent()
+       self.pages.previous()
+       self.__addCurrent()
+       
+       self.updateLayout()
 
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
-                                     self.pages[self.cur_page].GetId(), 
+                                     self.pages.current().GetId(), 
                                      direction=False, 
-                                     page=self.pages[self.cur_page])
+                                     page=self.pages.current())
        self.GetEventHandler().ProcessEvent(change_event)
 
-                
    def getPageParent(self):
      """Return the object which should serve as parent for page objects.
 

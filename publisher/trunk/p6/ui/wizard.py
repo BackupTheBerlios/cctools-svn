@@ -40,13 +40,11 @@ class WizFrame(ccwx.xrcwiz.XrcWiz):
            L{p6.ui.interfaces.IWizardPage}.
         @type pages: sequence
         """
-        
-        self.pages = pages
 
-        self.cur_page = 0
+        self.setPageCollection(ccwx.xrcwiz.PageCollection(pages))
         self.addCurrent(None)
 
-        self.pages[self.cur_page].Show()
+        self.pages.current().Show()
 
         self.SetAutoLayout(True)
         self.Show()
