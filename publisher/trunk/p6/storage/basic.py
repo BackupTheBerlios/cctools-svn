@@ -7,11 +7,62 @@ import zope.component
 
 import p6
 import p6.api
+import p6.extension.interfaces
 import interfaces
+
+def basicStorageUi(storage):
+    
+    class BasicStorageUi(object):
+
+        zope.interface.implements(p6.ui.interfaces.IPageList)
+
+        def __init__(self, target, event):
+            self.__pages = None
+            self.__storage = storage
+
+        def createPages(self):
+            
+            # XXX -- hack
+            # 
+            # We import here because doing so at instantiation causes problems
+            # -- in particular, the App needs to be created before other
+            # UI objects, and the import has side effects (querying the
+            # background color)
+            
+            import p6.ui.pages.fieldrender
+            
+            # create the simple page
+            fields = [
+                p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
+                'path', 'Destination Path')
+                ]
+
+            self.__pages = []
+            
+            self.__pages.append(
+                lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
+                x, 'BASIC_UI_META', 'Basic Storage', fields,
+                self.callback))
+
+        def list(self):
+            if self.__pages is None:
+                self.createPages()
+                
+            return self.__pages
+
+        def callback(self, value_dict):
+            print value_dict
+            pass
+
+    return BasicStorageUi
 
 class BasicStorage(object):
     zope.interface.implements(interfaces.IStorage)
-
+    
+    id = 'BASIC_STORAGE'
+    name = 'Basic Storage'
+    description = 'A simple storage provider which does nothing.'
+    
     def __init__(self):
         
         zope.component.provideHandler(
@@ -23,6 +74,16 @@ class BasicStorage(object):
             zope.component.adapter(p6.storage.events.IStore)(
                 p6.api.deinstify(self.__wrapStore))
             )
+
+        # register handlers for extension points --
+        # this allows us to extend the user interface in a unified way
+        # 
+        zope.component.provideSubscriptionAdapter(
+            basicStorageUi(self),
+            (p6.extension.interfaces.IStorageMetaCollection,
+             p6.extension.events.IExtensionPageEvent,
+             ),
+            p6.ui.interfaces.IPageList)
 
     def validate(self, event=None):
         """Handle L{p6.storage.events.IValidate} events by simply

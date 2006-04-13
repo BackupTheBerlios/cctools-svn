@@ -92,7 +92,29 @@ class PagesDirective(object):
     
         for page in p6.ui.pages.metadata.generatePages(for_):
             p6.api.getApp().pages.append(page)
-            
+
+
+    def storageSelector(self, _context, multi=False):
+        _context.action(discriminator=('RegisterPage', 'StorageSelector',
+                                       p6.ui.pages.StorageSelectorPage),
+                        callable=p6.api.getApp().pages.append,
+                        args=(p6.ui.pages.StorageSelectorPage,),
+                        )
+
+    def finalUrl(self, _context, title):
+        _context.action(discriminator=('RegisterPage', 'FinalUrlPage',
+                                       p6.ui.pages.StorePage),
+                        callable=p6.api.getApp().pages.append,
+                        args=(lambda x: p6.ui.pages.FinalUrlPage(x, title),),
+                        )
+
+    def extensionPoint(self, _context, for_):
+
+        _context.action(discriminator=('Register', 'ExtensionPoint', for_),
+                        callable=p6.api.getApp().pages.append,
+                        args=(p6.extension.ExtensionPoint(for_), ),
+                        )
+    
     def storepage(self, _context):
         _context.action(discriminator=('RegisterPage', 'StorePage',
                                        p6.ui.pages.StorePage),

@@ -13,6 +13,7 @@ import p6
 import p6.api
 import interfaces
 
+
 class WizFrame(ccwx.xrcwiz.XrcWiz):
     """Top level wizard window."""
     
@@ -50,11 +51,4 @@ class WizFrame(ccwx.xrcwiz.XrcWiz):
         self.SetAutoLayout(True)
         self.Show()
         self.Layout()
-                
-    def getPageParent(self):
-        """Return the object which should serve as parent for page objects.
-
-        @rtype: L{wx.Window}
-        """
-        return wx.xrc.XRCCTRL(self, "PNL_BODY")
     

@@ -177,6 +177,33 @@ class IStorePageSubdirective(zope.interface.Interface):
     """A generic storage page which is able to emit and handle the
     appropriate events."""
 
+class IStorageSelector(zope.interface.Interface):
+    """A page which allows users to select one or more storage providers
+    to upload to."""
+
+    multi = zope.configuration.fields.Bool(
+        title = _("Multiple"),
+        description = _("Allow multiple storage providers to be selected."),
+        required=False,
+        )
+
+class IExtensionPoint(zope.interface.Interface):
+    """ XXX """
+
+    for_ = zope.configuration.fields.GlobalInterface(
+        title=u"",
+        description=u"",
+        required=True,
+        )
+
+class IFinalUrlPage(zope.interface.Interface):
+    """ XXX """
+
+    title = zope.configuration.fields.MessageID(
+        title=u"The page title.",
+        required=True,
+        )
+    
 class IXmldisplayPageSubdirective(zope.interface.Interface):
     """A generic page which displays a psuedo-XML representation of the
     metadata collected."""

@@ -19,6 +19,10 @@ class IFileItem(IWorkItem):
 
 class IStorage(zope.interface.Interface):
     """Interface for backend storage providers."""
+
+    id = zope.interface.Attribute("The unique identifier for this provider.")
+    name = zope.interface.Attribute("The human readable name for this provider.")
+    description = zope.interface.Attribute("A description")
     
     def validate():
         """Walks through the item and metadata models, ensuring everything

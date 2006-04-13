@@ -91,6 +91,7 @@
 
   </metadatagroup>
 
+<!--
   <metadatagroup
      id="Login"
      title="Log in to the Archive"
@@ -113,9 +114,14 @@
             />
 
   </metadatagroup>
-
+-->
     
   <pages appid="ccpublisher">
+
+    <!-- A sequence of pages, metadata pages and extension points.  Note
+         that the last element should *always* be a real page.  If it's an
+         extension point, it might expand to nothing, and then the program
+         just ends.  Sad, but true. -->
 
     <page factory="ccpublisher.ui.WelcomePage" />
 
@@ -126,7 +132,19 @@
              p6.storage.interfaces.IWorkItem
              p6.storage.interfaces.IStorage"  />
 
-    <storepage  />
+    <storageSelector 
+        multi="False" />
+
+    <extensionPoint
+	for="p6.extension.interfaces.IStorageMetaCollection" />
+
+    <storepage />
+
+    <extensionPoint
+        for="p6.storage.extensions.IPostStoreExtension" />
+
+    <finalUrl 
+        title="Upload complete."/>
 
   </pages>
 

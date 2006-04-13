@@ -8,6 +8,7 @@ import wx
 import wx.xrc
 from wx.xrc import XRCCTRL
 
+import p6.extension.point
 import os.path
 
 import ccwx.stext
@@ -126,6 +127,38 @@ class XrcWiz(wx.Frame):
       self.GetSizer().Layout()      
       self.Refresh()
 
+   def __checkPage(self, index):
+      """Check if the page is an extension point; if it is, expand it and
+      replace it in the sequence.
+
+      Return True if we replaced an extension point with pages, or if there
+      was no extension point; return False if we replaced an extension point
+      with nothing -- this implies we may need to check again."""
+
+      if (isinstance(self.pages[index], p6.extension.point.ExtensionPoint)):
+         print 'is an instance'
+         print self.pages
+         
+         ext_point = self.pages[index]
+         del self.pages[index]
+
+         expanded_pages = ext_point.implementors()
+
+         if expanded_pages:
+            realized_pages = []
+            for implementor in expanded_pages:
+               for p in implementor:
+                  realized_pages.append(p(self.getPageParent()))
+                  
+            self.pages[index:index] = realized_pages
+            return True
+
+         # the extension point expanded to nothing
+         return False
+
+      # there was no extension point
+      return True
+         
    def onNext(self, event):
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGING,
                                      self.pages[self.cur_page].GetId(), 
@@ -144,6 +177,10 @@ class XrcWiz(wx.Frame):
           self.Close()
           return
 
+       while ( not( self.__checkPage(self.cur_page+1) ) and
+               (self.cur_page + 1) < len(self.pages) ):
+          pass
+       
        self.setPage(self.pages[self.cur_page + 1].xrcid)
        
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
@@ -172,6 +209,14 @@ class XrcWiz(wx.Frame):
                                      direction=False, 
                                      page=self.pages[self.cur_page])
        self.GetEventHandler().ProcessEvent(change_event)
+
+                
+   def getPageParent(self):
+     """Return the object which should serve as parent for page objects.
+
+     @rtype: L{wx.Window}
+     """
+     return wx.xrc.XRCCTRL(self, "PNL_BODY")
 
    def OnPageChanged(self, event):
       if hasattr(event.GetPage(), 'onChanged'):

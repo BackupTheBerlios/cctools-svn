@@ -62,6 +62,21 @@
           schema="p6.configure.metadirectives.IXmldisplayPageSubdirective"
           />
 
+      <meta:subdirective
+          name="storageSelector"
+          schema="p6.configure.metadirectives.IStorageSelector"
+          />
+
+      <meta:subdirective
+          name="extensionPoint"
+          schema="p6.configure.metadirectives.IExtensionPoint"
+          />
+
+      <meta:subdirective
+          name="finalUrl"
+          schema="p6.configure.metadirectives.IFinalUrlPage"
+          />
+
     </meta:complexDirective>
 
 
