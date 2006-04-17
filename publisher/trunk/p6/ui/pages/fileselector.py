@@ -10,6 +10,21 @@ import ccwx.xrcwiz
 import p6
 import p6.api
 
+class FileDropTarget(wx.FileDropTarget):
+    """ This object implements generic drop target functionality for Files """
+
+    def OnDropFiles(self, x, y, filenames):
+        """Bridge dropped files to P6 events."""
+
+        # XXX we don't handle dropped directories here.
+        
+        for filename in filenames:
+            zope.component.handle(
+                p6.storage.events.ItemSelected(
+                   p6.storage.items.FileItem(filename)
+                   )
+                )
+
 class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
     """Page which displays a file selector and publishes events when
     items are selected or deselected.
@@ -36,6 +51,9 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
             zope.component.adapter(p6.storage.events.IItemSelected)(
                 p6.api.deinstify(self.selectItem))
             )
+
+        # enable dropping files on the list box
+        XRCCTRL(self, "LST_FILES").SetDropTarget(FileDropTarget())
 
     def selectItem(self, event):
         """Responds to ItemSelected events and updates the user interface."""
