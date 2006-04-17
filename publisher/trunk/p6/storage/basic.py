@@ -9,8 +9,11 @@ import p6
 import p6.api
 import p6.extension.interfaces
 import interfaces
+import common
 
 def basicStorageUi(storage):
+
+    print 'basic', storage
     
     class BasicStorageUi(object):
 
@@ -45,18 +48,28 @@ def basicStorageUi(storage):
                 self.callback))
 
         def list(self):
-            if self.__pages is None:
-                self.createPages()
+            # check if we've been activated by the interface
+            
+            if self.__storage.activated():
                 
-            return self.__pages
+                if self.__pages is None:
+                    self.createPages()
+
+                return self.__pages
+            else:
+                # not activated, so we don't contribute to the interface
+                return []
 
         def callback(self, value_dict):
             print value_dict
-            pass
+
+            # register for future storage events after validating our
+            # storage-specific settings
+            self.storage.registerEvents()
 
     return BasicStorageUi
 
-class BasicStorage(object):
+class BasicStorage(common.CommonStorageMixin):
     zope.interface.implements(interfaces.IStorage)
     
     id = 'BASIC_STORAGE'
@@ -64,17 +77,9 @@ class BasicStorage(object):
     description = 'A simple storage provider which does nothing.'
     
     def __init__(self):
+
+        # self.registerEvents()
         
-        zope.component.provideHandler(
-            zope.component.adapter(p6.storage.events.IValidate)(
-                p6.api.deinstify(self.validate))
-            )
-
-        zope.component.provideHandler(
-            zope.component.adapter(p6.storage.events.IStore)(
-                p6.api.deinstify(self.__wrapStore))
-            )
-
         # register handlers for extension points --
         # this allows us to extend the user interface in a unified way
         # 
@@ -93,24 +98,6 @@ class BasicStorage(object):
                                                 message='validating submission data...')
 
         zope.component.handle(update)
-
-    def __wrapStore(self, event=None):
-        """Wraps dispatch of L{p6.storage.events.IStore} events by calling
-        self.store(self, event).  Publishes a L{p6.storage.events.WorkStored}
-        event after .store completes.
-        """
-
-        update = p6.ui.events.UpdateStatusEvent(delta=20,
-                                                message='uploading submission...')
-
-        zope.component.handle(update)
-
-        # call the store method
-        mdata = self.store(event)
-        
-        # after the storage process, publish a post-store event
-        stored_event = p6.storage.events.WorkStored(mdata)
-        zope.component.handle(stored_event)
 
     def store(self, event=None):
         """Handle L{p6.storage.events.IStore} events by simply
