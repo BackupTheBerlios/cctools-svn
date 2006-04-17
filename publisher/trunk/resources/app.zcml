@@ -129,8 +129,7 @@
 
     <metadatapages 
 	for="p6.storage.interfaces.IWork
-             p6.storage.interfaces.IWorkItem
-             p6.storage.interfaces.IStorage"  />
+             p6.storage.interfaces.IWorkItem"  />
 
     <storageSelector 
         multi="False" />
