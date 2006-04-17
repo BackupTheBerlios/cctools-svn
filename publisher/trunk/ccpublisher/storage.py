@@ -7,6 +7,8 @@ import zope.component
 
 import p6
 import p6.ui.events
+import p6.storage.common
+import p6.extension.exceptions
 
 from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
@@ -37,15 +39,99 @@ class CallbackBridge(object):
     def __call__(self, bytes=1):
         self.increment(steps=bytes)
     
+
+def archiveStorageUi(storage):
+
+    class ArchiveStorageUi(object):
+
+        zope.interface.implements(p6.ui.interfaces.IPageList)
+
+        def __init__(self, target, event):
+            self.__pages = None
+            self.__storage = storage
+
+        def createPages(self):
+            
+            # XXX -- hack
+            # 
+            # We import here because doing so at instantiation causes problems
+            # -- in particular, the App needs to be created before other
+            # UI objects, and the import has side effects (querying the
+            # background color)
+            
+            import p6.ui.pages.fieldrender
+            
+            # create the simple page
+            fields = [
+                p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
+                'username', 'Username'),
+                p6.metadata.base.metadatafield(p6.metadata.types.IPasswordField)(
+                'password', 'Password'),
+                ]
+
+            self.__pages = []
+            
+            self.__pages.append(
+                lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
+                x, 'ARCHIVE_UI_META', 'Internet Archive', fields,
+                self.callback))
+
+        def list(self):
+            # see if we've been activated
+            if (self.__storage.activated()):
+                
+                if self.__pages is None:
+                    self.createPages()
+
+                return self.__pages
+            else:
+                # not activated, so don't ask for information
+                return []
+
+        def callback(self, value_dict):
+
+            # make sure both a username and password were provided
+            if not('username' in value_dict and 'password' in value_dict):
+                raise p6.extension.exceptions.ExtensionSettingsException(
+                    "You must supply both a username and password.")
+            
+            # XXX validate the credentials with IA
+            
+
+            # store the credentials for future use
+            self.storage.credentials = (value_dict['username'],
+                                          value_dict['password'])
+
+            # register for future storage events after validating our
+            # storage-specific settings
+            
+            self.storage.registerEvents()
+
+    return ArchiveStorageUi
+
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
-                     p6.storage.basic.BasicStorage):
+                     p6.storage.common.CommonStorageMixin):
+    
     zope.interface.implements(p6.metadata.interfaces.IMetadataStorage,
                               p6.storage.interfaces.IStorage)
 
+    id = 'ARCHIVE_STORAGE'
+    name = 'Internet Archive Storage'
+    description = 'Upload works to the Internet Archive (www.archive.org).'
+    
     # metadata interface
     def __init__(self):
         p6.metadata.base.BasicMetadataStorage.__init__(self)
-        p6.storage.basic.BasicStorage.__init__(self)
+
+        # register handlers for extension points --
+        # this allows us to extend the user interface in a unified way
+        # 
+        zope.component.provideSubscriptionAdapter(
+            archiveStorageUi(self),
+            (p6.extension.interfaces.IStorageMetaCollection,
+             p6.extension.events.IExtensionPageEvent,
+             ),
+            p6.ui.interfaces.IPageList)
 
     def validate(self, event=None):
        # determine the appropriate collection
@@ -136,9 +222,9 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        print submission.metaxml().getvalue()
        print submission.filesxml().getvalue()
+       
        archive_URI =  submission.submit(
-           IMetadataStorage(self).getMetaValue('username'),
-           IMetadataStorage(self).getMetaValue('password'),
+           self.credentials[0], self.credentials[1],
            callback=CallbackBridge())
        
        return {'URI':archive_URI}

@@ -2,12 +2,10 @@
            xmlns:i18n="http://namespaces.zope.org/i18n"
            i18n_domain="p6">
 
-<!--
   <storage
      name="Archive.org Storage"
      factory="ccpublisher.storage.ArchiveStorage"
      />
--->
 
   <adapter 
      for="p6.storage.interfaces.IFileItem"
