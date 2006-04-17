@@ -59,6 +59,8 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         wx.YieldIfNeeded()
         self.store()
 
+        wx.YieldIfNeeded()
+
     def validateItem(self):
         """Publishes a L{p6.storage.events.ValidateWork} event which allows
         metadata providers to register errors before the upload occurs.
