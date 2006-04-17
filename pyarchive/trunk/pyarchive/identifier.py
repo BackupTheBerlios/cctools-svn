@@ -63,10 +63,8 @@ def munge(identifier):
 
     return "".join(letters)
 
-def verify_url(collection, identifier, mediatype):
+def verify_url(identifier):
     """Takes an archive.org identifier and returns the verification URL."""
 
-    return "http://www.archive.org/%s/%s-details-db.php?"\
-           "collection=%s&collectionid=%s" % (mediatype, mediatype,
-                                              collection, identifier)
+    return "http://www.archive.org/details/%s" % (identifier)
 
