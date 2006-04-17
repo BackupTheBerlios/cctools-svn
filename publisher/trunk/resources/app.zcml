@@ -51,6 +51,7 @@
             type="p6.metadata.types.ISelectionField"
             choices="Other Audio Video Image Text Interactive"
             validator="ccpublisher.validators.validateWorkFormat"
+	    canonical="http://purl.org/dc/elements/1.1/type"
             />
 
      <field id="description"
