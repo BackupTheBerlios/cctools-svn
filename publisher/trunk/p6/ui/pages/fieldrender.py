@@ -10,6 +10,7 @@ import zope.interface
 
 import p6
 import p6.api
+import p6.extension.exceptions
 
 import license
 
@@ -81,7 +82,15 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
         return result
         
     def onChanging(self, event):
-        return self.__validator(self.__assemble())
+        try:
+            return self.__validator(self.__assemble())
+        except p6.extension.exceptions.ExtensionSettingsException, e:
+            # an error occured while validating the extension settings
+            # show an alert
+            wx.MessageDialog(None, str(e), "Error", wx.OK).ShowModal()
+            
+            # veto the event -- don't allow the page to change w/o correction
+            event.Veto()
 
     PAGE_XRC = """
 <resource>
