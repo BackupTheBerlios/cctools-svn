@@ -10,12 +10,16 @@
   <include package="p6" />
 
   <!-- Application specific configuration -->
-
   <include package="ccpublisher" />
 
   <storage
      name="NoOp Storage"
      factory="p6.storage.basic.BasicStorage"
+     />
+
+  <storage
+     name="Archive.org Storage"
+     factory="ccpublisher.storage.ArchiveStorage"
      />
 
   <metadatagroup
@@ -90,31 +94,6 @@
             />
 
   </metadatagroup>
-
-<!--
-  <metadatagroup
-     id="Login"
-     title="Log in to the Archive"
-     for="p6.storage.interfaces.IStorage"
-     persistMode="prompt"
-     >
-
-     <field id="username"
-            label="Email Address"
-            type="p6.metadata.types.ITextField"
-            persist="True"
-            validator="ccpublisher.validators.validateUsername"
-            />
-
-     <field id="password"
-            label="Password"
-            type="p6.metadata.types.IPasswordField"
-            persist="True"
-            validator="ccpublisher.validators.validatePassword"
-            />
-
-  </metadatagroup>
--->
     
   <pages appid="ccpublisher">
 
