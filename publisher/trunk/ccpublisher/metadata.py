@@ -37,8 +37,11 @@ def itemSelected(event):
     if (p6.storage.interfaces.IFileItem in
         zope.interface.providedBy(event.item)):
 
-        print event.item.getIdentifier()
         id3 = metadata(event.item.getIdentifier())
+
+        if id3 is None:
+            # the cctagutils framework doesn't know how to handle this file
+            return
         
         # this is a file item; try to extract ID3
         # XXX this should really update the metadata for this item instead of
