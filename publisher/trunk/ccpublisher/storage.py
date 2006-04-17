@@ -95,12 +95,16 @@ def archiveStorageUi(storage):
                 raise p6.extension.exceptions.ExtensionSettingsException(
                     "You must supply both a username and password.")
             
-            # XXX validate the credentials with IA
-            
+            # validate the credentials with IA
+            if not(pyarchive.user.validate(value_dict['username'],
+                                           value_dict['password'])):
+
+                raise p6.extension.exceptions.ExtensionSettingsException(
+                    "Invalid username or password.")
 
             # store the credentials for future use
             self.storage.credentials = (value_dict['username'],
-                                          value_dict['password'])
+                                        value_dict['password'])
 
             # register for future storage events after validating our
             # storage-specific settings
