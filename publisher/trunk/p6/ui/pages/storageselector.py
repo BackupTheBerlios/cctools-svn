@@ -36,6 +36,7 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
     def init(self):
 
         self.__options = []
+        self.GetSizer().Clear()
         
         # get a list of storage providers
         providers = p6.api.getApp().storage
