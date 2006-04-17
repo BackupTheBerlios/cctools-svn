@@ -22,6 +22,10 @@ def workFormatListener(event):
 
         file_info = MIME_MANAGER.GetFileTypeFromExtension(
             event.item.filename.split(".")[-1])
+        if file_info is None:
+            # we can't determine the mime information; bail out
+            return
+        
         mime_type = file_info.GetMimeType()
         
         # check if this falls into one of our types
