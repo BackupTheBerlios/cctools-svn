@@ -163,9 +163,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
        archive_id = self.__archiveId()
 
        # generate the verification url
-       v_url = pyarchive.identifier.verify_url(self.archive_collection,
-                                               archive_id,
-                                               self.submission_type)
+       v_url = pyarchive.identifier.verify_url(archive_id)
        
        # get the copyright information fields
        license = api.findField('license', api.getApp().items[0])
