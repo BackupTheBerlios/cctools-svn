@@ -15,6 +15,11 @@
         />
 
   <subscriber
+        for="p6.metadata.events.IUpdateMetadataEvent"
+        handler=".metadata.itemSelected"
+        />
+
+  <subscriber
 	for="p6.storage.events.IItemSelected"
 	handler=".adapters.workFormatListener" />
 

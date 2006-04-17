@@ -2,6 +2,8 @@ import p6
 import zope
 import zope.interface
 
+from cctagutils.metadata import metadata
+
 def updateMetadataBridge(event):
     """ccPublisher uses properties like title, etc, for the entire work --
     P6 metadata providers publish the information for a particular item.
@@ -33,7 +35,7 @@ def itemSelected(event):
 
     # make sure a FileItem was selected
     if (p6.storage.interfaces.IFileItem in
-        zope.interface.implementedBy(event.item.__class__)):
+        zope.interface.providedBy(event.item)):
 
         print event.item.getIdentifier()
         id3 = metadata(event.item.getIdentifier())
@@ -42,11 +44,36 @@ def itemSelected(event):
         # XXX this should really update the metadata for this item instead of
         # the work -- would be a more generic solution, but will require
         # handling in the UI
+
+        # Title
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
             p6.storage.interfaces.IWork,
-            group('workinfo'),
             group('workinfo').get('title'),
             id3.getTitle()
             )
         zope.component.handle(updateEvent)
 
+        # Author
+        updateEvent = p6.metadata.events.UpdateMetadataEvent(
+            p6.storage.interfaces.IWork,
+            group('workinfo').get('holder'),
+            id3.getArtist()
+            )
+        zope.component.handle(updateEvent)
+
+        # Copyright Year
+        updateEvent = p6.metadata.events.UpdateMetadataEvent(
+            p6.storage.interfaces.IWork,
+            group('workinfo').get('year'),
+            id3.getYear()
+            )
+        zope.component.handle(updateEvent)
+
+        # License
+        updateEvent = p6.metadata.events.UpdateMetadataEvent(
+            p6.storage.interfaces.IWork,
+            group('license').get('license'),
+            id3.getLicenseUrl()
+            )
+        zope.component.handle(updateEvent)
+        
