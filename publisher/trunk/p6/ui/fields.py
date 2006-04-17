@@ -31,7 +31,10 @@ def comboField(field):
     
     class ProxiedCombo(wx.ComboBox):
         def __init__(self, parent):
-            wx.ComboBox.__init__(self, parent, choices=field.choices)
+            wx.ComboBox.__init__(self, parent,
+                                 choices=field.choices,
+                                 style=wx.CB_READONLY)
+            # XXX we should support type-ahead find here
 
         def getValue(self):
             return self.GetStringSelection()
