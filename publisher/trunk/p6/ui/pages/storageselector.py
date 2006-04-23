@@ -54,13 +54,21 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
                 style = wx.RB_GROUP
             else:
                 style = 0
-                
+
+            # create the new radio button
             rdbItem = wx.RadioButton(self, label=p[1], style=style)
             rdbItem.id = p[0]
-            rdbItem.SetToolTip(wx.ToolTip(p[2]))
 
             self.__options.append(rdbItem)
             self.GetSizer().Add(rdbItem)
+
+            # create the description text
+            desc_sizer = wx.FlexGridSizer(1, 2)
+            desc_sizer.AddGrowableCol(1)
+            desc_sizer.AddGrowableRow(0)
+            desc_sizer.AddSpacer((20, 5))
+            desc_sizer.Add(wx.StaticText(self, -1, p[2], style=wx.EXPAND))
+            self.GetSizer().Add(desc_sizer)
     
     def onChanged(self, event):
         if event.direction:
