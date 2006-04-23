@@ -76,7 +76,10 @@ def archiveStorageUi(storage):
             self.__pages.append(
                 lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
                 x, 'ARCHIVE_UI_META', 'Internet Archive', fields,
-                self.callback))
+                self.callback,
+                description="Enter your Internet Archive username and password.\n "
+                "If you do not have a username and password, visit http://archive.org\n"
+                "to create an account."))
 
         def list(self):
             # see if we've been activated
