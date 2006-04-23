@@ -19,7 +19,7 @@
 
   <storage
      name="Archive.org Storage"
-     factory="ccpublisher.storage.ArchiveStorage"
+     factory="ccpublisher.ia.ArchiveStorage"
      />
 
   <metadatagroup

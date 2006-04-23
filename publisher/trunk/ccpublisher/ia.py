@@ -265,13 +265,11 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
        print submission.metaxml().getvalue()
        print submission.filesxml().getvalue()
        
-       #archive_URI =  submission.submit(
-       #    self.credentials[0], self.credentials[1],
-       #    callback=CallbackBridge())
+       self.uri = submission.submit(
+           self.credentials[0], self.credentials[1],
+           callback=CallbackBridge())
 
-       self.uri = "http://example.com/foo"
-       
-       return {'URI':self.uri} # archive_URI}
+       return {'URI':self.uri}
        
     def __archiveId(self):
         """Generates an archive.org identifier from work metadata or
