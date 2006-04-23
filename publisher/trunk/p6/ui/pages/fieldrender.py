@@ -24,7 +24,8 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
     
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
-    def __init__(self, parent, id, headline, fields, validator):
+    def __init__(self, parent, id, headline, fields, validator,
+                 description=""):
         """Fields is a sequence of metadata fields."""
         
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
@@ -33,12 +34,17 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
                                         headline)
 
         self.__fields = fields
+        self.__description = description
         self.__validator = validator
+        
         self.initFields(fields)
 
     def initFields(self, fields):
         """Create the user input widgets for this group."""
 
+        # add any description text
+        self.GetSizer().Add(wx.StaticText(self, -1, self.__description))
+            
         # create the actual sizer to hold the labels and widgets
         item_sizer = wx.FlexGridSizer(cols=2)
         item_sizer.AddGrowableCol(1)
@@ -100,6 +106,7 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
       <vgap>5</vgap>
       <hgap>5</hgap>
       <growablecols>0</growablecols>
+      <growablerows>1</growablerows>
     </object>
   </object>
 </resource>
