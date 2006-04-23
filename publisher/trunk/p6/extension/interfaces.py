@@ -16,3 +16,5 @@ class IExtensionPoint(zope.interface.Interface):
 class IStorageMetaCollection(zope.interface.Interface):
     pass
 
+class IPostStoreExtension(zope.interface.Interface):
+    pass

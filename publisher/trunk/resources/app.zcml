@@ -99,9 +99,11 @@
   <pages appid="ccpublisher">
 
     <!-- A sequence of pages, metadata pages and extension points.  Note
-         that the last element should *always* be a real page.  If it's an
-         extension point, it might expand to nothing, and then the program
-         just ends.  Sad, but true. -->
+         that the last element should *always* expand to a real page.  It
+	 can be a real page or an extension point.  If it is an extension 
+	 point, it *must* expand to at least one page.  If it doesn't,
+	 we have problems determining when we to show the quit button,
+	 so the program just ends.  Sad, but true. -->
 
     <page factory="ccpublisher.ui.WelcomePage" />
 
@@ -120,12 +122,8 @@
     <storepage />
 
     <extensionPoint
-        for="p6.storage.extensions.IPostStoreExtension" />
-
-    <finalUrl 
-        title="Upload complete."/>
+        for="p6.extension.interfaces.IPostStoreExtension" />
 
   </pages>
 
- 
 </configure>

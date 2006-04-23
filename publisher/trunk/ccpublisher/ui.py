@@ -85,6 +85,53 @@ It's simple:</label>
     </resource>
     """
 
+class FinalPage(ccwx.xrcwiz.XrcWizPage):
+    """Welcome page class."""
+
+    def __init__(self, parent):
+        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+                                        self.PAGE_XRC,
+                                        'IA_COMPLETE', 'Upload Complete')
+
+    PAGE_XRC="""
+<resource>
+  <object class="wxPanel" name="IA_COMPLETE">
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          <label>Your work has been uploaded to the Internet Archive.</label>
+        </object>
+      
+        <flag>wxEXPAND</flag>
+      </object>
+      <growablecols>0</growablecols>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          <label>You can view your work online at:</label>
+        </object>
+      
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="spacer">
+        
+        <size>10,10</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText" name="TXT_FINALURL">
+          
+          <label>%s</label>
+        </object>
+      
+        <flag>wxEXPAND</flag>
+      </object>
+    </object>
+  </object>
+</resource>
+"""
+
 class WebbrowserHtml(wx.html.HtmlWindow):
     def OnLinkClicked(self, linkinfo):
         webbrowser.open( linkinfo.GetHref(), True, True )

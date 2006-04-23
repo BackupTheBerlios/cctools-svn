@@ -95,14 +95,7 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         except wx._core.PyAssertionError, e:
             pass
 
-        # check if a URI was supplied
-        print 'meta:', event.metadata
-        if 'URI' in event.metadata:
-            XRCCTRL(wx.GetApp().GetTopWindow(), "LBL_POSTOP").SetLabel(
-                "You can find your uploaded work at %s" % event.metadata['URI']
-                )
-
-        self.Refresh()
+        # metadata is returned in event.metadata... in case we care
 
     def updateStatus(self, event):
         """Event handler for L{p6.ui.events.IUpdateStatus} events."""

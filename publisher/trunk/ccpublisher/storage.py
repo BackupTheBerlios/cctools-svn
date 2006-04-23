@@ -14,6 +14,8 @@ from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
 from ccpublisher.interfaces import IEmbeddable
 
+import ui
+
 class CallbackBridge(object):
     """Bridge pyarchive status update callbacks to P6 events."""
     
@@ -113,6 +115,37 @@ def archiveStorageUi(storage):
 
     return ArchiveStorageUi
 
+def archiveStorageFinalPage(storage):
+
+    class ArchiveStorageUi(object):
+
+        zope.interface.implements(p6.ui.interfaces.IPageList)
+
+        def __init__(self, target, event):
+            self.__pages = [ui.FinalPage]
+            self.__storage = storage
+
+        def __expand(self):
+            """Perform last minute string interpolation."""
+
+            if getattr(ui.FinalPage, 'needsExpansion', 'True'):
+                # only do this once...
+                ui.FinalPage.PAGE_XRC = ui.FinalPage.PAGE_XRC % \
+                                        self.__storage.uri
+                ui.FinalPage.needsExpansion = False
+            
+        def list(self):
+            # see if we've been activated
+            if (self.__storage.activated()):
+
+                self.__expand()
+                return self.__pages
+            else:
+                # not activated, so don't make a contribution to the UI
+                return []
+
+    return ArchiveStorageUi
+
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
                      p6.storage.common.CommonStorageMixin):
     
@@ -133,6 +166,13 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
         zope.component.provideSubscriptionAdapter(
             archiveStorageUi(self),
             (p6.extension.interfaces.IStorageMetaCollection,
+             p6.extension.events.IExtensionPageEvent,
+             ),
+            p6.ui.interfaces.IPageList)
+
+        zope.component.provideSubscriptionAdapter(
+            archiveStorageFinalPage(self),
+            (p6.extension.interfaces.IPostStoreExtension,
              p6.extension.events.IExtensionPageEvent,
              ),
             p6.ui.interfaces.IPageList)
@@ -225,11 +265,13 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
        print submission.metaxml().getvalue()
        print submission.filesxml().getvalue()
        
-       archive_URI =  submission.submit(
-           self.credentials[0], self.credentials[1],
-           callback=CallbackBridge())
+       #archive_URI =  submission.submit(
+       #    self.credentials[0], self.credentials[1],
+       #    callback=CallbackBridge())
+
+       self.uri = "http://example.com/foo"
        
-       return {'URI':archive_URI}
+       return {'URI':self.uri} # archive_URI}
        
     def __archiveId(self):
         """Generates an archive.org identifier from work metadata or
