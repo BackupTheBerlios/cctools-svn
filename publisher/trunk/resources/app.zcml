@@ -13,13 +13,13 @@
   <include package="ccpublisher" />
 
   <storage
-     name="NoOp Storage"
-     factory="p6.storage.basic.BasicStorage"
+     name="Archive.org Storage"
+     factory="ccpublisher.ia.ArchiveStorage"
      />
 
   <storage
-     name="Archive.org Storage"
-     factory="ccpublisher.ia.ArchiveStorage"
+     name="Self-Host Storage"
+     factory="ccpublisher.selfhost.SelfHostStorage"
      />
 
   <metadatagroup
