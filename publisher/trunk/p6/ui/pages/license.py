@@ -77,7 +77,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
                                                 label='License Class:')
 
         # retrieve the license classes in a background thread
-        thread.start_new_thread(self.getLicenseClasses, ())
+        #thread.start_new_thread(self.getLicenseClasses, ())
+        self.getLicenseClasses()
 
         self.fieldSizer.Add(self.lblLicenses)
         self.fieldSizer.Add(self.cmbLicenses, flag=wx.EXPAND)
