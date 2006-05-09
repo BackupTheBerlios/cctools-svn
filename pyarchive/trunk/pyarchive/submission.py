@@ -99,7 +99,7 @@ class ArchiveItem:
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
-        <upload_application appid="ccpublisher" version="1.9.1" />
+        <upload_application appid="ccpublisher" version="1.9.3" />
         """ % (self.title, self.collection, self.mediatype) )
 
         if username is not None:
