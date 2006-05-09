@@ -193,7 +193,20 @@ class ArchiveItem:
 
         try:
             ftp.mkd(self.identifier)
-        except ftplib.error_perm, (code, msg):
+        except ftplib.error_perm, e:
+            print e.args
+            
+            # separate the error code from the args
+            if len(e.args) >= 2:
+                code, msg = e.args
+            else:
+                try:
+                    code, msg = e.args[0].split(" ", 1)
+                except ValueError, e:
+                    code = -1
+                    msg = e.args[0]
+                    
+            code = int(code)
             if code != 550:
                 raise ftplib.error_perm(code, msg)
             
