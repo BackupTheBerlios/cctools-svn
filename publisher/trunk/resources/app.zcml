@@ -17,10 +17,12 @@
      factory="ccpublisher.ia.ArchiveStorage"
      />
 
+<!--
   <storage
      name="Self-Host Storage"
      factory="ccpublisher.selfhost.SelfHostStorage"
      />
+-->
 
   <metadatagroup
      id="workinfo"
