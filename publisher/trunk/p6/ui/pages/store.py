@@ -100,7 +100,7 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
     def updateStatus(self, event):
         """Event handler for L{p6.ui.events.IUpdateStatus} events."""
         new_value = 0
-        
+
         if event.value != 0:
             new_value = event.value
 
@@ -109,6 +109,7 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
 
         XRCCTRL(self, "WXG_PROGRESS").SetValue(new_value)
         XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
+        wx.Yield()
 
     def resetStatus(self, event):
         """Event handler for L{p6.ui.events.IResetStatus} events."""
