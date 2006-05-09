@@ -35,6 +35,7 @@ class CallbackBridge(object):
                                                 message=status)
         zope.component.handle(update)
         
+        
     def finish(self):
         pass
     
@@ -77,7 +78,7 @@ def archiveStorageUi(storage):
                 lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
                 x, 'ARCHIVE_UI_META', 'Internet Archive', fields,
                 self.callback,
-                description="Enter your Internet Archive username and password.\n "
+                description="Enter your Internet Archive username and password.\n"
                 "If you do not have a username and password, visit http://archive.org\n"
                 "to create an account."))
 
@@ -127,21 +128,14 @@ def archiveStorageFinalPage(storage):
         def __init__(self, target, event):
             self.__pages = [ui.FinalPage]
             self.__storage = storage
-
-        def __expand(self):
-            """Perform last minute string interpolation."""
-
-            if getattr(ui.FinalPage, 'needsExpansion', 'True'):
-                # only do this once...
-                ui.FinalPage.PAGE_XRC = ui.FinalPage.PAGE_XRC % \
-                                        self.__storage.uri
-                ui.FinalPage.needsExpansion = False
             
         def list(self):
             # see if we've been activated
             if (self.__storage.activated()):
 
-                self.__expand()
+                # update the link
+                self.__pages[0].HTTP_LINK_VALUE = self.__storage.uri
+
                 return self.__pages
             else:
                 # not activated, so don't make a contribution to the UI
