@@ -10,7 +10,7 @@ Name "${APPNAME}"
 
 # Defines
 !define REGKEY "SOFTWARE\ccPublisher"
-!define VERSION 1.9.2
+!define VERSION 1.9.3.0
 !define COMPANY "Creative Commons"
 !define URL http://creativecommons.org
 
@@ -54,7 +54,7 @@ InstallDir $PROGRAMFILES\ccPublisher
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 1.9.2.0
+VIProductVersion ${VERSION}
 VIAddVersionKey ProductName ccPublisher
 VIAddVersionKey ProductVersion "${VERSION}"
 VIAddVersionKey CompanyName "${COMPANY}"
