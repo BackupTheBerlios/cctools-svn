@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="p6"
+    >
+
+  <!-- Meta configuration (directives) -->
+  <include file="meta.zcml" />
+
+  <include package=".metadata" />
+  <include package=".ui" />
+  <include package=".storage" />
+
+</configure>
