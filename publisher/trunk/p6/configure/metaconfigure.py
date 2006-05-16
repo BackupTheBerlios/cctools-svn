@@ -47,6 +47,10 @@ class MGroupDirective(object):
         if label == '':
             label = id
 
+        if choicesList:
+            choicesList = list(choicesList)
+            choicesList.sort()
+        
         self.fields.append(
             metadatafield(type)(id, label, choices=(choicesList or choices),
                                 description=description, tip=tip,
