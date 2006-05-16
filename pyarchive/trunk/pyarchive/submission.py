@@ -177,7 +177,9 @@ class ArchiveItem:
 
         new_url = "/create.php"
         headers = {"Content-type": "application/x-www-form-urlencoded",
-                   "Accept": "text/plain"}
+                   "Accept": "text/plain",
+                   "User-Agent": "ccPublisher 1.9.3"}
+        
         params = urllib.urlencode({'xml':1,
                                    'user':username,
                                    'identifier':identifier}
