@@ -107,6 +107,9 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         if event.delta != 0:
             new_value = XRCCTRL(self, "WXG_PROGRESS").GetValue() + event.delta
 
+        if not(event.message):
+            event.message = XRCCTRL(self, "LBL_CURRENTLY").GetLabel()
+            
         XRCCTRL(self, "WXG_PROGRESS").SetValue(new_value)
         XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
         wx.Yield()
@@ -117,7 +120,8 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         XRCCTRL(self, "WXG_PROGRESS").SetRange(event.steps)
 
         XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
-        
+
+        wx.Yield()
 
     PAGE_XRC = """
 <resource>
