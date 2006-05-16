@@ -14,21 +14,24 @@ __license__ = 'licensed under the GNU GPL2'
 
 import cStringIO as StringIO
 import cb_ftp
+
+import httplib
+import urllib
 import urllib2
+import urlparse
+
 import xml.dom.minidom
 import xml.sax.saxutils
 import os.path
 import string
 import types
 import codecs
-import ftplib
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
 import pyarchive.utils
+import pyarchive.identifier
 import pyarchive.const
-
-# from cctag.metadata import metadata
 
 class ArchiveItem:
     """
@@ -41,7 +44,6 @@ class ArchiveItem:
     </metadata>    
     """
 
-    # XXX take the uploading application as a parameter so that it's not hard coded.
     def __init__(self, identifier, collection, mediatype,
                  title, runtime=None, adder=None, license=None):
         self.files = []
@@ -89,6 +91,9 @@ class ArchiveItem:
         """Generates _meta.xml to use in submission;
         returns a file-like object."""
 
+        # define a convenience handle to XML escape routine
+        xe = xml.sax.saxutils.escape
+        
         meta_out = StringIO.StringIO()
         result = codecs.getwriter('UTF-8')(meta_out)
 
@@ -99,8 +104,12 @@ class ArchiveItem:
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
+        <resource>%s</resource>
         <upload_application appid="ccpublisher" version="1.9.3" />
-        """ % (self.title, self.collection, self.mediatype) )
+        """ % (xe(self.title),
+               self.collection,
+               self.mediatype,
+               self.mediatype) )
 
         if username is not None:
             result.write(u"<uploader>%s</uploader>\n" % username)
@@ -116,13 +125,13 @@ class ArchiveItem:
                     for n in value:
                         result.write(u'<%s>%s</%s>\n' % (
                                            key,
-                                           xml.sax.saxutils.escape(n),
+                                           xe(str(n)),
                                            key)
                                      )
                 else:
                     result.write(u'<%s>%s</%s>\n' % (
                                            key,
-                                           xml.sax.saxutils.escape(value),
+                                           xe(str(value)),
                                            key) )
 
         result.write(u'</metadata>\n')
@@ -156,19 +165,54 @@ class ArchiveItem:
             raise MissingParameterException
 
         if len(self.files) < 1:
-            raise MissingParameterException("Must include at least one file.")
+            raise MissingParameterException
 
         for archivefile in self.files:
             archivefile.sanityCheck()
         
+
+    def __ftpUrl(self, username, identifier):
+        """Query archive.org for the appropriate FTP url to use.
+        If successful returns a tuple containing (server, path)."""
+
+        new_url = "/create.php"
+        headers = {"Content-type": "application/x-www-form-urlencoded",
+                   "Accept": "text/plain"}
+        params = urllib.urlencode({'xml':1,
+                                   'user':username,
+                                   'identifier':identifier}
+                                  )
+
+        conn = httplib.HTTPConnection('www.archive.org')
+        conn.request('POST', new_url, params, headers)
+
+        try:
+            resp = conn.getresponse()
+        except httplib.BadStatusLine, e:
+            # retry the query
+            print 'retrying...'
+            return self.__ftpUrl(username, identifier)
+
+        response = resp.read() 
+                    
+        response_dom = xml.dom.minidom.parseString(response)
+        result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
+
+        if result_type == "success":
+            url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+            print url
+            #pieces = urlparse.urlparse(url)
+            #print pieces
+            
+            return url.split('/') #(pieces[1].split('@')[-1], pieces[2])
+        else:
+            # some error occured; throw an exception with the message
+            raise Exception(response_dom.getElementsByTagName("message")[0])
         
     def submit(self, username, password, server=None, callback=None):
         """Submit the files to archive.org"""
 
-        # set the server/adder (if necessary)
-        if server is not None:
-            self.server = server
-
+        # set the adder (if necessary)
         if self.metadata['adder'] is None:
             self.metadata['adder'] = username
 
@@ -178,40 +222,18 @@ class ArchiveItem:
         # reset the status
         callback.reset(steps=10)
         
+        ftp_server, ftp_path = self.__ftpUrl(username, self.identifier)
+
+        print ftp_server
+        print ftp_path
+        
         # connect to the FTP server
         callback.increment(status='connecting to archive.org...')
 
-        print self.server
-        print username
-        print self.identifier
-        
-        ftp = cb_ftp.FTP(self.server)
+        ftp = cb_ftp.FTP(ftp_server)
         ftp.login(username, password)
-
-        # create a new folder for the submission
-        callback.increment(status='creating folder for uploads...')
-
-        try:
-            ftp.mkd(self.identifier)
-        except ftplib.error_perm, e:
-            print e.args
-            
-            # separate the error code from the args
-            if len(e.args) >= 2:
-                code, msg = e.args
-            else:
-                try:
-                    code, msg = e.args[0].split(" ", 1)
-                except ValueError, e:
-                    code = -1
-                    msg = e.args[0]
-                    
-            code = int(code)
-            if code != 550:
-                raise ftplib.error_perm(code, msg)
-            
-        ftp.cwd(self.identifier)
-
+        ftp.cwd(ftp_path)
+        
         # upload the XML files
         callback.increment(status='uploading metadata...')
 
@@ -229,19 +251,18 @@ class ArchiveItem:
             os.chdir(localpath)
 
             # reset the gauge for this file
-            callback.reset(filename=fname)
+            callback.reset(filename=archivefile.filename)
             
             ftp.storbinary("STOR %s" % archivefile.archiveFilename(),
                            file(fname, 'rb'), callback=callback)
 
         ftp.quit()
         
+        callback.increment(status='completing upload...')
+        
         # call the import url, check the return result
-        callback.reset(steps=3)
-        callback.increment(status='finishing submission...')
-        importurl = "http://www.archive.org/services/contrib-submit.php?" \
-                    "user_email=%s&server=%s&dir=%s" % (
-                    username, self.server, self.identifier)
+        importurl = "http://www.archive.org/checkin.php?" \
+                    "xml=1&identifier=%s&user=%s" % (self.identifier, username)
         response = urllib2.urlopen(importurl)
                     
         callback.increment(status='checking response...')
@@ -250,12 +271,12 @@ class ArchiveItem:
 
         if result_type == 'success':
            # extract the URL element and store it
-           self.archive_url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+           self.archive_url = pyarchive.identifier.verify_url(self.identifier)
+           #"http://archive.org/details/%s" % self.identifier
         else:
            # an error occured; raise an exception
-           raise SubmissionError("%s: %s" % (
-                                    response_dom.getElementsByTagName("result")[0].getAttribute("code"),
-                                    response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
+           raise SubmissionError("%s: %s" % (-1,
+                                           response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
                                 ))
         callback.finish()
            
@@ -287,7 +308,10 @@ class ArchiveFile:
             if bitrate[1]:
                 self.format = pyarchive.const.MP3['VBR']
             else:
-                self.format = pyarchive.const.MP3[bitrate[0]]
+		try:
+                    self.format = pyarchive.const.MP3[bitrate[0]]
+                except KeyError, e:
+                    self.format = pyarchive.const.MP3['VBR']
                 
     def fileNode(self):
         """Generates the XML to represent this file in files.xml."""
