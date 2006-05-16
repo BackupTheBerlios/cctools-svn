@@ -77,7 +77,20 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
                     )
 
     def validate(self, event):
-        return XRCCTRL(self, "LST_FILES").GetItemCount() > 0
+        # make sure the user has selected at least one file...
+        if event.direction:
+            # only check if moving forward
+            if XRCCTRL(self, "LST_FILES").GetItemCount() > 0:
+                return True
+            else:
+                # haven't selected anything; show an error message
+                wx.MessageDialog(self, "You must select at least one file.",
+                                 "ccPublisher: Error",
+                                 wx.OK).ShowModal()
+                return False
+        else:
+            # always allow moving back
+            return True
     
 
     XRCID = "FILE_SELECTOR"
