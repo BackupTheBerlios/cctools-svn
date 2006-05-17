@@ -12,6 +12,8 @@ import p6.extension.exceptions
 
 from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
+import p6.metadata.persistance
+
 from ccpublisher.interfaces import IEmbeddable
 
 import ui
@@ -64,12 +66,20 @@ def archiveStorageUi(storage):
             
             import p6.ui.pages.fieldrender
             
+            # check if we have persisted values for username/passwd
+            username = p6.metadata.persistance.load("ia", "username", "")
+            password = p6.metadata.persistance.load("ia", "password", "")
+            persist  = p6.metadata.persistance.load("ia", "persist", False)
+            
             # create the simple page
             fields = [
                 p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
-                'username', 'Username'),
+                'username', 'Username', default=username),
                 p6.metadata.base.metadatafield(p6.metadata.types.IPasswordField)(
-                'password', 'Password'),
+                'password', 'Password', default=password),
+                p6.metadata.base.metadatafield(p6.metadata.types.IBooleanField)(
+                'persist', 'Save your username and password?', default=persist)
+                
                 ]
 
             self.__pages = []
@@ -112,6 +122,19 @@ def archiveStorageUi(storage):
             self.storage.credentials = (value_dict['username'],
                                         value_dict['password'])
 
+            # check if the user wanted to persist them
+            if value_dict['persist']:
+                # store them
+                p6.metadata.persistance.store("ia", "username", value_dict['username'])
+                p6.metadata.persistance.store("ia", "password", value_dict['password'])
+                p6.metadata.persistance.store("ia", "persist", True)
+            else:
+                # clear the potentially persisted values
+                p6.metadata.persistance.store("ia", "username", "")
+                p6.metadata.persistance.store("ia", "password", "")
+                p6.metadata.persistance.store("ia", "persist", False)
+                
+                
             # register for future storage events after validating our
             # storage-specific settings
             
