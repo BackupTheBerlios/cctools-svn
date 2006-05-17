@@ -61,6 +61,8 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
             sizer.Add(label)
 
             widget = p6.ui.interfaces.IEntryWidget(field)(self)
+            widget.SetValue(field.default)
+            
             field._widget = weakref.ref(widget)
             
             sizer.Add(widget, flag=wx.EXPAND)
