@@ -79,8 +79,8 @@ Section -Main SEC0000
     CreateDirectory "$SMPROGRAMS\$StartMenuGroup"
     SetOutPath "$SMPROGRAMS\$StartMenuGroup"
     CreateShortCut "$SMPROGRAMS\$StartMenuGroup\ccPublisher.lnk" \
-                   "$INSTDIR\main.exe" \
-                   "main" "$INSTDIR\main.exe" 0 SW_SHOWNORMAL \
+                   "$INSTDIR\ccp.exe" \
+                   "main" "$INSTDIR\ccp.exe" 0 SW_SHOWNORMAL \
                    ALT|CTRL|SHIFT|F5 "a description"
     
     WriteRegStr HKLM "${REGKEY}\Components" Main 1

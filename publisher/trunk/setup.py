@@ -82,9 +82,9 @@ if __name__ == '__main__':
           author_email='software@creativecommons.org',
           classifiers= classifiers,
           py_modules=[],
-          scripts=['ccpublisher.py'],
+          scripts=['ccp.py'],
           windows=[
-                   {'script':'ccpublisher.py',
+                   {'script':'ccp.py',
                     "icon_resources": [(1, os.path.join('resources', 'ccp8.ico'))],
                     } ],
           app=['ccpublisher.py'],
