@@ -69,3 +69,9 @@ def get(group, key):
     return result
 
     
+def load(group, key, default):
+    try:
+        return get(group, key)
+    except KeyError, e:
+        return default
+    
