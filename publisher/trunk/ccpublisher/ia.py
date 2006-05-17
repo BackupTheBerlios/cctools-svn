@@ -7,6 +7,7 @@ import zope.component
 
 import p6
 import p6.ui.events
+import p6.ui.pages
 import p6.storage.common
 import p6.extension.exceptions
 
@@ -92,6 +93,10 @@ def archiveStorageUi(storage):
                 "If you do not have a username and password, visit http://archive.org\n"
                 "to create an account."))
 
+            self.__pages.append(p6.ui.pages.StorePage)
+
+            self.__pages.append(lambda x: ui.ia.FinalPage(x, self.__storage))
+
         def list(self):
             # see if we've been activated
             if (self.__storage.activated()):
@@ -142,30 +147,6 @@ def archiveStorageUi(storage):
 
     return ArchiveStorageUi
 
-def archiveStorageFinalPage(storage):
-
-    class ArchiveStorageUi(object):
-
-        zope.interface.implements(p6.ui.interfaces.IPageList)
-
-        def __init__(self, target, event):
-            self.__pages = [ui.FinalPage]
-            self.__storage = storage
-            
-        def list(self):
-            # see if we've been activated
-            if (self.__storage.activated()):
-
-                # update the link
-                self.__pages[0].HTTP_LINK_VALUE = self.__storage.uri
-
-                return self.__pages
-            else:
-                # not activated, so don't make a contribution to the UI
-                return []
-
-    return ArchiveStorageUi
-
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
                      p6.storage.common.CommonStorageMixin):
     
@@ -185,14 +166,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
         # 
         zope.component.provideSubscriptionAdapter(
             archiveStorageUi(self),
-            (p6.extension.interfaces.IStorageMetaCollection,
-             p6.extension.events.IExtensionPageEvent,
-             ),
-            p6.ui.interfaces.IPageList)
-
-        zope.component.provideSubscriptionAdapter(
-            archiveStorageFinalPage(self),
-            (p6.extension.interfaces.IPostStoreExtension,
+            (p6.extension.interfaces.IStorageProcessing,
              p6.extension.events.IExtensionPageEvent,
              ),
             p6.ui.interfaces.IPageList)
@@ -216,7 +190,6 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
        else:
            self.archive_collection = pyarchive.const.OPENSOURCE_MEDIA
            self.submission_type = work_type = api.findField('format')
-           
 
     def store(self, event=None):
        # generate the identifier and make sure it's available

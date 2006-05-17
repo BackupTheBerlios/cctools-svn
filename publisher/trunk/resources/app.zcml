@@ -98,12 +98,11 @@
     
   <pages appid="ccpublisher">
 
-    <!-- A sequence of pages, metadata pages and extension points.  Note
-         that the last element should *always* expand to a real page.  It
-	 can be a real page or an extension point.  If it is an extension 
-	 point, it *must* expand to at least one page.  If it doesn't,
-	 we have problems determining when we to show the quit button,
-	 so the program just ends.  Sad, but true. -->
+    <!-- A sequence of pages, metadata pages and extension points.  If
+	 the last item is an extension point and has an implementor, it
+	 must expand to one or more pages.  If it has no implementors, 
+	 no harm, no foul.
+      -->
 
     <page factory="ccpublisher.ui.WelcomePage" />
 
@@ -119,7 +118,8 @@
     <extensionPoint
 	for="p6.extension.interfaces.IStorageMetaCollection" />
 
-    <storepage />
+    <extensionPoint
+	for="p6.extension.interfaces.IStorageProcessing" />
 
     <extensionPoint
         for="p6.extension.interfaces.IPostStoreExtension" />
