@@ -117,8 +117,11 @@ class SelfHostStorage(p6.metadata.base.BasicMetadataStorage,
         v_url = self.verification_url
 
         # get the copyright information fields
+        license_xml = etree.fromstring(api.getApp().license_doc)
+        
         license = api.findField('license', api.getApp().items[0])
-
+        license_name = license_xml.find('license-name').text
+        
         year = api.findField('year', api.getApp().items[0])
         holder = api.findField('holder', api.getApp().items[0])
 
@@ -136,20 +139,7 @@ class SelfHostStorage(p6.metadata.base.BasicMetadataStorage,
 
         # calculate the hash of each item
         # XXX see triple-x comment in store method of ia.py
-        self.rdf = cctagutils.rdf.generate([n.getIdentifier() for n in
-                                            api.getApp().items[1:]],
-                                           v_url, license, year, holder,
-                                           work_meta=api.workInformation())
-
-        return
         
-        # extract the HTML/RDF from the license web service
-        license_resp = p6.api.getApp().license_doc
-
-        htmlrdf = license_resp[license_resp.find('<html>') + 6:
-                               license_resp.find('</html>')]
-
-        self.rdf = htmlrdf
-
-        print self
-        print self.rdf
+        self.rdf = cctagutils.rdf.generate_rdfa(
+            [n.getIdentifier() for n in api.getApp().items[1:]],
+            license_name, license, v_url)
