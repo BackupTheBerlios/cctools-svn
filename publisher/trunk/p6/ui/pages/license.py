@@ -15,6 +15,7 @@ import zope.component
 import ccwx.xrcwiz
 import ccwsclient
 
+import p6.api
 import p6.ui
 import p6.metadata
 
@@ -50,6 +51,9 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         self.__fields = []
         self.__fieldinfo = {}
 
+        # initialize tracking for work information
+        self.__workinfo = {}
+        
         # create the web services proxy
         self.__cc_server = ccwsclient.CcRest(self.REST_ROOT)
         
@@ -132,21 +136,26 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
 
                 answers[field] = answer_key 
 
-        self._license_doc = self.__cc_server.issue(self.__license, answers)
+        self._license_doc = self.__cc_server.issue(self.__license, answers,
+                                                   workinfo=self.__workinfo)
 
         # XXX do some sort of field name matching here?
         # update the metadata field
         for field in self.metagroup.getFields():
             zope.component.handle(
-                p6.metadata.events.UpdateMetadataEvent(self.metagroup.appliesTo,
-                                                       field,
-                                                       self.getLicenseUrl()
+                p6.metadata.events.UpdateMetadataEvent(
+                      self.metagroup.appliesTo,
+                      field,
+                      self.getLicenseUrl()
                                                        )
                 )
+
+        # XXX hack: store the license document on the app object
+        p6.api.getApp().license_doc = self._license_doc
                 
     def getLicenseUrl(self):
         """Extract the license URL from the returned licensing document."""
-        if self._license_doc is None:
+        if not(self._license_doc):
             return None
 
         d = etree.fromstring(self._license_doc)
@@ -156,7 +165,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
 
     def getLicenseName(self):
         """Extract the license name from the returned licensing document."""
-        if self._license_doc is None:
+        if not(self._license_doc):
             return None
 
         d = etree.fromstring(self._license_doc)
@@ -281,7 +290,15 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     def validate(self, event):
         return True
 
-    REST_ROOT = 'http://api.creativecommons.org/rest/1.5'
+    def onChanged(self, event):
+
+        # update the work information
+        self.__workinfo =p6.api.workInformation()
+
+        # force another call to the web service to incorporate any work info
+        self.onLicense(None)
+        
+    REST_ROOT = 'http://api.creativecommons.org/rest/dev'
     STR_INTRO_TEXT="""With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."""
 
     HTML_LICENSE = '<html><body bgcolor="#%s"><font size="3">You chose <a href="%s">%s</a>.</font></body></html>'
