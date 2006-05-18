@@ -1,4 +1,5 @@
 import os
+import elementtree.ElementTree as etree
 
 import pyarchive
 
@@ -13,6 +14,7 @@ import p6.extension.exceptions
 from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
 from ccpublisher.interfaces import IEmbeddable
+import cctagutils.rdf
 
 import ui
 
@@ -110,6 +112,44 @@ class SelfHostStorage(p6.metadata.base.BasicMetadataStorage,
             p6.ui.interfaces.IPageList)
 
     def store(self, event=None):
-        # generate the RDF
-        self.rdf = "Foo. Bar."
-           
+        
+        # get the verification URL
+        v_url = self.verification_url
+
+        # get the copyright information fields
+        license = api.findField('license', api.getApp().items[0])
+
+        year = api.findField('year', api.getApp().items[0])
+        holder = api.findField('holder', api.getApp().items[0])
+
+        for item in api.getApp().items:
+           # adapt the item to IEmbeddable if possible
+           embeddable = zope.component.getGlobalSiteManager().getAdapters(
+               [item,], IEmbeddable)
+
+           if embeddable:
+               for e in embeddable:
+                   # take e[1] since getAdapters returns a list of tuples --
+                   # (name, adapter)
+                   e[1].embed(license, v_url, year, holder)
+
+
+        # calculate the hash of each item
+        # XXX see triple-x comment in store method of ia.py
+        self.rdf = cctagutils.rdf.generate([n.getIdentifier() for n in
+                                            api.getApp().items[1:]],
+                                           v_url, license, year, holder,
+                                           work_meta=api.workInformation())
+
+        return
+        
+        # extract the HTML/RDF from the license web service
+        license_resp = p6.api.getApp().license_doc
+
+        htmlrdf = license_resp[license_resp.find('<html>') + 6:
+                               license_resp.find('</html>')]
+
+        self.rdf = htmlrdf
+
+        print self
+        print self.rdf
