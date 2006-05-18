@@ -190,6 +190,13 @@ class WizApp(wx.App):
         # set the version number
         wx.xrc.XRCCTRL(about, "LBL_VERSION").SetLabel("release %s" %
                                                    ccpublisher.const.version())
+
+        # create the hyperlink label
+        http_link = wx.lib.hyperlink.HyperLinkCtrl(about, -1,
+                                                   'http://wiki.creativecommons.org/CcPublisher')
+
+        about.GetSizer().Insert(4, http_link)
+        about.Fit()
         
         # connect the events
         self.Bind(wx.EVT_BUTTON,
@@ -197,9 +204,10 @@ class WizApp(wx.App):
                   id = wx.xrc.XRCID("CMD_OK")
                   )
                   
-        # display the dialog
+        # display the dialog, then destroy it
         about.ShowModal()
-    
+        about.Destroy()
+        
     def reportBug(self, event):
         # open the browser window to the New Issue tracker page
         webbrowser.open_new("http://roundup.creativecommons.org/ccpublisher/issue?@template=item")
