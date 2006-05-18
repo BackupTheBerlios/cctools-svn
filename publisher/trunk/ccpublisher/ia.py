@@ -299,19 +299,3 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
         return "%s %s. Licensed to the public under %s verify at %s" % (
             year, holder, license, verification )
 
-
-"""
-   def archive(self, event):
-
-       for filename in self._files:
-           sub = submission.addFile(filename, pyarchive.const.ORIGINAL,
-                              claim = self.__claimString(license, v_url, year, holder)
-                              )
-           sub.format = self.getPage('FILE_FORMAT').getFormat(filename)
-
-       final_url = submission.submit(XRCCTRL(self, "TXT_USERNAME").GetValue(),
-                         XRCCTRL(self, "TXT_PASSWORD").GetValue(),
-                         callback=XRCCTRL(self, "FTP_PROGRESS").callback)
-
-       return final_url
-"""
