@@ -18,3 +18,6 @@ class IStorageMetaCollection(zope.interface.Interface):
 
 class IPostStoreExtension(zope.interface.Interface):
     pass
+
+class IStorageProcessing(zope.interface.Interface):
+    pass
