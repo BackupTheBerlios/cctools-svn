@@ -114,7 +114,25 @@ class PageCollection(object):
       for i in range(len(self.page_stack) - 1, -1, -1):
          page_list, index = self.page_stack[i]
          if index < len(page_list) - 1:
-            return False
+            
+            # items exist in this set of pages; see if they're
+            # pages or e.p's; if e.p's, make sure they have implementors
+            for j in range(index + 1, len(page_list)):
+               if isinstance(page_list[j], p6.extension.point.ExtensionPoint):
+
+                  if not(page_list[j].implementors()):
+                     # not one implements this extension point
+                     continue
+                  else:
+                     # we assume *someone* implements it... not
+                     # necessarily safe, but a compromise...
+                     return False
+
+               else:
+                  # at least one real page remains
+                  return False
+               
+            # return False
 
       return True
 
