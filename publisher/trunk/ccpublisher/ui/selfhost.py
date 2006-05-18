@@ -41,7 +41,7 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
         """Allow the user to save the RDF block."""
 
         saveDialog = wx.FileDialog(self, style=wx.SAVE|wx.OVERWRITE_PROMPT,
-                                   wildcard="RDF (*.rdf)|*.rdf|"
+                                   wildcard="HTML (*.html)|*.html|"
                                             "Text files (*.txt)|*.txt")
         if (saveDialog.ShowModal() == wx.ID_OK):
             file(saveDialog.GetPath(), 'w').write(
@@ -72,7 +72,7 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
-          <label>After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder.</label>
+          <label>After you paste the verification text into your web page, your file is ready\nto file share; just drop it in your shared folder.</label>
         </object>
       </object>
       <object class="sizeritem">
