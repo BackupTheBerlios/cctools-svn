@@ -95,3 +95,13 @@ def getAppSupportDir():
 def updatePref(setid, fieldid, value):
     getApp().prefs[setid].fields[fieldid].value = value
 
+def workInformation():
+
+    # collect the work information
+    return {'title'       : findField('title'),
+            'type'        : findField('format'),
+            'year'        : findField('year'),
+            'description' : findField('description'),
+            'holder'      : findField('holder'),
+            }
+    
