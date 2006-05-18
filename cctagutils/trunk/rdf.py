@@ -8,6 +8,7 @@ __license__ = 'licensed under the GNU GPL2'
 
 import re
 import urllib
+import os
 import cctagutils.base32 as base32
 import sha
 from cctagutils.metadata import metadata
@@ -67,8 +68,8 @@ def generate(files, claim_url, license, year, holder,
 		       holder + \
 		       '</dc:title></Agent></dc:rights>\n'
 
-		if work_meta['format']:
-			out += '\t<dc:type rdf:resource="http://purl.org/dc/dcmitype/%s" />\n' % work_meta['format']
+		if 'type' in work_meta:
+			out += '\t<dc:type rdf:resource="http://purl.org/dc/dcmitype/%s" />\n' % work_meta['type']
 			
 		if 'sourceurl' in work_meta:
 			out += '\t<dc:source rdf:resource="%s" />\n' % (
@@ -80,5 +81,22 @@ def generate(files, claim_url, license, year, holder,
 		out += license_rdf + '\n'
 	
 	out += '</rdf:RDF>\n'
+	
+	return out
+
+def generate_rdfa(files, license_name, license_url, verify_url):
+
+	out = ''
+	out +=  "<!-- Publish this file at " + verify_url + " -->\n"
+	out += "<ul>\n"
+	
+	for f in files:
+                h = fileHash(f)
+
+		out += """<li>The file %s identified by <a href="magnet:?xt=urn:sha1:%s">urn:sha1:%s</a> is licensed to the public under the <a about="urn:sha1:%s" rel="license" href="%s">%s</a> license.</li>\n""" % (
+			os.path.basename(f),
+			h, h, h, license_url, license_name)
+
+	out += '</ul>\n'
 	
 	return out
