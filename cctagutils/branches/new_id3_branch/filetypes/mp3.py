@@ -94,9 +94,9 @@ class Metadata:
 
         # commit the change to the file
         tag_version = self.__tag.getVersion()
-        if tag_version == eyeD3.ID3V2_2 or \
+        if tag_version == eyeD3.ID3_V2_2 or \
                not(tag_version):
-            tag_version = eyeD3.ID3V2_3
+            tag_version = eyeD3.ID3_V2_3
             
         try:
             self.__tag.update(version=tag_version)
