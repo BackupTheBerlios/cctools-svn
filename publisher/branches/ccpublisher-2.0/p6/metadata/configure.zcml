@@ -1,0 +1,36 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="p6"
+    >
+
+  <!-- define a handler for the [Update|Load]Metadata Events -->
+  <subscriber
+	for=".events.IUpdateMetadataEvent"
+	handler=".adapters.updateMetadata"
+	/>
+
+  <subscriber
+        for=".events.ILoadMetadataEvent"
+        handler=".adapters.loadMetadata"
+        />
+
+  <!-- adapters for handling metadata update event adaptation -->
+  <!-- One should be defined for circumstances where you want to
+       define metadata which applies to an interface, not to a 
+       particular instance.
+   -->
+
+  <adapter
+      for=".events.IUpdateMetadataEvent"
+      provides="p6.storage.interfaces.IStorage"
+      factory=".adapters.collectStorageAppliesTo"
+      />
+
+  <adapter
+      for=".events.IUpdateMetadataEvent"
+      provides="p6.storage.interfaces.IWork"
+      factory=".adapters.collectRootAppliesTo"
+      />
+
+</configure>
