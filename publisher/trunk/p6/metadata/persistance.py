@@ -58,7 +58,7 @@ def get(group, key):
 
     print 'loading %s:%s ...' % (group, key)
 
-    p_store = shelve.open(os.path.join(p6.api.getAppSupportDir(),
+    p_store = shelve.open(os.path.join(p6.api.getSupportDir(),
                                        PERST_FILE))
 
     result = p_store[group][key]
