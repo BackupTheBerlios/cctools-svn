@@ -49,7 +49,7 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile setup.exe
+OutFile ${APPNAME}-${VERSION}-setup.exe
 InstallDir $PROGRAMFILES\ccPublisher
 CRCCheck on
 XPStyle on
@@ -122,17 +122,17 @@ SectionEnd
 
 Section un.post UNSEC0001
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\ccPublisher.lnk"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk"
-    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall ccPublisher.lnk"
+    Delete "$SMPROGRAMS\$StartMenuGroup\ccPublisher.lnk"
+    Delete "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk"
+    Delete "$SMPROGRAMS\$StartMenuGroup\Uninstall ccPublisher.lnk"
 
     Delete /REBOOTOK $INSTDIR\uninstall.exe
     DeleteRegValue HKLM "${REGKEY}" StartMenuGroup
     DeleteRegValue HKLM "${REGKEY}" Path
     DeleteRegKey /ifempty HKLM "${REGKEY}\Components"
     DeleteRegKey /ifempty HKLM "${REGKEY}"
-    RMDir /REBOOTOK $SMPROGRAMS\$StartMenuGroup
-    RMDir /REBOOTOK $INSTDIR
+    RMDir "$SMPROGRAMS\$StartMenuGroup"
+    RMDir /REBOOTOK "$INSTDIR"
 SectionEnd
 
 # Installer functions
