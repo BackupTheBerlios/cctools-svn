@@ -33,7 +33,7 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
         if self.HTTP_LINK_VALUE is not None:
             self.setItemUrl(self.HTTP_LINK_VALUE)
 
-    def OnChanged(self, event):
+    def onChanged(self, event):
         """Update the display with the link to the item online."""
 
         self.setItemUrl(self.storage.uri)
@@ -48,17 +48,12 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
             # create the new link
             self.__http_link = wx.lib.hyperlink.HyperLinkCtrl(self, -1, url)
             
-            # get the SizerItem
-            sizer_container = self.GetSizer().GetItem(
-                XRCCTRL(self, "TXT_FINALURL"))
-
-            # replace the place holder
-            sizer_container.SetWindow(self.__http_link)
+            # insert it into the sizer
+            self.GetSizer().Add(self.__http_link)
             
         else:
             self.__http_link.SetLabel(url)
             self.__http_link.SetURL(url)
-
 
         # force the window to redraw
         self.Fit()
@@ -88,14 +83,6 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
       <object class="spacer">
         
         <size>10,10</size>
-      </object>
-      <object class="sizeritem">
-        <object class="wxStaticText" name="TXT_FINALURL">
-          
-          <label>%s</label>
-        </object>
-      
-        <flag>wxEXPAND</flag>
       </object>
     </object>
   </object>
