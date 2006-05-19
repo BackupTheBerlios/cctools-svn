@@ -9,7 +9,7 @@ Builds platform appropriate packages for distribution.
  $ python appsetup.py py2app
 
  Linux:
- $ python appsetup.py bdist_rpm
+ $ python appsetup.py sdist
 
 copyright 2004-2005, Nathan R. Yergler
 licensed to the public under the GNU GPL version 2.
@@ -74,7 +74,7 @@ if PLATFORM != 'linux':
 if __name__ == '__main__':
 
     setup(name='ccPublisher',
-          version='1.9.3',
+          version='2.0.0',
           description = desc,
           long_description= long_desc,
           url='http://creativecommons.org',
