@@ -5,7 +5,7 @@ def findZcml(basePath):
     """Walk the working directory for ZCML files which will be installed
     alongside the byte-code files."""
 
-    IGNORE_DIRS = ('dist', 'build')
+    IGNORE_DIRS = ('dist', 'build', 'extensions')
     
     result = []
 
