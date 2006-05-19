@@ -7,7 +7,7 @@ import p6.api
 
 def version():
 	
-    v = file(os.path.join(p6.api.getAppSupportDir(), 'version.txt'))\
+    v = file(os.path.join(p6.api.getResourceDir(), 'version.txt'))\
 	.read().strip()
     
     return v

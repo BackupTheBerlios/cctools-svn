@@ -24,10 +24,10 @@
            label="Password" />
 
   </preferences>
-
+<!--
   <subscriber
         for="p6.storage.events.IStored"
         handler=".blogping.AfterStored"
         />
-
+-->
 </configure>

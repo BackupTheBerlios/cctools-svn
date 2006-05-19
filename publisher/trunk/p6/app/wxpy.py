@@ -60,7 +60,7 @@ class WizApp(wx.App):
 
     def __loadPrefs(self):
         input = ConfigParser.ConfigParser()
-        input.read((os.path.join(p6.api.getAppSupportDir(),
+        input.read((os.path.join(p6.api.getResourceDir(),
                                  'extprefs.conf'),))
 
         for section in input.sections():
@@ -83,7 +83,7 @@ class WizApp(wx.App):
                            self.prefs[prefset].fields[field].value or '')
 
 
-        output.write(file(os.path.join(p6.api.getAppSupportDir(),
+        output.write(file(os.path.join(p6.api.getResourceDir(),
                                        'extprefs.conf'), 'w'))
         
     def __configure(self):
@@ -184,7 +184,7 @@ class WizApp(wx.App):
     def showAbout(self, event):
         # load the dialog definition
         xrc_resource = wx.xrc.XmlResource(
-            os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
+            os.path.join(p6.api.getResourceDir(), 'dialogs.xrc'))
         about = xrc_resource.LoadDialog(None, "DLG_ABOUT")
 
         # set the version number
@@ -193,7 +193,7 @@ class WizApp(wx.App):
 
         # create the hyperlink label
         http_link = wx.lib.hyperlink.HyperLinkCtrl(about, -1,
-                                                   'http://wiki.creativecommons.org/CcPublisher')
+                       'http://wiki.creativecommons.org/CcPublisher')
 
         about.GetSizer().Insert(4, http_link)
         about.Fit()
@@ -216,7 +216,8 @@ class WizApp(wx.App):
     
         
         # load the dialog definition
-        xrc_resource = wx.xrc.XmlResource(os.path.join(p6.api.getAppSupportDir(), 'dialogs.xrc'))
+        xrc_resource = wx.xrc.XmlResource(os.path.join(
+            p6.api.getResourceDir(), 'dialogs.xrc'))
         report = xrc_resource.LoadDialog(None, "DLG_BUGREPORT")
         
         # connect the OK button

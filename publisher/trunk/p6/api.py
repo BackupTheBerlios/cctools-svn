@@ -4,6 +4,9 @@ p6.api
 Collects frequently used functions in a single module.
 """
 
+import platform
+import os.path
+
 import wx
 import zope.interface
 import p6
@@ -80,18 +83,55 @@ def findField(field_id, item=None):
 
     return result
 
-def getAppSupportDir():
-    """Returns the Application Support directory where we can store
-    preferences and persisted metadata information.
+def getResourceDir():
+    """Returns the Application Resource directory where user interface
+    definitions, version information and images are stored.
 
 
-    @return: path to the application directory
+    @return: path to the application resource directory
     @rtype: string
     """
 
-    # XXX
-    return getApp().resource_dir # '.'
+    return getApp().resource_dir
 
+def getSupportDir():
+    """Returns the Application Support directory where user settings
+    and extensions are stored.
+
+    @return: path to the application support directory
+    @rtype: string
+    """
+
+    PLATFORM = platform.system().lower()
+    user_home = os.path.expanduser('~')
+    
+    if (PLATFORM == 'windows'):
+        return os.path.join(user_home, 'Application Data', 'ccPublisher')
+
+    elif (PLATFORM == 'darwin'):
+        return os.path.join(user_home, 'Library', 'Application Support',
+                            'ccPublisher')
+    elif (PLATFORM == 'linux'):
+        return os.path.join(user_home, '.ccpublisher')
+
+    else:
+        return '.'
+
+def checkAppDirs():
+    """Ensure that the resource and support directories exist;
+    if resources does not exist, raise an exception.  If support and
+    support/extensions does not exist, create them."""
+
+    if not(os.path.exists(getResourceDir())):
+        # resource dir *must* be there
+        raise Exception()
+
+    if not(os.path.exists(getSupportDir())):
+        os.makedirs(getSupportDir())
+
+    if not(os.path.exists(os.path.join(getSupportDir(), 'extensions'))):
+        os.makedirs(os.path.join(getSupportDir(), 'extensions'))
+        
 def updatePref(setid, fieldid, value):
     getApp().prefs[setid].fields[fieldid].value = value
 

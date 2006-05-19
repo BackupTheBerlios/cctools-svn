@@ -13,6 +13,7 @@ import platform
 import ccpublisher.const as const
 from ccpublisher.app import CcPublisher, CcMain
 
+import p6.api
 import libfeedback
 
 def main(argv=[]):
@@ -37,6 +38,8 @@ def main(argv=[]):
                      confFile = 'app.zcml',
                      )
 
+   p6.api.checkAppDirs()
+   
    # Connect the crash-reporting handler
    libfeedback.wxAddExceptHook(const.REPORTING_URL,
                                const.REPORTING_APP,

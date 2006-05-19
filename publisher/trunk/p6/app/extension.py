@@ -8,6 +8,7 @@ import fnmatch
 import platform
 
 import zope
+import p6.api
 
 class ExtensionPrefField(object):
     def __init__(self, id, type, label, value=None):
@@ -26,58 +27,10 @@ class ExtensionPrefs(object):
     
 def extPaths():
     """Return a list of paths to search for extensions and plugins."""
-    PLATFORM = platform.system().lower()
 
-    # initialize the result
-    result = []
-    
-    if PLATFORM == 'windows':
-        # load paths from registry
-
-        import _winreg
-        import win32con
-
-        # Find the P6 path
-        try:
-            KEY_PATH = [win32con.HKEY_LOCAL_MACHINE, 'SOFTWARE', 'P6', ]
-            p6key = KEY_PATH[0]
-            for k in KEY_PATH[1:]:
-                p6key = _winreg.OpenKey(p6key, k)
-    
-            P6_SHARE_PATH = _winreg.QueryValueEx(p6key, 'SharedPath')[0]
-    
-            p6_ext_path = os.path.join(P6_SHARE_PATH, 'extensions')
-            if os.path.exists(p6_ext_path):
-                results.append(p6_ext_path)
-        except WindowsError, e:
-            # if we can't open the registry key, we're most likely running
-            # in a sand box -- and we can continue on just fine
-            pass
-        
-    elif PLATFORM == 'linux':
-        # always look in the current working directory
-        # XXX Should this go away? It's sorta needed for dev work
-        result = [os.path.dirname(__file__)]
-        
-        # check if the autopackage non-root share exists
-        ap_local_path = os.path.join(os.path.expanduser('~'),
-                                     '.local', 'ccpublisher', 'extensions')
-        if os.path.exists(ap_local_path):
-            result.append(ap_local_path)
-
-        # check for the global autopackage share
-        ap_root_path = os.path.join('/', 'usr', 'local', 'share', 'p6',
-                                    'extensions')
-        if os.path.exists(ap_root_path):
-            result.append(ap_root_path)
-
-    elif PLATFORM == 'darwin':
-        pass
-    else:
-        pass
-    
-    print result
-    return result
+    return [os.path.join(os.path.abspath('.'), 'extensions'),
+            os.path.join(p6.api.getSupportDir(), 'extensions')
+            ]
 
 def extConfs(path):
     """Generates a list of configuration files in the specified path;

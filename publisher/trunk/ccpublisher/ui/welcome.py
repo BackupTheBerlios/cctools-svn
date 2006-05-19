@@ -28,7 +28,7 @@ class WelcomePage(ccwx.xrcwiz.XrcWizPage):
         help = HtmlHelp(self, 'ccPublisher',
                         MORE_INFO % (version(),
                                      os.path.join(
-            p6.api.getAppSupportDir(),'publishguy_small.gif')
+            p6.api.getResourceDir(),'publishguy_small.gif')
                                      )
                         )
         help.Show()

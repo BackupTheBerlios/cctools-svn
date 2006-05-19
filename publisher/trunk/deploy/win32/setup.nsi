@@ -1,9 +1,9 @@
 # ccPublisher NSIS Build Script
-# (c) 2005, Nathan R. Yergler, Creative Commons
+# (c) 2005-2006, Nathan R. Yergler, Creative Commons
 #
 # Notes:
-#  Before running the bootstrap script must be built using py2exe; this is
-#  currently in the autopackage folder -- python setup.py py2exe
+#  Before running the application must be built using: python setup.py py2exe
+
 
 !define APPNAME "ccPublisher"
 Name "${APPNAME}"
@@ -12,7 +12,7 @@ Name "${APPNAME}"
 !define REGKEY "SOFTWARE\ccPublisher"
 !define VERSION 1.9.3.0
 !define COMPANY "Creative Commons"
-!define URL http://creativecommons.org
+!define URL http://wiki.creativecommons.org/CcPublisher
 
 !define P6_VERSION 2.0
 !define P6_URL "http://drop.creativecommons.org/p6_setup.exe"

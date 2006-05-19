@@ -35,7 +35,7 @@ def store(group, key, value):
 
     print 'persisting %s:%s (%s) ...' % (group, key, value)
     
-    p_store = shelve.open(os.path.join(p6.api.getAppSupportDir(),
+    p_store = shelve.open(os.path.join(p6.api.getSupportDir(),
                                        PERST_FILE))
 
     g_dict = p_store.get(group, {})
