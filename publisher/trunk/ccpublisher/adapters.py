@@ -27,9 +27,10 @@ def workFormatListener(event):
             return
         
         mime_type = file_info.GetMimeType()
+        if mime_type is None:
+            return
         
         # check if this falls into one of our types
-        
         if ("text" in mime_type):
             type_value = "Text"
         elif ("audio" in mime_type):
