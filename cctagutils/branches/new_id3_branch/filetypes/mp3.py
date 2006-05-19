@@ -41,6 +41,8 @@ class Metadata:
                 print "Illegal frames in ID3; aborting."
             else:
                 raise
+        except IndexError, e:
+            self.__tag = None
 
     def _getFrame(self, fids):
         """Returns the first frame whose ID is contained in the tuple fids.
