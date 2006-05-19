@@ -2,7 +2,7 @@ import os
 from distutils.core import Extension
 
 # Packages to include
-packages = ['ccpublisher',
+packages = ['ccpublisher', 'ccpublisher.ui',
             'p6', 'p6.app', 
             'p6.configure', 'p6.zcmlsupport',
             'p6.metadata', 
