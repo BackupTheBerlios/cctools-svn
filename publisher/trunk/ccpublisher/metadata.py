@@ -44,6 +44,8 @@ def itemSelected(event):
             return
         
         # this is a file item; try to extract ID3
+        # only actually publish an update event when the file contains a value
+
         # XXX this should really update the metadata for this item instead of
         # the work -- would be a more generic solution, but will require
         # handling in the UI
@@ -54,7 +56,8 @@ def itemSelected(event):
             group('workinfo').get('title'),
             id3.getTitle()
             )
-        zope.component.handle(updateEvent)
+        if id3.getTitle():
+            zope.component.handle(updateEvent)
 
         # Author
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
@@ -62,7 +65,8 @@ def itemSelected(event):
             group('workinfo').get('holder'),
             id3.getArtist()
             )
-        zope.component.handle(updateEvent)
+        if id3.getArtist():
+            zope.component.handle(updateEvent)
 
         # Copyright Year
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
@@ -70,7 +74,8 @@ def itemSelected(event):
             group('workinfo').get('year'),
             id3.getYear()
             )
-        zope.component.handle(updateEvent)
+        if id3.getYear():
+            zope.component.handle(updateEvent)
 
         # License
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
@@ -78,5 +83,6 @@ def itemSelected(event):
             group('license').get('license'),
             id3.getLicenseUrl()
             )
-        zope.component.handle(updateEvent)
+        if id3.getLicenseUrl():
+            zope.component.handle(updateEvent)
         
