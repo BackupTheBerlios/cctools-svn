@@ -10,25 +10,27 @@ import roundup.instance
 import roundup.password
 
 TRACKER_HOME = '/web/roundup/trackers/ccpublisher'
-TRACKER_USER = 'nathan'
+TRACKER_USER = 'autoreporter'
 
 DEFAULT_PRIORITY = 'critical'
 DEFAULT_TITLE = 'Autoreported crash information'
 
-DEFAULT_KEYWORD = 'autoreport'
+DEFAULT_KEYWORD = None #'autoreport'
 
 # a user who watches for new auto-submitted issues
 # and is added to their initial nosy list;
 # set to None to disable this feature
-WATCH_USER = 'admin'
+WATCH_USER = None # 'admin'
 
 def findNode(roundupClass, filter):
     for id in roundupClass.list():
+        match = True
         for key in filter:
-            if not(roundupClass.getnode(id)[key] == filter[key]):
+            if roundupClass.getnode(id)[key] != filter[key]:
                 # this isn't what we're looking for
-                continue
+                match = False
 
+        if match:
             # we passed all keys -- this is it
             return roundupClass.getnode(id)
 
@@ -76,7 +78,11 @@ def cgiIssue(formFields):
 
     application = findNode(r_db.getclass('application'),
                            {'identifier': formFields['app_id'],
-                            'version'   : formFields['app_version']})['id']
+                            'version'   : formFields['app_version']})
+
+    # see if we found the app record; if so, we just want the id
+    if application:
+       application = application['id']
 
     platform = findNode(r_db.getclass('platform'),
                         {'identifier': formFields['platform']})
