@@ -10,7 +10,7 @@ Name "${APPNAME}"
 
 # Defines
 !define REGKEY "SOFTWARE\ccPublisher"
-!define VERSION 2.0.1.0
+!define VERSION 2.0.2.0
 !define COMPANY "Creative Commons"
 !define URL http://wiki.creativecommons.org/CcPublisher
 
