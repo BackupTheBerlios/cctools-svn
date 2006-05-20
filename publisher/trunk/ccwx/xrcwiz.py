@@ -181,7 +181,7 @@ class XrcWiz(wx.Frame):
 
       # finish creation
       self.PostCreate(pre)
-      self.SetMinSize((488,425))
+      self.SetMinSize((488,450))
       self.SetAutoLayout(True)
 
       self.Bind(wx.EVT_BUTTON, self.onNext, XRCCTRL(self, "CMD_NEXT"))
