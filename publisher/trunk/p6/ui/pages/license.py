@@ -234,19 +234,33 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
             # enumeration field; determine if we're using a combo or radio btns
             if len(self.__fieldinfo[field]['enum'].values()) > 3:
                 # using a combo box
+
+                # get the list of values; store the first one, we'll use
+                # it as the default
+                choices = self.__fieldinfo[field]['enum'].values()
+                default = choices[0]
+
+                # sort the list of options
+                choices.sort()
+
+                # create the widget
                 self.__fieldinfo[field]['control'] = \
                      wx.ComboBox(self.pnlFields,
                                  style=wx.CB_DROPDOWN|wx.CB_READONLY,
-                                 choices = self.__fieldinfo[field]['enum'].values()
+                                 choices = choices
                                  )
 
+                # set tool tips, event handlers, default...
                 self.__fieldinfo[field]['control'].SetToolTip(
                     wx.ToolTip(self.__fieldinfo[field]['description']))
-                self.__fieldinfo[field]['control'].SetSelection(0)
                 self.Bind(wx.EVT_COMBOBOX, self.updateLicense,
                           self.__fieldinfo[field]['control'])
                 self.Bind(wx.EVT_TEXT, self.updateLicense,
                           self.__fieldinfo[field]['control'])
+
+                self.__fieldinfo[field]['control'].SetSelection(
+                    self.__fieldinfo[field]['control'].FindString(default)
+                    )
             else:
                 # using radio buttons
                 self.__fieldinfo[field]['control'] = wx.BoxSizer(wx.VERTICAL)
@@ -285,7 +299,6 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     def updateLicense(self, event):
         self.onLicense(event)
         self.txtLicense.SetPage(self.HTML_LICENSE % (BGCOLOR, self.getLicenseUrl(), self.getLicenseName()))
-        # "You chose %s" % str(self.getLicenseName()))
                     
     def validate(self, event):
         return True
@@ -297,6 +310,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
 
         # force another call to the web service to incorporate any work info
         self.onLicense(None)
+        
+        wx.GetApp().GetTopWindow().SendSizeEvent()
         
     REST_ROOT = 'http://api.creativecommons.org/rest/dev'
     STR_INTRO_TEXT="""With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."""
