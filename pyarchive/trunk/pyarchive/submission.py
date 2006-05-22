@@ -207,7 +207,7 @@ class ArchiveItem:
             return url.split('/') #(pieces[1].split('@')[-1], pieces[2])
         else:
             # some error occured; throw an exception with the message
-            raise Exception(response_dom.getElementsByTagName("message")[0].childeNodes[0].nodeValue)
+            raise Exception(response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue)
         
     def submit(self, username, password, server=None, callback=None):
         """Submit the files to archive.org"""
