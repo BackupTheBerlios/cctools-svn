@@ -1,0 +1,33 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="p6_blogping">
+
+  <!-- P6 Blogping Extension
+       (c) 2005, Nathan R. Yergler, Creative Commons  
+       licensed under the GNU GPL 2                   -->
+
+
+  <preferences
+    id="blogping"
+    label="Blog Integration" >
+
+    <field id="xml_url"
+           type="str"
+           label="XML-RPC URL" />
+
+    <field id="username"
+           type="str"
+           label="Username" />
+
+    <field id="password"
+           type="str"
+           label="Password" />
+
+  </preferences>
+<!--
+  <subscriber
+        for="p6.storage.events.IStored"
+        handler=".blogping.AfterStored"
+        />
+-->
+</configure>
