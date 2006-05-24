@@ -97,7 +97,13 @@ class PageCollection(object):
          del self.page_stack[-1]
 
          # decrement our old current index
-         self.__cur_index = self.__cur_index - 1
+         self.__cur_index = self.__cur_index
+
+         # check if we're on an extension point
+         while isinstance(self.pages[self.__cur_index],
+                          p6.extension.point.ExtensionPoint):
+            self.__cur_index = self.__cur_index - 1
+
 
    def is_first(self):
 
@@ -202,6 +208,7 @@ class XrcWiz(wx.Frame):
    def __addCurrent(self, event=None):
 
        # add and show the new page
+       print self.pages.current()
        XRCCTRL(self, "PNL_BODY").GetSizer().Insert(0,
                                                    self.pages.current(),
                                                    flag=wx.EXPAND)
