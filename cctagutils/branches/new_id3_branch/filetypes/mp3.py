@@ -86,6 +86,10 @@ class Metadata:
         # reopen the file (in case of 2.2)
         #self.__open()
 
+        # make sure eyeD3 was able to open the file
+        if self.__tag is None:
+            return
+        
         # remove the frame if it exists
         self.__tag.frames.removeFramesByID(frame.header.id)
 
