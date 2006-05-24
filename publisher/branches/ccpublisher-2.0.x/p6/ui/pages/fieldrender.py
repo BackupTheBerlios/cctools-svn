@@ -91,7 +91,10 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
         
     def onChanging(self, event):
         try:
-            return self.__validator(self.__assemble())
+            if event.direction:
+                return self.__validator(self.__assemble())
+            else:
+                return True
         except p6.extension.exceptions.ExtensionSettingsException, e:
             # an error occured while validating the extension settings
             # show an alert
