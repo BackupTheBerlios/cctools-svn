@@ -208,7 +208,6 @@ class XrcWiz(wx.Frame):
    def __addCurrent(self, event=None):
 
        # add and show the new page
-       print self.pages.current()
        XRCCTRL(self, "PNL_BODY").GetSizer().Insert(0,
                                                    self.pages.current(),
                                                    flag=wx.EXPAND)
