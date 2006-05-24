@@ -80,7 +80,8 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
         """Event handler for file selection; publishes ItemSelected events
         when the user picks one or more files."""
         
-        fileBrowser = wx.FileDialog(self.GetParent())
+        fileBrowser = wx.FileDialog(self.GetParent(),
+                                    style=wx.OPEN|wx.MULTIPLE|wx.FILE_MUST_EXIST)
 
         if fileBrowser.ShowModal() == wx.ID_OK:
 
@@ -112,7 +113,7 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
                 p6.storage.events.ItemDeselected(item)
                 )
             
-            selectedItem = file_list.GetNextSelected(selectedItem)
+            selectedItem = file_list.GetFirstSelected()
 
     def onKeyUp(self, event):
         if (event.GetKeyCode() == wx.WXK_DELETE):
