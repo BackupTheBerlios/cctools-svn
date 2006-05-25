@@ -10,6 +10,8 @@ import sys
 import os
 import platform
 
+import wx
+
 import ccpublisher.const as const
 from ccpublisher.app import CcPublisher, CcMain
 
@@ -29,11 +31,19 @@ def main(argv=[]):
    except NameError, e:
        root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
 
+
+   # initialize i18n machinery
+   locale = wx.Locale(wx.LANGUAGE_DEFAULT, wx.LOCALE_LOAD_DEFAULT)
+   locale.AddCatalogLookupPathPrefix(os.path.join(root_dir, 'locale'))
+   locale.AddCatalog('p6')
+   locale.AddCatalog('ccpublisher')
+   _ = wx.GetTranslation
+   
    # create the application and execute it
    app = CcPublisher(appname = 'ccPublisher',
                      rsc_dir = root_dir,
                      filename= 'err.log',
-                     xrcfile = 'wizard.xrc',
+                     xrcfile = 'ccpublisher.xrc',
                      frameclass = CcMain,
                      confFile = 'app.zcml',
                      )

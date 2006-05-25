@@ -54,16 +54,16 @@ else:
 # fix up the data file inclusion
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
-              'resources/wizard.xrc',
-	          'resources/dialogs.xrc',
+              'resources/ccpublisher.xrc',
+	      'resources/dialogs.xrc',
               'resources/app.zcml',
-	          'resources/ccp8.ico',
-	          'resources/cc_33.gif',
+	      'resources/ccp8.ico',
+	      'resources/cc_33.gif',
               'resources/cc_doc_33.gif',
-	          'resources/version.txt',
-	          'resources/publishguy.gif',
-	          'resources/publishguy_small.gif'])
-	         ]
+              'resources/version.txt',
+              'resources/publishguy.gif',
+              'resources/publishguy_small.gif'])
+             ]
 
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
