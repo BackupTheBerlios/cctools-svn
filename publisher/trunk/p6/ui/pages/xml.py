@@ -19,7 +19,10 @@ class XmlMetadataPage(ccwx.xrcwiz.XrcWizPage):
 
     def __init__(self, parent, headline='Metadata as XML'):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC, self.XRCID, headline)
+                                        os.path.join(p6.api.getResourceDir(),
+                                                     "p6.xrc"),
+                                        "XML_META",
+                                        headline)
 
     def onChanged(self, event):
         event = p6.metadata.events.CollectGroups(None)
@@ -32,26 +35,4 @@ class XmlMetadataPage(ccwx.xrcwiz.XrcWizPage):
                 [group], p6.metadata.interfaces.IXmlString)
 
         XRCCTRL(self, "TXT_XML").SetValue("\n".join([n[1] for n in xml_strings]))
-
-    PAGE_XRC="""
-<resource>
-  <object class="wxPanel" name="XML_META">
-    <object class="wxFlexGridSizer">
-      <cols>1</cols>
-      <growablecols>0</growablecols>
-      <growablerows>0</growablerows>
-      <vgap>10</vgap>
-      
-      <object class="sizeritem">
-        <object class="wxTextCtrl" name="TXT_XML">
-          <style>wxTE_MULTILINE|wxTE_READONLY</style>
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-      
-    </object>
-  </object>
-
-</resource>
-    """
     

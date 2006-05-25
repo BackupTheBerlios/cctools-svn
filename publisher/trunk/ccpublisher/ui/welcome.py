@@ -18,7 +18,8 @@ class WelcomePage(ccwx.xrcwiz.XrcWizPage):
 
     def __init__(self, parent):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC,
+                                        os.path.join(p6.api.getResourceDir(),
+                                                     "ccpublisher.xrc"),
                                         'CCTAG_WELCOME', 'Welcome')
 
         # connect the How Does This Work button
@@ -33,58 +34,6 @@ class WelcomePage(ccwx.xrcwiz.XrcWizPage):
                         )
         help.Show()
         
-
-
-    PAGE_XRC="""
-    <resource>
-      <object class="wxPanel" name="CCTAG_WELCOME">
-    <object class="wxFlexGridSizer">
-      <cols>1</cols>
-      <object class="sizeritem">
-        <object class="wxStaticText">
-          <label>This tool will help you put your audio and video on the 
-Web with a Creative Commons license.
-
-It's simple:</label>
-        </object>
-      </object>
-      <vgap>5</vgap>
-      <growablecols>0</growablecols>
-      <object class="sizeritem">
-        <object class="wxStaticText">
-          <label>1) Drag and drop your audio or video files
-2) Choose your Creative Commons license
-3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service
-4) Get a URL where you and your friends can download your file
-
-</label>
-        </object>
-        <flag>wxGROW</flag>
-      </object>
-      <object class="sizeritem">
-        <object class="wxStaticText">
-          <label>Click Next to get started.</label>
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-      <object class="sizeritem">
-        <object class="wxButton" name="HELP_WHAT_TYPES">
-          <label>How does this work?</label>
-          <style>wxNO_BORDER</style>
-        </object>
-        <flag>wxALIGN_RIGHT|wxALIGN_BOTTOM</flag>
-        <cellpos>2,1</cellpos>
-        <cellspan>1,1</cellspan>
-      </object>
-      <object class="spacer">
-        <size>2,2</size>
-      </object>
-      <growablerows>2</growablerows>
-      <growablerows>3</growablerows>
-    </object>
-    </object>
-    </resource>
-    """
 
 class WebbrowserHtml(wx.html.HtmlWindow):
     def OnLinkClicked(self, linkinfo):

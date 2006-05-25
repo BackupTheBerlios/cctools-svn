@@ -118,8 +118,8 @@ class WizApp(wx.App):
         """Generate the top-level menu bar and return the MenuBar object."""
 
         # load the basic menu bar
-        res = wx.xrc.EmptyXmlResource()
-        res.LoadFromString(self.MENU_XRC)
+        res = wx.xrc.XmlResource(
+            os.path.join(p6.api.getResourceDir(), 'p6.xrc'))
         menubar = res.LoadMenuBar('TOPMENU')
 
         # connect menu events
@@ -268,31 +268,3 @@ class WizApp(wx.App):
         self.__reportDlg.Close()
         del self.__reportDlg
         
-    MENU_XRC = """
-<resource>
-  <object class="wxMenuBar" name="TOPMENU">
-    <object class="wxMenu" name="MNU_FILE">
-      <label>&amp;File</label>
-      <object class="wxMenuItem" name="MNU_EXIT">
-        <label>&amp;Exit</label>
-      </object>
-    </object>
-    <object class="wxMenu" name="MNU_EDIT">
-      <label>&amp;Edit</label>
-      <object class="wxMenuItem" name="MNU_PREFERENCES">
-        <label>&amp;Preferences</label>
-      </object>
-    </object>
-    <object class="wxMenu" name="MNU_HELP">
-      <label>&amp;Help</label>
-      <object class="wxMenuItem" name="MNU_ABOUT">
-        <label>&amp;About</label>
-      </object>
-      <object class="wxMenuItem" name="MNU_REPORT">
-        <label>&amp;Report a bug</label>
-      </object>
-    </object>
-  </object>
-</resource>
-"""
-    

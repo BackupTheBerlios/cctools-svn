@@ -1,5 +1,7 @@
 """Storage page for controlling upload process and displaying feedback."""
 
+import os
+
 import wx
 from wx.xrc import XRCCTRL
 
@@ -13,8 +15,6 @@ import p6.api
 class StorePage(ccwx.xrcwiz.XrcWizPage):
     """Displays a page which validates and stores the item."""
     
-    XRCID = "STORE_PROGRESS"
-
     def __init__(self, parent, headline='Uploading'):
         """
         @param parent: Parent window
@@ -25,7 +25,10 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         """
         
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC, self.XRCID, headline)
+                                        os.path.join(p6.api.getResourceDir(),
+                                                     "p6.xrc"),
+                                        "STORE_PROGRESS",
+                                        headline)
 
         # register event handlers
         zope.component.provideHandler(
@@ -122,48 +125,4 @@ class StorePage(ccwx.xrcwiz.XrcWizPage):
         XRCCTRL(self, "LBL_CURRENTLY").SetLabel(event.message)
 
         wx.Yield()
-
-    PAGE_XRC = """
-<resource>
-  <object class="wxPanel" name="STORE_PROGRESS">
-    <object class="wxFlexGridSizer">
-      <cols>1</cols>
-      <growablecols>0</growablecols>
-      <growablerows>3</growablerows>
-      <vgap>10</vgap>
-      
-      <object class="sizeritem">
-        <object name="LBL_MACRO_TASK" class="wxStaticText">
-          <label>Working...</label>
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-      
-      <object class="sizeritem">
-        <object class="wxStaticText" name="LBL_CURRENTLY">
-          <label/>
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-
-      <object class="sizeritem">
-        <object class="wxGauge" name="WXG_PROGRESS">
-          <range>100</range>
-          <style>wxGA_PROGRESSBAR</style>
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-      
-      <object class="sizeritem">
-        <object class="wxStaticText" name="LBL_POSTOP">
-          <label/>
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-
-    </object>
-  </object>
-
-</resource>
-    """
     

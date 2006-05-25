@@ -20,7 +20,8 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
     
     def __init__(self, parent, storage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC,
+                                        os.path.join(p6.api.getResourceDir(),
+                                                     "ccpublisher.xrc"),
                                         'IA_COMPLETE', 'Upload Complete')
 
         self.storage = storage
@@ -57,34 +58,3 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
 
         # force the window to redraw
         self.Fit()
-            
-    PAGE_XRC="""
-<resource>
-  <object class="wxPanel" name="IA_COMPLETE">
-    <object class="wxFlexGridSizer">
-      <cols>1</cols>
-      <object class="sizeritem">
-        <object class="wxStaticText">
-          
-          <label>Your work has been uploaded to the Internet Archive.</label>
-        </object>
-      
-        <flag>wxEXPAND</flag>
-      </object>
-      <growablecols>0</growablecols>
-      <object class="sizeritem">
-        <object class="wxStaticText">
-          
-        <label>You can view your work online shortly at:</label>
-        </object>
-      
-        <flag>wxEXPAND</flag>
-      </object>
-      <object class="spacer">
-        
-        <size>10,10</size>
-      </object>
-    </object>
-  </object>
-</resource>
-"""

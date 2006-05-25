@@ -1,5 +1,7 @@
 """Basic file selector page; published ItemSelected events."""
 
+import os
+
 import wx
 import wx.xrc
 from wx.xrc import XRCCTRL
@@ -41,7 +43,9 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
         """
         
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC, self.XRCID, headline)
+                                        os.path.join(p6.api.getResourceDir(),
+                                                     "p6.xrc"),
+                                        "FILE_SELECTOR", headline)
 
         # connect event handlers for browse button, delete button, delete key
         self.Bind(wx.EVT_BUTTON, self.onBrowse, XRCCTRL(self, "CMD_BROWSE"))
@@ -135,64 +139,3 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
             # always allow moving back
             return True
     
-
-    XRCID = "FILE_SELECTOR"
-    PAGE_XRC = """
-<resource>
-  <object class="wxPanel" name="FILE_SELECTOR">
-    <object class="wxFlexGridSizer">
-      <cols>1</cols>
-      <object class="sizeritem">
-        <object class="wxStaticText" name="LBL_DROPFILES">
-          <label>Drag n' drop the audio or video files you want to publish to the 
-Web with a Creative Commons license, or click the Browse button 
-to manually select your files.</label>
-        </object>
-        <cellpos>0,0</cellpos>
-        <cellspan>1,1</cellspan>
-        <flag>wxEXPAND</flag>
-      </object>
-      <object class="sizeritem">
-        <object class="wxFlexGridSizer">
-          <cols>3</cols>
-          <hgap>5</hgap>
-          <object class="sizeritem">
-            <object class="wxButton" name="CMD_BROWSE">
-              <label>Browse</label>
-            </object>
-            <flag>wxALIGN_BOTTOM</flag>
-            <cellpos>2,0</cellpos>
-            <cellspan>1,1</cellspan>
-          </object>
-          <object class="sizeritem">
-            <object class="wxButton" name="CMD_DELETE">
-              <label>Delete</label>
-            </object>
-            <flag>wxALIGN_BOTTOM</flag>
-          </object>
-          <object class="spacer">
-            <size>1,1</size>
-          </object>
-          <growablecols>1</growablecols>
-          <growablecols>2</growablecols>
-        </object>
-        <flag>wxALIGN_RIGHT</flag>
-        <border>05</border>
-        <cellpos>2,0</cellpos>
-        <cellspan>1,1</cellspan>
-      </object>
-      <object class="sizeritem">
-        <object class="wxListCtrl" name="LST_FILES">
-          <size>450,175</size>
-          <style>wxLC_ICON|wxSIMPLE_BORDER</style>
-        </object>
-        <cellpos>1,0</cellpos>
-        <cellspan>1,1</cellspan>
-      </object>
-      <growablerows>2</growablerows>
-      <vgap>5</vgap>
-      <growablecols>0</growablecols>
-    </object>
-  </object>
-</resource>
-    """

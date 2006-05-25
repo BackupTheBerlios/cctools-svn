@@ -58,8 +58,8 @@ class P6PrefsPanel(wx.Panel):
 
 class P6PrefsWindow(wx.Frame):
     def __init__(self, parent):
-        res = wx.xrc.EmptyXmlResource()
-        res.LoadFromString(self.XRC)
+        res = wx.xrc.XmlResource(
+            os.path.join(p6.api.getResourceDir(), 'p6.xrc'))
 
         # create the frame's skeleton
         pre = wx.PreFrame()
@@ -96,38 +96,3 @@ class P6PrefsWindow(wx.Frame):
     def onCancel(self, event):
         self.Close()
 
-    XRC = """
-<resource>
-  <object class="wxFrame" name="FRM_PREFS">
-    <title>Preferences</title>
-    <object class="wxFlexGridSizer">
-      <cols>1</cols>
-      <growablerows>0</growablerows>
-      <growablecols>0</growablecols>
-      <object class="sizeritem">
-        <object class="wxNotebook" name="NTB_PREFS">
-        </object>
-        <flag>wxEXPAND</flag>
-      </object>
-      <object class="sizeritem">
-        <object class="wxBoxSizer">
-          <object class="sizeritem">
-            <object class="wxButton" name="CMD_OK">
-              <label>&amp;OK</label>
-              <default>1</default>
-            </object>
-            <flag>wxALIGN_CENTRE</flag>
-          </object>
-          <object class="sizeritem">
-            <object class="wxButton" name="CMD_CANCEL">
-              <label>&amp;Cancel</label>
-            </object>
-          </object>
-          <orient>wxHORIZONTAL</orient>
-        </object>
-        <flag>wxALIGN_RIGHT</flag>
-      </object>
-    </object>
-  </object>
-</resource>
-"""
