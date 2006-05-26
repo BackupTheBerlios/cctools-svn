@@ -18,6 +18,10 @@ import libfeedback
 
 def main(argv=[]):
 
+   # check if we're running inside py2exe where no site.py is processed
+   if hasattr(sys, "setdefaultencoding"):
+       sys.setdefaultencoding("utf-8")
+   
    # determine the resource path
    try:
        root_dir = os.path.join( os.path.abspath(os.path.dirname(__file__)), 

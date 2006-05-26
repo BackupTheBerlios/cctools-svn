@@ -81,7 +81,7 @@ if __name__ == '__main__':
           author='Nathan R. Yergler',
           author_email='software@creativecommons.org',
           classifiers= classifiers,
-          py_modules=[],
+          py_modules=['sitecustomize'],
           scripts=['ccp.py'],
           windows=[
                    {'script':'ccp.py',
