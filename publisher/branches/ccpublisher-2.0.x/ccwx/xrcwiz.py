@@ -96,10 +96,8 @@ class PageCollection(object):
          self.pages, self.__cur_index = self.page_stack[-1]
          del self.page_stack[-1]
 
-         # decrement our old current index
-         self.__cur_index = self.__cur_index
-
          # check if we're on an extension point
+         # (we are by definition if we just had to pop something off the stack)
          while isinstance(self.pages[self.__cur_index],
                           p6.extension.point.ExtensionPoint):
             self.__cur_index = self.__cur_index - 1
