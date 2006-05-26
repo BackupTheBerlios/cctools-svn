@@ -105,7 +105,7 @@ class ArchiveItem:
         <collection>%s</collection>
         <mediatype>%s</mediatype>
         <resource>%s</resource>
-        <upload_application appid="ccpublisher" version="2.0.2" />
+        <upload_application appid="ccpublisher" version="2.0.3" />
         """ % (xe(self.title),
                self.collection,
                self.mediatype,
@@ -178,7 +178,7 @@ class ArchiveItem:
         new_url = "/create.php"
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "text/plain",
-                   "User-Agent": "ccPublisher 2.0.2"}
+                   "User-Agent": "ccPublisher 2.0.3"}
         
         params = urllib.urlencode({'xml':1,
                                    'user':username,
