@@ -1,33 +1,52 @@
-P6 App Lifecycle
-================
+-----------
+ccPublisher
+-----------
 
-P6 is a framework for developing simple, "wizard"-based publishing applications.  Applications have the following features:
+:Author: Nathan R. Yergler
+:Updated: $Date$
 
-* Users select one or more "items" for upload.  Items can be files, CD tracks or any arbitrary chunk of data.
-* Users supply metadata about their item.  Metadata is divided into sections, and each section can apply to either the entire submission or each item.  Sections which apply to each item are collected for each item individually.
-* Once the user has supplied the metadata, the items along with their metadata are published to some backend.  Backends can be as simple as a local tar file, or as complex as FTP uploads with calls to confirmation web services.
-* After the publishing process is complete, the user may be presented with additional opportunities to blog the item, email friends, etc.
+ccPublisher is a tool for generating license information for a work and
+optionally uploading it to the Internet Archive or other repository for
+hosting.  
 
-P6 Tech Overview
-================
+What's New
+==========
 
-P6 is a loosely coupled framework that aims to provide common, generic services to applications and push application-specific functionality down to the client application.
+For information on changes in this release, see the appropriate release
+page.  Release pages may be found at 
+http://wiki.creativecommons.org/CcPublisher_2_Releases.
 
-P6 provides the following packages:
+Running ccPublisher
+===================
 
-* p6.ui
-    Window and application classes, interfaces pages should adhere to.
+To run ccPublisher from source, you must have the following prerequisites
+installed:
 
-* p6.metadata
-    Metadata interfaces, basic class definitions, metadata events.
+* Python 2.4 or later
+* wxPython 2.6 or later
+* elementtree for Python
 
-* p6.storage
-    Interfaces for backend storage providers, sample implementation.
+See XXX for dependency download links.
 
-An application wishing to use the P6 framework would:
+Once you have the dependencies installed, you can run ccPublisher using the
+included script::
 
-1) Create a primary frame class; this is mostly just a dead chicken and it'd be good to get rid of it if possible
-2) Provide a list of page classes.  Some standard pages (file selector, etc) are provided in the p6.ui.pages package, but any wx.Panel subclass may be used so long as it conforms to the specified interface.  
-3) Define your metadata fields, or use the stock collection.  
-4) Listen for events.  P6 publishes events for item selection, metadata field changes, and backend interaction.  If you're implementing your own backend, for example, you'll need to listen for StoreItem events.
+  $ ./ccPublisher.sh
 
+The wrapper script fixes up the Python path to ensure that the default
+String encoding is properly set.  
+
+Contact Information
+===================
+
+Bugs may be reported to software@creativecommons.org (good) or recorded
+in the bug tracker at http://roundup.creativecommons.org/ccpublisher
+(better).  For general discussion, the #cc channel on irc.freenode.net.
+The cc-devel mailing list may also be used for communication with the
+developers; see http://wiki.creativecommons.org/Mailing_Lists for details.
+
+License Information
+===================
+
+ccPublisher is licensed under the GNU GPL version 2. License information 
+can be found in the file LICENSE.txt, included in this distribution.
