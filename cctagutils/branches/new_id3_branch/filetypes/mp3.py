@@ -111,6 +111,10 @@ class Metadata:
                 pass
             else:
                 raise
+        except AssertionError, e:
+            # XXX an eyed3 assertion failed; this is often
+            # due to poorly formed frames that screw up its parsing
+            pass
 
     def getTitle(self):
         return (self.__tag and self.__tag.getTitle()) or "";
