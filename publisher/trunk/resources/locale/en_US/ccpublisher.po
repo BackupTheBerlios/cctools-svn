@@ -1,0 +1,123 @@
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: Fri Feb 18 16:51:55 2005\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Nathan R. Yergler <nathan@creativecommons.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: utf-8\n"
+"Generated-By: xrc_pot.py\n"
+
+msgid "release"
+msgstr ""
+
+msgid "copyright 2004-2006, Creative Commons"
+msgstr ""
+
+msgid "licensed under the GNU GPL version 2.0"
+msgstr ""
+
+msgid "This is your verification RDF."
+msgstr ""
+
+msgid "Copy and paste the text below into the document at "
+msgstr ""
+
+msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Your work has been uploaded to the Internet Archive."
+msgstr ""
+
+msgid "You can view your work online shortly at:"
+msgstr ""
+
+msgid "This tool will help you put your audio and video on the\nWeb with a Creative Commons license.\n\nIt's simple:"
+msgstr ""
+
+msgid "1) Drag and drop your audio or video files\n2) Choose your Creative Commons license\n3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service\n4) Get a URL where you and your friends can download your file"
+msgstr ""
+
+msgid "Click Next to get started."
+msgstr ""
+
+msgid "How does this work?"
+msgstr ""
+
+msgid "Is this file Creative Commons licensed?"
+msgstr ""
+
+msgid "Prev"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Browse..."
+msgstr ""
+
+msgid "The Internet Archive needs to know the format of your file.  Please click on the drop down box to select the format type for each file."
+msgstr ""
+
+msgid "About ccPublisher"
+msgstr ""
+
+msgid "Select Your Files"
+msgstr ""
+
+msgid "Uploading"
+msgstr ""
+
+msgid "Copyright Holder"
+msgstr ""
+
+msgid "Copyright Year"
+msgstr ""
+
+msgid "Title of Work"
+msgstr ""
+
+msgid "Work Format"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Keywords help users find works by topic."
+msgstr ""
+
+msgid "(separated with a comma)"
+msgstr ""
+
+msgid "Choose A License"
+msgstr ""
+
+msgid "Your Name"
+msgstr ""
+
+msgid "File Format"
+msgstr ""
+
+msgid "Please enter the URL where you will host your verification metadata.\nIn most cases, this will be the page you link to your MP3 file from."
+msgstr ""
+
+msgid "Verification URL"
+msgstr ""
+
+msgid "You must supply the verification URL."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
