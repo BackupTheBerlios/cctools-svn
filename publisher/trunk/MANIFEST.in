@@ -1,4 +1,6 @@
 include setup.py
+include sitecustomize.py
+include ccPublisher.sh
 include resources/*
 exclude resources/p6settings
 exclude resources/*~

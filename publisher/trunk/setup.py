@@ -54,16 +54,16 @@ else:
 # fix up the data file inclusion
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
-              'resources/ccpublisher.xrc',
-	      'resources/dialogs.xrc',
+              'resources/wizard.xrc',
+	          'resources/dialogs.xrc',
               'resources/app.zcml',
-	      'resources/ccp8.ico',
-	      'resources/cc_33.gif',
+	          'resources/ccp8.ico',
+	          'resources/cc_33.gif',
               'resources/cc_doc_33.gif',
-              'resources/version.txt',
-              'resources/publishguy.gif',
-              'resources/publishguy_small.gif'])
-             ]
+	          'resources/version.txt',
+	          'resources/publishguy.gif',
+	          'resources/publishguy_small.gif'])
+	         ]
 
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
@@ -74,7 +74,7 @@ if PLATFORM != 'linux':
 if __name__ == '__main__':
 
     setup(name='ccPublisher',
-          version='2.0.2',
+          version='2.0.3',
           description = desc,
           long_description= long_desc,
           url='http://creativecommons.org',
@@ -87,7 +87,7 @@ if __name__ == '__main__':
                    {'script':'ccp.py',
                     "icon_resources": [(1, os.path.join('resources', 'ccp8.ico'))],
                     } ],
-          app=['ccpublisher.py'],
+          app=['ccp.py'],
           data_files=dataFiles,
           packages=packages,
           package_data=pkgData,
