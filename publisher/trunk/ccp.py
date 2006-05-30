@@ -37,7 +37,6 @@ def main(argv=[]):
    locale.AddCatalogLookupPathPrefix(os.path.join(root_dir, 'locale'))
    locale.AddCatalog('p6')
    locale.AddCatalog('ccpublisher')
-   _ = wx.GetTranslation
    
    # create the application and execute it
    app = CcPublisher(appname = 'ccPublisher',
@@ -48,8 +47,6 @@ def main(argv=[]):
                      confFile = 'app.zcml',
                      )
 
-   p6.api.checkAppDirs()
-   
    # Connect the crash-reporting handler
    libfeedback.wxAddExceptHook(const.REPORTING_URL,
                                const.REPORTING_APP,
