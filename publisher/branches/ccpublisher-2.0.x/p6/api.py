@@ -124,7 +124,7 @@ def checkAppDirs():
 
     if not(os.path.exists(getResourceDir())):
         # resource dir *must* be there
-        raise Exception()
+        raise Exception("Can not find resource directory.")
 
     if not(os.path.exists(getSupportDir())):
         os.makedirs(getSupportDir())
