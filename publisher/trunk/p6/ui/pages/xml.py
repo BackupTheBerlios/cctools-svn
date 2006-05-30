@@ -11,6 +11,8 @@ import zope.component
 import p6
 import p6.metadata
 
+from p6.i18n import _
+
 class XmlMetadataPage(ccwx.xrcwiz.XrcWizPage):
     """Collects all the metadata fields and displays them as XML."""
     

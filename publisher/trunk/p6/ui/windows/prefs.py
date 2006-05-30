@@ -25,7 +25,7 @@ class P6PrefsPanel(wx.Panel):
         for fieldid in prefs:
             # create the label
             self.GetSizer().Add(wx.StaticText(self,
-                                              label=prefs[fieldid].label))
+                                              label=_(prefs[fieldid].label)))
 
             # create the widget
             if prefs[fieldid].type == str:
@@ -78,7 +78,7 @@ class P6PrefsWindow(wx.Frame):
         prefdict = p6.api.getApp().prefs
         for id in prefdict:
             self.pages.append(P6PrefsPanel(notebook, id, prefdict[id].fields))
-            notebook.AddPage(self.pages[-1], prefdict[id].label)
+            notebook.AddPage(self.pages[-1], _(prefdict[id].label))
 
         # connect events
         self.Bind(wx.EVT_BUTTON, self.onOK, wx.xrc.XRCCTRL(self,'CMD_OK'))

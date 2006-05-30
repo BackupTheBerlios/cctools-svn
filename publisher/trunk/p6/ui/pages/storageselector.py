@@ -12,6 +12,8 @@ import p6.api
 import p6.storage.interfaces
 import p6.extension.interfaces
 
+from p6.i18n import _
+
 class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
     """User interface page which displays a list of available
     storage providers and allows the user to select one or more.

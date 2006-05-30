@@ -12,6 +12,8 @@ import zope.component
 import p6
 import p6.api
 
+from p6.i18n import _
+
 class StorePage(ccwx.xrcwiz.XrcWizPage):
     """Displays a page which validates and stores the item."""
     

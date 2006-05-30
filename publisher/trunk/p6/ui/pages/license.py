@@ -19,6 +19,8 @@ import p6.api
 import p6.ui
 import p6.metadata
 
+from p6.i18n import _
+
 class WebbrowserHtml(wx.html.HtmlWindow):
     """Proxy class for L{wx.html.HtmlWindow} which opens a web browser
     when the user clicks a link."""
@@ -41,7 +43,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         self.PAGE_XRC,
                                         'LICENSE_CHOOSER',
-                                        'Choose A License')
+                                        _('Choose A License'))
 
         self.metagroup = metaGroup
 

@@ -14,7 +14,7 @@ import p6.extension.exceptions
 
 import license
 
-import inspect
+from p6.i18n import _
 
 class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
     """Utility page for rendering a set of MetadataField objects independtly
@@ -43,7 +43,7 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
         """Create the user input widgets for this group."""
 
         # add any description text
-        self.GetSizer().Add(wx.StaticText(self, -1, self.__description))
+        self.GetSizer().Add(wx.StaticText(self, -1, _(self.__description)))
             
         # create the actual sizer to hold the labels and widgets
         item_sizer = wx.FlexGridSizer(cols=2)
@@ -57,7 +57,7 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
 
         for field in field_list:
 
-            label = wx.StaticText(self, label=field.label)
+            label = wx.StaticText(self, label=_(field.label))
             sizer.Add(label)
 
             widget = p6.ui.interfaces.IEntryWidget(field)(self)
@@ -69,12 +69,12 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
 
             # check for a tooltip
             if field.tip:
-                widget.SetToolTip(wx.ToolTip(field.tip))
+                widget.SetToolTip(wx.ToolTip(_(field.tip)))
 
             # check for a description
             if field.description:
                 sizer.Add((5,5))
-                desc_label = wx.StaticText(self, label=field.description)
+                desc_label = wx.StaticText(self, label=_(field.description))
                 sizer.Add(desc_label, flag=wx.EXPAND)
 
 
@@ -98,7 +98,7 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
         except p6.extension.exceptions.ExtensionSettingsException, e:
             # an error occured while validating the extension settings
             # show an alert
-            wx.MessageDialog(None, str(e), "Error", wx.OK).ShowModal()
+            wx.MessageDialog(None, _(str(e)), _("Error"), wx.OK).ShowModal()
             
             # veto the event -- don't allow the page to change w/o correction
             event.Veto()

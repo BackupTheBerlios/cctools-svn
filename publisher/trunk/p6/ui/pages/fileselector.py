@@ -12,6 +12,8 @@ import ccwx.xrcwiz
 import p6
 import p6.api
 
+from p6.i18n import _
+
 class FileDropTarget(wx.FileDropTarget):
     """ This object implements generic drop target functionality for Files """
 
@@ -33,7 +35,7 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
     """
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
-    def __init__(self, parent, headline='Select Your Files'):
+    def __init__(self, parent, headline=_('Select Your Files')):
         """
         @param parent: Parent window
         @type parent: L{wx.Window}
@@ -131,8 +133,8 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
                 return True
             else:
                 # haven't selected anything; show an error message
-                wx.MessageDialog(self, "You must select at least one file.",
-                                 "ccPublisher: Error",
+                wx.MessageDialog(self, _("You must select at least one file."),
+                                 _("ccPublisher: Error"),
                                  wx.OK).ShowModal()
                 return False
         else:

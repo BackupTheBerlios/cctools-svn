@@ -15,6 +15,8 @@ import license
 
 import inspect
 
+from p6.i18n import _
+
 class MetadataPage(ccwx.xrcwiz.XrcWizPage):
     """Basic metadata page; generated for most metadata groups."""
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
@@ -59,7 +61,7 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
         for field in metaGroup.getFields():
 
-            label = wx.StaticText(self, label=field.label)
+            label = wx.StaticText(self, label=_(field.label))
             sizer.Add(label)
 
             widget = p6.ui.interfaces.IEntryWidget(field)(self)
@@ -69,12 +71,12 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
             # check for a tooltip
             if field.tip:
-                widget.SetToolTip(wx.ToolTip(field.tip))
+                widget.SetToolTip(wx.ToolTip(_(field.tip)))
 
             # check for a description
             if field.description:
                 sizer.Add((5,5))
-                desc_label = wx.StaticText(self, label=field.description)
+                desc_label = wx.StaticText(self, label=_(field.description))
                 sizer.Add(desc_label, flag=wx.EXPAND)
 
             # check if the field is persistant and try to load it
@@ -86,15 +88,6 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
                     )
 
                 zope.component.handle(event)
-
-                # found a value, set it
-                #if len(event.value) > 1:
-                #    print 'aieee!'
-                #    print event.value
-
-                #print event.value
-                #if len(event.value) > 0:
-                #    widget.SetValue(event.value[0])
 
     def onValidate(self, event):
         errors = []
@@ -218,15 +211,11 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
             
             for field in metaGroup.getFields():
 
-                label = wx.StaticText(self, label=field.label)
+                label = wx.StaticText(self, label=_(field.label))
                 item_sizer.Add(label)
 
                 widget = p6.ui.interfaces.IEntryWidget(field)(self)
                 
-                print zope.component.getGlobalSiteManager().getAdapters(
-                    (item,),
-                    p6.metadata.interfaces.IMetadataProvider)
-
                 value = p6.metadata.interfaces.IMetadataStorage(item).\
                         getMetaValue(field.id, default='')
                 widget.SetValue(value)

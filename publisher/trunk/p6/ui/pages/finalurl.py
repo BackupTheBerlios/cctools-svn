@@ -12,10 +12,12 @@ import zope.component
 import p6
 import p6.api
 
+from p6.i18n import _
+
 class FinalUrlPage(ccwx.xrcwiz.XrcWizPage):
     """Displays a page which validates and stores the item."""
     
-    def __init__(self, parent, headline='Uploading'):
+    def __init__(self, parent, headline=_('Uploading')):
         """
         @param parent: Parent window
         @type parent: L{wx.Window}
