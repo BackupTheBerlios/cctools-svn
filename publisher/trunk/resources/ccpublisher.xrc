@@ -1,5 +1,102 @@
 <?xml version="1.0" ?>
 <resource>
+  <object class="wxDialog" name="DLG_ABOUT">
+    <title>About ccPublisher</title>
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <object class="sizeritem">
+        <object class="wxStaticBitmap">
+          
+          
+          <bitmap>publishguy.gif</bitmap>
+        </object>
+        
+        
+        <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="spacer">
+        
+        
+        <size>10,10</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          <label>ccPublisher 2</label>
+        </object>
+        
+        
+        <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText" name="LBL_VERSION">
+          
+          
+          <label>release 1.9.1</label>
+        </object>
+        
+        
+        <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="spacer">
+        
+        
+        <size>10,10</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticLine" name="INFO_LINE"/>
+        
+        
+        <flag>wxGROW</flag>
+      </object>
+      <object class="spacer">
+        
+        
+        <size>10,10</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          <label>copyright 2004-2006, Creative Commons</label>
+        </object>
+        
+        
+        <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          <label>licensed under the GNU GPL version 2.0</label>
+        </object>
+        
+        
+        <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <object class="spacer">
+        
+        
+        <size>5,5</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxButton" name="CMD_OK">
+          
+          
+          <label>&amp;OK</label>
+          
+          
+          <default>1</default>
+        </object>
+        
+        
+        <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
+      </object>
+      <growablecols>0</growablecols>
+    </object>
+    <centered>1</centered>
+  </object>
   <object class="wxPanel" name="SELFHOST_COMPLETE">
     <object class="wxFlexGridSizer">
       <cols>1</cols>
