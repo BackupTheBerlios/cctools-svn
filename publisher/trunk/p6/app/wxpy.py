@@ -184,7 +184,7 @@ class WizApp(wx.App):
     def showAbout(self, event):
         # load the dialog definition
         xrc_resource = wx.xrc.XmlResource(
-            os.path.join(p6.api.getResourceDir(), 'dialogs.xrc'))
+            os.path.join(p6.api.getResourceDir(), 'ccpublisher.xrc'))
         about = xrc_resource.LoadDialog(None, "DLG_ABOUT")
 
         # set the version number
@@ -214,28 +214,6 @@ class WizApp(wx.App):
         
         return
     
-        
-        # load the dialog definition
-        xrc_resource = wx.xrc.XmlResource(os.path.join(
-            p6.api.getResourceDir(), 'dialogs.xrc'))
-        report = xrc_resource.LoadDialog(None, "DLG_BUGREPORT")
-        
-        # connect the OK button
-        self.Bind(wx.EVT_BUTTON,
-                  self.__reportBug,
-                  id = wx.xrc.XRCID("CMD_OK")
-                  )
-        
-        # connect the Cancel button
-        self.Bind(wx.EVT_BUTTON,
-                  lambda event: report.Close(),
-                  id = wx.xrc.XRCID("CMD_CANCEL")
-                  )
-                  
-        # display the dialog
-        self.__reportDlg = report
-        report.ShowModal()
-
     def __reportBug(self, event):
         fields = {}
         fields['app_id'] = ccpublisher.const.REPORTING_APP
