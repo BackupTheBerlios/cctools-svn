@@ -1,24 +1,24 @@
 <resource>
   <object class="wxMenuBar" name="TOPMENU">
     <object class="wxMenu" name="MNU_FILE">
-      <label>&amp;File</label>
+      <label>File</label>
       <object class="wxMenuItem" name="MNU_EXIT">
-        <label>&amp;Exit</label>
+        <label>Exit</label>
       </object>
     </object>
     <object class="wxMenu" name="MNU_EDIT">
-      <label>&amp;Edit</label>
+      <label>Edit</label>
       <object class="wxMenuItem" name="MNU_PREFERENCES">
-        <label>&amp;Preferences</label>
+        <label>Preferences</label>
       </object>
     </object>
     <object class="wxMenu" name="MNU_HELP">
-      <label>&amp;Help</label>
+      <label>Help</label>
       <object class="wxMenuItem" name="MNU_ABOUT">
-        <label>&amp;About</label>
+        <label>About</label>
       </object>
       <object class="wxMenuItem" name="MNU_REPORT">
-        <label>&amp;Report a bug</label>
+        <label>Report a bug</label>
       </object>
     </object>
   </object>
@@ -162,14 +162,14 @@ to manually select your files.</label>
         <object class="wxBoxSizer">
           <object class="sizeritem">
             <object class="wxButton" name="CMD_OK">
-              <label>&amp;OK</label>
+              <label>OK</label>
               <default>1</default>
             </object>
             <flag>wxALIGN_CENTRE</flag>
           </object>
           <object class="sizeritem">
             <object class="wxButton" name="CMD_CANCEL">
-              <label>&amp;Cancel</label>
+              <label>Cancel</label>
             </object>
           </object>
           <orient>wxHORIZONTAL</orient>
