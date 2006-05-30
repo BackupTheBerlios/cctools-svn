@@ -5,7 +5,7 @@ from distutils.core import Extension
 packages = ['ccpublisher', 'ccpublisher.ui',
             'p6', 'p6.app', 
             'p6.configure', 'p6.zcmlsupport',
-            'p6.metadata', 
+            'p6.metadata', 'p6.i18n',
             'p6.storage','p6.storage.providers',
             'p6.ui', 'p6.ui.pages', 'p6.ui.windows',
             'p6.extension',
