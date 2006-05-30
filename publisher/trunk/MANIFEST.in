@@ -2,6 +2,7 @@ include setup.py
 include sitecustomize.py
 include ccPublisher.sh
 include resources/*
+recursive-include resources/locale/*/LC_MESSAGES *.mo
 exclude resources/p6settings
 exclude resources/*~
 exclude p6.settings
