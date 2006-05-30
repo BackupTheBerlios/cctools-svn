@@ -8,4 +8,3 @@ exclude p6.settings
 recursive-include ccpublisher *.zcml
 recursive-include p6 *.zcml
 include deploy/linux/*.in
-include zope/proxy/proxy.h
