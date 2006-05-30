@@ -55,15 +55,15 @@ else:
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
               'resources/wizard.xrc',
-	          'resources/dialogs.xrc',
+              'resources/dialogs.xrc',
               'resources/app.zcml',
-	          'resources/ccp8.ico',
-	          'resources/cc_33.gif',
+              'resources/ccp8.ico',
+              'resources/cc_33.gif',
               'resources/cc_doc_33.gif',
-	          'resources/version.txt',
-	          'resources/publishguy.gif',
-	          'resources/publishguy_small.gif'])
-	         ]
+              'resources/version.txt',
+              'resources/publishguy.gif',
+              'resources/publishguy_small.gif'])
+             ]
 
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
@@ -97,7 +97,7 @@ if __name__ == '__main__':
                    'py2app':{'argv_emulation':True,
                              'iconfile':os.path.join('resources', 'ccp8.icns'),
 			                 'packages':packages,
-                             'includes':['dbhash', 'encodings',]
+                             'includes':['dbhash', 'encodings','argvemulator']
                              },
                    },
           desktop_file=['deploy/linux/ccpublisher.desktop.in'],
