@@ -48,7 +48,7 @@ def selfhostMetadataUi(storage):
             self.__pages = []
 
             desc = "Please enter the URL where you will host your " \
-                   "verification metadata.  \nIn most cases, this will " \
+                   "verification metadata.\nIn most cases, this will " \
                    "be the page you link to your MP3 file from."
             
             self.__pages.append(

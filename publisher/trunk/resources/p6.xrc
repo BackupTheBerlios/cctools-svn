@@ -27,9 +27,7 @@
       <cols>1</cols>
       <object class="sizeritem">
         <object class="wxStaticText" name="LBL_DROPFILES">
-          <label>Drag n' drop the audio or video files you want to publish to the 
-Web with a Creative Commons license, or click the Browse button 
-to manually select your files.</label>
+          <label>Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files.</label>
         </object>
         <cellpos>0,0</cellpos>
         <cellspan>1,1</cellspan>

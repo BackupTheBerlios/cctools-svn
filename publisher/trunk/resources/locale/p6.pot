@@ -32,9 +32,7 @@ msgstr ""
 msgid "Report a bug"
 msgstr ""
 
-msgid "Drag n' drop the audio or video files you want to publish to the 
-Web with a Creative Commons license, or click the Browse button 
-to manually select your files."
+msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
 msgstr ""
 
 msgid "Browse"
@@ -50,8 +48,5 @@ msgid "OK"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Preferences"
 msgstr ""
 
