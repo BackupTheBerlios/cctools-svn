@@ -85,3 +85,55 @@ msgstr ""
 msgid "About ccPublisher"
 msgstr ""
 
+msgid "Select Your Files"
+msgstr ""
+
+msgid "Uploading"
+msgstr ""
+
+msgid "Copyright Holder"
+msgstr ""
+
+msgid "Copyright Year"
+msgstr ""
+
+msgid "Title of Work"
+msgstr ""
+
+msgid "Work Format"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Keywords help users find works by topic."
+msgstr ""
+
+msgid "(separated with a comma)"
+msgstr ""
+
+msgid "Choose A License"
+msgstr ""
+
+msgid "Your Name"
+msgstr ""
+
+msgid "File Format"
+msgstr ""
+
+msgid "Please enter the URL where you will host your verification metadata.  
+In most cases, this will be the page you link to your MP3 file from."
+msgstr ""
+
+msgid "Verification URL"
+msgstr ""
+
+msgid "You must supply the verification URL."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
