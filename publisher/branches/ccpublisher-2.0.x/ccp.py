@@ -42,7 +42,6 @@ def main(argv=[]):
                      confFile = 'app.zcml',
                      )
 
-   p6.api.checkAppDirs()
    
    # Connect the crash-reporting handler
    libfeedback.wxAddExceptHook(const.REPORTING_URL,
