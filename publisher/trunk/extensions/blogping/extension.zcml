@@ -6,6 +6,10 @@
        (c) 2005, Nathan R. Yergler, Creative Commons  
        licensed under the GNU GPL 2                   -->
 
+  <extension
+    id="blogping"
+    name="Blog Ping"
+    description="A sample extension..." />
 
   <preferences
     id="blogping"

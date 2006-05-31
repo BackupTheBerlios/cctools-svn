@@ -1,10 +1,15 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:i18n="http://namespaces.zope.org/i18n"
-           i18n_domain="p6_minimal">
+	   i18n_domain="p6_simple">
 
   <!-- P6 Sample Extension Configuration
        (c) 2005, Nathan R. Yergler, Creative Commons  
        licensed under the GNU GPL 2                   -->
+
+  <extension
+     id="p6_minimal"
+     name="Minimal P6 Extension"
+     description="An extremely small extension." />
 
   <metadatagroup
      id="authormetadata"
