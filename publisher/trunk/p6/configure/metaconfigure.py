@@ -3,6 +3,21 @@ import p6.api
 
 from p6.metadata.base import metadatafield, MetadataGroup
 
+class ExtensionDirective(object):
+    """extension registration."""
+
+    def __init__(self, _context, id, name, description):
+
+        _context.action(discriminator=('extension', 'i18n_path', id),
+                        callable=p6.i18n.addCatalogPath,
+                        args=(_context.path('locale'),),
+                        )
+
+        _context.action(discriminator=('extension', 'i18n_domain', id),
+                        callable=p6.i18n.loadCatalog,
+                        args=(_context.i18n_domain,),
+                        )
+        
 class StorageDirective(object):
     """A storage declaration."""
 

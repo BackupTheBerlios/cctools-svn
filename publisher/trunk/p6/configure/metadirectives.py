@@ -259,3 +259,21 @@ class IPrefsFieldSubdirective(zope.interface.Interface):
         required=False,
         )
     
+class IExtensionDirective(zope.interface.Interface):
+    """An extension registration."""
+
+    id = zope.configuration.fields.MessageID(
+        title=u"",
+        required=True,
+        )
+
+    name = zope.configuration.fields.MessageID(
+        title=u"",
+        required=True,
+        )
+
+    description = zope.configuration.fields.MessageID(
+        title=u"",
+        required=False,
+        )
+    

@@ -79,6 +79,11 @@
 
     </meta:complexDirective>
 
+    <meta:complexDirective
+	name="extension"
+	schema="p6.configure.metadirectives.IExtensionDirective"
+	handler="p6.configure.metaconfigure.ExtensionDirective"
+	/>
 
     <meta:complexDirective
         name="preferences"
