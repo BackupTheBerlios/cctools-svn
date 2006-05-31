@@ -277,3 +277,7 @@ class IExtensionDirective(zope.interface.Interface):
         required=False,
         )
     
+    locale = zope.configuration.fields.Path(
+        title=u"Relative path containing locale files.",
+        required=False,
+        )
