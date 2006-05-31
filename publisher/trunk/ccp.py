@@ -16,6 +16,7 @@ import ccpublisher.const as const
 from ccpublisher.app import CcPublisher, CcMain
 
 import p6.api
+import p6.i18n
 import libfeedback
 
 def main(argv=[]):
@@ -33,10 +34,8 @@ def main(argv=[]):
 
 
    # initialize i18n machinery
-   locale = wx.Locale(wx.LANGUAGE_DEFAULT, wx.LOCALE_LOAD_DEFAULT)
-   locale.AddCatalogLookupPathPrefix(os.path.join(root_dir, 'locale'))
-   locale.AddCatalog('p6')
-   locale.AddCatalog('ccpublisher')
+   p6.i18n.initialize(root_dir)
+   p6.i18n.loadCatalog('ccpublisher')
    
    # create the application and execute it
    app = CcPublisher(appname = 'ccPublisher',
