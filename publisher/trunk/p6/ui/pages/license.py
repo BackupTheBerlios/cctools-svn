@@ -57,7 +57,8 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         self.__workinfo = {}
         
         # create the web services proxy
-        self.__cc_server = ccwsclient.CcRest(self.REST_ROOT)
+        self.__cc_server = ccwsclient.CcRest(self.REST_ROOT,
+                                             lang=p6.i18n.getLocale())
         
         # create the sizer
         self.sizer = self.GetSizer()
