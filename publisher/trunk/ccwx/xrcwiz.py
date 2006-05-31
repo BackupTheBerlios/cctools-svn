@@ -312,6 +312,9 @@ class XrcWiz(wx.Frame):
       if hasattr(event.GetPage(), 'onChanged'):
          event.GetPage().onChanged(event)
 
+      wx.GetApp().GetTopWindow().SendSizeEvent()
+      
+
    def OnPageChanging(self, event):
        if not event.GetPage().validate(event):
            event.Veto()
