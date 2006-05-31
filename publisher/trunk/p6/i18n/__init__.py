@@ -9,10 +9,15 @@ def initialize(root_dir):
     global LOCALE
     
     LOCALE = wx.Locale(wx.LANGUAGE_DEFAULT, wx.LOCALE_LOAD_DEFAULT)
-    LOCALE.AddCatalogLookupPathPrefix(os.path.join(root_dir, 'locale'))
+    addCatalogPath(os.path.join(root_dir, 'locale'))
 
     # load the framework catalog
     loadCatalog('p6')
+
+def addCatalogPath(pathname):
+    global LOCALE
+
+    LOCALE.AddCatalogLookupPathPrefix(pathname)
 
 def loadCatalog(catalog_name):
     """Add a catalog to the lookup system."""
