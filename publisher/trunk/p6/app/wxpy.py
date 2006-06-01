@@ -142,8 +142,8 @@ class WizApp(wx.App):
                   self.reportBug,
                   id=wx.xrc.XRCID('MNU_REPORT'))
 
-	# connect Mac OS X handlers
-	self.SetMacAboutMenuItemId(wx.xrc.XRCID('MNU_ABOUT'))
+        # connect Mac OS X handlers
+        self.SetMacAboutMenuItemId(wx.xrc.XRCID('MNU_ABOUT'))
 
         return menubar
 
@@ -188,8 +188,8 @@ class WizApp(wx.App):
         about = xrc_resource.LoadDialog(None, "DLG_ABOUT")
 
         # set the version number
-        wx.xrc.XRCCTRL(about, "LBL_VERSION").SetLabel("release %s" %
-                                                   ccpublisher.const.version())
+        wx.xrc.XRCCTRL(about, "LBL_VERSION").SetLabel(_("release") +
+                                         str(ccpublisher.const.version()))
 
         # create the hyperlink label
         http_link = wx.lib.hyperlink.HyperLinkCtrl(about, -1,
