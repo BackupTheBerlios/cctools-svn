@@ -21,20 +21,23 @@ import libfeedback
 
 def main(argv=[]):
 
+   # parse any command line options
+   (options, args) = p6.app.getParser().parse_args(argv)
+   
    # determine the resource path
    try:
        root_dir = os.path.join( os.path.abspath(os.path.dirname(__file__)), 
-				'resources' )
+                                'resources' )
        if platform.system().lower() == 'linux' and \
-              not(os.path.exists(os.path.join(root_dir, 'app.zcml'))):
-           root_dir = '/usr/local/%s/resources' % const.APPNAME
+          not(os.path.exists(os.path.join(root_dir, 'app.zcml'))):
+          root_dir = '/usr/local/%s/resources' % const.APPNAME
            
    except NameError, e:
        root_dir = os.path.join( os.path.dirname(sys.executable), 'resources' )
 
 
    # initialize i18n machinery
-   p6.i18n.initialize(root_dir)
+   p6.i18n.initialize(root_dir, locale=options.locale)
    p6.i18n.loadCatalog('ccpublisher')
    
    # create the application and execute it
