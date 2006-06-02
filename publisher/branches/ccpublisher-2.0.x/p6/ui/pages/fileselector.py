@@ -1,5 +1,7 @@
 """Basic file selector page; published ItemSelected events."""
 
+import os
+
 import wx
 import wx.xrc
 from wx.xrc import XRCCTRL
@@ -16,9 +18,14 @@ class FileDropTarget(wx.FileDropTarget):
     def OnDropFiles(self, x, y, filenames):
         """Bridge dropped files to P6 events."""
 
-        # XXX we don't handle dropped directories here.
-        
         for filename in filenames:
+            # check if this is a directory
+            if os.path.isdir(filename):
+                # we don't support adding directories 
+                wx.MessageDialog(None, "Please drag and drop individual files on this window.", 
+                                 "ccPublisher: Error", wx.OK).ShowModal()
+                continue
+            
             zope.component.handle(
                 p6.storage.events.ItemSelected(
                    p6.storage.items.FileItem(filename)
