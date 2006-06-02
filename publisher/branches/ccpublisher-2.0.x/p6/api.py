@@ -138,8 +138,8 @@ def updatePref(setid, fieldid, value):
 def workInformation():
 
     # collect the work information
-    return {'title'       : findField('title'),
-            'type'        : findField('format'),
+    return {'title'       : findField('http://purl.org/dc/elements/1.1/title'),
+            'type'        : findField('http://purl.org/dc/elements/1.1/type'),
             'year'        : findField('year'),
             'description' : findField('description'),
             'holder'      : findField('holder'),
