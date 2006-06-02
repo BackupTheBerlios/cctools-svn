@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pyarchive
 
@@ -23,12 +24,19 @@ class CallbackBridge(object):
     """Bridge pyarchive status update callbacks to P6 events."""
     
     def __init__(self):
-        pass
+        # initialize the scale, used to scale progress for very large files
+        self.__scale = 1.0
     
     def reset(self, steps=1, filename=None, status=''):
         if filename is not None:
             status = 'Uploading %s...' % filename
-            steps = os.stat(filename).st_size
+            file_size = os.stat(filename).st_size
+            
+            # scale the file size down
+            if file_size > sys.maxint:
+                self.__scale = ( (sys.maxint - 1) * 1.0 ) / file_size 
+                
+            steps = int( file_size * self.__scale )
             
         resetEvt = p6.ui.events.ResetStatusEvent(steps=steps, message=status)
         zope.component.handle(resetEvt)
@@ -43,7 +51,7 @@ class CallbackBridge(object):
         pass
     
     def __call__(self, bytes=1):
-        self.increment(steps=bytes)
+        self.increment(steps=int( bytes * self.__scale ))
     
 
 def archiveStorageUi(storage):
