@@ -33,6 +33,30 @@ import pyarchive.utils
 import pyarchive.identifier
 import pyarchive.const
 
+class UploadApplication(object):
+    """A class which wraps the relevant information about the 
+    uploading application."""
+    
+    def __init__(self, application_name, application_version):
+        self.__name = application_name
+        self.__version = application_version
+        
+    def __getApplication(self):
+        return self.__name
+
+    application = property(__getApplication)
+    
+    def __getVersion(self):
+        return self.__version
+    
+    version = property(__getVersion)
+
+    def __user_agent(self):
+        """Returns a user-agent string for this application."""
+        return "%s %s" % (self.application, self.version)
+    
+    user_agent = property(__user_agent)
+    
 class ArchiveItem:
     """
     <metadata>
@@ -44,9 +68,14 @@ class ArchiveItem:
     </metadata>    
     """
 
-    def __init__(self, identifier, collection, mediatype,
+    def __init__(self, uploader, identifier, collection, mediatype,
                  title, runtime=None, adder=None, license=None):
+        """Initialize the submision; uploader should be an instance of 
+        UploadApplication"""
+        
         self.files = []
+        
+        self.uploader = uploader
         self.identifier = identifier
         self.collection = collection
         self.mediatype = mediatype
@@ -105,11 +134,13 @@ class ArchiveItem:
         <collection>%s</collection>
         <mediatype>%s</mediatype>
         <resource>%s</resource>
-        <upload_application appid="ccpublisher" version="2.0.2" />
+        <upload_application appid="%s" version="%s" />
         """ % (xe(self.title),
                self.collection,
                self.mediatype,
-               self.mediatype) )
+               self.mediatype,
+               self.uploader.application,
+               self.uploader.version) )
 
         if username is not None:
             result.write(u"<uploader>%s</uploader>\n" % username)
@@ -178,7 +209,7 @@ class ArchiveItem:
         new_url = "/create.php"
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "text/plain",
-                   "User-Agent": "ccPublisher 2.0.2"}
+                   "User-Agent": self.uploader.user_agent}
         
         params = urllib.urlencode({'xml':1,
                                    'user':username,
@@ -308,7 +339,7 @@ class ArchiveFile:
             if bitrate[1]:
                 self.format = pyarchive.const.MP3['VBR']
             else:
-		try:
+                try:
                     self.format = pyarchive.const.MP3[bitrate[0]]
                 except KeyError, e:
                     self.format = pyarchive.const.MP3['VBR']
