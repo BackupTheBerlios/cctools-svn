@@ -1,5 +1,6 @@
 import os
 import sys
+import socket
 
 import pyarchive
 
@@ -15,6 +16,7 @@ import p6.extension.exceptions
 from p6 import api
 from p6.metadata.interfaces import IMetadataStorage
 import p6.metadata.persistance
+from p6.i18n import _
 
 from ccpublisher.interfaces import IEmbeddable
 import const
@@ -126,12 +128,16 @@ def archiveStorageUi(storage):
                     "You must supply both a username and password.")
             
             # validate the credentials with IA
-            if not(pyarchive.user.validate(value_dict['username'],
-                                           value_dict['password'])):
-
+            try:
+                if not(pyarchive.user.validate(value_dict['username'],
+                                               value_dict['password'])):
+    
+                    raise p6.extension.exceptions.ExtensionSettingsException(
+                        _("Invalid username or password."))
+            except socket.error, e:
                 raise p6.extension.exceptions.ExtensionSettingsException(
-                    "Invalid username or password.")
-
+                    _("Unable to connect to the Internet Archive to verify username and password."))
+            
             # store the credentials for future use
             self.storage.credentials = (value_dict['username'],
                                         value_dict['password'])
