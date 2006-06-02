@@ -26,7 +26,7 @@ import fnmatch
 from deploy.setupsupport import *
 from deploy.setupcfg import *
 
-from ccpublisher.const import APPNAME
+from ccpublisher.const import APPNAME, version
 
 PLATFORM = platform.system().lower()
 RSRC_DIR = 'resources'
@@ -54,16 +54,16 @@ else:
 # fix up the data file inclusion
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
-              'resources/wizard.xrc',
-	          'resources/dialogs.xrc',
+              'resources/ccpublisher.xrc',
+              'resources/dialogs.xrc',
               'resources/app.zcml',
-	          'resources/ccp8.ico',
-	          'resources/cc_33.gif',
+              'resources/ccp8.ico',
+              'resources/cc_33.gif',
               'resources/cc_doc_33.gif',
-	          'resources/version.txt',
-	          'resources/publishguy.gif',
-	          'resources/publishguy_small.gif'])
-	         ]
+              'resources/version.txt',
+              'resources/publishguy.gif',
+              'resources/publishguy_small.gif'])
+             ]
 
 if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
@@ -74,7 +74,7 @@ if PLATFORM != 'linux':
 if __name__ == '__main__':
 
     setup(name='ccPublisher',
-          version='2.0.3',
+          version=version(),
           description = desc,
           long_description= long_desc,
           url='http://creativecommons.org',
@@ -97,7 +97,7 @@ if __name__ == '__main__':
                    'py2app':{'argv_emulation':True,
                              'iconfile':os.path.join('resources', 'ccp8.icns'),
 			                 'packages':packages,
-                             'includes':['dbhash', 'encodings',]
+                             'includes':['dbhash', 'encodings','argvemulator']
                              },
                    },
           desktop_file=['deploy/linux/ccpublisher.desktop.in'],
