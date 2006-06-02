@@ -16,6 +16,8 @@ import platform
 import libfeedback.comm
 import webbrowser
 
+from p6.i18n import _
+
 zope.configuration.xmlconfig.openInOrPlain = bananas.openInOrPlain
 
 class WizApp(wx.App):
