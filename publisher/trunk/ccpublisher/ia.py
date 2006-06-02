@@ -17,6 +17,7 @@ from p6.metadata.interfaces import IMetadataStorage
 import p6.metadata.persistance
 
 from ccpublisher.interfaces import IEmbeddable
+import const
 
 import ui
 
@@ -181,7 +182,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
     def validate(self, event=None):
        # determine the appropriate collection
-       work_type = api.findField('format')
+       work_type = api.findField('http://purl.org/dc/elements/1.1/type')
 
        if work_type:
            work_type = work_type.lower()
@@ -225,6 +226,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        # create the submission object
        submission = pyarchive.submission.ArchiveItem(
+           pyarchive.submission.UploadApplication("ccPublisher", const.version()),
            archive_id,
            self.archive_collection,
            self.submission_type,

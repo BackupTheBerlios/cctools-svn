@@ -44,6 +44,10 @@ class WizApp(wx.App):
         wx.App.__init__(self, filename=self.errlog)
 
     def OnInit(self):
+
+        # ensure support directories exist
+        p6.api.checkAppDirs()
+        
         self.__configure()
         self.__loadPrefs()
         

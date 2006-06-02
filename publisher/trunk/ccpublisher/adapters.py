@@ -42,7 +42,8 @@ def workFormatListener(event):
         else:
             # fall back to "Other" as the default if we can't figure it out
             type_value = "Other"
-        
+
+        # Publish an update event for the work format
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
             event.item,
             "http://purl.org/dc/elements/1.1/type",
