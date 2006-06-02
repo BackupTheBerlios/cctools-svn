@@ -35,7 +35,7 @@ def metadatafield(fieldType):
                      persist=False, canonical=''):
 
             # store the default values
-            self.id = id
+            self.__id = id
             self.label = label
             self.choices = choices
             self.default = default
@@ -44,7 +44,12 @@ def metadatafield(fieldType):
             self.description = description
             self.validator = validator or NoOp
             self.persist = persist
-            self.canonical = canonical
+            self.__canonical = canonical
+            
+        def id_or_canonical(self):
+            return self.__canonical or self.__id
+        
+        id = canonical = property(id_or_canonical)
 
     return MetadataField
 
