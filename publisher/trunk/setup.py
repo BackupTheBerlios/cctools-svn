@@ -3,13 +3,13 @@ ccPublisher Build Script
 Builds platform appropriate packages for distribution.
 
  Windows:
- $ python appsetup.py py2exe
+ $ python setup.py py2exe
 
  Mac OS X:
- $ python appsetup.py py2app
+ $ python setup.py py2app
 
  Linux:
- $ python appsetup.py sdist
+ $ python setup.py sdist
 
 copyright 2004-2005, Nathan R. Yergler
 licensed to the public under the GNU GPL version 2.
@@ -55,7 +55,7 @@ else:
 dataFiles = [(RSRC_DIR, 
              ['resources/LICENSE.txt',
               'resources/ccpublisher.xrc',
-              'resources/dialogs.xrc',
+              'resources/p6.xrc',
               'resources/app.zcml',
               'resources/ccp8.ico',
               'resources/cc_33.gif',
@@ -69,7 +69,8 @@ if PLATFORM != 'linux':
     # we need to include the ZCML as side-by-side resources on
     # "compiled" platforms
     dataFiles = dataFiles + \
-                findZcml(os.path.dirname(__file__) or os.getcwd())
+                findZcml(os.path.dirname(__file__) or os.getcwd()) + \
+                locale_files(os.path.dirname(__file__) or os.getcwd())
     
 if __name__ == '__main__':
 

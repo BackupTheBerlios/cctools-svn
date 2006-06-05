@@ -34,3 +34,22 @@ def packageData(pkgList):
         result[package] = ['*.zcml']
 
     return result
+
+def locale_files(base_dir):
+    
+    result = []
+
+    # walk the directory tree, ignoring distutils folders
+    for (dirpath, dirnames, filenames) in os.walk(base_dir, topdown=True):
+
+        # strip out the common portion of the path
+        relpath = dirpath[len(base_dir)+1:]
+
+        # filter out only locale files
+        zcml = fnmatch.filter(filenames, "*.[pm]o") + \
+               fnmatch.filter(filenames, "*.pot") 
+        
+        if len(zcml) > 0:
+            result.append((relpath, [os.path.join(relpath, n) for n in zcml]))
+
+    return result
