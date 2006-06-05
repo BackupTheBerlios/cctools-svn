@@ -8,13 +8,13 @@ import zope.interface
 import zope.component
 
 import p6
+import support.browser as webbrowser
 import interfaces
 import bananas
 
 import ccpublisher.const
 import platform
 import libfeedback.comm
-import webbrowser
 
 from p6.i18n import _
 
@@ -216,10 +216,10 @@ class WizApp(wx.App):
         
     def reportBug(self, event):
         # open the browser window to the New Issue tracker page
-        webbrowser.open_new("http://roundup.creativecommons.org/ccpublisher/issue?@template=item")
-        
-        return
-    
+        webbrowser.open_new("http://roundup.creativecommons.org/"
+                            "ccpublisher/issue?@template=item")
+
+
     def __reportBug(self, event):
         fields = {}
         fields['app_id'] = ccpublisher.const.REPORTING_APP

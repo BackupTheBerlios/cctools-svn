@@ -1,6 +1,5 @@
 """LicenseChooser custom metadata wizard page."""
 
-import webbrowser
 import urllib2
 import thread
 
@@ -18,6 +17,7 @@ import ccwsclient
 import p6.api
 import p6.ui
 import p6.metadata
+import p6.app.support.browser as webbrowser
 
 from p6.i18n import _
 
