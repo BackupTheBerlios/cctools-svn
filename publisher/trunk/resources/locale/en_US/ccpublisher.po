@@ -38,7 +38,7 @@ msgid "You can view your work online shortly at:"
 msgstr ""
 
 msgid "This tool will help you put your audio and video on the\nWeb with a Creative Commons license.\n\nIt's simple:"
-msgstr ""
+msgstr "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
 
 msgid "1) Drag and drop your audio or video files\n2) Choose your Creative Commons license\n3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service\n4) Get a URL where you and your friends can download your file"
 msgstr ""
