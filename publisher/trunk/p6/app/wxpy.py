@@ -219,36 +219,3 @@ class WizApp(wx.App):
         webbrowser.open_new("http://roundup.creativecommons.org/"
                             "ccpublisher/issue?@template=item")
 
-
-    def __reportBug(self, event):
-        fields = {}
-        fields['app_id'] = ccpublisher.const.REPORTING_APP
-        fields['app_version'] = ccpublisher.const.version()
-        fields['title'] = wx.xrc.XRCCTRL(self.__reportDlg, "TXT_TITLE").GetValue()
-        fields['platform'] = platform.platform()
-        if (wx.xrc.XRCCTRL(self.__reportDlg, "CMB_TYPE").GetStringSelection().lower() == "bug report"):
-            fields['priority'] = "bug"
-        else:
-            fields['priority'] = "wish"
-            
-        fields['message'] = wx.xrc.XRCCTRL(self.__reportDlg, "TXT_BODY").GetValue()
-        
-        bugUrl = libfeedback.comm.sendReport(ccpublisher.const.REPORTING_URL, fields)
-        if bugUrl is not None:
-            result = wx.MessageDialog(None, "Your crash report has been sent.\n"
-                  "You can track your report at\n"
-                  "%s\n\nDo you want to open this page in your browser now?" % bugUrl,
-                  caption="ccPublisher: Report Sent",
-                  style=wx.YES|wx.NO).ShowModal()
-                  
-            if result == wx.ID_YES:
-                # open the web browser
-                webbrowser.open_new(bugUrl)
-        else:
-            # XXX Show yet-another-error here 
-            # and humbly provide a way to submit a report manually
-            pass
-
-        self.__reportDlg.Close()
-        del self.__reportDlg
-        
