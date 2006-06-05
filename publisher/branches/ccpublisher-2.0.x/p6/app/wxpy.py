@@ -8,13 +8,13 @@ import zope.interface
 import zope.component
 
 import p6
+import support.browser as webbrowser
 import interfaces
 import bananas
 
 import ccpublisher.const
 import platform
 import libfeedback.comm
-import webbrowser
 
 zope.configuration.xmlconfig.openInOrPlain = bananas.openInOrPlain
 
@@ -214,31 +214,8 @@ class WizApp(wx.App):
         
     def reportBug(self, event):
         # open the browser window to the New Issue tracker page
-        webbrowser.open_new("http://roundup.creativecommons.org/ccpublisher/issue?@template=item")
-        
-        return
-    
-        
-        # load the dialog definition
-        xrc_resource = wx.xrc.XmlResource(os.path.join(
-            p6.api.getResourceDir(), 'dialogs.xrc'))
-        report = xrc_resource.LoadDialog(None, "DLG_BUGREPORT")
-        
-        # connect the OK button
-        self.Bind(wx.EVT_BUTTON,
-                  self.__reportBug,
-                  id = wx.xrc.XRCID("CMD_OK")
-                  )
-        
-        # connect the Cancel button
-        self.Bind(wx.EVT_BUTTON,
-                  lambda event: report.Close(),
-                  id = wx.xrc.XRCID("CMD_CANCEL")
-                  )
-                  
-        # display the dialog
-        self.__reportDlg = report
-        report.ShowModal()
+        webbrowser.open_new("http://roundup.creativecommons.org/"
+                            "ccpublisher/issue?@template=item")
 
     def __reportBug(self, event):
         fields = {}
