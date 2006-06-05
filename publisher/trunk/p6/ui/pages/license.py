@@ -112,7 +112,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
             self.__l_classes = self.__cc_server.license_classes()
         except urllib2.URLError, e:
             wx.MessageBox("Unable to connect to the Internet to retrieve license information.  Check your connection and try again.",
-                         caption="ccPublisher: Error.",
+                         caption=_("appname") + ": " + _("Error"),
                          style=wx.OK|wx.ICON_ERROR, parent=self.GetParent())
             self.GetParent().Close()
             return

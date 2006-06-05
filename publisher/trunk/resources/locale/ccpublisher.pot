@@ -11,6 +11,10 @@ msgstr ""
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: xrc_pot.py\n"
 
+# Don't change this translation string
+msgid "appname"
+msgstr "ccPublisher"
+
 msgid "release"
 msgstr ""
 
@@ -119,6 +123,4 @@ msgstr ""
 msgid "You must supply the verification URL."
 msgstr ""
 
-msgid "Error"
-msgstr ""
 

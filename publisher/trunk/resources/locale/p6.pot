@@ -50,3 +50,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Error"
+msgstr ""
+
+msgid "Please drag and drop individual files on this window."
+msgstr ""
+
+msgid "You must select at least one file."
+msgstr ""

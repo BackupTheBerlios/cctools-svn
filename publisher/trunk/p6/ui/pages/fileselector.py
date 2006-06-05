@@ -24,8 +24,9 @@ class FileDropTarget(wx.FileDropTarget):
             # check if this is a directory
             if os.path.isdir(filename):
                 # we don't support adding directories 
-                wx.MessageDialog(None, "Please drag and drop individual files on this window.", 
-                                 "ccPublisher: Error", wx.OK).ShowModal()
+                wx.MessageDialog(None,
+                   _("Please drag and drop individual files on this window."), 
+                   _("appname") + ": " + _("Error"), wx.OK).ShowModal()
                 continue
             
             zope.component.handle(
@@ -139,7 +140,7 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
             else:
                 # haven't selected anything; show an error message
                 wx.MessageDialog(self, _("You must select at least one file."),
-                                 _("ccPublisher: Error"),
+                                 _("appname") + ": " + _("Error"),
                                  wx.OK).ShowModal()
                 return False
         else:
