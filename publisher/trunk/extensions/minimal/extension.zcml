@@ -1,6 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:i18n="http://namespaces.zope.org/i18n"
-	   i18n_domain="p6_simple">
+           i18n_domain="p6_simple">
 
   <!-- P6 Sample Extension Configuration
        (c) 2005, Nathan R. Yergler, Creative Commons  
