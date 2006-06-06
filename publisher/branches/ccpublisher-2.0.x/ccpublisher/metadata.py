@@ -53,7 +53,7 @@ def itemSelected(event):
         # Title
         updateEvent = p6.metadata.events.UpdateMetadataEvent(
             p6.storage.interfaces.IWork,
-            group('workinfo').get('title'),
+            group('workinfo').get('http://purl.org/dc/elements/1.1/title'),
             id3.getTitle()
             )
         if id3.getTitle():
