@@ -1,0 +1,29 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="p6"
+    >
+
+  <adapter
+      for=".interfaces.IFileItem"
+      provides=".interfaces.IInputStream"
+      factory=".items.FileItemStream"
+      />
+
+  <!-- Dummy adapter registration: IFileItem indirectly implements
+       IMetadataProvider; this explicitly lets the registry know about it -->
+
+  <adapter
+      for=".interfaces.IFileItem"
+      provides="p6.metadata.interfaces.IMetadataProvider"
+      factory=".adapters.fileItemMetadataProvider"
+      />
+
+  <!-- Metadata provider registrations -->
+
+  <subscriber
+        for="p6.storage.events.IItemSelected"
+        handler=".providers.id3.itemSelected"
+        />
+
+</configure>

@@ -1,0 +1,58 @@
+# -*-shell-script-*-
+
+[Meta]
+RootName: @creativecommons.org/tools/ccpublisher:1.9
+DisplayName: ccPublisher
+ShortName: ccPublisher
+Maintainer: Creative Commons <software@creativecommons.org>
+Packager: Nathan R. Yergler <nathan@creativecommons.org>
+Summary: ccPublisher.
+URL: http://www.creativecommons.org/
+License: GNU General Public License, Version 2
+SoftwareVersion: 1.9
+AutopackageTarget: 1.0
+
+# InterfaceVersion: 2.0
+
+[Description]
+Put long & detailed description here.
+
+[BuildPrepare]
+
+# generate a source distribution so we have a MANIFEST file
+rm -rf build
+python appsetup.py sdist -t MANIFEST.in -o
+python appsetup.py build build_ext
+
+# grab all the Python files and resources
+mkdir -p $build_root/ccpublisher
+cp -a ./build/lib*/* $build_root/ccpublisher
+tar czvf - `cat MANIFEST`  | tar zxvf - -C $build_root/ccpublisher
+
+# grab the launch script, .desktop file, etc
+cp autopackage/ccpublisher.desktop $build_root
+cp autopackage/apboot.py $build_root
+
+[BuildUnprepare]
+#unprepareBuild
+
+[Imports]
+echo '*' | import
+
+[Prepare]
+# Dependency checking
+require @python.org/python 2.4
+requireAtLeast "@wxpython.org/wxpython:2.5"
+
+# Dependency checking
+#require @creativecommons.org/p6 2.0
+
+[Install]
+# Put your installation script here
+installData ccpublisher
+installExe apboot.py
+installDesktop "Sound & Video" ccpublisher.desktop
+
+[Uninstall]
+# Usually just the following line is enough to uninstall everything
+uninstallFromLog

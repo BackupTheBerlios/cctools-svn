@@ -1,0 +1,4 @@
+include app.zcml
+include resources/*
+recursive-include * *.zcml
+prune extensions
