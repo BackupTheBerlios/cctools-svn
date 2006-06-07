@@ -22,19 +22,23 @@ class CcMain(p6.ui.wizard.WizFrame):
         p6.ui.wizard.WizFrame.__init__(self, 'FRM_MAIN', app)
 
         # set the window icon
-
         self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'ccp8.ico'),
                              wx.BITMAP_TYPE_ICO))
         
-        # attach the image list to the file selector
-        self.__imgList = wx.ImageList(33,32)
 
-        self.__imgList.Add(
-            wx.Bitmap(os.path.join(self.app.resource_dir, 'cc_doc_33.gif'))
-            )
+    def getIconList(self):
+        if not(getattr(self, '__imgList', None)):
+            # create the image list
+            self.__imgList = wx.ImageList(33,32)
 
-        XRCCTRL(self, "LST_FILES").SetImageList(self.__imgList,
-                                                wx.IMAGE_LIST_NORMAL)
+            self.__imgList.Add(
+                wx.Bitmap(os.path.join(self.app.resource_dir, 'cc_doc_33.gif'))
+                )
+            
+        return self.__imgList
+
+        #XRCCTRL(self, "LST_FILES").SetImageList(self.__imgList,
+        #                                        wx.IMAGE_LIST_NORMAL)
 
        
 
