@@ -63,4 +63,10 @@
       factory=".adapters.fileItemDisplay"
       />
 
+  <adapter
+      for="p6.storage.interfaces.IItem"
+      provides=".interfaces.ILabelText"
+      factory=".adapters.genericItemDisplay"
+      />
+
 </configure>
