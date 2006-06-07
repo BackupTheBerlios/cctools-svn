@@ -220,7 +220,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            archive_id,
            self.archive_collection,
            self.submission_type,
-           api.findField('title')
+           api.findField('http://purl.org/dc/elements/1.1/title')
            )
 
        # retrieve all metadata fields for the work (the root item)
