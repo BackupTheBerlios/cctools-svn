@@ -69,43 +69,13 @@ def archiveStorageUi(storage):
 
         def createPages(self):
             
-            # XXX -- hack
-            # 
-            # We import here because doing so at instantiation causes problems
-            # -- in particular, the App needs to be created before other
-            # UI objects, and the import has side effects (querying the
-            # background color)
-            
-            import p6.ui.pages.fieldrender
-            
-            # check if we have persisted values for username/passwd
-            username = p6.metadata.persistance.load("ia", "username", "")
-            password = p6.metadata.persistance.load("ia", "password", "")
-            persist  = p6.metadata.persistance.load("ia", "persist", False)
-            
-            # create the simple page
-            fields = [
-                p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
-                'username', 'Username', default=username),
-                p6.metadata.base.metadatafield(p6.metadata.types.IPasswordField)(
-                'password', 'Password', default=password),
-                p6.metadata.base.metadatafield(p6.metadata.types.IBooleanField)(
-                'persist', 'Save your username and password?', default=persist)
-                
-                ]
-
             self.__pages = []
             
-            self.__pages.append(
-                lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
-                x, 'ARCHIVE_UI_META', 'Internet Archive', fields,
-                self.callback,
-                description="Enter your Internet Archive username and password.\n"
-                "If you do not have a username and password, visit http://archive.org\n"
-                "to create an account."))
-
+            self.__pages.append(lambda x: ui.ia.IdentifierPage(x,
+                                                               self.__storage))
+            self.__pages.append(lambda x: ui.ia.ArchiveLoginPage(x,
+                                                               self.__storage))
             self.__pages.append(p6.ui.pages.StorePage)
-
             self.__pages.append(lambda x: ui.ia.FinalPage(x, self.__storage))
 
         def list(self):
@@ -120,45 +90,19 @@ def archiveStorageUi(storage):
                 # not activated, so don't ask for information
                 return []
 
-        def callback(self, value_dict):
+        def archive_id_callback(self, value_dict):
+            archive_id = value_dict['archive_id']
 
-            # make sure both a username and password were provided
-            if not('username' in value_dict and 'password' in value_dict):
+            if not(pyarchive.identifier.conforms(archive_id)):
                 raise p6.extension.exceptions.ExtensionSettingsException(
-                    "You must supply both a username and password.")
-            
-            # validate the credentials with IA
-            try:
-                if not(pyarchive.user.validate(value_dict['username'],
-                                               value_dict['password'])):
-    
-                    raise p6.extension.exceptions.ExtensionSettingsException(
-                        _("Invalid username or password."))
-            except socket.error, e:
-                raise p6.extension.exceptions.ExtensionSettingsException(
-                    _("Unable to connect to the Internet Archive to verify username and password."))
-            
-            # store the credentials for future use
-            self.storage.credentials = (value_dict['username'],
-                                        value_dict['password'])
+                _("That identifier does not conform to the Internet Archive's naming standards."))
 
-            # check if the user wanted to persist them
-            if value_dict['persist']:
-                # store them
-                p6.metadata.persistance.store("ia", "username", value_dict['username'])
-                p6.metadata.persistance.store("ia", "password", value_dict['password'])
-                p6.metadata.persistance.store("ia", "persist", True)
-            else:
-                # clear the potentially persisted values
-                p6.metadata.persistance.store("ia", "username", "")
-                p6.metadata.persistance.store("ia", "password", "")
-                p6.metadata.persistance.store("ia", "persist", False)
-                
-                
-            # register for future storage events after validating our
-            # storage-specific settings
-            
-            self.storage.registerEvents()
+            if not(pyarchive.identifier.available(archive_id)):
+                raise p6.extension.exceptions.ExtensionSettingsException(
+                _("That identifier is not available."))
+
+            # both tests pass -- store the identifier
+            self.storage.identifier = archive_id
 
     return ArchiveStorageUi
 
@@ -176,6 +120,9 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
     def __init__(self):
         p6.metadata.base.BasicMetadataStorage.__init__(self)
 
+        # set the default identifier
+        self.identifier = None
+        
         # register handlers for extension points --
         # this allows us to extend the user interface in a unified way
         # 
@@ -207,11 +154,8 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            self.submission_type = work_type = api.findField('format')
 
     def store(self, event=None):
-       # generate the identifier and make sure it's available
-       archive_id = self.__archiveId()
-
        # generate the verification url
-       v_url = pyarchive.identifier.verify_url(archive_id)
+       v_url = pyarchive.identifier.verify_url(self.identifier)
        
        # get the copyright information fields
        license = api.findField('license', api.getApp().items[0])
@@ -232,12 +176,16 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        # create the submission object
        submission = pyarchive.submission.ArchiveItem(
-           pyarchive.submission.UploadApplication("ccPublisher", const.version()),
-           archive_id,
-           self.archive_collection,
-           self.submission_type,
-           api.findField('http://purl.org/dc/elements/1.1/title')
+           pyarchive.submission.UploadApplication("ccPublisher",
+                                                  const.version())
            )
+       
+       # set the submission identifier, collection, etc
+       submission.identifier = self.identifier
+       submission.collection = self.archive_collection
+       submission.mediatype = self.submission_type
+       submission.title = api.findField(
+           'http://purl.org/dc/elements/1.1/title')
 
        # retrieve all metadata fields for the work (the root item)
        root_item = api.getApp().items[0]
@@ -280,7 +228,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        return {'URI':self.uri}
        
-    def __archiveId(self):
+    def defaultIdentifier(self):
         """Generates an archive.org identifier from work metadata or
         embedded ID3 tags."""
 
