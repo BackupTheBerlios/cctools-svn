@@ -16,6 +16,7 @@ import license
 import inspect
 
 from p6.i18n import _
+from p6.ui.interfaces import ILabelText
 
 class MetadataPage(ccwx.xrcwiz.XrcWizPage):
     """Basic metadata page; generated for most metadata groups."""
@@ -201,7 +202,8 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
         for item in self.__items:
 
             # create the item label
-            item_label = wx.StaticText(self, label=item.getIdentifier())
+            item_label = wx.StaticText(self,
+                                       label=ILabelText(item).text)
             self.GetSizer().Add(item_label, flag=wx.EXPAND)
 
             # create the item sizer
