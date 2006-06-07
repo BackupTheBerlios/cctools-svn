@@ -1,6 +1,7 @@
 """Basic file selector page; published ItemSelected events."""
 
 import os
+import weakref
 
 import wx
 import wx.xrc
@@ -13,6 +14,7 @@ import p6
 import p6.api
 
 from p6.i18n import _
+from p6.ui.interfaces import ILabelText
 
 class FileDropTarget(wx.FileDropTarget):
     """ This object implements generic drop target functionality for Files """
@@ -35,6 +37,84 @@ class FileDropTarget(wx.FileDropTarget):
                    )
                 )
 
+class FileListControl(wx.ListCtrl):
+    def __init__(self, parent):
+        wx.ListCtrl.__init__(self, parent, -1,
+                             style=wx.LC_REPORT|wx.LC_VIRTUAL)
+
+        self.SetImageList(p6.api.getApp().GetTopWindow().getIconList(),
+                          wx.IMAGE_LIST_NORMAL)
+        self.SetImageList(p6.api.getApp().GetTopWindow().getIconList(),
+                          wx.IMAGE_LIST_SMALL)
+
+        # set up the list of items and the columns
+        self.__items = []
+        self.InsertColumn(0, _("Filename"), width=-1)
+        self.SetItemCount(0)
+
+        # connect UI events
+        self.Bind(wx.EVT_SIZE, self.OnResize, self)
+        
+        # connect event listeners for updating the user interface
+        # listen for item addition events
+        zope.component.provideHandler(
+            zope.component.adapter(p6.storage.events.IItemSelected)(
+                p6.api.deinstify(self.selectItem))
+            )
+
+        # listen for item removal events
+        zope.component.provideHandler(
+            zope.component.adapter(p6.storage.events.IItemDeselected)(
+                p6.api.deinstify(self.removeItem))
+            )
+
+    def GetVirtualItem(self, index):
+        """Return the virtual item we derive the list control item
+        from for the specified index."""
+        
+        return self.__items[index]
+
+    def OnGetItemText(self, item, col):
+        """Return the item text."""
+
+        return ILabelText(self.__items[item]).text
+
+    def OnGetItemImage(self, item):
+        """Return the image to use for this item."""
+        
+        # XXX Eventually we'll want to use file-type specific icons
+        return 0
+
+    def OnGetItemAttr(self, item):
+        """Return the row attributes for this item."""
+        
+        return None
+
+    def OnResize(self, event):
+        """Resize the filename column as the window is resized."""
+        
+        self.SetColumnWidth(0, self.GetClientSizeTuple()[0])
+        event.Skip()
+        
+    def selectItem(self, event):
+        """Responds to ItemSelected events and updates the user interface."""
+
+        # add the item to our list
+        self.__items.append(event.item)
+
+        # update the item count
+        self.SetItemCount(len(self.__items))
+        
+    def removeItem(self, event):
+        """Responds to ItemDeselected events and updates the user interface."""
+
+        # remove the item from the list
+        self.__items.remove(event.item)
+        
+        # update the item count
+        self.SetItemCount(len(self.__items))
+
+    
 class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
     """Page which displays a file selector and publishes events when
     items are selected or deselected.
@@ -55,45 +135,28 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
                                                      "p6.xrc"),
                                         "FILE_SELECTOR", headline)
 
+        # initialize the user interface
+        self.__initUserInterface()
+
+    def __initUserInterface(self):
+        # create the list control for showing selected files
+        self.__fileList = FileListControl(self)
+        self.GetSizer().Add(self.__fileList, flag=wx.EXPAND|wx.ALL)
+            
+        # enable dropping files on the list box
+        self.__fileList.SetDropTarget(FileDropTarget())
+
         # connect event handlers for browse button, delete button, delete key
         self.Bind(wx.EVT_BUTTON, self.onBrowse, XRCCTRL(self, "CMD_BROWSE"))
         self.Bind(wx.EVT_BUTTON, self.onDelete, XRCCTRL(self, "CMD_DELETE"))
         self.Bind(wx.EVT_KEY_UP, self.onKeyUp,  self)
-        
-        # listen for item addition events
-        zope.component.provideHandler(
-            zope.component.adapter(p6.storage.events.IItemSelected)(
-                p6.api.deinstify(self.selectItem))
-            )
 
-        # listen for item removal events
-        zope.component.provideHandler(
-            zope.component.adapter(p6.storage.events.IItemDeselected)(
-                p6.api.deinstify(self.removeItem))
-            )
-
-        # enable dropping files on the list box
-        XRCCTRL(self, "LST_FILES").SetDropTarget(FileDropTarget())
-
-    def selectItem(self, event):
-        """Responds to ItemSelected events and updates the user interface."""
-        XRCCTRL(self, "LST_FILES").\
-                      InsertImageStringItem(0, event.item.getIdentifier(), 0)
-
-    def removeItem(self, event):
-        """Responds to ItemDeselected events and updates the user interface."""
-
-        file_list = XRCCTRL(self, "LST_FILES")
-        file_list.DeleteItem(
-            file_list.FindItem(0, event.item.getIdentifier(), False)
-            )
-    
     def onBrowse(self, event):
         """Event handler for file selection; publishes ItemSelected events
         when the user picks one or more files."""
         
         fileBrowser = wx.FileDialog(self.GetParent(),
-                                    style=wx.OPEN|wx.MULTIPLE|wx.FILE_MUST_EXIST)
+                                 style=wx.OPEN|wx.MULTIPLE|wx.FILE_MUST_EXIST)
 
         if fileBrowser.ShowModal() == wx.ID_OK:
 
@@ -108,25 +171,25 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
     def onDelete(self, event):
         """Event handler for file removal; publishes ItemDeselected events."""
 
-        file_list = XRCCTRL(self, "LST_FILES")
 
-        selectedItem = file_list.GetFirstSelected()
+        # contstruct a list of items to remove
+        to_remove = []
+        
+        selectedItem = self.__fileList.GetFirstSelected()
         while(selectedItem != -1):
 
-            id = file_list.GetItemText(selectedItem)
-            item = [n for n in p6.api.getApp().items if
-                    n.getIdentifier() == id]
+            to_remove.append(
+                self.__fileList.GetVirtualItem(selectedItem))
+            selectedItem = self.__fileList.GetNextSelected(selectedItem)
 
-            if len(item) > 0:
-                item = item[0]
-
+        # fire an item deselected event for each
+        for item in to_remove:
+            
             # publish the de-select event
             zope.component.handle(
                 p6.storage.events.ItemDeselected(item)
                 )
-            
-            selectedItem = file_list.GetFirstSelected()
-
+                
     def onKeyUp(self, event):
         if (event.GetKeyCode() == wx.WXK_DELETE):
             self.onDelete(event)
@@ -135,7 +198,7 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
         # make sure the user has selected at least one file...
         if event.direction:
             # only check if moving forward
-            if XRCCTRL(self, "LST_FILES").GetItemCount() > 0:
+            if self.__fileList.GetItemCount() > 0:
                 return True
             else:
                 # haven't selected anything; show an error message

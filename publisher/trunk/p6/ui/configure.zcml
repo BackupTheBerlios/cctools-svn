@@ -56,4 +56,11 @@
       factory=".fields.checkField"
       />
 
+  <!-- Generic user interface adapters -->
+  <adapter
+      for="p6.storage.interfaces.IFileItem"
+      provides=".interfaces.ILabelText"
+      factory=".adapters.fileItemDisplay"
+      />
+
 </configure>

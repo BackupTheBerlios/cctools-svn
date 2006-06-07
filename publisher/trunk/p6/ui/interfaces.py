@@ -4,6 +4,11 @@ UI interfaces.
 
 import zope.interface
 
+class ILabelText(zope.interface.Interface):
+    """Wrapper interface for encapsultating label text."""
+
+    text = zope.interface.Attribute("Text to be displayed in the label.")
+
 class IEntryWidget(zope.interface.Interface):
     pass
 
