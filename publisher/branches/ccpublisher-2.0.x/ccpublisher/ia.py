@@ -273,7 +273,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
         if creator:
            id_pieces.append(creator)
 
-        title = api.findField('title')
+        title = api.findField('http://purl.org/dc/elements/1.1/title')
         if title:
            id_pieces.append(title)
 
