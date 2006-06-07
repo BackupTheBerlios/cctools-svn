@@ -166,6 +166,11 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
                 p6.api.deinstify(self.onItemSelected))
             )
         
+        zope.component.provideHandler(
+            zope.component.adapter(p6.storage.events.IItemDeselected)(
+                p6.api.deinstify(self.onItemDeselected))
+            )
+        
         # bind wx events
         self.Bind(ccwx.xrcwiz.EVT_XRCWIZ_PAGE_CHANGED, self.onChanged)
 
@@ -180,8 +185,9 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
         # check if this event's item should be stored here...
         if (self.metagroup.appliesTo in
             zope.interface.implementedBy(event.item.__class__)):
-        
-            del self.__items[self.__items.index(event.item)]
+
+            self.__items.remove(event.item)
+            #del self.__items[self.__items.index(event.item)]
 
     def initFields(self, metaGroup):
         """Create the user input widgets for this group."""

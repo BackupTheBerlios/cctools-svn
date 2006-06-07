@@ -181,11 +181,19 @@ class WizApp(wx.App):
                 p6.api.deinstify(self.selectItem))
             )
 
+        zope.component.provideHandler(
+            zope.component.adapter(p6.storage.events.IItemDeselected)(
+                p6.api.deinstify(self.deselectItem))
+            )
+
         # create the root item
         self.items.append(p6.storage.items.RootItem())
         
     def selectItem(self, event):
         self.items.append(event.item)
+
+    def deselectItem(self, event):
+        self.items.remove(event.item)
         
     def showAbout(self, event):
         # load the dialog definition
