@@ -102,7 +102,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         # bind event handlers
         self.Bind(wx.EVT_COMBOBOX, self.onSelectLicenseClass, self.cmbLicenses)
 
-	self.Hide()
+        self.Hide()
 
     def getLicenseClasses(self):
         """Calls the SOAP API via proxy to get a list of all available
@@ -117,8 +117,11 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
             self.GetParent().Close()
             return
 
+        # update the list of license classes
         self.cmbLicenses.AppendItems(self.__l_classes.values())
-        self.cmbLicenses.SetValue('Creative Commons')
+        
+        # default to the "standard" license class
+        self.cmbLicenses.SetValue(self.__l_classes['standard'])
 
         # use wx.CallAfter to schedule the call (can't touch GUI in a thread)
         wx.CallAfter(lambda: self.onSelectLicenseClass(None))
