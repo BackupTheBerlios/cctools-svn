@@ -11,6 +11,8 @@ import wx
 import zope.interface
 import p6
 
+from p6.i18n import _
+
 def deinstify(func):
     """Decorator to strip an instance method of it's "self" paramter,
     making it work properly as a non-bound function or adapter.
@@ -145,3 +147,8 @@ def workInformation():
             'holder'      : findField('holder'),
             }
     
+def showError(err_msg):
+    """Show an error message w/ OK button in a consistent style."""
+    wx.MessageDialog(None, _(err_msg),
+                     _("appname") + ": " + _("Error"),
+                     wx.OK|wx.ICON_ERROR).ShowModal()
