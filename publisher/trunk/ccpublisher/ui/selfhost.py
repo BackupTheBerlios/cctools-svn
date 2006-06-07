@@ -10,6 +10,7 @@ from wx.xrc import XRCCTRL
 
 import ccwx
 import p6.api
+from p6.i18n import _
 
 from ccpublisher.const import version
 
@@ -20,7 +21,7 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'SELFHOST_COMPLETE', 'Complete')
+                                        'SELFHOST_COMPLETE', _('Complete'))
 
         # connect the Save button handler
         self.Bind(wx.EVT_BUTTON, self.onSave, XRCCTRL(self, "CMD_SAVE_RDF"))
@@ -45,7 +46,9 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
                                    wildcard="HTML (*.html)|*.html|"
                                             "Text files (*.txt)|*.txt")
         if (saveDialog.ShowModal() == wx.ID_OK):
-            file(saveDialog.GetPath(), 'w').write(
-                XRCCTRL(self, "TXT_RDF").GetValue())
-            
+            try:
+                file(saveDialog.GetPath(), 'w').write(
+                    XRCCTRL(self, "TXT_RDF").GetValue())
+            except IOError, e:
+                p6.api.showError("Unable to write to the selected file.")
             
