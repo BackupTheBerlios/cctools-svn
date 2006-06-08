@@ -1,16 +1,24 @@
-import wx
+import inspect
 
 I18N_FILE = None
 
 def dump_ (str_arg):
-    """Dump strings for translation to a text file."""
-    global I18N_FILE
+    """Dump strings for translation to one of two text files."""
+
+    frame_info = inspect.getframeinfo(inspect.currentframe().f_back)
+
+    src_file = frame_info[0]
+    line_no = frame_info[1]
     
-    if I18N_FILE is None:
-        I18N_FILE = file('strings.txt', 'w')
-        
-    I18N_FILE.write(str_arg)
-    I18N_FILE.write('\n')
+    if 'p6' in src_file:
+        out_file = file('p6.txt', 'w+')
+    else:
+        out_file = file('ccpublisher.txt', 'w+')
+
+    # write the translation record
+    
+    out_file.write(str_arg)
+    out_file.write('\n')
 
     return str_arg
 
