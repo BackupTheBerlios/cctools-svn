@@ -4,7 +4,7 @@ pyarchive.submission
 A Python library which provides an interface for uploading files to the
 Internet Archive.
 
-copyright 2004, Creative Commons, Nathan R. Yergler
+copyright 2004-2006, Creative Commons, Nathan R. Yergler
 """
 
 __id__ = "$Id$"
@@ -20,8 +20,8 @@ import urllib
 import urllib2
 import urlparse
 
-import xml.dom.minidom
 import xml.sax.saxutils
+import elementtree.ElementTree as etree
 import os.path
 import string
 import types
@@ -68,31 +68,23 @@ class ArchiveItem:
     </metadata>    
     """
 
-    def __init__(self, uploader, identifier, collection, mediatype,
-                 title, runtime=None, adder=None, license=None):
+    #def __init__(self, uploader, identifier, collection, mediatype,
+    #             title, runtime=None, adder=None, license=None):
+    
+    def __init__(self, uploader, license=None):
         """Initialize the submision; uploader should be an instance of 
         UploadApplication"""
         
         self.files = []
         
         self.uploader = uploader
-        self.identifier = identifier
-        self.collection = collection
-        self.mediatype = mediatype
-        self.title = title
+        self.__identifier = None
+        self.collection = None
+        self.mediatype = None
+        self.title = None
 
         self.metadata = {}
-
-        self.metadata['runtime'] = runtime
-        self.metadata['adder'] = adder
-        self.metadata['license'] = license
-
-        if collection == pyarchive.const.OPENSOURCE_AUDIO:
-            self.server = 'audio-uploads.archive.org'
-        elif collection == pyarchive.const.OPENSOURCE_MOVIES:
-            self.server = 'movies-uploads.archive.org'
-        else:
-            self.server = 'items-uploads.archive.org'
+        self.metadata['licenseurl'] = license
             
         self.archive_url = None
 
@@ -106,12 +98,35 @@ class ArchiveItem:
 
     def __getitem__(self, key):
         return self.metadata[key]
+
+    def __getIdentifier(self):
+        """Return the current IA identifier for the submission, or
+        None if an identifier has not been successfully set."""
+        
+        return self.__identifier
+        
+    def __setIdentifier(self, identifier):
+        """Check if the identifier is available by calling create.
+        If it is, store the FTP information and return True.  If the
+        identifier is not available or does not meet standards, throw
+        an exception."""
+
+        if pyarchive.identifier.conforms(identifier) and \
+           pyarchive.identifier.available(identifier):
+
+            self.__identifier = identifier
+            return True
+
+        raise Exception()
+
+    identifier = property(__getIdentifier, __setIdentifier)
     
     def addFile(self, filename, source, format=None, claim=None):
         self.files.append(ArchiveFile(filename, source, format, claim))
 
         # set the running time to defaults
-        self.files[-1].runtime = self.metadata['runtime']
+        if 'runtime' in self.metadata:
+            self.files[-1].runtime = self.metadata['runtime']
 
         # return the added file object
         return self.files[-1]
@@ -130,12 +145,14 @@ class ArchiveItem:
 
         # write the required keys
         result.write(u"""
+        <identifier>%s</identifier>
         <title>%s</title>
         <collection>%s</collection>
         <mediatype>%s</mediatype>
         <resource>%s</resource>
         <upload_application appid="%s" version="%s" />
-        """ % (xe(self.title),
+        """ % (self.identifier,
+               xe(self.title),
                self.collection,
                self.mediatype,
                self.mediatype,
@@ -168,9 +185,6 @@ class ArchiveItem:
         result.write(u'</metadata>\n')
 
         result.seek(0)
-
-        meta_out.seek(0)
-        print meta_out.getvalue()
         meta_out.seek(0)
         
         return meta_out
@@ -191,19 +205,31 @@ class ArchiveItem:
 
     def sanityCheck(self):
         """Perform sanity checks before submitting to archive.org"""
-        # do some simple sanity checks
-        if None in (self.identifier, self.collection, self.mediatype):
-            raise MissingParameterException
 
+        # check for required fields
+        if self.identifier is None:
+            raise MissingParameterException("No identifier specified.")
+
+        if self.collection is None:
+            raise MissingParameterException("No collection specified.")
+
+        if self.mediatype is None:
+            raise MissingParameterException("No mediatype specified.")
+
+        if self.metadata['licenseurl'] is None:
+            raise MissingParameterException("No licenseurl specified.")
+        
+        # check that fields were specified
         if len(self.files) < 1:
-            raise MissingParameterException
+            raise MissingParameterException("No files selected.")
 
+        # perform sanity checks for each file
         for archivefile in self.files:
             archivefile.sanityCheck()
         
 
-    def __ftpUrl(self, username, identifier):
-        """Query archive.org for the appropriate FTP url to use.
+    def createSubmission(self, username, identifier):
+        """Create a new submission at archive.org.
         If successful returns a tuple containing (server, path)."""
 
         new_url = "/create.php"
@@ -224,22 +250,52 @@ class ArchiveItem:
         except httplib.BadStatusLine, e:
             # retry the query
             print 'retrying...'
-            return self.__ftpUrl(username, identifier)
+            # XXX wtf?
+            return self.createSubmission(username, identifier)
 
         response = resp.read() 
                     
-        response_dom = xml.dom.minidom.parseString(response)
-        result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
-
-        if result_type == "success":
-            url = response_dom.getElementsByTagName("url")[0].childNodes[0].nodeValue
+        response_dom = etree.fromstring(response)
+        result = etree.fromstring(response).getroot()
+        if result.tag != 'result':
+            raise SubmissionError("Unknown response format: %s" %
+                                  etree.tostring(result))
+            
+        if result.attrib['type'] == "success":
+            url = result.find('url').text
             print url
             
-            return url.split('/') #(pieces[1].split('@')[-1], pieces[2])
+            return url.split('/') 
         else:
             # some error occured; throw an exception with the message
-            raise Exception(response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue)
+            raise Exception(result.find('message').text)
+
+    def completeSubmission(self, username):
+        """Complete the submission at archive.org; return True if successful,
+        otherwise raise an exception."""
         
+        # call the import url, check the return result
+        importurl = "http://www.archive.org/checkin.php?" \
+                    "xml=1&identifier=%s&user=%s" % (self.identifier, username)
+        response = etree.parse(urllib2.urlopen(importurl))
+
+        # our response should be encapsulated in a <result> tag
+        result = response.getroot()
+        if result.tag != 'result':
+            raise SubmissionError("Unknown response format: %s" %
+                                  etree.tostring(result))
+
+        # check the response status
+        result_type = result.attrib['type']
+
+        if result_type == 'success':
+           # successfully completed
+           return True
+
+        else:
+           # an error occured; raise an exception
+           raise SubmissionError(result.find('message').text)
+    
     def submit(self, username, password, server=None, callback=None):
         """Submit the files to archive.org"""
 
@@ -252,11 +308,9 @@ class ArchiveItem:
 
         # reset the status
         callback.reset(steps=10)
-        
-        ftp_server, ftp_path = self.__ftpUrl(username, self.identifier)
 
-        print ftp_server
-        print ftp_path
+        # create the submission on the server
+        ftp_server, ftp_path = self.createSubmission(username, self.identifier)
         
         # connect to the FTP server
         callback.increment(status='connecting to archive.org...')
@@ -288,27 +342,12 @@ class ArchiveItem:
                            file(fname, 'rb'), callback=callback)
 
         ftp.quit()
-        
-        callback.increment(status='completing upload...')
-        
-        # call the import url, check the return result
-        importurl = "http://www.archive.org/checkin.php?" \
-                    "xml=1&identifier=%s&user=%s" % (self.identifier, username)
-        response = urllib2.urlopen(importurl)
-                    
-        callback.increment(status='checking response...')
-        response_dom = xml.dom.minidom.parse(response)
-        result_type = response_dom.getElementsByTagName("result")[0].getAttribute("type")
 
-        if result_type == 'success':
-           # extract the URL element and store it
-           self.archive_url = pyarchive.identifier.verify_url(self.identifier)
-           #"http://archive.org/details/%s" % self.identifier
-        else:
-           # an error occured; raise an exception
-           raise SubmissionError("%s: %s" % (-1,
-                                           response_dom.getElementsByTagName("message")[0].childNodes[0].nodeValue
-                                ))
+        # complete the submission
+        callback.increment(status='completing upload...')
+        if self.completeSubmission(username, callback):
+            self.archive_url = pyarchive.identifier.verify_url(self.identifier)
+        
         callback.finish()
            
         return self.archive_url
