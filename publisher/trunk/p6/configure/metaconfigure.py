@@ -24,7 +24,8 @@ class StorageDirective(object):
     def __init__(self, _context, name, factory):
 
         app = p6.api.getApp()
-        if getattr(app, 'storage', None) is None:
+        if app is not None and \
+               getattr(app, 'storage', None) is None:
             app.storage = []
 
         _context.action(discriminator=None,
@@ -86,11 +87,20 @@ class PagesDirective(object):
     """Definition of a set of pages."""
 
     def __init__(self, _context, appid):
-        # register the App ID
-        p6.api.getApp().appid = appid
+        p6_app = p6.api.getApp()
 
-        # initialize the page registry
-        p6.api.getApp().pages = []
+        if p6_app is not None:
+            # really running the app...
+            self.__running = True
+            
+            # register the App ID
+            p6_app.appid = appid
+
+            # initialize the page registry
+            p6_app.pages = []
+
+        else:
+            self.__running = False
         
     def metadatapages(self, _context, for_):
         _context.action(discriminator=('GeneratePages',),
@@ -104,69 +114,70 @@ class PagesDirective(object):
 
         pagegen = lambda x: p6.ui.pages.metadata.generatePages(for_)
         pagegen.expand = True
-        
-        p6.api.getApp().pages.append(pagegen)
-            
-        return
-    
-        for page in p6.ui.pages.metadata.generatePages(for_):
-            p6.api.getApp().pages.append(page)
 
+        if self.__running:
+            p6.api.getApp().pages.append(pagegen)
 
     def storageSelector(self, _context, multi=False):
-        _context.action(discriminator=('RegisterPage', 'StorageSelector',
-                                       p6.ui.pages.StorageSelectorPage),
-                        callable=p6.api.getApp().pages.append,
-                        args=(p6.ui.pages.StorageSelectorPage,),
-                        )
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', 'StorageSelector',
+                                           p6.ui.pages.StorageSelectorPage),
+                            callable=p6.api.getApp().pages.append,
+                            args=(p6.ui.pages.StorageSelectorPage,),
+                            )
 
     def finalUrl(self, _context, title):
-        _context.action(discriminator=('RegisterPage', 'FinalUrlPage',
-                                       p6.ui.pages.StorePage),
-                        callable=p6.api.getApp().pages.append,
-                        args=(lambda x: p6.ui.pages.FinalUrlPage(x, title),),
-                        )
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', 'FinalUrlPage',
+                                           p6.ui.pages.StorePage),
+                            callable=p6.api.getApp().pages.append,
+                            args=(lambda x: p6.ui.pages.FinalUrlPage(x, title),),
+                            )
 
     def extensionPoint(self, _context, for_):
-
-        _context.action(discriminator=('Register', 'ExtensionPoint', for_),
-                        callable=p6.api.getApp().pages.append,
-                        args=(p6.extension.ExtensionPoint(for_), ),
-                        )
+        if self.__running:
+            _context.action(discriminator=('Register', 'ExtensionPoint', for_),
+                            callable=p6.api.getApp().pages.append,
+                            args=(p6.extension.ExtensionPoint(for_), ),
+                            )
     
     def storepage(self, _context):
-        _context.action(discriminator=('RegisterPage', 'StorePage',
-                                       p6.ui.pages.StorePage),
-                        callable=p6.api.getApp().pages.append,
-                        args=(p6.ui.pages.StorePage,),
-                        )
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', 'StorePage',
+                                           p6.ui.pages.StorePage),
+                            callable=p6.api.getApp().pages.append,
+                            args=(p6.ui.pages.StorePage,),
+                            )
 
     def fileselector(self, _context):
-        _context.action(discriminator=('RegisterPage', 'FileSelector'),
-                        callable=p6.api.getApp().pages.append,
-                        args=(p6.ui.pages.FileSelectorPage,),
-                        )
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', 'FileSelector'),
+                            callable=p6.api.getApp().pages.append,
+                            args=(p6.ui.pages.FileSelectorPage,),
+                            )
 
     def xmlpage(self, _context):
-        _context.action(discriminator=('RegisterPage', 'XmlDisplayPage',
-                                       p6.ui.pages.XmlMetadataPage),
-                        callable=p6.api.getApp().pages.append,
-                        args=(p6.ui.pages.XmlMetadataPage,),
-                        )
-
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', 'XmlDisplayPage',
+                                           p6.ui.pages.XmlMetadataPage),
+                            callable=p6.api.getApp().pages.append,
+                            args=(p6.ui.pages.XmlMetadataPage,),
+                            )
 
     def xrcpage(self, _context, title, xrcfile, xrcid):
-        _context.action(discriminator=('RegisterPage', xrcid,
-                                       p6.ui.pages.XrcPage),
-                        callable=p6.api.getApp().pages.append,
-                        args=(p6.ui.pages.xrcpage(title, xrcfile, xrcid),),
-                        )
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', xrcid,
+                                           p6.ui.pages.XrcPage),
+                            callable=p6.api.getApp().pages.append,
+                            args=(p6.ui.pages.xrcpage(title, xrcfile, xrcid),),
+                            )
         
     def page(self, _context, factory):
-        _context.action(discriminator=('RegisterPage', factory),
-                        callable=p6.api.getApp().pages.append,
-                        args=(factory, )
-                        )
+        if self.__running:
+            _context.action(discriminator=('RegisterPage', factory),
+                            callable=p6.api.getApp().pages.append,
+                            args=(factory, )
+                            )
     
 class PreferencesDirective(object):
     """A preference set."""
