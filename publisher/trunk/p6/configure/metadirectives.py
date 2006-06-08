@@ -27,14 +27,14 @@ class IStorageDirective(zope.interface.Interface):
 class IMdataGroupDirective(zope.interface.Interface):
     """Metadata grouping."""
 
-    id = zope.configuration.fields.MessageID(
-        title=u"Unique identifier",
+    id = zope.configuration.fields.PythonIdentifier(
+        title=u"Unique group identifier",
         description=u"",
         required=True,
         )
 
     title= zope.configuration.fields.MessageID(
-        title=u"Unique identifier",
+        title=u"Group title",
         description=u"",
         required=True,
         )
@@ -68,7 +68,7 @@ class IMdataGroupDirective(zope.interface.Interface):
 class IMetadataFieldSubdirective(zope.interface.Interface):
     """  """
 
-    id = zope.configuration.fields.MessageID(
+    id = zope.configuration.fields.PythonIdentifier(
         title=u"",
         description=u"",
         required=True,
@@ -81,25 +81,25 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         )
 
     label = zope.configuration.fields.MessageID(
-        title=u"",
+        title=u"Metadata field label",
         description=u"",
         required=False,
         )
 
     description = zope.configuration.fields.MessageID(
-        title=u"",
+        title=u"Metadata field description",
         description=u"",
         required=False,
         )
 
     tip = zope.configuration.fields.MessageID(
-        title=u"",
+        title=u"Metadata field tool-tip (for user interface rendering)",
         description=u"",
         required=False,
         )
 
     choices = zope.configuration.fields.Tokens(
-        title=u"",
+        title=u"Possible values for this field.",
         description=u"",
         required=False,
         value_type=zope.configuration.fields.MessageID(),
@@ -125,7 +125,7 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         required=False,
         )
 
-    canonical = zope.configuration.fields.MessageID(
+    canonical = zope.schema.TextLine(
         title=u"canonical",
         description=u"The canonical URI for this field.",
         required=False,
@@ -145,7 +145,7 @@ class IPageSubdirective(zope.interface.Interface):
     """A single page."""
 
     title= zope.configuration.fields.MessageID(
-        title=u"Unique identifier",
+        title=u"Page Title",
         description=u"",
         required=False,
         )
@@ -222,7 +222,7 @@ class IXrcPageSubdirective(zope.interface.Interface):
         required=True,
         )
     
-    xrcid = zope.configuration.fields.MessageID(
+    xrcid = zope.schema.TextLine(
         title=u"XRC Id",
         description=u"",
         required=True,
@@ -231,7 +231,7 @@ class IXrcPageSubdirective(zope.interface.Interface):
 class IPreferencesDirective(zope.interface.Interface):
     """A container for an extension preference set."""
 
-    id = zope.configuration.fields.MessageID(
+    id = zope.configuration.fields.PythonIdentifier(
         title=u"A unique ID for this extension/preference set.",
         required=True,
         )
@@ -244,7 +244,7 @@ class IPreferencesDirective(zope.interface.Interface):
 class IPrefsFieldSubdirective(zope.interface.Interface):
     """A single preference field."""
 
-    id = zope.configuration.fields.MessageID(
+    id = zope.configuration.fields.PythonIdentifier(
         title=u"The unique identifier for this field.",
         required=True,
         )
@@ -262,7 +262,7 @@ class IPrefsFieldSubdirective(zope.interface.Interface):
 class IExtensionDirective(zope.interface.Interface):
     """An extension registration."""
 
-    id = zope.configuration.fields.MessageID(
+    id = zope.configuration.fields.PythonIdentifier(
         title=u"",
         required=True,
         )
