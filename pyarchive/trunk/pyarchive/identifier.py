@@ -18,6 +18,26 @@ import string
 
 import exceptions
 
+# valid identifier characters
+VALID_CHARS = string.ascii_letters + string.digits + "._"
+
+def conforms(identifier):
+    """Checks to make sure the proposed identifier conforms to IA
+    standards; returns True if identifier is acceptable; False otherwise."""
+
+    # check length
+    if len(identifier) < 5 or len(identifier) > 100:
+        return False
+
+    # check alphanumeric-ness
+    invalid_chars = [n for n in identifier
+                     if n not in VALID_CHARS]
+    if len(invalid_chars) > 0:
+        return False
+    
+    # all tests passed -- identifier conforms
+    return True
+
 def available(identifier):
     """Checks availability for a given identifier; returns True if the
     identifier is available, False if already in use.  Note that this does
@@ -58,8 +78,7 @@ def munge(identifier):
     identifier."""
 
     letters = [n for n in identifier if
-               n in string.letters or
-               n in string.digits]
+               n in VALID_CHARS]
 
     return "".join(letters)
 
