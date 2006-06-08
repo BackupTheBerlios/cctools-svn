@@ -173,7 +173,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
     def validate(self, event=None):
        # determine the appropriate collection
-       work_type = api.findField('http://purl.org/dc/elements/1.1/type')
+       work_type = api.findField('format')
 
        if work_type:
            work_type = work_type.lower()
@@ -189,8 +189,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            self.submission_type = pyarchive.const.VIDEO
        else:
            self.archive_collection = pyarchive.const.OPENSOURCE_MEDIA
-           self.submission_type = work_type = api.findField(
-               'http://purl.org/dc/elements/1.1/type')
+           self.submission_type = work_type = api.findField('format')
 
     def store(self, event=None):
        # generate the identifier and make sure it's available
@@ -221,7 +220,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            archive_id,
            self.archive_collection,
            self.submission_type,
-           api.findField('http://purl.org/dc/elements/1.1/title')
+           api.findField('title')
            )
 
        # retrieve all metadata fields for the work (the root item)
@@ -274,7 +273,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
         if creator:
            id_pieces.append(creator)
 
-        title = api.findField('http://purl.org/dc/elements/1.1/title')
+        title = api.findField('title')
         if title:
            id_pieces.append(title)
 

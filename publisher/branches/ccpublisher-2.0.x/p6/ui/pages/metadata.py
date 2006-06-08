@@ -266,12 +266,16 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
                 widget = field._widget[item]()
 
                 if widget is not None:
-                    zope.component.handle(
-                        p6.metadata.events.UpdateMetadataEvent(item,
-                                                               field,
+                    try:
+                        zope.component.handle(
+                            p6.metadata.events.UpdateMetadataEvent(item,
+                                                                   field,
                                                              widget.GetValue()
-                                                               )
-                        )
+                                                                   )
+                            )
+                    except wx._core.PyAssertionError, e:
+                        # wallpaper... just ignore it
+                        pass
 
 
     def onChanged(self, event):
