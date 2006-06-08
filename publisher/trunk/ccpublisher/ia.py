@@ -90,20 +90,6 @@ def archiveStorageUi(storage):
                 # not activated, so don't ask for information
                 return []
 
-        def archive_id_callback(self, value_dict):
-            archive_id = value_dict['archive_id']
-
-            if not(pyarchive.identifier.conforms(archive_id)):
-                raise p6.extension.exceptions.ExtensionSettingsException(
-                _("That identifier does not conform to the Internet Archive's naming standards."))
-
-            if not(pyarchive.identifier.available(archive_id)):
-                raise p6.extension.exceptions.ExtensionSettingsException(
-                _("That identifier is not available."))
-
-            # both tests pass -- store the identifier
-            self.storage.identifier = archive_id
-
     return ArchiveStorageUi
 
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
@@ -151,7 +137,8 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            self.submission_type = pyarchive.const.VIDEO
        else:
            self.archive_collection = pyarchive.const.OPENSOURCE_MEDIA
-           self.submission_type = work_type = api.findField('format')
+           self.submission_type = work_type = api.findField(
+               'http://purl.org/dc/elements/1.1/type')
 
     def store(self, event=None):
        # generate the verification url
