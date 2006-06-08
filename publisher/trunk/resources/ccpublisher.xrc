@@ -502,7 +502,7 @@ on the drop down box to select the format type for each file.</label>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
-          <label>ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to check if it is available.</label>
+          <label>ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available.</label>
         </object>
         <flag>wxEXPAND</flag>
       </object>
