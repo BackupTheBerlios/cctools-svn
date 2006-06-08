@@ -189,7 +189,8 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
            self.submission_type = pyarchive.const.VIDEO
        else:
            self.archive_collection = pyarchive.const.OPENSOURCE_MEDIA
-           self.submission_type = work_type = api.findField('format')
+           self.submission_type = work_type = api.findField(
+               'http://purl.org/dc/elements/1.1/type')
 
     def store(self, event=None):
        # generate the identifier and make sure it's available
