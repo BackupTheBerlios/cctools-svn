@@ -4,7 +4,7 @@ import urllib2
 import thread
 
 import wx
-import wx.html
+import wx.lib.hyperlink
 
 import elementtree.ElementTree as etree
 
@@ -20,18 +20,6 @@ import p6.metadata
 import p6.app.support.browser as webbrowser
 
 from p6.i18n import _
-
-class WebbrowserHtml(wx.html.HtmlWindow):
-    """Proxy class for L{wx.html.HtmlWindow} which opens a web browser
-    when the user clicks a link."""
-    
-    def OnLinkClicked(self, linkinfo):
-        """Respond to link click by opening a new window in the user's
-        web browser."""
-        
-        webbrowser.open( linkinfo.GetHref(), True, True )
-
-BGCOLOR = hex(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE).GetRGB())[2:]  #"efefef"
 
 class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     """Custom wizard page which implements a license chooser based on
@@ -64,7 +52,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         self.sizer = self.GetSizer()
         
         self.sizer.Add(wx.StaticText(parent=self,
-                       label=self.STR_INTRO_TEXT),
+                       label=_(self.STR_INTRO_TEXT)),
                        flag=wx.EXPAND)
 
         # create the panel for the fields
@@ -81,7 +69,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
                                        style=wx.CB_DROPDOWN|wx.CB_READONLY
                                        )
         self.lblLicenses = wx.StaticText(parent=self.pnlFields,
-                                                label='License Class:')
+                                         label=_('License Class:'))
 
         # retrieve the license classes in a background thread
         #thread.start_new_thread(self.getLicenseClasses, ())
@@ -90,13 +78,19 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         self.fieldSizer.Add(self.lblLicenses)
         self.fieldSizer.Add(self.cmbLicenses, flag=wx.EXPAND)
 
-        # set up the license URL widget
-        self.txtLicense = WebbrowserHtml(self, -1)
-        self.txtLicense.SetPage(self.HTML_LICENSE % (BGCOLOR, 'foo', 'foo'))
-        ir = self.txtLicense.GetInternalRepresentation()
-        self.txtLicense.SetSize( (ir.GetWidth()+25, ir.GetHeight()+25) )
+        # create the license deed hyperlink
+        deed_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        deed_sizer.Add( wx.StaticText(self, -1, _("Selected License:")) )
+        deed_sizer.Add( (10, 10) )
+        
+        self.lblLicense = wx.lib.hyperlink.HyperLinkCtrl(
+            self, wx.ID_ANY, _("None selected"), URL="")
+        deed_sizer.Add(self.lblLicense)
 
-        self.sizer.Add(self.txtLicense, flag=wx.EXPAND)
+        self.sizer.Add(deed_sizer, flag=wx.EXPAND)
+        #self.sizer.Add(self.lblLicense)
+
+        # update the layout
         self.Layout()
 
         # bind event handlers
@@ -304,7 +298,12 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     
     def updateLicense(self, event):
         self.onLicense(event)
-        self.txtLicense.SetPage(self.HTML_LICENSE % (BGCOLOR, self.getLicenseUrl(), self.getLicenseName()))
+        
+        self.lblLicense.SetLabel(self.getLicenseName())
+        self.lblLicense.SetURL(self.getLicenseUrl())
+        self.lblLicense.SetToolTip(wx.ToolTip(self.getLicenseUrl()))
+        
+        self.lblLicense.UpdateLink()
                     
     def validate(self, event):
         return True
@@ -320,15 +319,12 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
     REST_ROOT = 'http://api.creativecommons.org/rest/dev'
     STR_INTRO_TEXT="""With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."""
 
-    HTML_LICENSE = '<html><body bgcolor="#%s"><font size="3">You chose <a href="%s">%s</a>.</font></body></html>'
-
     PAGE_XRC = """
 <resource>
   <object class="wxPanel" name="LICENSE_CHOOSER">
     <object class="wxFlexGridSizer">
       <cols>1</cols>
-      <vgap>5</vgap>
-      <hgap>5</hgap>
+      <vgap>2</vgap>
       <growablecols>0</growablecols>
       <growablerows>1,2</growablerows>
     </object>
