@@ -37,8 +37,6 @@ class CcMain(p6.ui.wizard.WizFrame):
             
         return self.__imgList
 
-        #XRCCTRL(self, "LST_FILES").SetImageList(self.__imgList,
-        #                                        wx.IMAGE_LIST_NORMAL)
 
        
 
