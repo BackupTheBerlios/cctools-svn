@@ -74,7 +74,7 @@ if PLATFORM != 'linux':
 if __name__ == '__main__':
 
     setup(name='ccPublisher',
-          version='2.0.4.1',
+          version='2.0.4.2',
           description = desc,
           long_description= long_desc,
           url='http://creativecommons.org',
