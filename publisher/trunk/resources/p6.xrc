@@ -96,7 +96,7 @@
       <object class="sizeritem">
         <object class="wxStaticText" name="LBL_MACRO_TASK">
           
-          <label>Done! (XXX)</label>
+          <label>Done!</label>
         </object>
         
         <flag>wxEXPAND</flag>

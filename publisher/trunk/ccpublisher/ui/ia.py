@@ -17,7 +17,7 @@ import p6.ui.pages.fieldrender
 from p6.i18n import _
 
 from ccpublisher.const import version
-
+                     
 class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
     """Identifier selection page class."""
 
@@ -50,13 +50,13 @@ class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
 
         if not(pyarchive.identifier.conforms(archive_id)):
             p6.api.showError(
-                "That identifier does not conform to the "
-                "Internet Archive's naming standards.")
+                _("That identifier does not conform to the "
+                "Internet Archive's naming standards.") )
             event.Veto()
 
         if not(pyarchive.identifier.available(archive_id)):
             p6.api.showError(
-                "That identifier is not available.")
+                _("That identifier is not available.") )
             event.Veto()
 
         # both tests pass -- store the identifier

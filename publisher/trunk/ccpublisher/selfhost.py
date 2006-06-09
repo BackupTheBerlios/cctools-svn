@@ -16,6 +16,8 @@ from p6.metadata.interfaces import IMetadataStorage
 from ccpublisher.interfaces import IEmbeddable
 import cctagutils.rdf
 
+from p6.i18n import _
+
 import ui
 
 def selfhostMetadataUi(storage):
@@ -53,8 +55,8 @@ def selfhostMetadataUi(storage):
             
             self.__pages.append(
                 lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
-                x, 'SELFHOST_UI_META', 'Self Hosted Files', fields,
-                self.callback, description=desc))
+                x, 'SELFHOST_UI_META', _('Self Hosted Files'), fields,
+                self.callback, description=_(desc)))
 
             self.__pages.append(
                 lambda x: ui.selfhost.FinalPage(x, self.storage)
@@ -93,10 +95,7 @@ class SelfHostStorage(p6.metadata.base.BasicMetadataStorage,
                               p6.storage.interfaces.IStorage)
 
     id = 'SELFHOST_STORAGE'
-    name = 'Self-hosted Files'
-    description = 'Create metadata suitable for use with files hosted ' \
-                  'on your web site.'
-    
+
     # metadata interface
     def __init__(self):
         p6.metadata.base.BasicMetadataStorage.__init__(self)

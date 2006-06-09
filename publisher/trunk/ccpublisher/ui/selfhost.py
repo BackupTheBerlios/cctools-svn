@@ -50,5 +50,5 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
                 file(saveDialog.GetPath(), 'w').write(
                     XRCCTRL(self, "TXT_RDF").GetValue())
             except IOError, e:
-                p6.api.showError("Unable to write to the selected file.")
+                p6.api.showError( _("Unable to write to the selected file."))
             
