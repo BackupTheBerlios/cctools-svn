@@ -24,14 +24,14 @@ class StorageDirective(object):
     def __init__(self, _context, name, factory, description=''):
 
         app = p6.api.getApp()
-        if app is not None and \
-               getattr(app, 'storage', None) is None:
-            app.storage = []
+        if app is not None:
+            if getattr(app, 'storage', None) is None:
+                app.storage = []
 
-        _context.action(discriminator=None,
-                        callable=app.registerStorage,
-                        args=(name, factory, description),
-                        )
+            _context.action(discriminator=None,
+                            callable=app.registerStorage,
+                            args=(name, factory, description),
+                            )
         
 class MGroupDirective(object):
     """A metadata group."""
