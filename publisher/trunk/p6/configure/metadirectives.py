@@ -17,11 +17,17 @@ class IStorageDirective(zope.interface.Interface):
         description=u"",
         required=True,
         )
-
+    
     factory = zope.configuration.fields.GlobalObject(
         title=u"Storage Factory callable",
         description=u"",
         required=True,
+        )
+
+    description = zope.configuration.fields.MessageID(
+        title=u"Description",
+        description=u"Storage provider description.",
+        required=False,
         )
     
 class IMdataGroupDirective(zope.interface.Interface):
@@ -102,7 +108,7 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         title=u"Possible values for this field.",
         description=u"",
         required=False,
-        value_type=zope.configuration.fields.MessageID(),
+        value_type=zope.schema.TextLine(),
         )
 
     choicesList = zope.configuration.fields.GlobalObject(

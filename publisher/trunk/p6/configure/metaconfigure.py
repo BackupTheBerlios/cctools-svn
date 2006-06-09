@@ -21,7 +21,7 @@ class ExtensionDirective(object):
 class StorageDirective(object):
     """A storage declaration."""
 
-    def __init__(self, _context, name, factory):
+    def __init__(self, _context, name, factory, description=''):
 
         app = p6.api.getApp()
         if app is not None and \
@@ -29,8 +29,8 @@ class StorageDirective(object):
             app.storage = []
 
         _context.action(discriminator=None,
-                        callable=lambda x: app.storage.append(x()),
-                        args=(factory,),
+                        callable=app.registerStorage,
+                        args=(name, factory, description),
                         )
         
 class MGroupDirective(object):

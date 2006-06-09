@@ -64,6 +64,22 @@ class WizApp(wx.App):
     def OnExit(self):
         self.__savePrefs()
 
+
+    def registerStorage(self, name, factory, description = ''):
+        """Add a storage provider and associate the name and description."""
+
+        # instantiate the provider
+        provider = factory()
+
+        # inject the name and description
+        # XXX we should use a registry here; we inject for compatibility with
+        # XXX existing code
+        provider.name = _(name)
+        provider.description = _(description)
+
+        # add the provider to our list of storage providers
+        self.storage.append(provider)
+        
     def __loadPrefs(self):
         input = ConfigParser.ConfigParser()
         input.read((os.path.join(p6.api.getResourceDir(),

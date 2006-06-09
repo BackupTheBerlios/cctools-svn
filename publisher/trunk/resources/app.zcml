@@ -13,12 +13,14 @@
   <include package="ccpublisher" />
 
   <storage
-     name="Archive.org Storage"
+     name="Internet Archive Storage"
+     description="Upload works to the Internet Archive (www.archive.org)."
      factory="ccpublisher.ia.ArchiveStorage"
      />
 
   <storage
-     name="Self-Host Storage"
+     name="Self-hosted files"
+     description="Create metadata suitable for use with files hosted on your web site."
      factory="ccpublisher.selfhost.SelfHostStorage"
      />
 
