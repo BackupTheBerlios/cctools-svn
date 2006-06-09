@@ -43,6 +43,9 @@ class Metadata:
                 raise
         except IndexError, e:
             self.__tag = None
+        except TypeError, e:
+            # malformed tags often piss off the type checks in eyeD3
+            self.__tag = None
 
     def _getFrame(self, fids):
         """Returns the first frame whose ID is contained in the tuple fids.
