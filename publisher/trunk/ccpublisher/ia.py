@@ -99,8 +99,6 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
                               p6.storage.interfaces.IStorage)
 
     id = 'ARCHIVE_STORAGE'
-    name = 'Internet Archive Storage'
-    description = 'Upload works to the Internet Archive (www.archive.org).'
     
     # metadata interface
     def __init__(self):
@@ -186,17 +184,26 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        # now add the individual files to the submission
        for item in p6.api.getApp().items[1:]:
-           # XXX we're passing in the filename instead of the item and this is really, really bad
-           # XXX we should make pyarchive interface aware, give it it's own InputItem interface
+           # XXX we're passing in the filename instead of the item
+           # XXX and this is really, really bad
+           # XXX we should make pyarchive interface aware, give it
+           # XXX it's own InputItem interface
            # XXX and then adapt our item to that.
-           sub = submission.addFile(item.getIdentifier(),
-                                    pyarchive.const.ORIGINAL,
-                                    format = p6.metadata.interfaces.IMetadataProvider(item).getMetaValue("format"),
-                                    claim = self.__claimString(license,
-                                                               v_url,
-                                                               year,
-                                                               holder)
-                                    )
+           
+           try:
+               sub = submission.addFile(item.getIdentifier(),
+                                        pyarchive.const.ORIGINAL,
+                                        format = p6.metadata.interfaces.IMetadataProvider(item).getMetaValue("format"),
+                                        claim = self.__claimString(license,
+                                                                   v_url,
+                                                                   year,
+                                                                   holder)
+                                        )
+           except IOError, e:
+               # the file doesn't exist
+               p6.api.showError(_("The selected file %s can not be found."))
+
+               sys.exit(2)
            
            for g in p6.api.getApp().groups:
                meta_dicts = [p6.metadata.interfaces.IMetadataStorage(item)]
