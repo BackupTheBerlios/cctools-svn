@@ -1,0 +1,23 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="p6_minimal">
+
+  <!-- P6 Sample Extension Configuration
+       (c) 2005, Nathan R. Yergler, Creative Commons  
+       licensed under the GNU GPL 2                   -->
+
+  <metadatagroup
+     id="authormetadata"
+     title="Author Metadata"
+     description="Additional Metadata About Your Work's Author"
+     for="p6.storage.interfaces.IWork"
+     >
+
+     <field id="yourname"
+            label="Your Name"
+            type="p6.metadata.types.ITextField"
+            />
+
+  </metadatagroup>
+
+</configure>
