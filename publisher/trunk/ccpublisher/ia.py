@@ -215,11 +215,18 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
 
        print submission.metaxml().getvalue()
        print submission.filesxml().getvalue()
-       
-       self.uri = submission.submit(
-           self.credentials[0], self.credentials[1],
-           callback=CallbackBridge())
 
+       try:
+           self.uri = submission.submit(
+               self.credentials[0], self.credentials[1],
+               callback=CallbackBridge())
+       except IOError, e:
+           if getattr(e, 'errno', -1) == 13:
+               # permission denied
+               p6.api.showError(_("ccPublisher does not have sufficient permissions to read the selected files."))
+               
+               sys.exit(2)
+               
        return {'URI':self.uri}
        
     def defaultIdentifier(self):
