@@ -33,9 +33,17 @@ def metadata(filename):
     # XXX right now we do stupid name-based type detection; a future
     # improvment might actually look at the file's contents.
     ext = filename.split('.')[-1].lower()
-    if ext in meta_handlers:
-        return meta_handlers[ext].openFile(filename)
-    else:
-        # return None if we can't find the file in our catalog
-        return None
 
+    try:
+        if ext in meta_handlers:
+            return meta_handlers[ext].openFile(filename)
+        else:
+            # return None if we can't find the file in our catalog
+            return None
+    except IOError, e:
+        if getattr(e, 'errno', -1) == 2:
+            # file not found -- return None
+            return None
+        else:
+            # re-raise the exception
+            raise e
