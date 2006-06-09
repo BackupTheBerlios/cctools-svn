@@ -1,9 +1,9 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:i18n="http://namespaces.zope.org/i18n"
-           i18n_domain="p6">
+           i18n_domain="ccpublisher">
 
   <!-- ccPublisher Application Configuration          
-       (c) 2005, Nathan R. Yergler, Creative Commons  
+       (c) 2005-2006, Nathan R. Yergler, Creative Commons  
        licensed under the GNU GPL 2                   -->
 
   <!-- P6 package must be included in order to support app configuration -->
