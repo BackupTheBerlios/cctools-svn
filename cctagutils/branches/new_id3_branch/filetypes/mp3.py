@@ -240,7 +240,8 @@ class Metadata:
         header = eyeD3.frames.FrameHeader()
         header.id = 'TCOP'
         header.compressed = 0
-        tcop = eyeD3.frames.TextFrame(header, text=unicode(claim))
+        tcop = eyeD3.frames.TextFrame(header, text=unicode(claim),
+                                      encoding=eyeD3.frames.UTF_8_ENCODING)
 
         # update the file
         self.__updateFrame(tcop)
