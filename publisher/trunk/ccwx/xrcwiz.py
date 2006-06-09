@@ -4,9 +4,10 @@ __copyright__ = '(c) 2004, Creative Commons, Nathan R. Yergler'
 __license__ = 'licensed under the GNU GPL2'
 
 import wx
-#import wx.wizard
 import wx.xrc
 from wx.xrc import XRCCTRL
+
+import xrc as ccwx_xrc
 
 import p6.extension.point
 import os.path
@@ -337,10 +338,10 @@ class XrcWizPage(wx.PyPanel):
       if isinstance(xrc, (str, unicode)):
          if os.path.exists(xrc):
             # the string is a filename
-            res = wx.xrc.XmlResource(xrc)
+            res = ccwx_xrc.load(xrc) 
          else:
             # the string is an XRC fragment
-            res = wx.xrc.EmptyXmlResource()
+            res = ccwx_xrc.resource()
             res.LoadFromString(xrc)
       elif isinstance(xrc, wx.xrc.XmlResource):
          res = xrc
