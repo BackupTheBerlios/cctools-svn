@@ -1,0 +1,3 @@
+
+class ExtensionSettingsException(Exception):
+    pass

@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: /p6/api.py:153
+#: /p6/ui/pages/fieldrender.py:101
+#: /p6/ui/pages/fileselector.py:31
+#: /p6/ui/pages/fileselector.py:206
+#: /p6/ui/pages/license.py:109
+msgid "Error"
+msgstr ""
+
+#: /p6/api.py:153
+#: /p6/ui/pages/fileselector.py:31
+#: /p6/ui/pages/fileselector.py:206
+#: /p6/ui/pages/license.py:109
+# DO NOT TRANSLATE
+msgid "appname"
+msgstr "ccPublisher"
+
+#: /p6/app/wxpy.py:221
+msgid "release"
+msgstr ""
+
+#: /p6/configure/metadirectives.py:173
+#: /p6/zcmlsupport/metadirectives.py:356
+msgid "Interfaces"
+msgstr ""
+
+#: /p6/configure/metadirectives.py:174
+msgid "The interfaces which metadata applies to."
+msgstr ""
+
+#: /p6/configure/metadirectives.py:191
+msgid "Multiple"
+msgstr ""
+
+#: /p6/configure/metadirectives.py:192
+msgid "Allow multiple storage providers to be selected."
+msgstr ""
+
+#: /p6/ui/pages/fileselector.py:124
+msgid "Select Your Files"
+msgstr ""
+
+#: /p6/ui/pages/fileselector.py:205
+msgid "You must select at least one file."
+msgstr ""
+
+#: /p6/ui/pages/fileselector.py:30
+msgid "Please drag and drop individual files on this window."
+msgstr ""
+
+#: /p6/ui/pages/fileselector.py:52
+msgid "Filename"
+msgstr ""
+
+#: /p6/ui/pages/finalurl.py:20
+msgid "Uploading"
+msgstr ""
+
+#: /p6/ui/pages/license.py:34
+msgid "Choose A License"
+msgstr ""
+
+#: /p6/ui/pages/license.py:72
+msgid "License Class:"
+msgstr ""
+
+#: /p6/ui/pages/license.py:83
+msgid "Selected License:"
+msgstr ""
+
+#: /p6/ui/pages/license.py:87
+msgid "None selected"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Report a bug"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Done!"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Help"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "OK"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Preferences"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Browse"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Working..."
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Delete"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Edit"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Exit"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "Cancel"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "About"
+msgstr ""
+
+#: /resources/p6.xrc:-1
+msgid "File"
+msgstr ""
