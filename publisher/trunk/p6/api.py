@@ -149,6 +149,6 @@ def workInformation():
     
 def showError(err_msg):
     """Show an error message w/ OK button in a consistent style."""
-    wx.MessageDialog(None, _(err_msg),
+    wx.MessageDialog(None, err_msg,
                      _("appname") + ": " + _("Error"),
                      wx.OK|wx.ICON_ERROR).ShowModal()
