@@ -1,3 +1,4 @@
+from p6.i18n import _
 
 def validateTitle(title):
     """A title must be supplied for Works."""
