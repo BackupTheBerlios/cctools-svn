@@ -10,6 +10,7 @@ from wx.xrc import XRCCTRL
 
 import ccwx
 import p6.api
+import p6.i18n
 
 from p6.i18n import _
 
@@ -28,13 +29,29 @@ class WelcomePage(ccwx.xrcwiz.XrcWizPage):
         self.Bind(wx.EVT_BUTTON, self.onHelp, XRCCTRL(self, "HELP_WHAT_TYPES"))
         
     def onHelp(self, event):
-        help = HtmlHelp(self, 'ccPublisher',
-                        MORE_INFO % (version(),
-                                     os.path.join(
-            p6.api.getResourceDir(),'publishguy_small.gif')
-                                     )
-                        )
-        help.Show()
+
+        # determine the path name for the locale-specific html file
+        html_file_name = os.path.join(p6.api.getResourceDir(), 'locale',
+                                      p6.i18n.getLocale(), 'welcome.html')
+
+        # see if it exists
+        if not(os.path.exists(html_file_name)):
+
+            # fall back to the English version
+            html_file_name = os.path.join(p6.api.getResourceDir(),
+                                          'locale', 'welcome.html')
+
+        if os.path.exists(html_file_name):
+            # if the file exists, load it and display 
+            html_file = file(html_file_name, 'r')
+
+            help = HtmlHelp(self, 'ccPublisher',
+                            html_file.read() % (version(),
+                                         os.path.join(
+                p6.api.getResourceDir(),'publishguy_small.gif')
+                                         )
+                            )
+            help.Show()
         
 
 class WebbrowserHtml(wx.html.HtmlWindow):
@@ -63,32 +80,3 @@ class HtmlHelp(wx.Dialog):
         html.SetSize( (ir.GetWidth()+25, ir.GetHeight()+25) )
         self.SetClientSize(html.GetSize())
         self.CentreOnParent(wx.BOTH)
-
-MORE_INFO = """
-<html>
-<title>ccPublisher</title>
-<body bgcolor="#e3e3e3">
-<table width="100%%" bgcolor="#729cb3" cellspacing="0" border="0">
-<tr><td><font size="+1"><strong>ccPublisher</strong></font><br>
-        <font size="-1">version %s</font></td>
-    <td align="right"><img src="%s"></td></tr>
-</table>
-<p><strong>What is ccPublisher?</strong></p>
-<p>ccPublisher is a tool which will help you put your audio and video on the
-Web with a Creative Commons license.  It will also let you upload your files
-to the Internet Archive to take advantage of free hosting.</p>
-<p><strong>What files can ccPublisher upload?</strong></p>
-<p>ccPublisher will embed a license claim in MP3 audio files.  ccPublisher will let
-you upload any audio or video file to the Internet Archive.</p>
-<p><strong>What about file sharing networks?</strong></p>
-<p>MP3 files licensed using ccPublisher (uploaded to the Internet Archive or self-
-hosted) will have an embedded license tag added which some file sharing networks
-can detect.  Just drop the files in your shared folder after you finish the
-ccPublisher wizard.</p>
-<p><strong>Do I need an Internet connection?</strong></p>
-<p>Yes, ccPublisher uses Creative Commons web services to create license
-information for your files.</p>
-</body>
-</html>
-
-"""
