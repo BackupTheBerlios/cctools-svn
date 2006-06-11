@@ -30,7 +30,16 @@ __copyright__ = 'Copyright 2004 Patrick Roberts'
 __license__ = 'Python'
 __version__ = '1.0'
 
-import os, platform, urllib, urllib2, sys, time, traceback, urlparse, webbrowser
+import os
+import platform
+import urllib
+import urllib2
+import sys
+import time
+import traceback
+import urlparse
+import webbrowser
+
 import wx
 
 import comm
@@ -79,15 +88,23 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
             dlg.Destroy()
             
             if result == wx.ID_OK:
+                # user authorizes crash report; try to import
+                # p6.i18n to get the application locale
+                try:
+                    from p6.i18n import getLocale
+                except ImportError, e:
+                    getLocale = lambda : ''
+                
                 info = {
                     'app_id' : app_id,
                     'app_version' : app_version,
                     'platform' : platform.platform(),
                     'title' : '%s (%s)' % (e_type, e_value),
+                    'message' : 'application locale: ' + getLocale()
                     }
 
                 if e_traceback:
-                    info['message'] = ''.join(traceback.format_tb(e_traceback)) + '%s: %s' % (e_type, e_value)
+                    info['message'] = info['message'] + '\n\n' + ''.join(traceback.format_tb(e_traceback)) + '%s: %s' % (e_type, e_value)
 
                 busy = wx.BusyCursor()
                 bugUrl = comm.sendReport(postUrl, info)
