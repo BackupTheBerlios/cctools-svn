@@ -2,6 +2,7 @@
 
 import os
 import webbrowser
+import socket
 
 import wx
 import wx.html
