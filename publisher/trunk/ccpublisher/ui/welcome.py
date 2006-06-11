@@ -11,6 +11,8 @@ from wx.xrc import XRCCTRL
 import ccwx
 import p6.api
 
+from p6.i18n import _
+
 from ccpublisher.const import version
 
 class WelcomePage(ccwx.xrcwiz.XrcWizPage):
