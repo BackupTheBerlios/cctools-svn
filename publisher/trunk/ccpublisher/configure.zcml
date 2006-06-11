@@ -15,7 +15,7 @@
         />
 
   <subscriber
-        for="p6.metadata.events.IUpdateMetadataEvent"
+        for="p6.storage.events.IItemSelected"
         handler=".metadata.itemSelected"
         />
 
