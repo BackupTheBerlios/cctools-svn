@@ -4,6 +4,7 @@ import sys
 import wx
 from wx.xrc import XRCCTRL
 
+import p6.api
 import p6.app.wxpy
 import p6.ui.wizard
 
@@ -24,6 +25,16 @@ class CcMain(p6.ui.wizard.WizFrame):
         # set the window icon
         self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'ccp8.ico'),
                              wx.BITMAP_TYPE_ICO))
+
+        # load Mr. Publish
+        mr_publish = os.path.join(p6.api.getResourceDir(),
+                                  'publishguy_small.gif')
+        
+        XRCCTRL(self, "IMG_PUBLISHGUY").SetBitmap(
+            wx.BitmapFromImage(
+            wx.Image(mr_publish, wx.BITMAP_TYPE_GIF)
+            )
+            )
         
 
     def getIconList(self):
