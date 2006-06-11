@@ -20,7 +20,7 @@ class WelcomePage(ccwx.xrcwiz.XrcWizPage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'CCTAG_WELCOME', 'Welcome')
+                                        'CCTAG_WELCOME', _('Welcome'))
 
         # connect the How Does This Work button
         self.Bind(wx.EVT_BUTTON, self.onHelp, XRCCTRL(self, "HELP_WHAT_TYPES"))

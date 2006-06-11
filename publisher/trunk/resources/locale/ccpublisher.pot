@@ -170,6 +170,9 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+msgid "Quit"
+msgstr ""
+
 #: /resources/ccpublisher.xrc:-1
 msgid "Browse..."
 msgstr ""

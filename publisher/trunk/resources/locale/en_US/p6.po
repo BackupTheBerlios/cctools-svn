@@ -1,14 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Development/Revision: 68521\n"
-"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
+"Project-Id-Version: ccPublisher 2.1.0.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2006-06-10 00:18+0800\n"
+"Last-Translator: Jedi <JediLin@Gmail.com>\n"
+"Language-Team: Creative Commons Taiwan <contact@creativecommons.org.tw>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: zope/app/locales/extract.py\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: TAIWAN\n"
 
 #: /p6/api.py:153
 #: /p6/ui/pages/fieldrender.py:101
@@ -16,125 +17,115 @@ msgstr ""
 #: /p6/ui/pages/fileselector.py:206
 #: /p6/ui/pages/license.py:109
 msgid "Error"
-msgstr ""
+msgstr "錯誤"
 
+# DO NOT TRANSLATE
 #: /p6/api.py:153
 #: /p6/ui/pages/fileselector.py:31
 #: /p6/ui/pages/fileselector.py:206
 #: /p6/ui/pages/license.py:109
-# DO NOT TRANSLATE
 msgid "appname"
 msgstr "ccPublisher"
 
 #: /p6/app/wxpy.py:221
+#, fuzzy
 msgid "release"
-msgstr ""
+msgstr "刪除"
 
 #: /p6/configure/metadirectives.py:173
 #: /p6/zcmlsupport/metadirectives.py:356
 msgid "Interfaces"
-msgstr ""
+msgstr "介面"
 
 #: /p6/configure/metadirectives.py:174
 msgid "The interfaces which metadata applies to."
-msgstr ""
+msgstr "後設資料所要套用的介面."
 
 #: /p6/configure/metadirectives.py:191
 msgid "Multiple"
-msgstr ""
+msgstr "多重"
 
 #: /p6/configure/metadirectives.py:192
 msgid "Allow multiple storage providers to be selected."
-msgstr ""
+msgstr "允許選擇多重存放服務提供處."
 
 #: /p6/ui/pages/fileselector.py:124
 msgid "Select Your Files"
-msgstr ""
+msgstr "選擇您的檔案"
 
 #: /p6/ui/pages/fileselector.py:205
 msgid "You must select at least one file."
-msgstr ""
+msgstr "您至少必須要選擇一個檔案."
 
 #: /p6/ui/pages/fileselector.py:30
 msgid "Please drag and drop individual files on this window."
-msgstr ""
+msgstr "請一次拖曳一個檔案進來本視窗."
 
 #: /p6/ui/pages/fileselector.py:52
+#, fuzzy
 msgid "Filename"
-msgstr ""
+msgstr "檔案"
 
 #: /p6/ui/pages/finalurl.py:20
 msgid "Uploading"
-msgstr ""
+msgstr "正在上傳"
 
 #: /p6/ui/pages/license.py:34
 msgid "Choose A License"
-msgstr ""
+msgstr "選擇一份授權條款"
 
 #: /p6/ui/pages/license.py:72
 msgid "License Class:"
-msgstr ""
+msgstr "授權種類:"
 
 #: /p6/ui/pages/license.py:83
 msgid "Selected License:"
-msgstr ""
+msgstr "已選用的授權條款:"
 
 #: /p6/ui/pages/license.py:87
 msgid "None selected"
-msgstr ""
+msgstr "還沒有選擇任何東西"
 
-#: /resources/p6.xrc:-1
 msgid "Report a bug"
-msgstr ""
+msgstr "瑕疵回報"
 
-#: /resources/p6.xrc:-1
+# /resources/p6.xrc:-1
 msgid "Done!"
-msgstr ""
+msgstr "完成啦!"
 
-#: /resources/p6.xrc:-1
 msgid "Help"
-msgstr ""
+msgstr "說明"
 
-#: /resources/p6.xrc:-1
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
-#: /resources/p6.xrc:-1
 msgid "Preferences"
-msgstr ""
+msgstr "偏好設定"
 
-#: /resources/p6.xrc:-1
 msgid "Browse"
-msgstr ""
+msgstr "瀏覽"
 
-#: /resources/p6.xrc:-1
 msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
-msgstr ""
+msgstr "將您想要以創用 CC 授權條款發表到網頁上的音訊檔或視訊檔拖曳進來, 或者按下「瀏覽」按鈕，手動選擇這些檔案."
 
-#: /resources/p6.xrc:-1
 msgid "Working..."
-msgstr ""
+msgstr "處理中..."
 
-#: /resources/p6.xrc:-1
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
-#: /resources/p6.xrc:-1
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
-#: /resources/p6.xrc:-1
 msgid "Exit"
-msgstr ""
+msgstr "離開"
 
-#: /resources/p6.xrc:-1
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
-#: /resources/p6.xrc:-1
 msgid "About"
-msgstr ""
+msgstr "關於"
 
-#: /resources/p6.xrc:-1
 msgid "File"
-msgstr ""
+msgstr "檔案"
+

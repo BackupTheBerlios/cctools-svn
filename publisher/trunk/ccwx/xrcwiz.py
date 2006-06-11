@@ -10,6 +10,8 @@ from wx.xrc import XRCCTRL
 import xrc as ccwx_xrc
 
 import p6.extension.point
+from p6.i18n import _
+
 import os.path
 
 import ccwx.stext
@@ -226,9 +228,9 @@ class XrcWiz(wx.Frame):
    def __updateNavBtns(self, event=None):
 
       if self.pages.is_last():
-         XRCCTRL(self, "CMD_NEXT").SetLabel('Quit')
+         XRCCTRL(self, "CMD_NEXT").SetLabel(_('Quit'))
       else:
-         XRCCTRL(self, "CMD_NEXT").SetLabel('Next')
+         XRCCTRL(self, "CMD_NEXT").SetLabel(_('Next'))
 
       if self.pages.is_first():
          XRCCTRL(self, "CMD_PREV").Disable()
