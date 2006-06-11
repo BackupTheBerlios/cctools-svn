@@ -10,6 +10,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
+# p6/ui/pages/license.py:320
+msgid "With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."
+msgstr ""
+
 #: /p6/api.py:153
 #: /p6/ui/pages/fieldrender.py:101
 #: /p6/ui/pages/fileselector.py:31

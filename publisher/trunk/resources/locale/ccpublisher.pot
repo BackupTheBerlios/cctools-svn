@@ -10,6 +10,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
+#: /ccpublisher/ui/welcome.py:23
+msgid "Welcome"
+msgstr ""
+
 #: /ccpublisher/ia.py:204
 msgid "The selected file %s can not be found."
 msgstr ""
