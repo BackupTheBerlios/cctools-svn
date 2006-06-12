@@ -47,6 +47,10 @@ class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
     def onChanging(self, event):
         """Validate the proposed identifier."""
 
+        if not(event.direction):
+            # user clicked Prev instead of Next
+            return
+        
         archive_id = XRCCTRL(self, "TXT_IDENTIFIER").GetValue()
 
         if not(pyarchive.identifier.conforms(archive_id)):
