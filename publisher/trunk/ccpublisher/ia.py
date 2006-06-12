@@ -57,40 +57,40 @@ class CallbackBridge(object):
         self.increment(steps=int( bytes * self.__scale ))
     
 
-def archiveStorageUi(storage):
+class ArchiveStorageUi(object):
 
-    class ArchiveStorageUi(object):
+    zope.interface.implements(p6.ui.interfaces.IPageList)
 
-        zope.interface.implements(p6.ui.interfaces.IPageList)
+    def __init__(self, storage):
+        self.__storage = storage
+        self.__pages = None
 
-        def __init__(self, target, event):
-            self.__pages = None
-            self.__storage = storage
+    def __call__(self, target, event):
+        return self
 
-        def createPages(self):
-            
-            self.__pages = []
-            
-            self.__pages.append(lambda x: ui.ia.IdentifierPage(x,
-                                                               self.__storage))
-            self.__pages.append(lambda x: ui.ia.ArchiveLoginPage(x,
-                                                               self.__storage))
-            self.__pages.append(p6.ui.pages.StorePage)
-            self.__pages.append(lambda x: ui.ia.FinalPage(x, self.__storage))
+    def createPages(self):
 
-        def list(self):
-            # see if we've been activated
-            if (self.__storage.activated()):
-                
-                if self.__pages is None:
-                    self.createPages()
+        self.__pages = []
 
-                return self.__pages
-            else:
-                # not activated, so don't ask for information
-                return []
+        self.__pages.append(lambda x: ui.ia.IdentifierPage(x,
+                                                           self.__storage))
+        self.__pages.append(lambda x: ui.ia.ArchiveLoginPage(x,
+                                                           self.__storage))
+        self.__pages.append(p6.ui.pages.StorePage)
+        self.__pages.append(lambda x: ui.ia.FinalPage(x, self.__storage))
 
-    return ArchiveStorageUi
+    def list(self):
+        # see if we've been activated
+        if (self.__storage.activated()):
+
+            if self.__pages is None:
+                self.createPages()
+
+            return self.__pages
+        else:
+            # not activated, so don't ask for information
+            return []
+
 
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
                      p6.storage.common.CommonStorageMixin):
@@ -111,7 +111,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
         # this allows us to extend the user interface in a unified way
         # 
         zope.component.provideSubscriptionAdapter(
-            archiveStorageUi(self),
+            ArchiveStorageUi(self),
             (p6.extension.interfaces.IStorageProcessing,
              p6.extension.events.IExtensionPageEvent,
              ),
