@@ -107,25 +107,25 @@ class CcRest:
         l_url = '%s/license/%s/issue' % (self.root, license)
 
         # construct the answers.xml document from the answers dictionary
-        answer_xml = """
+        answer_xml = u"""
         <answers>
           <locale>%s</locale>
           <license-%s>""" % (lang, license)
 
         for key in answers:
-            answer_xml = """%s
+            answer_xml = u"""%s
             <%s>%s</%s>""" % (answer_xml, key, answers[key], key)
 
-        answer_xml = """%s
+        answer_xml = u"""%s
           </license-%s>
           <work-info>
         """ % (answer_xml, license)
 
         for key in workinfo:
-            answer_xml = """%s
+            answer_xml = u"""%s
             <%s>%s</%s>""" % (answer_xml, key, workinfo[key], key)
 
-        answer_xml = """%s
+        answer_xml = u"""%s
           </work-info>
         </answers>
         """ % (answer_xml)
@@ -133,7 +133,7 @@ class CcRest:
         # retrieve the license source document
         try:
             self.__a_doc = urllib2.urlopen(l_url,
-                                     data='answers=%s' % answer_xml).read()
+                                     data=u'answers=%s' % answer_xml).read()
         except urllib2.HTTPError:
             self.__a_doc = ''
             
