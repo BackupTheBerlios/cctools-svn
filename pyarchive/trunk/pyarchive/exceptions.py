@@ -19,3 +19,5 @@ class MissingParameterException(LookupError):
 class SubmissionError(Exception):
     pass
     
+class CommunicationsError(Exception):
+    pass
