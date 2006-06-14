@@ -1,7 +1,6 @@
 """ccPublisher-specific user interface components."""
 
 import os
-import webbrowser
 import socket
 
 import wx
@@ -11,14 +10,13 @@ from wx.xrc import XRCCTRL
 
 import ccwx
 import pyarchive.identifier
+import pyarchive.exceptions
 
 import p6
 import p6.api
 import p6.ui.pages.fieldrender
 from p6.i18n import _
 
-from ccpublisher.const import version
-                     
 class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
     """Identifier selection page class."""
 
@@ -122,7 +120,7 @@ class ArchiveLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 
                 raise p6.extension.exceptions.ExtensionSettingsException(
                     _("Invalid username or password."))
-        except socket.error, e:
+        except (socket.error, pyarchive.exceptions.CommunicationsError), e:
             raise p6.extension.exceptions.ExtensionSettingsException(
                 _("Unable to connect to the Internet Archive to verify username and password."))
 
