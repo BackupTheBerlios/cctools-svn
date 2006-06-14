@@ -161,6 +161,9 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
     def __init__(self):
         p6.metadata.base.BasicMetadataStorage.__init__(self)
 
+        # initialize the URI
+        self.uri = ''
+        
         # register handlers for extension points --
         # this allows us to extend the user interface in a unified way
         # 
