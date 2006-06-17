@@ -18,7 +18,6 @@ import cb_ftp
 import httplib
 import urllib
 import urllib2
-import urlparse
 
 import xml.sax.saxutils
 import elementtree.ElementTree as etree
@@ -277,7 +276,11 @@ class ArchiveItem:
         # call the import url, check the return result
         importurl = "http://www.archive.org/checkin.php?" \
                     "xml=1&identifier=%s&user=%s" % (self.identifier, username)
-        response = etree.parse(urllib2.urlopen(importurl))
+        try:
+            response = etree.parse(urllib2.urlopen(importurl))
+        except httplib.BadStatusLine, e:
+            # retry our request
+            response = etree.parse(urllib2.urlopen(importurl))
 
         # our response should be encapsulated in a <result> tag
         result = response.getroot()
