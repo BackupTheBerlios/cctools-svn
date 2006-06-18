@@ -303,7 +303,7 @@ class ArchiveItem:
         """Submit the files to archive.org"""
 
         # set the adder (if necessary)
-        if self.metadata['adder'] is None:
+        if self.metadata.get('adder', None) is None:
             self.metadata['adder'] = username
 
         # make sure we're ready to submit
