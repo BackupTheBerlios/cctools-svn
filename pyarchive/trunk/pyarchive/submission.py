@@ -16,6 +16,7 @@ import cStringIO as StringIO
 import cb_ftp
 
 import httplib
+import socket
 import urllib
 import urllib2
 import xml.parsers.expat
@@ -26,12 +27,16 @@ import os.path
 import string
 import types
 import codecs
+import time
 
 from pyarchive.exceptions import MissingParameterException
 from pyarchive.exceptions import SubmissionError
 import pyarchive.utils
 import pyarchive.identifier
 import pyarchive.const
+import exceptions
+
+MAX_RETRY = 10
 
 class UploadApplication(object):
     """A class which wraps the relevant information about the 
@@ -68,8 +73,12 @@ class ArchiveItem:
     </metadata>    
     """
 
+    # ***
+    # old constructor signature:
+    # 
     #def __init__(self, uploader, identifier, collection, mediatype,
     #             title, runtime=None, adder=None, license=None):
+    # ***
     
     def __init__(self, uploader, license=None):
         """Initialize the submision; uploader should be an instance of 
@@ -232,6 +241,8 @@ class ArchiveItem:
         """Create a new submission at archive.org.
         If successful returns a tuple containing (server, path)."""
 
+        retry_count = 0
+        
         new_url = "/create.php"
         headers = {"Content-type": "application/x-www-form-urlencoded",
                    "Accept": "text/plain",
@@ -245,14 +256,27 @@ class ArchiveItem:
         conn = httplib.HTTPConnection('www.archive.org')
         conn.request('POST', new_url, params, headers)
 
-        try:
-            resp = conn.getresponse()
-        except httplib.BadStatusLine, e:
-            # retry the query
-            return self.createSubmission(username, identifier)
+        while retry_count < MAX_RETRY:
+            try:
+                resp = conn.getresponse()
+                response = resp.read()
 
-        response = resp.read() 
-                    
+                # successfully read
+                break
+            except (socket.error, httplib.HTTPException), e:
+                # increment the retry count
+                retry_count = retry_count + 1
+
+                # short delay to prevent hammering server...
+                time.sleep(1)
+
+        # make sure we were successful
+        if retry_count == MAX_RETRY:
+            # unsuccessful
+            raise exceptions.CommunicationsError(
+                "Unable to create submission.")
+        
+        # parse the response
         try:
             response_dom = etree.fromstring(response)
         except xml.parsers.expat.ExpatError, e:
@@ -276,15 +300,31 @@ class ArchiveItem:
     def completeSubmission(self, username):
         """Complete the submission at archive.org; return True if successful,
         otherwise raise an exception."""
+
+        retry_count = 0
         
         # call the import url, check the return result
         importurl = "http://www.archive.org/checkin.php?" \
                     "xml=1&identifier=%s&user=%s" % (self.identifier, username)
-        try:
-            response = etree.parse(urllib2.urlopen(importurl))
-        except httplib.BadStatusLine, e:
-            # retry our request
-            response = etree.parse(urllib2.urlopen(importurl))
+
+        # attempt to complete the submission
+        while retry_count < MAX_RETRY:
+            try:
+                response = etree.parse(urllib2.urlopen(importurl))
+                break
+            
+            except (socket.error, httplib.HTTPException), e:
+                # increment the retry count
+                retry_count = retry_count + 1
+
+                # short delay to prevent hammering the server
+                time.sleep(1)
+
+        # make sure we were successful
+        if retry_count == MAX_RETRY:
+            # unsuccessful
+            raise exceptions.CommunicationsError(
+                "Unable to complete submission.")
 
         # our response should be encapsulated in a <result> tag
         result = response.getroot()
