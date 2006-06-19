@@ -118,7 +118,16 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
                           
                     if result == wx.ID_YES:
                         # open the web browser
-                        webbrowser.open_new(bugUrl)
+                        try:
+                            webbrowser.open_new(bugUrl)
+                        except WindowsError, e:
+                            # some bizarre error occured opening the browser
+                            wx.MessageDialog(None,
+                                             "Unable to open browser; your
+                                             crash report is available at %s"
+                                             % bugURL,
+                                             caption="ccPublisher: Error",
+                                             style=wx.OK).ShowModal()
                 else:
                     # XXX Show yet-another-error here 
                     # and humbly provide a way to submit a report manually
