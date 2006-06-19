@@ -317,7 +317,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         self.onLicense(None)
         
     REST_ROOT = 'http://api.creativecommons.org/rest/dev'
-    STR_INTRO_TEXT="""With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."""
+    STR_INTRO_TEXT="""With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here."""
 
     PAGE_XRC = """
 <resource>

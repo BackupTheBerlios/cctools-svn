@@ -10,6 +10,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr ""
+
+msgid "Verification URL"
+msgstr ""
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr ""
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr ""
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr ""
+
 #: /ccpublisher/ui/welcome.py:23
 msgid "Welcome"
 msgstr ""

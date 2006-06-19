@@ -44,19 +44,20 @@ def selfhostMetadataUi(storage):
             # create the simple page
             fields = [
                 p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
-                'vurl', 'Verification URL'),
+                'vurl', _('Verification URL')),
                 ]
 
             self.__pages = []
 
-            desc = "Please enter the URL where you will host your " \
-                   "verification metadata.\nIn most cases, this will " \
-                   "be the page you link to your MP3 file from."
-            
             self.__pages.append(
                 lambda x: p6.ui.pages.fieldrender.SimpleFieldPage(
                 x, 'SELFHOST_UI_META', _('Self Hosted Files'), fields,
-                self.callback, description=_(desc)))
+                self.callback,
+                description=_("Please enter the URL where you will host your "
+                              "verification metadata. In most cases, this "
+                              "will be the page you link to your MP3 file "
+                              "from.")
+                ))
 
             self.__pages.append(
                 lambda x: ui.selfhost.FinalPage(x, self.storage)

@@ -20,7 +20,7 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
     """
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
-    def __init__(self, parent, headline='Select Upload Destination',
+    def __init__(self, parent, headline=_('Select Upload Destination'),
                  multi=True):
         """
         @param parent: Parent window

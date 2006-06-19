@@ -26,7 +26,7 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         self.PAGE_XRC % metaGroup.id,
                                         metaGroup.id,
-                                        metaGroup.title)
+                                        _(metaGroup.title))
 
         self.metagroup = metaGroup
         self.initFields(metaGroup)

@@ -86,11 +86,11 @@ class ArchiveLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
         # create the simple page
         fields = [
             p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
-            'username', 'Username', default=username),
+            'username', _('Username'), default=username),
             p6.metadata.base.metadatafield(p6.metadata.types.IPasswordField)(
-            'password', 'Password', default=password),
+            'password', _('Password'), default=password),
             p6.metadata.base.metadatafield(p6.metadata.types.IBooleanField)(
-            'persist', 'Save your username and password?', default=persist)
+            'persist', _('Save your username and password?'), default=persist)
             ]
 
         description=_("Enter your Internet Archive username and password.  "
