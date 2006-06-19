@@ -99,7 +99,8 @@ if __name__ == '__main__':
                    'py2app':{'argv_emulation':True,
                              'iconfile':os.path.join('resources', 'ccp8.icns'),
 			                 'packages':packages,
-                             'includes':['dbhash', 'encodings','argvemulator']
+                             'includes':['dbhash', 'encodings','argvemulator'],
+                             'site_packages':True,
                              },
                    },
           desktop_file=['deploy/linux/ccpublisher.desktop.in'],
