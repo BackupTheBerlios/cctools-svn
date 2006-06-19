@@ -1,5 +1,9 @@
 import urllib2
+import socket
+
 import elementtree.ElementTree as etree
+
+MAX_RETRY=10
 
 class CcRest:
     """Wrapper class to decompose REST XML responses into Python objects."""
@@ -98,14 +102,9 @@ class CcRest:
         self._cur_license['__keys__'] = keys
         return self._cur_license
 
-    def issue(self, license, answers, workinfo={}, lang=None):
-
-        # use the default language if none is specified
-        if lang is None:
-            lang = self.__default_lang
-            
-        l_url = '%s/license/%s/issue' % (self.root, license)
-
+    def __answers_xml(self, license, answers, workinfo, lang):
+        """Construct answers.xml."""
+        
         # construct the answers.xml document from the answers dictionary
         answer_xml = u"""
         <answers>
@@ -130,11 +129,31 @@ class CcRest:
         </answers>
         """ % (answer_xml)
 
-        # retrieve the license source document
-        try:
-            self.__a_doc = urllib2.urlopen(l_url,
-                                     data=u'answers=%s' % answer_xml).read()
-        except urllib2.HTTPError:
-            self.__a_doc = ''
+        return answer_xml
+    
+    def issue(self, license, answers, workinfo={}, lang=None):
+
+        retry_count = 0
+        
+        # use the default language if none is specified
+        if lang is None:
+            lang = self.__default_lang
             
-        return self.__a_doc
+        l_url = '%s/license/%s/issue' % (self.root, license)
+        answer_xml = self.__answers_xml(license, answers, workinfo, lang)
+
+        while (retry_count < MAX_RETRY):
+            # retrieve the license source document
+            try:
+                # retrieve the license information from the web service
+                self.__a_doc = urllib2.urlopen(l_url,
+                                       data=u'answers=%s' % answer_xml).read()
+                
+                return self.__a_doc
+            except (socket.error, urllib2.HTTPError), e:
+                # check if this is our last attempt
+                if retry_count == MAX_RETRY - 1:
+                    # re-raise the exception
+                    raise e
+                else:
+                    retry_count = retry_count + 1
