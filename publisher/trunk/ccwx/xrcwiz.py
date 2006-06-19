@@ -213,15 +213,13 @@ class XrcWiz(wx.Frame):
                                                    self.pages.current(),
                                                    flag=wx.EXPAND)
 
-       self.pages.current().Show()
-       self.pages.current().Layout()
-
        # update the headline
        XRCCTRL(self, "LBL_HEADER_TEXT").SetLabel(
           self.pages.current().headline)
        
        self.__updateNavBtns(event)
-       self.Layout()
+       self.pages.current().Show()
+       self.Fit()
 
    addCurrent = __addCurrent
 
