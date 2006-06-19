@@ -123,8 +123,8 @@ def wxAddExceptHook(postUrl, app_id, app_version='[No version]'):
                         except WindowsError, e:
                             # some bizarre error occured opening the browser
                             wx.MessageDialog(None,
-                                             "Unable to open browser; your
-                                             crash report is available at %s"
+                                             "Unable to open browser; your "
+                                             "crash report is available at %s"
                                              % bugURL,
                                              caption="ccPublisher: Error",
                                              style=wx.OK).ShowModal()
