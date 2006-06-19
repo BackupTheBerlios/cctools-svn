@@ -18,6 +18,7 @@ import cb_ftp
 import httplib
 import urllib
 import urllib2
+import xml.parsers.expat
 
 import xml.sax.saxutils
 import elementtree.ElementTree as etree
@@ -248,13 +249,16 @@ class ArchiveItem:
             resp = conn.getresponse()
         except httplib.BadStatusLine, e:
             # retry the query
-            print 'retrying...'
-            # XXX wtf?
             return self.createSubmission(username, identifier)
 
         response = resp.read() 
                     
-        response_dom = etree.fromstring(response)
+        try:
+            response_dom = etree.fromstring(response)
+        except xml.parsers.expat.ExpatError, e:
+            # XML format error occurred... raise our own Exception
+            raise SubmissionError("Invalid response format.", response)
+            
         result = etree.fromstring(response).getroot()
         if result.tag != 'result':
             raise SubmissionError("Unknown response format: %s" %
