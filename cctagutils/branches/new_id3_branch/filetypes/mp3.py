@@ -249,5 +249,8 @@ class Metadata:
     def isWritable(self):
         """Returns true if the user has permission to change the metadata."""
 
-        # XXX we just return True here -- still need to catch other exceptions for file access
-        return True #('w' in getattr(self.__fileobj, 'mode', 'w'))
+        if self.__fileobj is None:
+            return False
+        
+        return ('w' in getattr(self.__fileobj, 'mode', 'r'))
+    
