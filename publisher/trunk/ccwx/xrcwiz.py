@@ -219,6 +219,7 @@ class XrcWiz(wx.Frame):
        
        self.__updateNavBtns(event)
        self.pages.current().Show()
+       
        self.Fit()
 
    addCurrent = __addCurrent
@@ -268,8 +269,6 @@ class XrcWiz(wx.Frame):
        self.pages.next()
        self.__addCurrent()
        
-       self.updateLayout()
-       
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
                                      self.pages.current().GetId(), 
                                      direction=True, 
@@ -277,7 +276,7 @@ class XrcWiz(wx.Frame):
        self.GetEventHandler().ProcessEvent(change_event)
 
        XRCCTRL(self, "PNL_BODY").Layout()
-       self.Layout()
+       self.Fit()
 
    def onPrev(self, event):
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGING,
@@ -289,13 +288,10 @@ class XrcWiz(wx.Frame):
        if not change_event.IsAllowed():
           return False
 
-
        self.__detachCurrent()
        self.pages.previous()
        self.__addCurrent()
        
-       self.updateLayout()
-
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGED,
                                      self.pages.current().GetId(), 
                                      direction=False, 

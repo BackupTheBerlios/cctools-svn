@@ -4,6 +4,7 @@ import weakref
 
 import wx
 import ccwx
+import ccwx.wraptext
 
 import zope.component
 import zope.interface
@@ -43,10 +44,12 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
         """Create the user input widgets for this group."""
 
         # add any description text
-        self.GetSizer().Add(wx.StaticText(self, -1, _(self.__description)))
+        self.GetSizer().Add(
+	    ccwx.wraptext.WordWrapText(self, -1, _(self.__description)), 
+	    flag=wx.EXPAND)
             
         # create the actual sizer to hold the labels and widgets
-        item_sizer = wx.FlexGridSizer(cols=2)
+        item_sizer = wx.FlexGridSizer(cols=2, hgap=10)
         item_sizer.AddGrowableCol(1)
         self.GetSizer().Add(item_sizer, flag=wx.EXPAND)
 
@@ -77,6 +80,7 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
                 desc_label = wx.StaticText(self, label=_(field.description))
                 sizer.Add(desc_label, flag=wx.EXPAND)
 
+	self.Fit()
 
     def __assemble(self):
         """Return a dictionary containing id-value pairs for

@@ -12,6 +12,7 @@ import zope.interface
 import zope.component
 
 import ccwx.xrcwiz
+import ccwx.wraptext
 import ccwsclient
 
 import p6.api
@@ -51,9 +52,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         # create the sizer
         self.sizer = self.GetSizer()
         
-        self.sizer.Add(wx.StaticText(parent=self,
-                       label=_(self.STR_INTRO_TEXT)),
-                       flag=wx.EXPAND)
+        self.sizer.Add(ccwx.wraptext.WordWrapText(self, -1, _(self.STR_INTRO_TEXT)), flag=wx.EXPAND)
 
         # create the panel for the fields
         self.pnlFields = wx.Panel(self)
@@ -211,7 +210,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
             self.updateFieldDetails(field)
 
         self.updateLicense(event)
-        self.Layout()
+        self.Fit()
 
     def updateFieldDetails(self, fieldid):
         
@@ -324,9 +323,9 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
   <object class="wxPanel" name="LICENSE_CHOOSER">
     <object class="wxFlexGridSizer">
       <cols>1</cols>
-      <vgap>2</vgap>
+      <vgap>25</vgap>
       <growablecols>0</growablecols>
-      <growablerows>1,2</growablerows>
+      <growablerows>1</growablerows>
     </object>
   </object>
 </resource>
