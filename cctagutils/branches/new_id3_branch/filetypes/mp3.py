@@ -21,10 +21,23 @@ class Metadata:
     def __init__(self, fileobj):
         self.__open(fileobj)
 
+    @classmethod
     def openFile(cls, filename):
-        return Metadata(file(filename, 'rw'))
-    openFile = classmethod(openFile)
 
+        # if check we can write to this file
+        if os.access(filename, os.W_OK|os.R_OK):
+            mode = 'rw'
+        elif os.access(filename, os.R_OK):
+            mode = 'r'
+        else:
+            # can't read or write, not much point in creating an instance
+            return None
+            
+        try:
+            return Metadata(file(filename, mode))
+        except IOError, e:
+            return None
+        
     def __open(self, fileobj=None):
         if fileobj is not None:
             self.__fileobj = fileobj
