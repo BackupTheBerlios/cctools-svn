@@ -191,6 +191,13 @@ class XrcWiz(wx.Frame):
       self.SetMinSize((488,450))
       self.SetAutoLayout(True)
 
+      # assign the fitOrLayout callable based on platform
+      # we do this here to reduce the number of comparisons necessary
+      if wx.Platform == "__WXMAC__":
+         self.__fitOrLayout = self.Fit
+      else:
+         self.__fitOrLayout = self.Layout
+
       self.Bind(wx.EVT_BUTTON, self.onNext, XRCCTRL(self, "CMD_NEXT"))
       self.Bind(wx.EVT_BUTTON, self.onPrev, XRCCTRL(self, "CMD_PREV"))
 
@@ -220,7 +227,7 @@ class XrcWiz(wx.Frame):
        self.__updateNavBtns(event)
        self.pages.current().Show()
        
-       self.Fit()
+       self.__fitOrLayout()
 
    addCurrent = __addCurrent
 
@@ -237,16 +244,15 @@ class XrcWiz(wx.Frame):
          XRCCTRL(self, "CMD_PREV").Enable()
 
       XRCCTRL(self, "CMD_NEXT").Enable()
-       
+
+   def __fitOrLayout(self):
+      """Call .Fit() or .Layout(), depending on our platform.  The
+      stub definition is overridden by an assignment from the constructor.
+      This allows us to minimize the number of times we check what
+      platform is in use."""
+
    def onCancel(self, event):
       self.Close()
-
-   def updateLayout(self):
-      """Sets the current page to the specified XRCID."""
-
-      # refresh the window
-      self.GetSizer().Layout()      
-      self.Refresh()
 
    def onNext(self, event):
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGING,
@@ -276,7 +282,7 @@ class XrcWiz(wx.Frame):
        self.GetEventHandler().ProcessEvent(change_event)
 
        XRCCTRL(self, "PNL_BODY").Layout()
-       self.Fit()
+       self.__fitOrLayout()
 
    def onPrev(self, event):
        change_event = XrcWizardEvent(ccEVT_XRCWIZ_PAGE_CHANGING,
