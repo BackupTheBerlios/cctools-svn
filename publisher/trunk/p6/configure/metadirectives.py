@@ -108,7 +108,7 @@ class IMetadataFieldSubdirective(zope.interface.Interface):
         title=u"Possible values for this field.",
         description=u"",
         required=False,
-        value_type=zope.schema.TextLine(),
+        value_type=zope.configuration.fields.MessageID(),
         )
 
     choicesList = zope.configuration.fields.GlobalObject(

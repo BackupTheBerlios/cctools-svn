@@ -12,6 +12,8 @@ See configure.zcml for registration details.
 
 import wx
 
+from p6.i18n import _
+
 def textField(field):
     """Basic text input widget."""
     
@@ -27,26 +29,34 @@ def passwordField(field):
     return ProxiedPasswordField
 
 def comboField(field):
-    """Proxied combo box class with addition error handling in GetValue
-    to catch errors on OS X."""
+    """Proxied combo box class with additional error handling in GetValue
+    to catch errors on OS X.  Proxied class also provides i18n support."""
 
     class ProxiedCombo(wx.ComboBox):
         def __init__(self, parent):
             wx.ComboBox.__init__(self, parent,
-                                 choices=field.choices,
                                  style=wx.CB_READONLY)
             # XXX we should support type-ahead find here
 
-        def GetValue(self):
+            # append each item to the list, associating each translated
+            # item with it's message id
+            for choice in field.choices:
+                self.Append(_(choice), choice)
 
-            try:
-                return wx.ComboBox.GetValue(self)
-            except wx._core.PyAssertionError, e:
-                if self.GetSelection() == wx.NOT_FOUND:
-                    return ""
-                else:
-                    raise e
-                
+        def GetValue(self):
+            """Return the message id of the selected item, or an empty
+            string if no item is selected."""
+            
+            if self.GetSelection() == wx.NOT_FOUND:
+                return ""
+            else:
+                return self.GetClientData(self.GetSelection())
+
+        def SetValue(self, new_value):
+            """Set the string selection to the translated value."""
+
+            self.SetStringSelection(_(new_value))
+            
     return ProxiedCombo
 
 def checkField(field):
