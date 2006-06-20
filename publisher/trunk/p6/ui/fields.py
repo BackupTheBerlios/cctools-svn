@@ -27,8 +27,9 @@ def passwordField(field):
     return ProxiedPasswordField
 
 def comboField(field):
-    """Proxied combo box class with GetStringSelection mapped to getValue."""
-    
+    """Proxied combo box class with addition error handling in GetValue
+    to catch errors on OS X."""
+
     class ProxiedCombo(wx.ComboBox):
         def __init__(self, parent):
             wx.ComboBox.__init__(self, parent,
@@ -36,9 +37,16 @@ def comboField(field):
                                  style=wx.CB_READONLY)
             # XXX we should support type-ahead find here
 
-        def getValue(self):
-            return self.GetStringSelection()
+        def GetValue(self):
 
+            try:
+                return wx.ComboBox.GetValue(self)
+            except wx._core.PyAssertionError, e:
+                if self.GetSelection() == wx.NOT_FOUND:
+                    return ""
+                else:
+                    raise e
+                
     return ProxiedCombo
 
 def checkField(field):
