@@ -10,6 +10,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
+msgid "Other"
+msgstr ""
+
+msgid "Audio"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Image" 
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Interactive"
+msgstr ""
+
 msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
 msgstr ""
 

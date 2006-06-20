@@ -2,13 +2,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Development/Revision: 68521\n"
 "POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2006-06-20 09:37-0500\n"
+"Last-Translator: Nathan R. Yergler <nathan@creativecommons.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
+
+msgid "Other"
+msgstr ""
+
+msgid "Audio"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Interactive"
+msgstr ""
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr ""
+
+msgid "Verification URL"
+msgstr ""
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr ""
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr ""
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr ""
 
 #: /ccpublisher/ui/welcome.py:23
 msgid "Welcome"
@@ -262,6 +298,6 @@ msgid "Your work has been uploaded to the Internet Archive."
 msgstr ""
 
 #: /resources/ccpublisher.xrc:-1
-#: /resources/ccpublisher.xrc:-1
 msgid "What is ccPublisher?"
 msgstr ""
+
