@@ -27,7 +27,19 @@ def getLicense(license_url):
 	
 
 def fileHash(filename):
-    return base32.b2a(sha.new(file(filename, 'rb').read()).digest()).upper()
+	block_size = 8192
+
+	sha_hash = sha.new()
+	in_file = file(filename, 'rb')
+
+	block = in_file.read(block_size)
+
+	while block:
+		sha_hash.update(block)
+
+		block = in_file.read(block_size)
+
+	return base32.b2a(sha_hash.digest()).upper()
 
 def generate(files, claim_url, license, year, holder,
 	     source=None, license_rdf=None, work_meta={} ):
