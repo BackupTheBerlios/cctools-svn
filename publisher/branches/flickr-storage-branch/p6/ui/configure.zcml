@@ -1,0 +1,72 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="p6"
+    >
+
+  <adapter
+      for="p6.metadata.license.ILicenseGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.license.page_ILicenseGroup"
+      />
+
+  <adapter
+      name="WorkToPage"
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.work_metaGroupWizPage"
+      />
+
+  <adapter
+      name="WorkItemToPage"
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.item_metaGroupWizPage"
+      />
+
+  <adapter
+      name="StorageMetaItemToPage"
+      for="p6.metadata.interfaces.IMetadataGroup"
+      provides=".interfaces.IWizardPage"
+      factory=".pages.metadata.storage_metaGroupWizPage"
+      />
+
+  <!-- Metadata Type to User Interface adapters -->
+  <adapter
+      for="p6.metadata.types.ITextField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.textField"
+      />
+
+  <adapter
+      for="p6.metadata.types.IPasswordField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.passwordField"
+      />
+
+  <adapter
+      for="p6.metadata.types.ISelectionField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.comboField"
+      />
+
+  <adapter
+      for="p6.metadata.types.IBooleanField"
+      provides=".interfaces.IEntryWidget"
+      factory=".fields.checkField"
+      />
+
+  <!-- Generic user interface adapters -->
+  <adapter
+      for="p6.storage.interfaces.IFileItem"
+      provides=".interfaces.ILabelText"
+      factory=".adapters.fileItemDisplay"
+      />
+
+  <adapter
+      for="p6.storage.interfaces.IItem"
+      provides=".interfaces.ILabelText"
+      factory=".adapters.genericItemDisplay"
+      />
+
+</configure>

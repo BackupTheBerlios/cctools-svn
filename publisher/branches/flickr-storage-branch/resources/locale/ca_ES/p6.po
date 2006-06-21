@@ -1,0 +1,149 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
+"PO-Revision-Date: 2006-06-20 09:27+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+# p6/ui/pages/license.py:320
+msgid "With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.  If you want to offer your work with no conditions, choose the Public Domain."
+msgstr "Amb una llicència de Creative Commons, manteniu els vostres drets d'autor però permeteu que la gent pugui copiar i distribuir la vostra obra sempre que us acreditin com a autors -- i només en les condicions que especifiqueu aquí. Si voleu oferir la vostra obra sense condicions, trieu el Domini Públic."
+
+# p6/ui/pages/storageselector:23
+msgid "Select Upload Destination"
+msgstr "Seleccioneu la destinació de pujada"
+
+#: /p6/api.py:153
+#: /p6/ui/pages/fieldrender.py:101
+#: /p6/ui/pages/fileselector.py:31
+#: /p6/ui/pages/fileselector.py:206
+#: /p6/ui/pages/license.py:109
+msgid "Error"
+msgstr "Error"
+
+# DO NOT TRANSLATE
+#: /p6/api.py:153
+#: /p6/ui/pages/fileselector.py:31
+#: /p6/ui/pages/fileselector.py:206
+#: /p6/ui/pages/license.py:109
+msgid "appname"
+msgstr "ccPublisher"
+
+#: /p6/app/wxpy.py:221
+msgid "release"
+msgstr "versió"
+
+#: /p6/configure/metadirectives.py:173
+#: /p6/zcmlsupport/metadirectives.py:356
+msgid "Interfaces"
+msgstr "Interfícies"
+
+#: /p6/configure/metadirectives.py:174
+msgid "The interfaces which metadata applies to."
+msgstr "Les interfícies a les quals s'apliquen les metadades."
+
+#: /p6/configure/metadirectives.py:191
+msgid "Multiple"
+msgstr "Múltiple"
+
+#: /p6/configure/metadirectives.py:192
+msgid "Allow multiple storage providers to be selected."
+msgstr "Permetre la selecció de múltiples proveïdos de dipòsit."
+
+#: /p6/ui/pages/fileselector.py:124
+msgid "Select Your Files"
+msgstr "Escolliu els vostres fitxers"
+
+#: /p6/ui/pages/fileselector.py:205
+msgid "You must select at least one file."
+msgstr "Heu de seleccionar com a mínim un fitxer."
+
+#: /p6/ui/pages/fileselector.py:30
+msgid "Please drag and drop individual files on this window."
+msgstr "Si us plau, arrossegueu i deixeu anar els fitxers individuals en aquesta finestra."
+
+#: /p6/ui/pages/fileselector.py:52
+msgid "Filename"
+msgstr "Nom del fitxer"
+
+#: /p6/ui/pages/finalurl.py:20
+msgid "Uploading"
+msgstr "Pujant"
+
+#: /p6/ui/pages/license.py:34
+msgid "Choose A License"
+msgstr "Escolliu una llicència"
+
+#: /p6/ui/pages/license.py:72
+msgid "License Class:"
+msgstr "Classe de llicència:"
+
+#: /p6/ui/pages/license.py:83
+msgid "Selected License:"
+msgstr "Llicència seleccionada:"
+
+#: /p6/ui/pages/license.py:87
+msgid "None selected"
+msgstr "Cap seleccionada"
+
+#: /resources/p6.xrc:-1
+msgid "Report a bug"
+msgstr "Informeu d'un error"
+
+#: /resources/p6.xrc:-1
+msgid "Done!"
+msgstr "Fet!"
+
+#: /resources/p6.xrc:-1
+msgid "Help"
+msgstr "Ajuda"
+
+#: /resources/p6.xrc:-1
+msgid "OK"
+msgstr "D'acord"
+
+#: /resources/p6.xrc:-1
+msgid "Preferences"
+msgstr "Preferències"
+
+#: /resources/p6.xrc:-1
+msgid "Browse"
+msgstr "Navega"
+
+#: /resources/p6.xrc:-1
+msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
+msgstr "Arrossegueu i deixeu anar els fitxers d'àudio o vídeo que voleu publicar al web amb una llicència de Creative Commons o cliqueu el botó Navega per seleccionar manualment els vostres fitxers"
+
+#: /resources/p6.xrc:-1
+msgid "Working..."
+msgstr "Treballant..."
+
+#: /resources/p6.xrc:-1
+msgid "Delete"
+msgstr "Esborra"
+
+#: /resources/p6.xrc:-1
+msgid "Edit"
+msgstr "Edita"
+
+#: /resources/p6.xrc:-1
+msgid "Exit"
+msgstr "Sortir"
+
+#: /resources/p6.xrc:-1
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: /resources/p6.xrc:-1
+msgid "About"
+msgstr "Quant a"
+
+#: /resources/p6.xrc:-1
+msgid "File"
+msgstr "Fitxer"
+
