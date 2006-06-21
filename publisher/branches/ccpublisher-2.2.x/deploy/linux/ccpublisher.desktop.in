@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=2.0
+Type=Application
+Encoding=UTF-8
+Name=ccPublisher
+Comment=Adds metadata and publishes digital works.
+TryExec=ccp.py
+Exec=main.py %U
+Terminal=false
+Categories=GNOME;Application;AudioVideo;Network
+#Icon=fooview.png
+#MimeType=image/x-foo
