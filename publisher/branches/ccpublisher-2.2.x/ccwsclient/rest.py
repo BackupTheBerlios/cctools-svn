@@ -1,5 +1,6 @@
 import urllib2
 import socket
+import time
 
 import elementtree.ElementTree as etree
 
@@ -157,3 +158,7 @@ class CcRest:
                     raise e
                 else:
                     retry_count = retry_count + 1
+
+                # sleep so we don't hammer the server
+                time.sleep(1)
+                
