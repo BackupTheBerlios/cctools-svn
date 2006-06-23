@@ -278,12 +278,12 @@ class ArchiveItem:
         
         # parse the response
         try:
-            response_dom = etree.fromstring(response)
+            result = etree.fromstring(response)
         except xml.parsers.expat.ExpatError, e:
             # XML format error occurred... raise our own Exception
             raise SubmissionError("Invalid response format.", response)
             
-        result = etree.fromstring(response).getroot()
+        # result = etree.fromstring(response).getroot()
         if result.tag != 'result':
             raise SubmissionError("Unknown response format: %s" %
                                   etree.tostring(result))
@@ -392,7 +392,7 @@ class ArchiveItem:
 
         # complete the submission
         callback.increment(status='completing upload...')
-        if self.completeSubmission(username, callback):
+        if self.completeSubmission(username):
             self.archive_url = pyarchive.identifier.verify_url(self.identifier)
         
         callback.finish()
