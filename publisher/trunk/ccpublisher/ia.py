@@ -170,7 +170,7 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
        submission.collection = self.archive_collection
        submission.mediatype = self.submission_type
        submission.title = api.findField('title')
-       submission.licenseurl = license
+       submission['licenseurl'] = license
        
        # retrieve all metadata fields for the work (the root item)
        root_item = api.getApp().items[0]

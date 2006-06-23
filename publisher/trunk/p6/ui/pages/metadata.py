@@ -36,7 +36,7 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
         # see if we have a description; if so, use it to label the page
         if metaGroup.description:
-            desc_label = wx.StaticText(self, label=metaGroup.description)
+            desc_label = wx.StaticText(self, label=_(metaGroup.description))
             self.GetSizer().Add(desc_label, flag=wx.EXPAND)
 
         # create the actual sizer to hold the labels and widgets
