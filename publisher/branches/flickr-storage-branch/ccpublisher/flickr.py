@@ -106,8 +106,30 @@ class FlickrStorage(p6.metadata.base.BasicMetadataStorage,
         v_url = ""
         titlei=api.findField('title')
         descriptioni=api.findField('description')
+        #Get the license information to transfer to Flickr
+        license_xml = etree.fromstring(api.getApp().license_doc)
+        license_full = license_xml.find('license-name').text
+        license=license_full.split()[0]
+        lic=0
+        #Choose the license, Flickr arbitrarily assigns a number to each license. Later, these should
+        #be requested first before choosing, in case Flickr changes the system. Next to be updated
+        if license == "Attribution":
+            lic=4
+        elif license == "Attribution-NonCommercial":
+            lic=2
+        elif license == "Attribution-NonCommercial-ShareAlike":
+            lic=1
+        elif license == "Attribution-NonCommercial-NoDerivs":
+            lic=3
+        elif license == "Attribution-NoDerivs":
+            lic=6
+        elif license == "Attribution-ShareAlike":
+            lic=5
         #tagsi=api.findField('keywords')
+        
+        #Make an Uploadr object and then upload everything. Must authenticate here automatically (gets Frob, Token, etc
+        # in case the filesystem doesn't cache the token.
         uploadMe=Uploadr.Uploadr()
         uploadMe.authenticatePt2()
         for item in api.getApp().items[1:]:
-           uploadMe.uploadImage(item.getIdentifier(),title=titlei,desc=descriptioni)
+           uploadMe.uploadImage(item.getIdentifier(),title=titlei,desc=descriptioni,license=lic)

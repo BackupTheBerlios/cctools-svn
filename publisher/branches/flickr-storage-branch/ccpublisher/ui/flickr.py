@@ -1,4 +1,4 @@
-"""Self-Hosted Storage user interface components"""
+"""User interface connector for Flickr uploader"""
 
 import os
 import sys
@@ -17,19 +17,19 @@ from ccpublisher.const import version
 import ccpublisher.Uploadr as Uploadr
 
 class WarningPage(ccwx.xrcwiz.XrcWizPage):
-    """Final page for self-hosting storage provider"""
-
+    
     def __init__(self, parent, storage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'FLICKR_WARNING', _('Complete'))
+                                        'FLICKR_WARNING', _('Authentication'))
 
-        # connect the Save button handler
-        self.Bind(wx.EVT_BUTTON, self.onAuth, XRCCTRL(self, "CMD_AUTH_RDF"))
+        # connect the Authentication handler, finish page
+        self.Bind(wx.EVT_BUTTON, self.onAuth, XRCCTRL(self, "CMD_AUTH_FLKR"))
         self.__storage = storage
         self.changed = False
 
+    #on Authentication, make an Uploadr object and authenticate
     def onAuth(self, event):
         """Allow the user to save the RDF block."""
         upT=Uploadr.Uploadr()
@@ -42,18 +42,11 @@ class FinalPage(ccwx.xrcwiz.XrcWizPage):
         ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'FLICKR_COMPLETE', _('Upload Complete'))
+                                        'FLICKR_COMPLETE', _('Uploading...'))
 
 
         self.__storage = storage
         
     def onChanged(self, event):
-
-        # generate the RDF
+        # call the uploader and everything
         self.__storage.store()
-        
-        # update the verification URL
-        #XRCCTRL(self, "LBL_V_URL").SetLabel(self.__storage.verification_url)
-        
-        # update the RDF
-        #XRCCTRL(self, "TXT_RDF").SetValue(self.__storage.rdf)

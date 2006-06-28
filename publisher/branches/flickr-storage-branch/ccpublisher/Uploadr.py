@@ -1,19 +1,14 @@
-#!/usr/bin/env python
-
 import sys, time, os, urllib2, shelve, string, xmltramp, mimetools, mimetypes, md5, webbrowser, traceback
 #
 #   Requires:
 #       xmltramp http://www.aaronsw.com/2002/xmltramp/
 #       flickr account http://flickr.com
 #
-#Most credit goes to: Cameron Mallory
-#Minor changes to include with ccPublisher made by Robert Litzke
-#   This code has been updated to use the new Auth API from flickr.
+#    Most credit goes to: Cameron Mallory
+#    Minor changes to include with ccPublisher made by Robert Litzke (auto-licenser, etc)
+#    This code has been updated to use the new Auth API from flickr.
 #
 #   You may use this code however you see fit in any form whatsoever.
-#
-#
-# Location to scan for new images 
 #
 #   Flickr settings
 #
@@ -24,9 +19,6 @@ FLICKR = {"title": "",
         "is_friend": "0",
         "is_family": "0" }
 
-##
-##  You shouldn't need to modify anything below here
-##
 FLICKR["secret" ] = "367567149e034a21"#"d8fb77bee73ab91b"
 FLICKR["api_key" ] = "6777b9af9f7b864b95f67c91e2c07310"#"2b22d953d654eb9e9ad25801238b4049"
 class APIConstants:
@@ -311,6 +303,10 @@ class Uploadr:
         xml = urllib2.urlopen( url ).read()
         return xmltramp.parse( xml )
     
+    """
+    Automatically set the license for the file online at Flickr. Flickr will display this license
+    Takes the photoid (returned by upload image) and the number of the license, 1-6 for creative commons, 0 otherwise
+    """
     def setLicense( self, photoid, licenseid ):
         print "setting license"
         d= {
@@ -324,18 +320,20 @@ class Uploadr:
         try:
             response=self.getResponse( url )
             print response
-            if ( self.isGood( response ) ):
-                print "SUCCESS!!"
-            else:
-                print "FAILED"
+            if not ( self.isGood( response ) ):
+                print "LICENSING FAILED"
         except:
             exc, val, tb = sys.exc_info()
             logfile = open("uploadrlog.txt", "a")
             traceback.print_exception(exc, val, tb, file=logfile)
             logfile.close()
-            del tb    
-    def uploadImage( self, image, title=None, desc=None,tags=None ):
-        if ( 0==0 ):#not self.uploaded.has_key( image ) ):
+            del tb
+    """
+    This method does all the heavy lifting, calling everything else and setting things up. Just call
+    this method with the appropriate arguments and everything is set.
+    """
+    def uploadImage( self, image, title=None, desc=None, tags=None, license=0 ):
+        if ( 0==0 ):
             print "Uploading ", image , "...",
             try:
                 photo = ('photo', image, open(image,'rb').read())
@@ -356,10 +354,7 @@ class Uploadr:
                 xml = urllib2.urlopen( url ).read()
                 res = xmltramp.parse(xml)
                 if ( self.isGood( res ) ):
-                    #print "successful."
-                    #print 'SIG:'+sig
-                    #print 'API KEY:'+FLICKR[self.api.key ]
-                    self.setLicense(res.photoid, 2)
+                    self.setLicense(res.photoid, license)
                 else :
                     print "problem..."
                     self.reportError( res )
