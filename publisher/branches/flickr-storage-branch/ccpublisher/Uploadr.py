@@ -89,15 +89,20 @@ class Uploadr:
         foo += "&" + self.api.licenseid + "=" + str(lic) + "&" + self.api.token + "=" + str(tok) #+ "&" +self.api.sig + "=" + sig
         return foo
  
-    #
-    #   Authenticate user so we can upload images
-    #
+    """
+    Authenticate the application, and store token
+    """
     def authenticate( self ):
-        print "Getting new Token"
+        print "Authenticating"
         self.getFrob()
         self.getAuthKey()
     
+    """
+    Since we can't be sure if ccPublisher stores authentication information by caching the Token,
+    we must run this section every time we use the application, right before uploading images
+    """
     def authenticatePt2( self ):
+        self.getFrob()
         self.getToken()   
         self.cacheToken()
     """
@@ -139,17 +144,10 @@ class Uploadr:
             }
         sig = self.signCall( d )
         url = self.urlGen(self.api.auth, d, sig )
-        ans = ""
         try:
             webbrowser.open( url )
-            #ans = raw_input("Have you authenticated this application? (Y/N): ")
         except:
-            print str(sys.exc_info())
-        #if ( ans.lower() == "n" ):
-        #    print "You need to allow this program to access your Flickr site."
-        #    print "A web browser should pop open with instructions."
-        #    print "After you have allowed access restart uploadr.py"
-        #    sys.exit()    
+            print str(sys.exc_info())  
 
     """
     http://www.flickr.com/services/api/flickr.auth.getToken.html

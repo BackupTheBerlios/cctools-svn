@@ -694,36 +694,6 @@
         
         <flag>wxALIGN_RIGHT</flag>
       </object>
-      <object class="sizeritem">
-        <object class="wxTextCtrl" name="TXT_RDF">
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          <style>wxTE_MULTILINE|wxTE_READONLY</style>
-        </object>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <flag>wxALL|wxGROW</flag>
-      </object>
       <vgap>5</vgap>
       <growablecols>0</growablecols>
       <growablerows>5</growablerows>
