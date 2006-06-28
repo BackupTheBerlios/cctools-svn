@@ -19,6 +19,12 @@
      />
 
   <storage
+     name="Flickr Storage"
+     description="Upload images to Flickr.com, a commercial image host."
+     factory="ccpublisher.flickr.FlickrStorage"
+     />
+	 
+  <storage
      name="Self-hosted files"
      description="Create metadata suitable for use with files hosted on your web site."
      factory="ccpublisher.selfhost.SelfHostStorage"

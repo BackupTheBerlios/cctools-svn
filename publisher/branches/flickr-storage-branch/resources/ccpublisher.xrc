@@ -20,10 +20,8 @@
           
           
           
-          
           <bitmap>publishguy.gif</bitmap>
         </object>
-        
         
         
         
@@ -41,7 +39,6 @@
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -74,10 +71,8 @@
           
           
           
-          
           <label>ccPublisher 2</label>
         </object>
-        
         
         
         
@@ -110,10 +105,8 @@
           
           
           
-          
           <label>release 1.9.1</label>
         </object>
-        
         
         
         
@@ -131,7 +124,6 @@
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -164,11 +156,9 @@
         
         
         
-        
         <flag>wxGROW</flag>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -201,10 +191,8 @@
           
           
           
-          
           <label>copyright 2004-2006, Creative Commons</label>
         </object>
-        
         
         
         
@@ -237,10 +225,8 @@
           
           
           
-          
           <label>licensed under the GNU GPL version 2.0</label>
         </object>
-        
         
         
         
@@ -258,7 +244,6 @@
         <flag>wxALIGN_CENTRE_HORIZONTAL</flag>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -291,9 +276,7 @@
           
           
           
-          
           <label>OK</label>
-          
           
           
           
@@ -310,7 +293,6 @@
           
           <default>1</default>
         </object>
-        
         
         
         
@@ -348,11 +330,9 @@
           
           
           
-          
           <label>This is your verification RDF.</label>
         </object>
       
-        
         
         <flag>wxGROW</flag>
       </object>
@@ -370,10 +350,8 @@
           
           
           
-          
           <label>Copy and paste the text below into the document at </label>
         </object>
-        
         
         
         
@@ -402,10 +380,8 @@
           
           
           
-          
           <label>http://example.com/</label>
         </object>
-        
         
         
         
@@ -434,11 +410,9 @@
           
           
           
-          
           <label>After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder.</label>
         </object>
       
-        
         
         <flag>wxGROW</flag>
       </object>
@@ -456,10 +430,8 @@
           
           
           
-          
           <label>Save</label>
         </object>
-        
         
         
         
@@ -488,10 +460,8 @@
           
           
           
-          
           <style>wxTE_MULTILINE|wxTE_READONLY</style>
         </object>
-        
         
         
         
@@ -511,12 +481,65 @@
       <growablerows>5</growablerows>
     </object>
   </object>
-  <object class="wxPanel" name="IA_COMPLETE">
+  <object class="wxPanel" name="FLICKR_COMPLETE">
     <object class="wxFlexGridSizer">
       <cols>1</cols>
       <object class="sizeritem">
         <object class="wxStaticText">
           
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>Your files have been uploaded to Flickr.com! Check your account to verify that they are online.</label>
+        </object>
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxEXPAND</flag>
+      </object>
+      <growablecols>0</growablecols>
+      <object class="spacer">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <size>10,10</size>
+      </object>
+    </object>
+  </object>
+  <object class="wxPanel" name="IA_COMPLETE">
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <object class="sizeritem">
+        <object class="wxStaticText">
           
           
           
@@ -545,7 +568,6 @@
         
         
         
-        
         <flag>wxEXPAND</flag>
       </object>
       <growablecols>0</growablecols>
@@ -564,11 +586,9 @@
           
           
           
-          
           <label>You can view your work online shortly at:</label>
         </object>
       
-        
         
         
         
@@ -597,9 +617,116 @@
         
         
         
-        
         <size>10,10</size>
       </object>
+    </object>
+  </object>
+  <object class="wxPanel" name="FLICKR_WARNING">
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>FLICKR.</label>
+        </object>
+      
+        
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder.</label>
+        </object>
+      
+        
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxButton" name="CMD_AUTH_RDF">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>Authenticate</label>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxALIGN_RIGHT</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxTextCtrl" name="TXT_RDF">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <style>wxTE_MULTILINE|wxTE_READONLY</style>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxALL|wxGROW</flag>
+      </object>
+      <vgap>5</vgap>
+      <growablecols>0</growablecols>
+      <growablerows>5</growablerows>
     </object>
   </object>
   <object class="wxPanel" name="CCTAG_WELCOME">
@@ -619,11 +746,24 @@
           
           
           
-          
           <label>This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:</label>
         </object>
-      
+		<object class="spacer">
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+		  <size>20,20</size>
+		</object>
         
         <flag>wxGROW</flag>
       </object>
@@ -631,7 +771,6 @@
       <growablecols>0</growablecols>
       <object class="sizeritem">
         <object class="wxStaticText">
-          
           
           
           
@@ -658,36 +797,28 @@
         
         
         
-        
         <flag>wxGROW</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
-          
           <label>2) Choose your Creative Commons license</label>
         </object>
-        
         <flag>wxGROW</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
-          
-          <label>3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service</label>
+          <label>3) Optionally send your Creative Commons licensed files to the Internet Archive or Flickr, free hosting services</label>
         </object>
-        
         <flag>wxGROW</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
-          
           <label>4) Get a URL where you and your friends can download your file</label>
         </object>
-        
         <flag>wxGROW</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText">
-          
           
           
           
@@ -702,7 +833,6 @@
           
           <label>Click Next to get started.</label>
         </object>
-        
         
         
         
@@ -731,7 +861,6 @@
           
           
           
-          
           <label>How does this work?</label>
           
           
@@ -744,11 +873,9 @@
           
           
           
-          
-          
+          <flag>wxGROW</flag>
           <style>wxNO_BORDER</style>
         </object>
-        
         
         
         
@@ -774,9 +901,7 @@
         
         
         
-        
         <cellpos>2,1</cellpos>
-        
         
         
         
@@ -792,7 +917,6 @@
         <cellspan>1,1</cellspan>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -836,9 +960,7 @@
               
               
               
-              
               <size>5,5</size>
-              
               
               
               
@@ -869,12 +991,10 @@
                   
                   
                   
-                  
                   <size>12,12</size>
                 </object>
                 <object class="sizeritem">
                   <object class="wxStaticText" name="LBL_HEADER_TEXT">
-                    
                     
                     
                     
@@ -900,9 +1020,7 @@
                     
                     
                     
-                    
                     <font>
-                      
                       
                       
                       
@@ -928,9 +1046,7 @@
                       
                       
                       
-                      
                       <style>default</style>
-                      
                       
                       
                       
@@ -956,7 +1072,6 @@
                       
                       
                       
-                      
                       <family>bold</family>
                       
                       
@@ -970,9 +1085,7 @@
                       
                       
                       
-                      
                       <underlined>False</underlined>
-                      
                       
                       
                       
@@ -1000,12 +1113,10 @@
                   
                   
                   
-                  
                   <flag>wxEXPAND|wxALIGN_CENTRE_VERTICAL</flag>
                 </object>
                 <growablecols>0</growablecols>
               </object>
-              
               
               
               
@@ -1039,9 +1150,7 @@
         
         
         
-        
         <flag>wxEXPAND</flag>
-        
         
         
         
@@ -1067,9 +1176,7 @@
         
         
         
-        
         <cellpos>0,0</cellpos>
-        
         
         
         
@@ -1108,10 +1215,8 @@
                       
                       
                       
-                      
                       <label>Prev</label>
                     </object>
-                    
                     
                     
                     
@@ -1140,9 +1245,7 @@
                       
                       
                       
-                      
                       <label>Next</label>
-                      
                       
                       
                       
@@ -1175,12 +1278,10 @@
                     
                     
                     
-                    
                     <size>2,2</size>
                   </object>
                 </object>
               </object>
-              
               
               
               
@@ -1206,9 +1307,7 @@
               
               
               
-              
               <cellpos>2,1</cellpos>
-              
               
               
               
@@ -1237,9 +1336,7 @@
         
         
         
-        
         <flag>wxALL|wxEXPAND</flag>
-        
         
         
         
@@ -1271,11 +1368,9 @@
       
       
       
-      
       <label>Delete</label>
     </object>
     <object class="wxMenuItem" name="MNU_FL_BROWSE">
-      
       
       
       
@@ -1306,10 +1401,8 @@
           
           
           
-          
           <label>Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive.</label>
         </object>
-        
         
         
         
@@ -1323,7 +1416,6 @@
         <flag>wxEXPAND</flag>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -1348,10 +1440,8 @@
           
           
           
-          
           <label>ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available.</label>
         </object>
-        
         
         
         
@@ -1365,7 +1455,6 @@
         <flag>wxEXPAND</flag>
       </object>
       <object class="spacer">
-        
         
         
         
@@ -1393,13 +1482,11 @@
               
               
               
-              
               <label>Identifier</label>
             </object>
           </object>
           <object class="sizeritem">
             <object class="wxTextCtrl" name="TXT_IDENTIFIER"/>
-            
             
             
             
@@ -1424,12 +1511,10 @@
         
         
         
-        
         <flag>wxEXPAND</flag>
       </object>
       <object class="sizeritem">
         <object class="wxStaticText" name="LBL_STATUS">
-          
           
           
           
@@ -1452,10 +1537,556 @@
         
         
         
+        <flag>wxEXPAND</flag>
+      </object>
+      <growablecols>0</growablecols>
+    </object>
+  </object>
+  <object class="wxPanel" name="IA_IDENTIFIER">
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive.</label>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="spacer">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <size>10,10</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available.</label>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="spacer">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <size>10,10</size>
+      </object>
+      <object class="sizeritem">
+        <object class="wxFlexGridSizer">
+          <cols>2</cols>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <label>Identifier</label>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxTextCtrl" name="TXT_IDENTIFIER"/>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <flag>wxEXPAND</flag>
+          </object>
+          <growablecols>1</growablecols>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText" name="LBL_STATUS">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label></label>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         <flag>wxEXPAND</flag>
       </object>
       <growablecols>0</growablecols>
     </object>
+  </object>
+  
+  <object class="wxDialog" name="FRM_HOW_WORKS">
+    <title>ccPublisher</title>
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <vgap>10</vgap>
+      <hgap>10</hgap>
+      <object class="sizeritem">
+        <object class="wxPanel" name="PNL_HEADER">
+          <bg>#729cb3</bg>
+          <object class="wxFlexGridSizer">
+            <cols>2</cols>
+            <growablecols>0</growablecols>
+            <object class="sizeritem">
+              <object class="wxStaticText">
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <label>ccPublisher</label>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <font>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <size>18</size>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <family>default</family>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <style>normal</style>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <weight>bold</weight>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <underlined>0</underlined>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <face>Sans</face>
+                </font>
+              </object>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <flag>wxALL|wxGROW</flag>
+            
+              
+              
+              
+              
+              
+              
+              
+              <border>10</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxStaticBitmap">
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <bitmap></bitmap>
+              </object>
+            </object>
+          </object>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>What is ccPublisher?</label>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <font>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <size>12</size>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <family>default</family>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <style>normal</style>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <weight>bold</weight>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <underlined>0</underlined>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <face>Sans</face>
+          </font>
+        </object>
+        
+      
+        
+        
+        
+        
+        
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. </label>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxALL|wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>What is ccPublisher?</label>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <font>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <size>12</size>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <family>default</family>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <style>normal</style>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <weight>bold</weight>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <underlined>0</underlined>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <face>Sans</face>
+          </font>
+        </object>
+        
+      
+        
+        
+        
+        
+        
+        <flag>wxGROW</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticText" name="TXT">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <label>It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. </label>
+        </object>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <flag>wxALL|wxGROW</flag>
+      </object>
+      <growablerows>2</growablerows>
+      <growablerows>4</growablerows>
+      <growablecols>0</growablecols>
+      <object class="spacer">
+        
+        
+        
+        
+        <size>20,20</size>
+      </object>
+    </object>
+    <size>420,-1</size>
   </object>
 </resource>
