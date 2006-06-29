@@ -44,10 +44,10 @@ def flickrMetadataUi(storage):
             import p6.ui.pages.fieldrender
             
             # create the simple page
-            fields = [
-                p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
-                'vurl', 'Verification URL'),
-                ]
+            fields = []
+            #    p6.metadata.base.metadatafield(p6.metadata.types.ITextField)(
+            #    'vurl', 'Verification URL'),
+            #    ]
             self.__pages = []
             self.__pages.append(
                 lambda x: ui.flickr.WarningPage(x, self.storage)
@@ -71,9 +71,9 @@ def flickrMetadataUi(storage):
         def callback(self, value_dict):
 
             # make sure the verification URL is specified
-            if not( ('vurl' in value_dict) and (value_dict['vurl']) ):
-                raise p6.extension.exceptions.ExtensionSettingsException(
-                    "You must supply the verification URL.")
+            #if not( ('vurl' in value_dict) and (value_dict['vurl']) ):
+            #    raise p6.extension.exceptions.ExtensionSettingsException(
+            #        "You must supply the verification URL.")
 
             # store the credentials for future use
             #self.storage.verification_url = value_dict['vurl']
@@ -103,9 +103,16 @@ class FlickrStorage(p6.metadata.base.BasicMetadataStorage,
 
     def store(self, event=None):       
         # get the verification URL
-        v_url = ""
+        #v_url = ""
         titlei=api.findField('title')
         descriptioni=api.findField('description')
+        tagsi=api.findField('keywords')
+        tagList=tagsi.split(",")
+        tagsi=""
+        for tag in tagList: #Flickr is space delimited, so we must enclose keywords in double quotes if they have a space
+            if tag.find(" ")>0:
+                tag='"'+tag+'"'
+            tagsi=tagsi+","+tag
         #Get the license information to transfer to Flickr
         license_xml = etree.fromstring(api.getApp().license_doc)
         license_full = license_xml.find('license-name').text
@@ -125,11 +132,13 @@ class FlickrStorage(p6.metadata.base.BasicMetadataStorage,
             lic=6
         elif license == "Attribution-ShareAlike":
             lic=5
-        #tagsi=api.findField('keywords')
+        
         
         #Make an Uploadr object and then upload everything. Must authenticate here automatically (gets Frob, Token, etc
         # in case the filesystem doesn't cache the token.
         uploadMe=Uploadr.Uploadr()
         uploadMe.authenticatePt2()
+        i=0
         for item in api.getApp().items[1:]:
-           uploadMe.uploadImage(item.getIdentifier(),title=titlei,desc=descriptioni,license=lic)
+           uploadMe.uploadImage(item.getIdentifier(),title=titlei,desc=descriptioni,tags=tagsi,license=lic)
+           i+=1

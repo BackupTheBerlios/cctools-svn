@@ -28,6 +28,8 @@ class WarningPage(ccwx.xrcwiz.XrcWizPage):
         self.Bind(wx.EVT_BUTTON, self.onAuth, XRCCTRL(self, "CMD_AUTH_FLKR"))
         self.__storage = storage
         self.changed = False
+        def onChanged(selfself, event):
+            self.Fit()
 
     #on Authentication, make an Uploadr object and authenticate
     def onAuth(self, event):

@@ -626,7 +626,7 @@
       <cols>1</cols>
       <object class="sizeritem">
         <object class="wxStaticText">
-          <label>Flickr requires you to authenticate ccPublisher before continuing. You must have a Flickr account to do so. If you have an account, simply click the "Authenticate" button below. You only need to do this the first time you use ccPublisher. After authentication, click next to continue, upload your images to Flickr.com. This might take some time, depending upon the size and number of images you are uploading.</label>
+          <label>Flickr requires you to authenticate ccPublisher before continuing; you must have a Flickr account to do so. If you have an account, simply click the "Authenticate" button below. You only need to do this the first time you use ccPublisher. After authentication, click next to continue and finish uploading your images to Flickr.com. This might take some time, depending upon the size and number of images you are uploading.</label>
         </object>
         <flag>wxEXPAND</flag>
       </object>
