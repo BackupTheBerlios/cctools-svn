@@ -13,12 +13,14 @@
   <include package="ccpublisher" />
 
   <storage
+     id="ARCHIVE_STORAGE"
      name="Internet Archive Storage"
      description="Upload works to the Internet Archive (www.archive.org)."
      factory="ccpublisher.ia.ArchiveStorage"
      />
 
   <storage
+     id="SELFHOST_STORAGE"
      name="Self-hosted files"
      description="Create metadata suitable for use with files hosted on your web site."
      factory="ccpublisher.selfhost.SelfHostStorage"
@@ -114,8 +116,7 @@
 	for="p6.storage.interfaces.IWork
              p6.storage.interfaces.IWorkItem"  />
 
-    <storageSelector 
-        multi="False" />
+    <storageSelector />
 
     <extensionPoint
 	for="p6.extension.interfaces.IStorageMetaCollection" />

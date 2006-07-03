@@ -80,16 +80,11 @@ class ArchiveStorageUi(object):
         self.__pages.append(lambda x: ui.ia.FinalPage(x, self.__storage))
 
     def list(self):
-        # see if we've been activated
-        if (self.__storage.activated()):
 
-            if self.__pages is None:
-                self.createPages()
+        if self.__pages is None:
+            self.createPages()
 
-            return self.__pages
-        else:
-            # not activated, so don't ask for information
-            return []
+        return self.__pages
 
 
 class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
@@ -98,8 +93,6 @@ class ArchiveStorage(p6.metadata.base.BasicMetadataStorage,
     zope.interface.implements(p6.metadata.interfaces.IMetadataStorage,
                               p6.storage.interfaces.IStorage)
 
-    id = 'ARCHIVE_STORAGE'
-    
     # metadata interface
     def __init__(self):
         p6.metadata.base.BasicMetadataStorage.__init__(self)

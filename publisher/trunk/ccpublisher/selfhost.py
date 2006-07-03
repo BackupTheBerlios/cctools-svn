@@ -64,16 +64,11 @@ def selfhostMetadataUi(storage):
                 )
             
         def list(self):
-            # see if we've been activated
-            if (self.__storage.activated()):
-                
-                if self.__pages is None:
-                    self.createPages()
 
-                return self.__pages
-            else:
-                # not activated, so don't ask for information
-                return []
+            if self.__pages is None:
+                self.createPages()
+
+            return self.__pages
 
         def callback(self, value_dict):
 
@@ -94,8 +89,6 @@ class SelfHostStorage(p6.metadata.base.BasicMetadataStorage,
     
     zope.interface.implements(p6.metadata.interfaces.IMetadataStorage,
                               p6.storage.interfaces.IStorage)
-
-    id = 'SELFHOST_STORAGE'
 
     # metadata interface
     def __init__(self):

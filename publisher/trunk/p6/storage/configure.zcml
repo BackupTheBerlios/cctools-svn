@@ -4,6 +4,10 @@
     i18n_domain="p6"
     >
 
+  <utility 
+      factory="p6.storage.registry.StorageRegistry"
+      />
+
   <adapter
       for=".interfaces.IFileItem"
       provides=".interfaces.IInputStream"

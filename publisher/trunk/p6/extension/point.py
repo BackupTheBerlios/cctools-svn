@@ -37,31 +37,3 @@ class ExtensionPoint(object):
         print  [n.list() for n in subs if n is not None]
         
         return [n.list() for n in subs if n is not None]
-
-## class ExtensionPointTarget(object):
-##     def __init__(self, interface):
-##         zope.interface.directlyImplements(self, interface)
-
-        
-## class activatedStorageExtension(object):
-##     zope.interface.implements(interfaces.IExtensionPoint)
-
-##     def __init__(self, iTarget):
-##         self.__target = iTarget
-
-
-##     def call(self):
-##         targetObj = ExtensionPointTarget(self.__target)
-##         result = []
-        
-##         for n in p6.api.getApp().storage:
-
-##             if interfaces.IActivated in zope.interface.implementedBy(n):
-##                 # this object is activated
-##                 a = zope.component.queryMultiAdapter( (n, targetObj),
-##                                                       IPageList )
-
-##                 if a:
-##                     result.append(a(n, targetObj))
-
-##         return result

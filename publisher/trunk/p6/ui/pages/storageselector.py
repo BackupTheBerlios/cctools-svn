@@ -1,5 +1,3 @@
-"""Basic file selector page; published ItemSelected events."""
-
 import wx
 import wx.xrc
 from wx.xrc import XRCCTRL
@@ -41,25 +39,24 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
         self.GetSizer().Clear()
         
         # get a list of storage providers
-        providers = p6.api.getApp().storage
-        provider_info = []
+        storage_registry = zope.component.getUtility(
+            p6.storage.registry.IStorageRegistry)
 
-        # get the information for all providers
-        for p in providers:
-            provider_info.append( (p.id, p.name, p.description) )
+        # iterate through list and add each to the UI
+        for p_id in storage_registry.identifiers():
 
-        for p in provider_info:
-            # XXX need to handle self._multi here
+            # get a handle to the storage provider
+            provider = storage_registry[p_id]
             
             # set the first item to wx.RB_GROUP to make them mutually exclusive
-            if p == provider_info[0]:
+            if p_id == storage_registry.identifiers()[0]:
                 style = wx.RB_GROUP
             else:
                 style = 0
 
             # create the new radio button
-            rdbItem = wx.RadioButton(self, label=p[1], style=style)
-            rdbItem.id = p[0]
+            rdbItem = wx.RadioButton(self, label=_(provider.name), style=style)
+            rdbItem.id = provider.id
 
             self.__options.append(rdbItem)
             self.GetSizer().Add(rdbItem)
@@ -69,7 +66,9 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
             desc_sizer.AddGrowableCol(1)
             desc_sizer.AddGrowableRow(0)
             desc_sizer.AddSpacer((20, 5))
-            desc_sizer.Add(wx.StaticText(self, -1, p[2], style=wx.EXPAND))
+            desc_sizer.Add(wx.StaticText(self, -1,
+                                      _(provider.description),
+                                      style=wx.EXPAND))
             self.GetSizer().Add(desc_sizer)
     
     def onChanged(self, event):
@@ -77,27 +76,21 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
             self.init()
 
     def onChanging(self, event):
-        # store the provider selection by decorating classes with
-        # IActivated or IDeactivated... XXX: we also need a way
-        # to "undecorate" classes.
+        # activate the selected provider and declare the others deactivated
+
+        storage_registry = zope.component.getUtility(
+            p6.storage.registry.IStorageRegistry)
 
         for rdbOption in self.__options:
-            provider = [n for n in p6.api.getApp().storage
-                        if n.id == rdbOption.id][0]
 
             if rdbOption.GetValue():
-                # this option is selected
-                zope.interface.directlyProvides(provider,
-                    p6.extension.interfaces.IActivated)
+                storage_registry[rdbOption.id].activate()
             else:
-                # remove the IActivated interface if necessary
-                zope.interface.directlyProvides(provider, 
-                    p6.extension.interfaces.IDeactivated)
+                storage_registry[rdbOption.id].deactivate()
 
     def validate(self, event):
         return True
     
-
     XRCID = "STORAGE_SELECTOR"
     PAGE_XRC = """
 <resource>

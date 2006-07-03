@@ -16,13 +16,6 @@ class CommonStorageMixin(object):
                 p6.api.deinstify(self.__wrapStore))
             )
 
-    def activated(self):
-        """Return True if self has been decorated with the IActivated
-        interface."""
-
-        return (p6.extension.interfaces.IActivated in
-                zope.interface.directlyProvidedBy(self))
-
     def validate(self, event=None):
         """Handle L{p6.storage.events.IValidate} events by simply
         updating the progress bar."""

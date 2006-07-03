@@ -12,6 +12,13 @@ _ = unicode
 
 class IStorageDirective(zope.interface.Interface):
     """Storage instantiation."""
+
+    id = zope.configuration.fields.PythonIdentifier(
+        title=u"Identifier",
+        description=u"Unique identifier for this storage provider.",
+        required=True,
+        )
+    
     name = zope.configuration.fields.MessageID(
         title=u"Name.",
         description=u"",
@@ -186,12 +193,6 @@ class IStorePageSubdirective(zope.interface.Interface):
 class IStorageSelector(zope.interface.Interface):
     """A page which allows users to select one or more storage providers
     to upload to."""
-
-    multi = zope.configuration.fields.Bool(
-        title = _("Multiple"),
-        description = _("Allow multiple storage providers to be selected."),
-        required=False,
-        )
 
 class IExtensionPoint(zope.interface.Interface):
     """ XXX """

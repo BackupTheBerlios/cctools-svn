@@ -1,3 +1,5 @@
+import zope.component
+
 import p6
 import p6.api
 
@@ -21,17 +23,17 @@ class ExtensionDirective(object):
 class StorageDirective(object):
     """A storage declaration."""
 
-    def __init__(self, _context, name, factory, description=''):
+    def __init__(self, _context, id, name, factory, description=''):
 
-        app = p6.api.getApp()
-        if app is not None:
-            if getattr(app, 'storage', None) is None:
-                app.storage = []
-
-            _context.action(discriminator=None,
-                            callable=app.registerStorage,
-                            args=(name, factory, description),
-                            )
+        # we construct a lambda here since the registry won't actually be
+        # instantiated until the entire application is configured
+        deferred_lookup = lambda w,x,y,z: zope.component.getUtility(
+            p6.storage.registry.IStorageRegistry).register(w,x,y,z)
+        
+        _context.action(discriminator=('storage', name, ),
+                        callable=deferred_lookup,
+                        args=(id, name, factory, description),
+                        )
         
 class MGroupDirective(object):
     """A metadata group."""
@@ -118,7 +120,7 @@ class PagesDirective(object):
         if self.__running:
             p6.api.getApp().pages.append(pagegen)
 
-    def storageSelector(self, _context, multi=False):
+    def storageSelector(self, _context):
         if self.__running:
             _context.action(discriminator=('RegisterPage', 'StorageSelector',
                                            p6.ui.pages.StorageSelectorPage),
