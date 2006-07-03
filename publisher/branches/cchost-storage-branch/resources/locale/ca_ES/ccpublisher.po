@@ -1,0 +1,285 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
+"PO-Revision-Date: 2006-06-20 09:27+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "Si us plau, entreu la URL on hostatjareu les metadades de verificació. En la majoria de casos, serà la pàgina que enllaçareu des del vostre fitxer MP3."
+
+msgid "Verification URL"
+msgstr "URL de verificació"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "Nom d'usuari"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "Contrasenya"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "Voleu desar el vostre nom d'usuari i la vostra contrasenya?"
+
+#: /ccpublisher/ui/welcome.py:23
+msgid "Welcome"
+msgstr "Benvinguts"
+
+#: /ccpublisher/ia.py:204
+msgid "The selected file %s can not be found."
+msgstr "No s'ha trobat el fitxer %s seleccionat."
+
+#: /ccpublisher/ia.py:226
+msgid "ccPublisher does not have sufficient permissions to read the selected files."
+msgstr "El ccPublisher no té prou permissos per llegir els fitxers seleccionats."
+
+#: /ccpublisher/selfhost.py:58
+msgid "Self Hosted Files"
+msgstr "Fitxers auto hostatjats"
+
+#: /ccpublisher/ui/ia.py:100
+msgid "Internet Archive login"
+msgstr "Entrada al Internet Archive"
+
+#: /ccpublisher/ui/ia.py:119
+msgid "Invalid username or password."
+msgstr "Nom d'usuari o contrasenya incorrectes."
+
+#: /ccpublisher/ui/ia.py:122
+msgid "Unable to connect to the Internet Archive to verify username and password."
+msgstr "No ha esta possible connectar amb el Internet Archive per verificar el nom d'usuari i la contrasenya."
+
+#: /ccpublisher/ui/ia.py:29
+msgid "Item Identifier"
+msgstr "Identificador de l'element"
+
+#: /ccpublisher/ui/ia.py:53
+msgid "That identifier does not conform to the Internet Archive's naming standards."
+msgstr "Aquest identificador no segueix els estàndards de nom del Internet Archive."
+
+#: /ccpublisher/ui/ia.py:59
+msgid "That identifier is not available."
+msgstr "Aquest identificador no està disponible."
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account."
+msgstr "Entreu el vostre nom d'usuari i la contrasenya del Internet Archive. Si no en teniu, visiteu http://archive.org per crear un nou compte."
+
+#: /ccpublisher/ui/selfhost.py:24
+msgid "Complete"
+msgstr "Finalització"
+
+#: /ccpublisher/ui/selfhost.py:53
+msgid "Unable to write to the selected file."
+msgstr "No ha estat possible escriure en el fitxer seleccionat."
+
+#: /ccpublisher/validators.py:15
+msgid "You must supply a description of at least 5 words."
+msgstr "Heu d'escriure una descripció de 5 paraules com a mínim."
+
+#: /ccpublisher/validators.py:6
+msgid "You must supply a title."
+msgstr "Heu d'indicar un títol."
+
+#: /resources/app.zcml:59
+msgid "Description"
+msgstr "Descripció"
+
+#: /resources/app.zcml:15
+msgid "Upload works to the Internet Archive (www.archive.org)."
+msgstr "Obres pujades al Internet Archive (www.archive.org)."
+
+#: /resources/app.zcml:15
+msgid "Internet Archive Storage"
+msgstr "Dipòsit en el Internet Archive"
+
+#: /resources/app.zcml:21
+msgid "Create metadata suitable for use with files hosted on your web site."
+msgstr "Creeu les metadades adients per ser utilitzades amb els fitxers hostatjats en el vostre lloc web."
+
+#: /resources/app.zcml:21
+msgid "Self-hosted files"
+msgstr "Fitxers auto hostatjats"
+
+#: /resources/app.zcml:27
+msgid "Metadata helps others to find your works."
+msgstr "Les metadades ajuden a trobar les vostres obres."
+
+#: /resources/app.zcml:27
+msgid "Tell Us About Your Files"
+msgstr "Informació dels vostres fitxers"
+
+#: /resources/app.zcml:34
+msgid "Copyright Holder"
+msgstr "Titular dels drets d'autor"
+
+#: /resources/app.zcml:39
+msgid "Copyright Year"
+msgstr "Any de registre"
+
+#: /resources/app.zcml:44
+msgid "Title of Work"
+msgstr "Nom de l'obra"
+
+#: /resources/app.zcml:51
+msgid "Work Format"
+msgstr "Format de l'obra"
+
+#: /resources/app.zcml:65
+msgid "(separated with a comma)"
+msgstr "(separades per comes)"
+
+#: /resources/app.zcml:65
+msgid "Keywords help users find works by topic."
+msgstr "Les paraules clau ajuden els usuaris a trobar les obres per temàtica."
+
+#: /resources/app.zcml:65
+msgid "Keywords"
+msgstr "Paraules clau"
+
+#: /resources/app.zcml:74
+msgid "Select File Formats"
+msgstr "Seleccioneu el format dels fitxres"
+
+#: /resources/app.zcml:80
+msgid "File Format"
+msgstr "Format del fitxer"
+
+#: /resources/app.zcml:87
+msgid "Choose Your License"
+msgstr "Escolliu la vostra llicència"
+
+#: /resources/app.zcml:94
+msgid "License"
+msgstr "Llicència"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "licensed under the GNU GPL version 2.0"
+msgstr "Subjecte a llicència GNU GPL versió 2.0"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
+msgstr "Després d'enganxar el text de verificació en la vostra pàgina web, el vostre fitxer està preparat per ser compartit; només cal que el col·loqueu en la vostra carpeta compartida."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Prev"
+msgstr "Previ"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "2) Choose your Creative Commons license"
+msgstr "2) Escolliu la vostra llicència de Creative Commons"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "OK"
+msgstr "D'acord"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "1) Drag and drop your audio or video files"
+msgstr "1) Arrossegueu i deixeu anar els vostres fitxers d'àudio i vídeo"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Next"
+msgstr "Següent"
+
+msgid "Quit"
+msgstr "Abandona"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Browse..."
+msgstr "Navega..."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "You can view your work online shortly at:"
+msgstr "Ben aviat podreu veure la vostra obra en línia a:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Identifier"
+msgstr "Identificador"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "També us permet pujar els vostres fitxers al Internet Archive per aprofitar-vos de l'hostatjament gratuït. El ccPublisher és una eina que us ajudarà a posar a la xarxa els vostres fitxers d'àudio i vídeo amb una llicència de Creative Commons. També us permet pujar els vostres fitxers al Internet Archive per aprofitar-vos de l'hostatjament gratuït."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Delete"
+msgstr "Esborra"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Click Next to get started."
+msgstr "Cliqueu Següent per començar"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "El ccPublisher és una eina que us ajudarà a posar a la xarxa els vostres fitxers d'àudio i vídeo amb una llicència de Creative Commons. També us permet pujar els vostres fitxers al Internet Archive per aprofitar-vos de l'hostatjament gratuït."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Copy and paste the text below into the document at "
+msgstr "Copieu i enganxeu el text inferior en el docuement a"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Filelist"
+msgstr "Llistat de fitxers"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "copyright 2004-2006, Creative Commons"
+msgstr "copyright 2004-2006, Creative Commons"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service"
+msgstr "3) Opcionalment, envieu els vostres fitxers amb llicència de Creative Commons al Internet Archive, un servei d'hostatjament gratuït"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher 2"
+msgstr "ccPubliher 2"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "release 1.9.1"
+msgstr "versió 1,9.1"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available."
+msgstr "El ccPublisher ha muntat un identificador com a suggereriment a partir de les metadades que heu facilitat. Els identificadors han de ser com a mínim de cinc caracters i poden contenir majúscules i mínúscules (A-Z, a-z), dígits (0-9), subratllats (_) i puntuacions(.).  Podeu canviar-lo ara; cliqueu Següent per verificar que està disponible."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "4) Get a URL where you and your friends can download your file"
+msgstr "4) Obtingueu una URL des d'on us podreu descarregar el vostre fitxer"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This is your verification RDF."
+msgstr "Aquesta és la vostra verificació RDF"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Save"
+msgstr "Desa"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "How does this work?"
+msgstr "Com funciona això?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Is this file Creative Commons licensed?"
+msgstr "Aquest fitxer té una llicència  de Creative Commons "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive."
+msgstr "Cada element en el Internet Archive té un identificador únic que forma part de la URL. Aquest identificador no pot ser canviat després d'haver tramés l'obra al Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
+msgstr "Aquesta eina us ajudarà a col·locar els vostres fitxers d'àudio i vídeo a la xarxa amb una llicència de Creative Commons. És senzill:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Your work has been uploaded to the Internet Archive."
+msgstr "La vostra obra ha esta pujada al Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "What is ccPublisher?"
+msgstr "Què és ccPublisher?"
+

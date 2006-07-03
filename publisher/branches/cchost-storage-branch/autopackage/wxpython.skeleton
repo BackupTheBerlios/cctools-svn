@@ -1,0 +1,18 @@
+[Meta]
+RootName: @wxpython.org/wxpython
+DisplayName: wxPython GUI Toolkit
+ShortName: wxpython
+Skeleton-Author: Nathan R. Yergler <nathan@creativecommons.org>
+Skeleton-Version: 1
+
+[Notes]
+Earliest detected version is wxPython 2.4 with new-style package layout. 
+Install to /usr/share/autopackage/skeletons/@wxpython.org/wxpython/skeleton.1
+
+[Test]
+testForPythonModule wx
+INTERFACE_VERSIONS=`python -c 'import wx; print wx.__version__' `
+SOFTWARE_VERSIONS=$INTERFACE_VERSIONS
+
+# We should probably publish some information about what wx libraries
+# (xrc, opengl, etc) are available -- maybe next time.

@@ -1,0 +1,17 @@
+[Meta]
+RootName: @creativecommons.org/p6
+DisplayName: P6 Publisher Framework
+ShortName: p6
+Skeleton-Author: Nathan R. Yergler <nathan@creativecommons.org>
+Skeleton-Version: 1
+Repository: http://drop.creativecommons.org/P6.xml
+
+[Notes]
+Earliest detected version is wxPython 2.4 with new-style package layout. 
+Install to /usr/share/autopackage/skeletons/@creativecommons.org/p6/skeleton.1
+
+[Test]
+INTERFACE_VERSIONS=`PYTHONPATH=$PREFIX/share/site-packages python -c 'import p6; print p6.VERSION' `
+SOFTWARE_VERSIONS=$INTERFACE_VERSIONS
+#testForPythonModule p6
+
