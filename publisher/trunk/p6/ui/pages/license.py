@@ -158,9 +158,16 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
             return None
 
         d = etree.fromstring(self._license_doc)
-        uri = d.find('license-uri').text
 
-        return uri
+        # look for the license-uri element
+        uri = d.find('license-uri')
+
+        if uri is not None:
+            # found
+            return uri.text
+        else:
+            # not found -- return an empty string
+            return ""
 
     def getLicenseName(self):
         """Extract the license name from the returned licensing document."""
