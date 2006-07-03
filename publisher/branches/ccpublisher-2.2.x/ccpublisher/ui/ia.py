@@ -36,7 +36,12 @@ class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
     def onChanged(self, event):
         """Show the default identifier."""
 
-        wx.Yield()
+        try: 
+            wx.Yield()
+        except wx._core.PyAssertionError, e:
+            # ignore assertion errors thrown
+            # when yield is called while yielding
+            pass
         
         if not(self.changed):
             XRCCTRL(self, "TXT_IDENTIFIER").SetValue(
