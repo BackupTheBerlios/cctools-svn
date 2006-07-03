@@ -82,13 +82,16 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 
             # check if the field is persistant and try to load it
             if field.persist:
-                print '... this field wants to persist...'
-                event = p6.metadata.events.LoadMetadataEvent(
-                    self.metagroup.appliesTo,
-                    self.metagroup, field,
-                    )
 
-                zope.component.handle(event)
+                persistUtility = zope.component.getUtility(
+                    p6.metadata.persistance.IMetadataPersistance)
+                
+                value = persistUtility.query(self.metagroup.id,
+                                             field.id)
+
+                # see if we have a value for this field
+                if value is not None:
+                    widget.SetValue(value)
 
     def onValidate(self, event):
         errors = []

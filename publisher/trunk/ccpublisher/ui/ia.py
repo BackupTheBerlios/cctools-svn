@@ -8,6 +8,8 @@ import wx.html
 import wx.lib.hyperlink
 from wx.xrc import XRCCTRL
 
+import zope.component
+
 import ccwx
 import pyarchive.identifier
 import pyarchive.exceptions
@@ -91,9 +93,12 @@ class ArchiveLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 
     def __init__(self, parent, storage):
         # check if we have persisted values for username/passwd
-        username = p6.metadata.persistance.load("ia", "username", "")
-        password = p6.metadata.persistance.load("ia", "password", "")
-        persist  = p6.metadata.persistance.load("ia", "persist", False)
+        persist = zope.component.getUtility(
+            p6.metadata.persistance.IMetadataPersistance)
+        
+        username = persist.query("ia", "username", "")
+        password = persist.query("ia", "password", "")
+        persist  = persist.query("ia", "persist", False)
 
         # create the simple page
         fields = [
@@ -137,20 +142,24 @@ class ArchiveLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
                 _("Unable to connect to the Internet Archive to verify username and password."))
 
         # store the credentials for future use
+        # XXX hack!
         self.storage.credentials = (value_dict['username'],
                                     value_dict['password'])
 
         # check if the user wanted to persist them
+        persist = zope.component.getUtility(
+            p6.metadata.persistance.IMetadataPersistance)
+        
         if value_dict['persist']:
             # store them
-            p6.metadata.persistance.store("ia", "username", value_dict['username'])
-            p6.metadata.persistance.store("ia", "password", value_dict['password'])
-            p6.metadata.persistance.store("ia", "persist", True)
+            persist.put("ia", "username", value_dict['username'])
+            persist.put("ia", "password", value_dict['password'])
+            persist.put("ia", "persist", True)
         else:
             # clear the potentially persisted values
-            p6.metadata.persistance.store("ia", "username", "")
-            p6.metadata.persistance.store("ia", "password", "")
-            p6.metadata.persistance.store("ia", "persist", False)
+            persist.clear("ia", "username")
+            persist.clear("ia", "password")
+            persist.clear("ia", "persist")
 
 
         # register for future storage events after validating our

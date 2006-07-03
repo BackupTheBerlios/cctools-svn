@@ -10,10 +10,10 @@
 	handler=".adapters.updateMetadata"
 	/>
 
-  <subscriber
-        for=".events.ILoadMetadataEvent"
-        handler=".adapters.loadMetadata"
-        />
+  <!-- register the metadata persistance utility -->
+  <utility 
+        factory=".persistance.ShelvePersistance"
+        provides=".persistance.IMetadataPersistance" />
 
   <!-- adapters for handling metadata update event adaptation -->
   <!-- One should be defined for circumstances where you want to

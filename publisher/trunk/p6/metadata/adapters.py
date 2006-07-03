@@ -74,6 +74,9 @@ def updateMetadata(event):
     @type event: object implementing L{p6.metadata.events.IUpdateMetadataEvent}
     """
 
+    persistUtility = zope.component.getUtility(
+        persistance.IMetadataPersistance)
+
     try:
         # store the value locally
         interfaces.IMetadataStorage(event.item).setMetaValue(
@@ -81,12 +84,9 @@ def updateMetadata(event):
 
         # check for persistance
         if event.field.persist and event.group.persistMode != 'never': 
-            # determine the item identifier
-            # (this may need to be revised at some point in the future)
-            identifier = persistance.item_id(event.item)
-            
-            persistance.store(event.field.group().id,
-                              event.field.id, event.value)
+
+            persistUtility.put(event.field.group().id,
+                               event.field.id, event.value)
             
     except TypeError, e:
         # look for all items of a particular instance.
@@ -102,40 +102,11 @@ def updateMetadata(event):
                     # check for persistance
                     if event.field.persist and \
                            event.field.group().persistMode != 'never': 
-                        # determine the item identifier
-                        identifier = persistance.item_id(item)
 
-                        persistance.store(str(event.field.group().id),
-                                          str(event.field.id), event.value)
+                        persistUtility.put(str(event.field.group().id),
+                                           str(event.field.id), event.value)
 
                 except TypeError, e:
                     print "unable to adapt %s" % repr(item)
                     pass
                 
-
-def loadMetadata(event):
-    """Event handler for L{p6.metadata.events.ILoadMetadataEvent}.  Attempts
-    to load the value for the field from persistant storage.
-
-    @param event: the event object to handle
-    @type event: object implementing L{p6.metadata.events.ILoadMetadataEvent}
-    """
-
-    try:
-        value = persistance.get(str(event.field.group().id),
-                                str(event.field.id))
-        if value:
-            event.value.append(value)
-
-        # publish an update metadata event
-        updateEvent = p6.metadata.events.UpdateMetadataEvent(
-            event.item,
-            event.field,
-            value
-            )
-        zope.component.handle(updateEvent)
-        
-    except KeyError, e:
-        pass
-    
-    
