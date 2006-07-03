@@ -57,11 +57,18 @@ class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
                 "Internet Archive's naming standards.") )
             event.Veto()
 
-        if not(pyarchive.identifier.available(archive_id)):
+        try:
+            if not(pyarchive.identifier.available(archive_id)):
+                p6.api.showError(
+                    _("That identifier is not available.") )
+                event.Veto()
+        except pyarchive.exceptions.MissingParameterException, e:
+            
             p6.api.showError(
-                _("That identifier is not available.") )
+                _("That identifier does not conform to the "
+                "Internet Archive's naming standards.") )
             event.Veto()
-
+            
         # both tests pass -- store the identifier
         self.storage.identifier = archive_id
         
