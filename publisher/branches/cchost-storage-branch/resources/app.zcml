@@ -13,6 +13,12 @@
   <include package="ccpublisher" />
 
   <storage
+     name="ccHost Installation Storage"
+     description="Upload works to any ccHost Installation, as ccMixter (www.ccMixter.org)."
+     factory="ccpublisher.cch.CCHostStorage"
+     />
+
+  <storage
      name="Internet Archive Storage"
      description="Upload works to the Internet Archive (www.archive.org)."
      factory="ccpublisher.ia.ArchiveStorage"
