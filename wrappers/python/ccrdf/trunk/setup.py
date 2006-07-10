@@ -25,7 +25,7 @@
 ##############################################################################
 """Setup for ccrdf package
 
-$Id$
+$Id:$
 """
 
 import os
@@ -38,7 +38,7 @@ except ImportError, e:
 setup(name='ccrdf',
       version='0.5.0',
       url='http://wiki.creativecommons.org/CcRdf',
-      download_url='http://mirrors.creativecommons.org/software/ccrdf',
+      download_url='http://mirrors.creativecommons.org/software/ccrdf/download',
       
       license='MIT',
       description='Library for manipulating '
