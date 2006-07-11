@@ -46,18 +46,13 @@ class Metadata:
         self.__tag = eyeD3.Tag()
         try:
             self.__tag.link(self.__fileobj)
-        except eyeD3.tag.TagException, e:
-            if "2.2" in e.msg:
-                print 'Unsupported version.'
-                self.__tag = None
-            elif "FrameHeader" in e.msg:
-                print "Illegal frames in ID3; aborting."
-            else:
-                raise
         except IndexError, e:
             self.__tag = None
         except TypeError, e:
             # malformed tags often piss off the type checks in eyeD3
+            self.__tag = None
+        except Exception, e:
+            # aww, what the hell
             self.__tag = None
 
     def _getFrame(self, fids):
