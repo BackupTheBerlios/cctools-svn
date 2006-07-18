@@ -5,10 +5,6 @@ p6.app
 
 import optparse
 
-import interfaces
-import wxpy
-import extension
-
 def getParser():
     """Configure and return an optparse option parser."""
     

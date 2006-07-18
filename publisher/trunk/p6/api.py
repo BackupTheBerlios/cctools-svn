@@ -9,7 +9,9 @@ import os.path
 
 import wx
 import zope.interface
-import p6
+
+import p6.storage
+import p6.metadata
 
 from p6.i18n import _
 

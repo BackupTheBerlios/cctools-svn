@@ -6,8 +6,12 @@ import wx.xrc
 
 import zope.interface
 import zope.component
+import zope.configuration.xmlconfig
 
-import p6
+import p6.api
+import p6.ui.wizard
+import p6.app.extension
+
 import support.browser as webbrowser
 import interfaces
 import bananas

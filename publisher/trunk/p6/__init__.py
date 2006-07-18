@@ -22,15 +22,4 @@
 
 """
 
-import wx
-
-import zope.interface
-
-import metadata
-import ui
-import storage
-import configure
-import app
-import i18n
-
 VERSION = 2.0

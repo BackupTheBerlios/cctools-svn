@@ -11,8 +11,8 @@ import wx
 if getattr(sys, 'setdefaultencoding', False):
     sys.setdefaultencoding('utf-8')
     del sys.setdefaultencoding
-    
-from catalog import *
+
+from catalog import initialize, addCatalogPath, loadCatalog, getLocale
 
 # use the wx i18n system
 _ = wx.GetTranslation

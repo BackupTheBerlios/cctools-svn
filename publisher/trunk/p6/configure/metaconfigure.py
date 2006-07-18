@@ -1,7 +1,7 @@
 import zope.component
 
-import p6
 import p6.api
+import p6.extension
 
 from p6.metadata.base import metadatafield, MetadataGroup
 
