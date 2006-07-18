@@ -59,7 +59,6 @@ class StorageRegistryItem(object):
     def deactivate(self):
         """Deactivate the storage provider if previously activated."""
 
-
         if self.instance is not None:
             del self.instance
             self.instance = None

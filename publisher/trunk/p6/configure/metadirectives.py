@@ -182,18 +182,7 @@ class IMetadataPagesSubdirective(zope.interface.Interface):
         required=False,
         value_type=zope.configuration.fields.GlobalInterface(),
         )
-
-class IFileSelectorSubdirective(zope.interface.Interface):
-    """File selector page."""
     
-class IStorePageSubdirective(zope.interface.Interface):
-    """A generic storage page which is able to emit and handle the
-    appropriate events."""
-
-class IStorageSelector(zope.interface.Interface):
-    """A page which allows users to select one or more storage providers
-    to upload to."""
-
 class IExtensionPoint(zope.interface.Interface):
     """ XXX """
 
@@ -202,18 +191,6 @@ class IExtensionPoint(zope.interface.Interface):
         description=u"",
         required=True,
         )
-
-class IFinalUrlPage(zope.interface.Interface):
-    """ XXX """
-
-    title = zope.configuration.fields.MessageID(
-        title=u"The page title.",
-        required=True,
-        )
-    
-class IXmldisplayPageSubdirective(zope.interface.Interface):
-    """A generic page which displays a psuedo-XML representation of the
-    metadata collected."""
     
 class IXrcPageSubdirective(zope.interface.Interface):
     """A customizable XRC page."""

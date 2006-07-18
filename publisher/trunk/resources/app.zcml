@@ -26,6 +26,35 @@
      factory="ccpublisher.selfhost.SelfHostStorage"
      />
 
+  <pages appid="ccpublisher">
+
+    <!-- A sequence of pages, metadata pages and extension points.  If
+	 the last item is an extension point and has an implementor, it
+	 must expand to one or more pages.  If it has no implementors, 
+	 no harm, no foul.
+      -->
+
+    <page factory="ccpublisher.ui.WelcomePage" />
+
+    <page factory="p6.ui.pages.StorageSelectorPage" />
+
+    <page factory="p6.ui.pages.FileSelectorPage"  />
+
+    <metadatapages 
+	for="p6.storage.interfaces.IWork
+             p6.storage.interfaces.IWorkItem"  />
+
+    <extensionPoint
+	for="p6.extension.interfaces.IStorageMetaCollection" />
+
+    <extensionPoint
+	for="p6.extension.interfaces.IStorageProcessing" />
+
+    <extensionPoint
+        for="p6.extension.interfaces.IPostStoreExtension" />
+
+  </pages>
+
   <metadatagroup
      id="workinfo"
      title="Tell Us About Your Files"
@@ -100,33 +129,5 @@
 
   </metadatagroup>
     
-  <pages appid="ccpublisher">
-
-    <!-- A sequence of pages, metadata pages and extension points.  If
-	 the last item is an extension point and has an implementor, it
-	 must expand to one or more pages.  If it has no implementors, 
-	 no harm, no foul.
-      -->
-
-    <page factory="ccpublisher.ui.WelcomePage" />
-
-    <fileselector />
-
-    <metadatapages 
-	for="p6.storage.interfaces.IWork
-             p6.storage.interfaces.IWorkItem"  />
-
-    <storageSelector />
-
-    <extensionPoint
-	for="p6.extension.interfaces.IStorageMetaCollection" />
-
-    <extensionPoint
-	for="p6.extension.interfaces.IStorageProcessing" />
-
-    <extensionPoint
-        for="p6.extension.interfaces.IPostStoreExtension" />
-
-  </pages>
 
 </configure>

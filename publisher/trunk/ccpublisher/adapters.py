@@ -9,8 +9,6 @@ import p6.metadata.events
 import cctagutils.metadata
 import ccpublisher.interfaces
 
-MIME_MANAGER = wx.MimeTypesManager()
-
 def workFormatListener(event):
     """Subscriber for IItemSelected events; attempts to determine the overall
     work format from the file extension or mime-type.  If possible, publishes
@@ -20,7 +18,7 @@ def workFormatListener(event):
     if p6.storage.interfaces.IFileItem in \
            zope.interface.providedBy(event.item):
 
-        file_info = MIME_MANAGER.GetFileTypeFromExtension(
+        file_info = wx.TheMimeTypesManager.GetFileTypeFromExtension(
             event.item.filename.split(".")[-1])
         if file_info is None:
             # we can't determine the mime information; bail out

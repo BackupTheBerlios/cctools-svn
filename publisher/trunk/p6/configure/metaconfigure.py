@@ -120,50 +120,11 @@ class PagesDirective(object):
         if self.__running:
             p6.api.getApp().pages.append(pagegen)
 
-    def storageSelector(self, _context):
-        if self.__running:
-            _context.action(discriminator=('RegisterPage', 'StorageSelector',
-                                           p6.ui.pages.StorageSelectorPage),
-                            callable=p6.api.getApp().pages.append,
-                            args=(p6.ui.pages.StorageSelectorPage,),
-                            )
-
-    def finalUrl(self, _context, title):
-        if self.__running:
-            _context.action(discriminator=('RegisterPage', 'FinalUrlPage',
-                                           p6.ui.pages.StorePage),
-                            callable=p6.api.getApp().pages.append,
-                            args=(lambda x: p6.ui.pages.FinalUrlPage(x, title),),
-                            )
-
     def extensionPoint(self, _context, for_):
         if self.__running:
             _context.action(discriminator=('Register', 'ExtensionPoint', for_),
                             callable=p6.api.getApp().pages.append,
                             args=(p6.extension.ExtensionPoint(for_), ),
-                            )
-    
-    def storepage(self, _context):
-        if self.__running:
-            _context.action(discriminator=('RegisterPage', 'StorePage',
-                                           p6.ui.pages.StorePage),
-                            callable=p6.api.getApp().pages.append,
-                            args=(p6.ui.pages.StorePage,),
-                            )
-
-    def fileselector(self, _context):
-        if self.__running:
-            _context.action(discriminator=('RegisterPage', 'FileSelector'),
-                            callable=p6.api.getApp().pages.append,
-                            args=(p6.ui.pages.FileSelectorPage,),
-                            )
-
-    def xmlpage(self, _context):
-        if self.__running:
-            _context.action(discriminator=('RegisterPage', 'XmlDisplayPage',
-                                           p6.ui.pages.XmlMetadataPage),
-                            callable=p6.api.getApp().pages.append,
-                            args=(p6.ui.pages.XmlMetadataPage,),
                             )
 
     def xrcpage(self, _context, title, xrcfile, xrcid):
