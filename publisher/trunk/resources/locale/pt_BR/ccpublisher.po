@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
+"PO-Revision-Date: 2006-07-26 08:03+0000\n"
+"Last-Translator: Bruno Luís Gonçalves Dilly <bruno.dilly@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+msgid "Other"
+msgstr "Outro"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Interactive"
+msgstr "Interativo"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "Por favor, escreva o endereço onde você vai hospedar os metadados de verificação. Na maioria dos casos, está será a mesma página que irá linkar seu MP3"
+
+msgid "Verification URL"
+msgstr "Endereço de verificação"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "Senha"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "Salvar nome de usuário e senha?"
+
+#: /ccpublisher/ui/welcome.py:23
+msgid "Welcome"
+msgstr "Bem vindo"
+
+#: /ccpublisher/ia.py:204
+msgid "The selected file %s can not be found."
+msgstr "O arquivo %s selecionado não foi encontrado."
+
+#: /ccpublisher/ia.py:226
+msgid "ccPublisher does not have sufficient permissions to read the selected files."
+msgstr "ccPublisher não possui permissão suficiente para ler os arquivos selecionados"
+
+#: /ccpublisher/selfhost.py:58
+msgid "Self Hosted Files"
+msgstr "Arquivos hospedados por você mesmo"
+
+#: /ccpublisher/ui/ia.py:100
+msgid "Internet Archive login"
+msgstr "Login do Internet Archive"
+
+#: /ccpublisher/ui/ia.py:119
+msgid "Invalid username or password."
+msgstr "Nome de usuário ou senha inválidos."
+
+#: /ccpublisher/ui/ia.py:122
+msgid "Unable to connect to the Internet Archive to verify username and password."
+msgstr "Não foi possível conectar ao Internet Archive para verificar nome de usuário e senha."
+
+#: /ccpublisher/ui/ia.py:29
+msgid "Item Identifier"
+msgstr "Identificador do Item"
+
+#: /ccpublisher/ui/ia.py:53
+msgid "That identifier does not conform to the Internet Archive's naming standards."
+msgstr "Este identificador não está nos padrões do Internet Archive."
+
+#: /ccpublisher/ui/ia.py:59
+msgid "That identifier is not available."
+msgstr "O identificador não está disponível."
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account."
+msgstr "Escreva seu nome de usuário e senha para o Internet Archive. Se você não tem um nome de usuário, visite http://archive.org para criar uma conta."
+
+#: /ccpublisher/ui/selfhost.py:24
+msgid "Complete"
+msgstr "Completo"
+
+#: /ccpublisher/ui/selfhost.py:53
+msgid "Unable to write to the selected file."
+msgstr "Não foi possível escrever o arquivo selecionado."
+
+#: /ccpublisher/validators.py:15
+msgid "You must supply a description of at least 5 words."
+msgstr "Você precisa dar uma descrição de no mínimo 5 palavras."
+
+#: /ccpublisher/validators.py:6
+msgid "You must supply a title."
+msgstr "Você precisa dar um título."
+
+#: /resources/app.zcml:59
+msgid "Description"
+msgstr "Descrição"
+
+#: /resources/app.zcml:15
+msgid "Upload works to the Internet Archive (www.archive.org)."
+msgstr "Enviar trabalho para o Internet Archive (www.archive.org)."
+
+#: /resources/app.zcml:15
+msgid "Internet Archive Storage"
+msgstr "Repositório Internet Archive"
+
+#: /resources/app.zcml:21
+msgid "Create metadata suitable for use with files hosted on your web site."
+msgstr "Criar metadados para usar com arquivos hospedados em seu web site."
+
+#: /resources/app.zcml:21
+msgid "Self-hosted files"
+msgstr "Arquivos hospedados por você mesmo."
+
+#: /resources/app.zcml:27
+msgid "Metadata helps others to find your works."
+msgstr "Metadados ajudam os outros a encontrar seus trabalhos."
+
+#: /resources/app.zcml:27
+msgid "Tell Us About Your Files"
+msgstr "Fale Sobre Seus Arquivos"
+
+#: /resources/app.zcml:34
+msgid "Copyright Holder"
+msgstr "Dono dos Direitos Autorais"
+
+#: /resources/app.zcml:39
+msgid "Copyright Year"
+msgstr "Ano do Copyright"
+
+#: /resources/app.zcml:44
+msgid "Title of Work"
+msgstr "Título do Trabalho"
+
+#: /resources/app.zcml:51
+msgid "Work Format"
+msgstr "Formato do Trabalho"
+
+#: /resources/app.zcml:65
+msgid "(separated with a comma)"
+msgstr "(separado por vírgulas)"
+
+#: /resources/app.zcml:65
+msgid "Keywords help users find works by topic."
+msgstr "Palavras-chaves ajudam usuário a encontrar trabalhos por tópicos."
+
+#: /resources/app.zcml:65
+msgid "Keywords"
+msgstr "Palavras-chaves"
+
+#: /resources/app.zcml:74
+msgid "Select File Formats"
+msgstr "Selecione Formato do Arquivo"
+
+#: /resources/app.zcml:80
+msgid "File Format"
+msgstr "Formato do Arquivo"
+
+#: /resources/app.zcml:87
+msgid "Choose Your License"
+msgstr "Escolha Sua Licença"
+
+#: /resources/app.zcml:94
+msgid "License"
+msgstr "Licença"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "licensed under the GNU GPL version 2.0"
+msgstr "licenciado sobre GNU GPL versão 2.0"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
+msgstr "Após colar o texto de verificação na sua página, seu arquivo estará pronto para ser compartilhado; apenas coloque em sua pasta de compartilhamento."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Prev"
+msgstr "Anterior"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "2) Choose your Creative Commons license"
+msgstr "2) Escolha sua licença Creative Commons"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "OK"
+msgstr "OK"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "1) Drag and drop your audio or video files"
+msgstr "1) Arraste e solte seus arquivos de audio ou video"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Quit"
+msgstr "Sair"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Browse..."
+msgstr "Procurar..."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "You can view your work online shortly at:"
+msgstr "Você pode ver seu trabalho online em:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Identifier"
+msgstr "Identificador"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "Isto também permitirá que você submeta seus arquivos para o Internet Archive tendo a vantagem de hospedagem gratuita. ccPublisher é uma ferrammenta que te ajudará a colocar audio e video na Web com licença Creative Commons."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Delete"
+msgstr "Apagar"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Click Next to get started."
+msgstr "Clique em Próximo para iniciar."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "ccPublisher é uma ferrammenta que te ajudará a colocar audio e video na Web com licença Creative Commons. Isto também permitirá que você submeta seus arquivos para o Internet Archive tendo a vantagem de hospedagem gratuita."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Copy and paste the text below into the document at "
+msgstr "Copie e cole o texto abaixo no documento em"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Filelist"
+msgstr "Lista de arquivos"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "copyright 2004-2006, Creative Commons"
+msgstr "copyright 2004-2006, Creative Commons"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service"
+msgstr "3) Opcionalmente você poderá mandar arquivos licenciados para o Internet Archive, um serviço gratuito de hospedagem"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher 2"
+msgstr "ccPublisher 2"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "release 1.9.1"
+msgstr "versão 1.9.1"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available."
+msgstr "ccPublisher criou uma sugestão de identificador baseado nos metadados que você proveu. Identificadores precisam ter no mínimo 5 caracteres e pode conter letras (A-Z, a-z), números (0-9), underscores (_) e pontos(.). "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "4) Get a URL where you and your friends can download your file"
+msgstr "4) Pegue o endereço de onde você e seus amigos poderão baixar o arquivo."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This is your verification RDF."
+msgstr "Este é seu RDF de verificação."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Save"
+msgstr "Salvar"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "How does this work?"
+msgstr "Como isto funciona?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Is this file Creative Commons licensed?"
+msgstr "Este arquivo é licenciado sob Creative Commons?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive."
+msgstr "Cada item do Internet Archive possui um identificador único que ajuda a formar o endereço do arquivo. Este identificador não poderá ser alterado após submetê-lo ao Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
+msgstr "Esta ferramenta o ajudará a colocar audio e video na Web sob uma licença Creative Commons. É simples:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Your work has been uploaded to the Internet Archive."
+msgstr "Seu arquivo já foi enviado ao Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+#: /resources/ccpublisher.xrc:-1
+msgid "What is ccPublisher?"
+msgstr "O que é o ccPublisher?"
