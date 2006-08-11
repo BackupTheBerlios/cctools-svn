@@ -43,20 +43,23 @@ class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
             raise p6.extension.exceptions.ExtensionSettingsException(
                 "You must supply an URL.")
 
-        # verify if the url is a valid ccHost Installation
-        try:
-            if not(pycchost.location.validate(value_dict['url'], self.storage.Request, self.storage.urlopen)):
-                raise p6.extension.exceptions.ExtensionSettingsException(
-                    _("Invalid URL."))
-        except (socket.error, pycchost.exceptions.CommunicationsError), e:
-            raise p6.extension.exceptions.ExtensionSettingsException(
-                _("Unable to connect to the CCHost to verify username and password."))
-
-
-        # store the valid url
-        theurl = value_dict['url']
+	theurl = value_dict['url']
         if theurl[len(theurl)-1] != '/':
             theurl = theurl + "/"
+        # verify if the url is a valid ccHost Installation
+        try:
+            if not(pycchost.location.validate(theurl, self.storage.Request, self.storage.urlopen)):
+                raise p6.extension.exceptions.ExtensionSettingsException(
+                    _("Invalid URL."))
+	except IOError, e:
+	    if hasattr(e, 'reason'):
+	        raise p6.extension.exceptions.ExtensionSettingsException(
+                    _("Failed to open the URL.\nThe error reason: %s.\nThis usually means the server doesn't exist, is down, or we don't have an internet connection." % e.reason))
+	    else:
+		raise p6.extension.exceptions.ExtensionSettingsException(
+                    _("Failed to open the URL. This usually means the server doesn't exist, is down, or we don't have an internet connection."))
+
+        # store the valid url
         self.storage.location = theurl
         p6.metadata.persistance.store("cch", "url", theurl)
                     
@@ -106,11 +109,13 @@ class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 
                 raise p6.extension.exceptions.ExtensionSettingsException(
                     _("Invalid username or password."))
-        except (socket.error, pycchost.exceptions.CommunicationsError), e:
-            raise p6.extension.exceptions.ExtensionSettingsException(
-                _("Unable to connect to the CCHost to verify username and password."))
-
-
+        except IOError, e:
+	    if hasattr(e, 'reason'):
+	        raise p6.extension.exceptions.ExtensionSettingsException(
+                    _("Failed to open the URL.\nThe error reason: %s.\nThis usually means the server doesn't exist, is down, or we don't have an internet connection." % e.reason))
+	    else:
+		raise p6.extension.exceptions.ExtensionSettingsException(
+                    _("Failed to open the URL. This usually means the server doesn't exist, is down, or we don't have an internet connection."))
 
         # store the credentials for future use
         self.storage.credentials = (value_dict['username'],
@@ -159,8 +164,18 @@ class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
 		self.GetSizer().Clear()
 
 		#get a list of submission types and their links
-		list =  pycchost.type.getSubmissionTypes(self.storage.location, self.storage.Request, self.storage.urlopen)
-		self.list = list
+		try:
+			list =  pycchost.type.getSubmissionTypes(self.storage.location, self.storage.Request, self.storage.urlopen)
+		except IOError, e:
+			list = []
+	    		if hasattr(e, 'reason'):
+	        	    raise p6.extension.exceptions.ExtensionSettingsException(
+	                        _("Failed to open the URL.\nThe error reason: %s.\nThis usually means the server doesn't exist, is down, or we don't have an internet connection." % e.reason))
+	    		else:
+			    raise p6.extension.exceptions.ExtensionSettingsException(
+                    		_("Failed to open the URL. This usually means the server doesn't exist, is down, or we don't have an internet connection."))
+		else:
+			self.list = list
 
 		for op in range(len(list)):
                         if (op % 2 == 1):

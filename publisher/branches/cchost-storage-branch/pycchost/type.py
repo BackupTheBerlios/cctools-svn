@@ -9,18 +9,12 @@ def getSubmissionTypes(url, Request, urlopen):
 
     url =  url + "?ccm=/media/submit"
     txdata = None
-    txheaders =  {'User-agent' : 'publishcchost', 'Refer' : url}
+    txheaders =  {'User-agent' : 'ccPublisher'}
     try:
         req = Request(url, txdata, txheaders) # create a request object
         handle = urlopen(req)
     except IOError, e:
-        print 'Failed to open "%s".' % url
-        if hasattr(e, 'code'):
-            print 'Failed with error code - %s.' % e.code
-        elif hasattr(e, 'reason'):
-            print "The error reason:", e.reason
-            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
-        sys.exit(2)
+	raise
     else:
         # parse submission page
         htmlSource = handle.read()

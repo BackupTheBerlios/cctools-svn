@@ -12,18 +12,12 @@ def validate(username, password, cchost_url, Request, urlopen):
     loginurl =  cchost_url + "?ccm=/media/login"
     values = {'user_name' : username, 'user_password' : password, 'userlogin' : 'classname'}
     txdata = urllib.urlencode(values)
-    txheaders =  {'User-agent' : 'publishcchost', 'Refer' : loginurl}
+    txheaders =  {'User-agent' : 'ccPublisher'}
     try:
         req = Request(loginurl, txdata, txheaders) # create a request object
         handle = urlopen(req)
     except IOError, e:
-        print 'Failed to open "%s".' % loginurl
-        if hasattr(e, 'code'):
-            print 'Failed with error code - %s.' % e.code
-        elif hasattr(e, 'reason'):
-            print "The error reason:", e.reason
-            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
-        sys.exit(2)
+	raise
     else:
         return is_logged_in(handle)
 

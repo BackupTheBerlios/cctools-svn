@@ -9,20 +9,12 @@ def validate(url, Request, urlopen):
 
     login_url = url + "?ccm=/media/login"
     txdata = None
-    txheaders =  {'User-agent' : 'publishcchost', 'Refer' : login_url}
+    txheaders =  {'User-agent' : 'ccPublisher'}
     try:
         req = Request(login_url, txdata, txheaders) # create a request object
         handle = urlopen(req)
     except IOError, e:
-        print 'Failed to open "%s".' % login_url
-        if hasattr(e, 'code'):
-            print 'Failed with error code - %s.' % e.code
-        elif hasattr(e, 'reason'):
-            print "The error reason:", e.reason
-            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
-        sys.exit(2)
-        return False
-            
+	raise
     else:
         # parse the requested page
         htmlSource = handle.read()
@@ -48,18 +40,12 @@ def title(url, Request, urlopen):
     """Get CCHost Installation's Title"""
 
     txdata = None
-    txheaders =  {'User-agent' : 'publishcchost', 'Refer' : url}
+    txheaders =  {'User-agent' : 'ccPublisher'}
     try:
         req = Request(url, txdata, txheaders) # create a request object
         handle = urlopen(req)
     except IOError, e:
-        print 'Failed to open "%s".' % url
-        if hasattr(e, 'code'):
-            print 'Failed with error code - %s.' % e.code
-        elif hasattr(e, 'reason'):
-            print "The error reason:", e.reason
-            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
-        sys.exit(2)
+	raise
     else:
         # parse requested page
         htmlSource = handle.read()

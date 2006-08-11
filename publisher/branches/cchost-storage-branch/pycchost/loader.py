@@ -23,8 +23,7 @@ def loader():
         try:                                            
             import ClientCookie 
         except ImportError:
-            print "Failed to import cookielib and ClientCookie. Try to upgrade to python2.4"
-            sys.exit(1)
+            raise
         else:
             urlopen = ClientCookie.urlopen
             cj = ClientCookie.LWPCookieJar()

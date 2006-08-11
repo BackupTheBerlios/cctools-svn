@@ -38,10 +38,15 @@ class CCHostStorageUi(object):
     def createPages(self):
 
         self.__pages = []
-
-	Request, urlopen = pycchost.loader.loader() # prepare to handle cookies
-	self.__storage.Request = Request
-	self.__storage.urlopen = urlopen
+	
+	try:
+		Request, urlopen = pycchost.loader.loader() # prepare to handle cookies
+	except ImportError:
+	        raise p6.extension.exceptions.ExtensionSettingsException(
+	             _("Failed to import cookielib or ClientCookie. Try to upgrade to python2.4"))
+	else:
+		self.__storage.Request = Request
+		self.__storage.urlopen = urlopen
 
         self.__pages.append(lambda x: ui.cch.CCHostLocationPage(x,self.__storage))
         self.__pages.append(lambda x: ui.cch.CCHostLoginPage(x,self.__storage))

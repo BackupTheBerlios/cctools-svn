@@ -15,19 +15,12 @@ def post_multipart(url, fields, files, urlopen, Request):
     """
     content_type, body = encode_multipart_formdata(fields, files)
     headers = {'Content-Type': content_type,'Content-Length': str(len(body)),
-               'User-agent' : 'publishcchost', 'Refer' : url}
+               'User-agent' : 'ccPublisher'}
     try:
         req = Request(url, body, headers) # create a request object
         handle = urlopen(req)
     except IOError, e:
-        print 'Failed to open "%s".' % url
-        if hasattr(e, 'code'):
-            print 'Failed with error code - %s.' % e.code
-        elif hasattr(e, 'reason'):
-            print "The error reason:", e.reason
-            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
-            sys.exit(2)
-    
+	raise
     return handle.read()
 
 def encode_multipart_formdata(fields, files):
