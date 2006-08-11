@@ -1,37 +1,30 @@
 """User-related support functions for CCHost Installation access."""
 
-import os.path
 import sys
-import urllib, HTMLParser
+import HTMLParser
 
-import exceptions
-import loader
-
-def validate(url):
+def validate(url, Request, urlopen):
     """Confirm that the url is a valid CCHost Installation
     return True if valid, otherwise return False."""
-    Request, urlopen = loader.loader() #import cookies library
 
-    if url[len(url)-1] != '/':
-        url = url + "/"
-    
     login_url = url + "?ccm=/media/login"
     txdata = None
-    txheaders =  {'User-agent' : 'ccPublisher', 'Refer' : login_url}
+    txheaders =  {'User-agent' : 'publishcchost', 'Refer' : login_url}
     try:
         req = Request(login_url, txdata, txheaders) # create a request object
         handle = urlopen(req)
     except IOError, e:
-#        print 'We failed to open "%s".' % theurl
-#        if hasattr(e, 'code'):
-#            print 'We failed with error code - %s.' % e.code
-#        elif hasattr(e, 'reason'):
-#            print "The error object has the following 'reason' attribute :", e.reason
-#            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
-#            sys.exit()
+        print 'Failed to open "%s".' % login_url
+        if hasattr(e, 'code'):
+            print 'Failed with error code - %s.' % e.code
+        elif hasattr(e, 'reason'):
+            print "The error reason:", e.reason
+            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
+        sys.exit(2)
         return False
             
     else:
+        # parse the requested page
         htmlSource = handle.read()
         p = linkParser()
         p.feed(htmlSource)
@@ -40,6 +33,7 @@ def validate(url):
 
 
 class linkParser(HTMLParser.HTMLParser):
+    """Parse login page to verify if there are a login form"""
     def __init__(self):
         HTMLParser.HTMLParser.__init__(self)
         self.valid = False
@@ -48,3 +42,51 @@ class linkParser(HTMLParser.HTMLParser):
             for atribute in attrs:
                 if atribute[0] == "id" and atribute[1] == "userloginform":
                     self.valid = True
+
+
+def title(url, Request, urlopen):
+    """Get CCHost Installation's Title"""
+
+    txdata = None
+    txheaders =  {'User-agent' : 'publishcchost', 'Refer' : url}
+    try:
+        req = Request(url, txdata, txheaders) # create a request object
+        handle = urlopen(req)
+    except IOError, e:
+        print 'Failed to open "%s".' % url
+        if hasattr(e, 'code'):
+            print 'Failed with error code - %s.' % e.code
+        elif hasattr(e, 'reason'):
+            print "The error reason:", e.reason
+            print "This usually means the server doesn't exist, is down, or we don't have an internet connection."
+        sys.exit(2)
+    else:
+        # parse requested page
+        htmlSource = handle.read()
+        p = getTitle() # start the HTMLParser
+        p.feed(htmlSource) # take it a html that need be parsed
+        p.close()
+        if p.title != '' and p.title != None:
+            return p.title
+        else:
+            return 'CCHost Installlation Login'
+    return 'CCHost Installlation Login'
+
+
+class getTitle(HTMLParser.HTMLParser):
+    """Get the title of the page, finding tag \"title\" """
+    def __init__(self):
+        HTMLParser.HTMLParser.__init__(self)
+        self.isTitle = False
+        self.title = ''
+    def handle_starttag(self, tag, attrs):
+        if tag=='title':
+            self.isTitle = True
+    def handle_endtag(self, tag):
+        if tag=='title':
+            self.isTitle = False
+    # title is all the data between the begin and and of "title" tag
+    def handle_data(self, data):
+        if self.isTitle:
+            self.title += data
+

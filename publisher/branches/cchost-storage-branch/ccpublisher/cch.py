@@ -22,6 +22,7 @@ from ccpublisher.interfaces import IEmbeddable
 import const
 
 import ui
+import pycchost
 
 class CCHostStorageUi(object):
 
@@ -38,10 +39,14 @@ class CCHostStorageUi(object):
 
         self.__pages = []
 
+	Request, urlopen = pycchost.loader.loader() # prepare to handle cookies
+	self.__storage.Request = Request
+	self.__storage.urlopen = urlopen
+
         self.__pages.append(lambda x: ui.cch.CCHostLocationPage(x,self.__storage))
         self.__pages.append(lambda x: ui.cch.CCHostLoginPage(x,self.__storage))
-#        self.__pages.append(lambda x: ui.cch.CCHostSubmissionTypePage (x,self.__storage))
-#        self.__pages.append(lambda x: ui.cch.CCHostMoreAbout (x,self.__storage))        
+        self.__pages.append(lambda x: ui.cch.CCHostSubmissionTypePage(x,self.__storage))
+#        self.__pages.append(lambda x: ui.cch.CCHostFormSubmission (x,self.__storage))        
         self.__pages.append(p6.ui.pages.StorePage)
 #        self.__pages.append(lambda x: ui.cch.CCHostFinalPage(x, self.__storage))
 
@@ -82,3 +87,4 @@ class CCHostStorage(p6.metadata.base.BasicMetadataStorage,
              p6.extension.events.IExtensionPageEvent,
              ),
             p6.ui.interfaces.IPageList)
+ 

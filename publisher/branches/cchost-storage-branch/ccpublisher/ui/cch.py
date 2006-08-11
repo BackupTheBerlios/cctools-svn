@@ -9,6 +9,7 @@ import wx.lib.hyperlink
 from wx.xrc import XRCCTRL
 
 import ccwx
+import zope.interface
 import pycchost.exceptions
 
 import p6
@@ -44,7 +45,7 @@ class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 
         # verify if the url is a valid ccHost Installation
         try:
-            if not(pycchost.location.validate(value_dict['url'])):
+            if not(pycchost.location.validate(value_dict['url'], self.storage.Request, self.storage.urlopen)):
                 raise p6.extension.exceptions.ExtensionSettingsException(
                     _("Invalid URL."))
         except (socket.error, pycchost.exceptions.CommunicationsError), e:
@@ -78,10 +79,6 @@ class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
             p6.metadata.base.metadatafield(p6.metadata.types.IBooleanField)(
             'persist', 'Save your username and password?', default=persist)
             ]
-        
-#        description=_("Enter your <cchost> username and password.  "
-#                      "If you do not have a username and password, visit "
-#                      "<cchost>/register to create an account.")
 
         description=_("Enter your CCHost Installation username and password.")
 
@@ -93,7 +90,8 @@ class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
                                                          self.callback,
                                                          description)
         self.storage = storage
-        
+
+
     def callback(self, value_dict):
 
         # make sure both a username and password were provided
@@ -104,7 +102,7 @@ class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
         # validate the credentials with ccHost Installation
         try:
             if not(pycchost.user.validate(value_dict['username'],
-                                           value_dict['password'], self.storage.location)):
+                                           value_dict['password'], self.storage.location, self.storage.Request, self.storage.urlopen)):
 
                 raise p6.extension.exceptions.ExtensionSettingsException(
                     _("Invalid username or password."))
@@ -134,3 +132,76 @@ class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
         # storage-specific settings
 
         self.storage.registerEvents()
+
+class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
+	"""User interface page which displays a list of available
+	storage providers and allows the user to select one or more.
+	"""
+	zope.interface.implements(p6.ui.interfaces.IWizardPage)
+
+	def __init__(self, parent, storage, headline=_('Pick Up Submission Type')):
+		"""
+	        @param parent: Parent window
+	        @type parent: L{wx.Window}
+	
+	        @param headline: Title to display above the wizard page
+	        @type headline: String
+	        """
+
+	        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+                	                        self.PAGE_XRC, self.XRCID, headline)
+
+        	self.storage = storage
+
+	def init(self):
+
+		self.__options = []
+		self.GetSizer().Clear()
+
+		#get a list of submission types and their links
+		list =  pycchost.type.getSubmissionTypes(self.storage.location, self.storage.Request, self.storage.urlopen)
+		self.list = list
+
+		for op in range(len(list)):
+                        if (op % 2 == 1):
+				# set the first item to wx.RB_GROUP to make them mutually exclusive
+				if op == 1:
+					style = wx.RB_GROUP
+				else:
+					style = 0
+
+				# create the new radio button
+				rdbItem = wx.RadioButton(self, label=list[op], style=style)
+				rdbItem.id = (op/2)+1
+				self.__options.append(rdbItem)
+				self.GetSizer().Add(rdbItem)
+
+	def onChanged(self, event):
+	        if event.direction:
+        		self.init()
+
+	def onChanging(self, event):
+		for rdbOption in self.__options:
+			if rdbOption.GetValue():
+				# this option is selected
+				self.storage.submissiontype = self.list[2*rdbOption.id-1]
+				self.storage.submissionlink = self.list[2*(rdbOption.id-1)]
+
+		# register for future storage events after validating our
+	        # storage-specific settings
+	        self.storage.registerEvents()		
+
+	XRCID = "SUBMISSION_TYPE_SELECTOR"
+	PAGE_XRC = """
+<resource>
+  <object class="wxPanel" name="%s">
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <vgap>5</vgap>
+      <hgap>5</hgap>
+      <growablecols>0</growablecols>
+    </object>
+  </object>
+</resource>
+	""" % XRCID
+
