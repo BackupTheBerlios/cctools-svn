@@ -4,6 +4,7 @@ import sys
 import urllib
 import HTMLParser
 import re
+import string
 
 def getForm(url, Request, urlopen, data = None):
     """Make a list of dictionaries with all requested information about submission, parsing submission page
@@ -62,8 +63,10 @@ class formParser(HTMLParser.HTMLParser):
 	            for atribute in attrs:
 	                if atribute[0] == "type" or atribute[0] == "name":
 	                    inf[atribute[0]] = atribute[1]
-	                elif (atribute[0] == "checked" and atribute[1] == "checked") or atribute[0] == "value":
+	                elif atribute[0] == "value":
 	                    inf['value'].append(atribute[1])
+			elif atribute[0] == "checked":
+			    inf['value'].append("checked")
 	            self.inf.update(inf)
 	        elif tag=='textarea':
 	            inf = {}
@@ -129,6 +132,8 @@ class formParser(HTMLParser.HTMLParser):
 	                self.inf = {}
 	                return
 	            elif self.inf['type'] == "radio":
+			if self.inf['value'][0] == "checked":
+			    self.inf['value'] = self.inf['value'][1:]
 	                pos = 0
 	                for elem in self.form:
 	                    if elem.has_key("name") and self.inf['name'] == elem['name']:
@@ -212,7 +217,7 @@ def getString(data):
             result += " "
         result += words
     result = re.sub('_', ' ', result)  # substitute _ by space
-    return result
+    return string.capitalize(result)
 
 def getDic(data):
     """Transform a list into a dictionary"""

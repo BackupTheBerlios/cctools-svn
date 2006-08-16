@@ -2,6 +2,8 @@
 
 import os
 import socket
+import re
+import elementtree.ElementTree as etree
 
 import wx
 import wx.html
@@ -10,12 +12,13 @@ from wx.xrc import XRCCTRL
 
 import ccwx
 import zope.interface
-import pycchost.exceptions
 
 import p6
 import p6.api
 import p6.ui.pages.fieldrender
 from p6.i18n import _
+
+import pycchost
 
 class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
     def __init__(self, parent, storage):
@@ -46,11 +49,13 @@ class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 	theurl = value_dict['url']
         if theurl[len(theurl)-1] != '/':
             theurl = theurl + "/"
-        # verify if the url is a valid ccHost Installation
+        # verify if the url is a valid ccHost Installation and find it's name
         try:
-            if not(pycchost.location.validate(theurl, self.storage.Request, self.storage.urlopen)):
+	    if not(pycchost.location.validate(theurl, self.storage.Request, self.storage.urlopen)):
                 raise p6.extension.exceptions.ExtensionSettingsException(
                     _("Invalid URL."))
+	    title = pycchost.location.title(theurl, self.storage.Request, self.storage.urlopen)
+	        
 	except IOError, e:
 	    if hasattr(e, 'reason'):
 	        raise p6.extension.exceptions.ExtensionSettingsException(
@@ -61,6 +66,8 @@ class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 
         # store the valid url
         self.storage.location = theurl
+	# get ccHost installation name
+	self.storage.title = title
         p6.metadata.persistance.store("cch", "url", theurl)
                     
         
@@ -161,7 +168,8 @@ class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
 	def init(self):
 
 		self.__options = []
-		self.GetSizer().Clear()
+		self.GetSizer().Clear(True)
+		self.Fit()
 
 		#get a list of submission types and their links
 		try:
@@ -190,6 +198,7 @@ class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
 				rdbItem.id = (op/2)+1
 				self.__options.append(rdbItem)
 				self.GetSizer().Add(rdbItem)
+		self.Fit()
 
 	def onChanged(self, event):
 	        if event.direction:
@@ -220,3 +229,258 @@ class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
 </resource>
 	""" % XRCID
 
+class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
+	"""User interface page which displays a list of available
+	storage providers and allows the user to select one or more.
+	"""		
+
+	zope.interface.implements(p6.ui.interfaces.IWizardPage)
+
+	def __init__(self, parent, storage, headline=_('Fill Submission Form')):
+		"""
+	        @param parent: Parent window
+	        @type parent: L{wx.Window}
+	
+	        @param headline: Title to display above the wizard page
+	        @type headline: String
+	        """
+
+	        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+                	                        self.PAGE_XRC, self.XRCID, headline)
+
+		w, h = parent.GetSize()
+		self.SetSize((w-5, h-70))
+		# creates an scrolled window
+		self.sw = wx.ScrolledWindow(self, -1, size=(w-5, h-70))
+		self.sw.SetSizer(wx.GridBagSizer(vgap=3, hgap=3))
+		self.sw.SetScrollbars(5, 5, 100, 100)
+
+		self.parent = parent
+        	self.storage = storage
+
+	def init(self, values=None):
+		self.resize()
+		self.sw.GetSizer().Clear(True)
+		self.sw.Fit()
+		self.sw.GetSizer().AddGrowableCol(0)
+		self.sw.GetSizer().AddGrowableCol(1)
+		row = 0
+
+		self.Bind(wx.EVT_SIZE, self.onSize)
+
+		#get a list of requested submission information
+		try:
+			form =  pycchost.form.getForm(self.storage.submissionlink, self.storage.Request, self.storage.urlopen, values)
+		except IOError, e:
+			form= []
+	    		if hasattr(e, 'reason'):
+	        	    raise p6.extension.exceptions.ExtensionSettingsException(
+	                        _("Failed to open the URL.\nThe error reason: %s.\nThis usually means the server doesn't exist, is down, or we don't have an internet connection." % e.reason))
+	    		else:
+			    raise p6.extension.exceptions.ExtensionSettingsException(
+                    		_("Failed to open the URL. This usually means the server doesn't exist, is down, or we don't have an internet connection."))
+		else:
+			self.form = form
+
+		self.values = [] # list of submission fields
+		self.list = [] # list of all form items and their names
+		self.accept_remixes = False
+
+		for inf in form:
+			if not(inf.has_key("name")):
+				inf['name'] = ""
+			if not(inf.has_key("label")):
+				inf['label'] = pycchost.form.getString(inf['name'])
+
+			# get hidden form items values
+			if inf['type'] == "hidden":
+			        self.values.append((inf['name'], inf['value'][0]))
+		
+			# display form items
+			elif inf['type'] == "submit":
+				if inf['name'] == "search":
+					formItem = wx.Button(self.sw, 1, inf['value'][0])
+					self.sw.Bind(wx.EVT_BUTTON, self.search, id=1)
+					self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan, wx.ALIGN_RIGHT)
+					row += 1
+				elif inf['name'] == "accept_remixes":
+					formItem = wx.Button(self.sw, 2, inf['value'][0])
+					self.sw.Bind(wx.EVT_BUTTON, self.accept, id=2)
+					self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan,wx.ALIGN_RIGHT)
+					row += 1
+					self.accept_remixes = True
+				else:
+					self.values.append((inf['name'], inf['value'][0]))
+
+			elif inf['type'] == "checkbox":
+				formItem = wx.CheckBox(self.sw, label=inf['label'])
+				if inf.has_key("value") and len(inf['value']) > 0 and inf['value'][0] == "checked":
+					formItem.SetValue(True)
+				else: formItem.SetValue(False)
+				if inf.has_key("tip"):
+					formItem.SetToolTip(wx.ToolTip(inf['tip']))
+				self.sw.GetSizer().Add(formItem, (row, 0), (1,2), wx.EXPAND)
+				row += 1
+				self.list.append((inf, formItem))
+
+			elif inf['type'] == "text" or inf['type'] == "textarea":
+				formItem = wx.StaticText(self.sw, -1, inf['label'])
+				if inf.has_key("tip"):
+					formItem.SetToolTip(wx.ToolTip(inf['tip']))
+				self.sw.GetSizer().Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				if inf["type"] == "text":
+					if inf.has_key("value") and inf['value'] != "":
+						formItem = wx.TextCtrl(self.sw, -1, inf['value'][0])
+					else:
+						formItem = wx.TextCtrl(self.sw, -1, "")
+				else: # type == "textarea"
+					if inf.has_key("value") and inf['value'] != "":
+						formItem = wx.TextCtrl(self.sw, -1, inf['value'][0], style=wxTE_MULTILINE)
+					else:
+						formItem = wx.TextCtrl(self.sw, -1, "", style=wx.TE_MULTILINE)
+				if inf.has_key("tip"):
+					formItem.SetToolTip(wx.ToolTip(inf['tip']))
+				self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan, wx.EXPAND)
+				row += 1
+				self.list.append((inf, formItem))
+
+			elif inf['type'] == "select":
+				formItem = wx.StaticText(self.sw, -1, inf['label'])
+				self.sw.GetSizer().Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				formItem = wx.Choice(self.sw, -1, (-1, -1), (-1, -1), inf['radiolabels'], name=inf['name'])
+				formItem.SetSelection(0)
+				self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan, wx.EXPAND)
+				row += 1
+				self.list.append((inf, formItem))
+
+			elif inf['type'] == "radio":
+				formItem = wx.StaticText(self.sw, -1, inf['label'])
+				if inf.has_key("tip"):
+					formItem.SetToolTip(wx.ToolTip(inf['tip']))
+				self.sw.GetSizer().Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				row += 1
+				for rbt in range(len(inf['radiolabels'])):
+					# create the new radio button
+					formItem = wx.RadioButton(self.sw, label=inf['radiolabels'][rbt], style=0)
+					formItem.id = rbt
+					if inf.has_key("radiotips"):
+						formItem.SetToolTip(wx.ToolTip(inf['radiotips'][rbt]))
+					self.sw.GetSizer().Add(formItem, (row, 1), (1,1), wx.ALIGN_LEFT)
+					row += 1
+					self.list.append((inf, formItem))
+				if inf['name'] == "upload_license":
+					self.licenses = (inf['value'], inf['radiolabels'])
+
+			elif inf['type'] == "about":
+				if inf['name'] == "cc_remix_license_notice" or inf['name'] == "cc_remix_search_result" or inf['name'] == "cc_remix_source_choice" :
+					formItem = wx.StaticText(self.sw, -1, inf['label'])
+					self.sw.GetSizer().Add(formItem, (row, 0), (1,2), wx.EXPAND)
+					row += 1
+		
+		# get items values from previous forms
+		if self.isSubmit():
+			self.getPrevValues()
+
+		self.sw.Fit()
+
+	def onSize(self, event):
+		self.resize()
+
+	def resize(self):
+		w, h = self.parent.GetSize()
+		self.SetSize((w-5, h-70))
+		self.sw.SetSize((w-5, h-70))
+
+	def onChanged(self, event):
+	        if event.direction:
+        		self.init()
+
+	def onChanging(self, event):
+		if event.direction:
+			if not(self.isSubmit()):
+				# if it's not the submission form
+			        # show an alert
+			        wx.MessageDialog(None, _("You need to fill the submission form first!"), _("Error"), wx.OK).ShowModal()
+				# veto the event -- don't allow the page to change w/o correction
+				event.Veto()
+
+	def isSubmit(self):
+		"""Verify if it's a final submission page"""
+		submit = False
+		for inf in self.values:
+			if inf[0] == "form_submit":
+				self.verifyValues()
+				self.storage.values = self.values
+				submit = True
+		return submit
+			
+
+	def search(self, event):
+		if self.accept_remixes:
+		        self.values.append(("accept_remixes", "Accept"))
+		self.values.append(("search", "Search"))
+		self.verifyValues()
+		self.init(self.values)
+		
+	def accept(self, event):
+	        self.values.append(("accept_remixes", "Accept"))
+		self.verifyValues()
+		self.init(self.values)	
+
+	def verifyValues(self):
+		for i in self.list:
+			if i[0]['type'] == "select":
+				self.values.append((i[0]['name'], i[0]['value'][i[1].GetSelection()]))
+			elif i[0]['type'] == "text" or i[0]['type'] == "textarea":
+				self.values.append((i[0]['name'], str(i[1].GetValue())))
+			elif i[0]['type'] == "checkbox":
+				if i[1].IsChecked():
+					self.values.append((i[0]['name'], "checked"))
+			elif i[0]['type'] == "radio":
+				if i[1].GetValue():
+					self.values.append((i[0]['name'], i[0]['value'][i[1].id]))
+	def getPrevValues(self):
+		"""Get values provided by user in previous windows"""
+		# get license		
+		license = p6.api.findField('license', p6.api.getApp().items[0])
+		license_xml = etree.fromstring(p6.api.getApp().license_doc)
+		license_name = license_xml.find('license-name').text
+		license_label = ""
+
+		# adapted nomenclature
+		lv = -1
+		for lic_value in self.licenses[0]:
+			lv += 1
+			lic_converter = {
+			"attribution": "by",
+			"noncommercial": "by-nc",
+			"share-alike": "by-sa",
+			"noderives": "by-nd"
+			}
+			if lic_converter.has_key(lic_value):
+				lic_value = lic_converter[lic_value]
+			# verify if license is allowed by server
+			if re.search(lic_value, license, 0) != None:
+				license_label = self.licenses[1][lv]
+		# if it's not possible to submit files under this license, report to the user
+		if license_label == "": 
+			wx.MessageDialog(None, _("It's not possible to submit files to %s under %s license! Choose another one in this form." % (self.storage.title, license_name)), _("Warning"), wx.OK).ShowModal()
+
+		# get work's name, tags, description
+		for field in self.list:
+			if field[0]['name'] == "upload_name":
+				field[1].SetValue(p6.api.findField('title', p6.api.getApp().items[0]))
+			elif field[0]['name'] == "upload_tags":
+				field[1].SetValue(p6.api.findField('keywords', p6.api.getApp().items[0]))
+			elif field[0]['name'] == "upload_description":
+				field[1].SetValue(str(p6.api.findField('description', p6.api.getApp().items[0])) + "\n" + str(p6.api.findField('holder', p6.api.getApp().items[0])) + "   " + str(p6.api.findField('year', p6.api.getApp().items[0])))
+			elif field[0]['name'] == "upload_license" and field[1].GetLabel() == license_label:
+				field[1].SetValue(True)
+			
+	XRCID = "SUBMISSION_FORM"
+	PAGE_XRC = """
+<resource>
+  <object class="wxPanel" name="%s">
+  </object>
+</resource>
+	""" % XRCID

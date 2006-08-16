@@ -51,7 +51,7 @@ class CCHostStorageUi(object):
         self.__pages.append(lambda x: ui.cch.CCHostLocationPage(x,self.__storage))
         self.__pages.append(lambda x: ui.cch.CCHostLoginPage(x,self.__storage))
         self.__pages.append(lambda x: ui.cch.CCHostSubmissionTypePage(x,self.__storage))
-#        self.__pages.append(lambda x: ui.cch.CCHostFormSubmission (x,self.__storage))        
+        self.__pages.append(lambda x: ui.cch.CCHostFormSubmission(x,self.__storage))        
         self.__pages.append(p6.ui.pages.StorePage)
 #        self.__pages.append(lambda x: ui.cch.CCHostFinalPage(x, self.__storage))
 
