@@ -20,6 +20,7 @@ from p6.i18n import _
 
 import pycchost
 
+
 class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
     def __init__(self, parent, storage):
         url = p6.metadata.persistance.load("cch", "url", "")
@@ -69,7 +70,6 @@ class CCHostLocationPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 	# get ccHost installation name
 	self.storage.title = title
         p6.metadata.persistance.store("cch", "url", theurl)
-                    
         
 
 class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
@@ -147,7 +147,7 @@ class CCHostLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
 
 class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
 	"""User interface page which displays a list of available
-	storage providers and allows the user to select one or more.
+	submission types and allows the user to select one or more.
 	"""
 	zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
@@ -230,8 +230,8 @@ class CCHostSubmissionTypePage(ccwx.xrcwiz.XrcWizPage):
 	""" % XRCID
 
 class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
-	"""User interface page which displays a list of available
-	storage providers and allows the user to select one or more.
+	"""User interface page which displays a form to
+	submit files to a ccHost Installation
 	"""		
 
 	zope.interface.implements(p6.ui.interfaces.IWizardPage)
@@ -248,25 +248,21 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 	        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
                 	                        self.PAGE_XRC, self.XRCID, headline)
 
-		w, h = parent.GetSize()
-		self.SetSize((w-5, h-70))
 		# creates an scrolled window
-		self.sw = wx.ScrolledWindow(self, -1, size=(w-5, h-70))
+		self.sw = wx.ScrolledWindow(self)
+		self.GetSizer().Add(self.sw, flag=wx.EXPAND)
 		self.sw.SetSizer(wx.GridBagSizer(vgap=3, hgap=3))
+		self.sizer = self.sw.GetSizer()
 		self.sw.SetScrollbars(5, 5, 100, 100)
 
-		self.parent = parent
         	self.storage = storage
 
 	def init(self, values=None):
-		self.resize()
-		self.sw.GetSizer().Clear(True)
+		self.sizer.Clear(True)
 		self.sw.Fit()
-		self.sw.GetSizer().AddGrowableCol(0)
-		self.sw.GetSizer().AddGrowableCol(1)
+		self.sizer.AddGrowableCol(0)
+		self.sizer.AddGrowableCol(1)
 		row = 0
-
-		self.Bind(wx.EVT_SIZE, self.onSize)
 
 		#get a list of requested submission information
 		try:
@@ -285,6 +281,7 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 		self.values = [] # list of submission fields
 		self.list = [] # list of all form items and their names
 		self.accept_remixes = False
+		self.isRemix = False
 
 		for inf in form:
 			if not(inf.has_key("name")):
@@ -301,12 +298,12 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 				if inf['name'] == "search":
 					formItem = wx.Button(self.sw, 1, inf['value'][0])
 					self.sw.Bind(wx.EVT_BUTTON, self.search, id=1)
-					self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan, wx.ALIGN_RIGHT)
+					self.sizer.Add(formItem, (row, 1), wx.DefaultSpan, wx.ALIGN_RIGHT)
 					row += 1
 				elif inf['name'] == "accept_remixes":
 					formItem = wx.Button(self.sw, 2, inf['value'][0])
 					self.sw.Bind(wx.EVT_BUTTON, self.accept, id=2)
-					self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan,wx.ALIGN_RIGHT)
+					self.sizer.Add(formItem, (row, 1), wx.DefaultSpan,wx.ALIGN_RIGHT)
 					row += 1
 					self.accept_remixes = True
 				else:
@@ -316,10 +313,11 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 				formItem = wx.CheckBox(self.sw, label=inf['label'])
 				if inf.has_key("value") and len(inf['value']) > 0 and inf['value'][0] == "checked":
 					formItem.SetValue(True)
-				else: formItem.SetValue(False)
+				else: 
+					formItem.SetValue(False)
 				if inf.has_key("tip"):
 					formItem.SetToolTip(wx.ToolTip(inf['tip']))
-				self.sw.GetSizer().Add(formItem, (row, 0), (1,2), wx.EXPAND)
+				self.sizer.Add(formItem, (row, 0), (1,2), wx.EXPAND)
 				row += 1
 				self.list.append((inf, formItem))
 
@@ -327,7 +325,7 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 				formItem = wx.StaticText(self.sw, -1, inf['label'])
 				if inf.has_key("tip"):
 					formItem.SetToolTip(wx.ToolTip(inf['tip']))
-				self.sw.GetSizer().Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				self.sizer.Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
 				if inf["type"] == "text":
 					if inf.has_key("value") and inf['value'] != "":
 						formItem = wx.TextCtrl(self.sw, -1, inf['value'][0])
@@ -340,16 +338,16 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 						formItem = wx.TextCtrl(self.sw, -1, "", style=wx.TE_MULTILINE)
 				if inf.has_key("tip"):
 					formItem.SetToolTip(wx.ToolTip(inf['tip']))
-				self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan, wx.EXPAND)
+				self.sizer.Add(formItem, (row, 1), wx.DefaultSpan, wx.EXPAND)
 				row += 1
 				self.list.append((inf, formItem))
 
 			elif inf['type'] == "select":
 				formItem = wx.StaticText(self.sw, -1, inf['label'])
-				self.sw.GetSizer().Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				self.sizer.Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
 				formItem = wx.Choice(self.sw, -1, (-1, -1), (-1, -1), inf['radiolabels'], name=inf['name'])
 				formItem.SetSelection(0)
-				self.sw.GetSizer().Add(formItem, (row, 1), wx.DefaultSpan, wx.EXPAND)
+				self.sizer.Add(formItem, (row, 1), wx.DefaultSpan, wx.EXPAND)
 				row += 1
 				self.list.append((inf, formItem))
 
@@ -357,7 +355,7 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 				formItem = wx.StaticText(self.sw, -1, inf['label'])
 				if inf.has_key("tip"):
 					formItem.SetToolTip(wx.ToolTip(inf['tip']))
-				self.sw.GetSizer().Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				self.sizer.Add(formItem, (row, 0), wx.DefaultSpan, wx.ALIGN_LEFT)
 				row += 1
 				for rbt in range(len(inf['radiolabels'])):
 					# create the new radio button
@@ -365,31 +363,32 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 					formItem.id = rbt
 					if inf.has_key("radiotips"):
 						formItem.SetToolTip(wx.ToolTip(inf['radiotips'][rbt]))
-					self.sw.GetSizer().Add(formItem, (row, 1), (1,1), wx.ALIGN_LEFT)
+					self.sizer.Add(formItem, (row, 1), (1,1), wx.ALIGN_LEFT)
 					row += 1
 					self.list.append((inf, formItem))
 				if inf['name'] == "upload_license":
 					self.licenses = (inf['value'], inf['radiolabels'])
 
 			elif inf['type'] == "about":
-				if inf['name'] == "cc_remix_license_notice" or inf['name'] == "cc_remix_search_result" or inf['name'] == "cc_remix_source_choice" :
+				if inf['name'] == "cc_remix_search_result" or inf['name'] == "cc_remix_source_choice" :
 					formItem = wx.StaticText(self.sw, -1, inf['label'])
-					self.sw.GetSizer().Add(formItem, (row, 0), (1,2), wx.EXPAND)
+					self.sizer.Add(formItem, (row, 0), (1,2), wx.EXPAND)
 					row += 1
+				elif inf['name'] == "cc_remix_license_notice":
+					formItem = wx.StaticText(self.sw, -1, inf['label'])
+					self.sizer.Add(formItem, (row, 0), (1,2), wx.EXPAND)
+					row += 1
+					self.isRemix = True
 		
 		# get items values from previous forms
 		if self.isSubmit():
 			self.getPrevValues()
 
 		self.sw.Fit()
-
-	def onSize(self, event):
-		self.resize()
-
-	def resize(self):
-		w, h = self.parent.GetSize()
-		self.SetSize((w-5, h-70))
-		self.sw.SetSize((w-5, h-70))
+		# register for future storage events after validating our
+	        # storage-specific settings
+	        self.storage.registerEvents()	
+		
 
 	def onChanged(self, event):
 	        if event.direction:
@@ -411,6 +410,7 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 			if inf[0] == "form_submit":
 				self.verifyValues()
 				self.storage.values = self.values
+				self.storage.file_name = self.file_name
 				submit = True
 		return submit
 			
@@ -425,7 +425,7 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 	def accept(self, event):
 	        self.values.append(("accept_remixes", "Accept"))
 		self.verifyValues()
-		self.init(self.values)	
+		self.init(self.values)
 
 	def verifyValues(self):
 		for i in self.list:
@@ -433,6 +433,8 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 				self.values.append((i[0]['name'], i[0]['value'][i[1].GetSelection()]))
 			elif i[0]['type'] == "text" or i[0]['type'] == "textarea":
 				self.values.append((i[0]['name'], str(i[1].GetValue())))
+				if i[0]['name'] == "upload_name":
+					self.file_name = str(i[1].GetValue())
 			elif i[0]['type'] == "checkbox":
 				if i[1].IsChecked():
 					self.values.append((i[0]['name'], "checked"))
@@ -441,30 +443,31 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 					self.values.append((i[0]['name'], i[0]['value'][i[1].id]))
 	def getPrevValues(self):
 		"""Get values provided by user in previous windows"""
-		# get license		
-		license = p6.api.findField('license', p6.api.getApp().items[0])
-		license_xml = etree.fromstring(p6.api.getApp().license_doc)
-		license_name = license_xml.find('license-name').text
-		license_label = ""
+		# get license if it's not a remix
+		if not(self.isRemix):		
+			license = p6.api.findField('license', p6.api.getApp().items[0])
+			license_xml = etree.fromstring(p6.api.getApp().license_doc)
+			license_name = license_xml.find('license-name').text
+			license_label = ""
 
-		# adapted nomenclature
-		lv = -1
-		for lic_value in self.licenses[0]:
-			lv += 1
-			lic_converter = {
-			"attribution": "by",
-			"noncommercial": "by-nc",
-			"share-alike": "by-sa",
-			"noderives": "by-nd"
-			}
-			if lic_converter.has_key(lic_value):
-				lic_value = lic_converter[lic_value]
-			# verify if license is allowed by server
-			if re.search(lic_value, license, 0) != None:
-				license_label = self.licenses[1][lv]
-		# if it's not possible to submit files under this license, report to the user
-		if license_label == "": 
-			wx.MessageDialog(None, _("It's not possible to submit files to %s under %s license! Choose another one in this form." % (self.storage.title, license_name)), _("Warning"), wx.OK).ShowModal()
+			# adapted nomenclature
+			lv = -1
+			for lic_value in self.licenses[0]:
+				lv += 1
+				lic_converter = {
+				"attribution": "by",
+				"noncommercial": "by-nc",
+				"share-alike": "by-sa",
+				"noderives": "by-nd"
+				}
+				if lic_converter.has_key(lic_value):
+					lic_value = lic_converter[lic_value]
+				# verify if license is allowed by server
+				if re.search(lic_value, license, 0) != None:
+					license_label = self.licenses[1][lv]
+			# if it's not possible to submit files under this license, report to the user
+			if license_label == "": 
+				wx.MessageDialog(None, _("It's not possible to submit files to %s under %s license! Choose another one in this form." % (self.storage.title, license_name)), _("Warning"), wx.OK).ShowModal()
 
 		# get work's name, tags, description
 		for field in self.list:
@@ -481,6 +484,66 @@ class CCHostFormSubmission(ccwx.xrcwiz.XrcWizPage):
 	PAGE_XRC = """
 <resource>
   <object class="wxPanel" name="%s">
+    <object class="wxFlexGridSizer">
+      <cols>1</cols>
+      <rows>1</rows>
+      <growablecols>0</growablecols>
+      <growablerows>0</growablerows>
+    </object>
   </object>
 </resource>
 	""" % XRCID
+
+class CCHostFinalPage(ccwx.xrcwiz.XrcWizPage):
+	"""Display results"""
+	zope.interface.implements(p6.ui.interfaces.IWizardPage)
+
+	def __init__(self, parent, storage, headline=_('Upload Complete')):
+		"""
+	        @param parent: Parent window
+	        @type parent: L{wx.Window}
+	
+	        @param headline: Title to display above the wizard page
+	        @type headline: String
+	        """
+
+	        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+                	                        self.PAGE_XRC, self.XRCID, headline)
+
+		self.SetSizer(wx.GridBagSizer(vgap=3, hgap=3))
+		self.GetSizer().AddGrowableCol(0)
+
+        	self.storage = storage
+
+	def init(self):
+		self.GetSizer().Clear(True)
+		self.Fit()
+		row = 0
+		for result in self.storage.uploads:
+			if result[0]: # upload succeeded
+				self.GetSizer().Add(wx.StaticText(self, -1, "Your work has been uploaded to %s!" % self.storage.title), (row,0), wx.DefaultSpan, wx.EXPAND)
+				row += 1
+			else: # upload failed
+				self.GetSizer().Add(wx.StaticText(self, -1, "Your work has NOT been uploaded to %s" % self.storage.title), (row,0), wx.DefaultSpan, wx.EXPAND)
+				row += 1
+			if result[1] != None:
+				self.GetSizer().Add(wx.StaticText(self, -1, "Your can view your work online at:\n"), (row,0), wx.DefaultSpan, wx.EXPAND)
+				row += 1
+				self.GetSizer().Add(wx.lib.hyperlink.HyperLinkCtrl(self, -1, result[1]), (row, 0), wx.DefaultSpan, wx.ALIGN_CENTER_HORIZONTAL)
+				row += 1
+			if result[2] != "":
+				self.GetSizer().Add(wx.StaticText(self, -1, "The error reason:\n %s" % result[2]), (row,0), wx.DefaultSpan, wx.ALIGN_LEFT)
+				row += 1
+		self.Fit()
+
+	def onChanged(self, event):
+		self.init()
+
+	XRCID = "CCHOST_UPLOAD"
+	PAGE_XRC = """
+<resource>
+  <object class="wxPanel" name="%s">
+  </object>
+</resource>
+	""" % XRCID
+

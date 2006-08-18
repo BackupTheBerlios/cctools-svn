@@ -42,7 +42,12 @@ def encode_multipart_formdata(fields, files):
         L.append('Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename))
         L.append('Content-Type: %s' % get_content_type(filename))
         L.append('')
-        L.append(value)
+       	try:
+	        L.append(value())
+        except IOError, e:
+                print 'Failed to open file.'
+                print e
+                sys.exit(2)
     L.append('--' + BOUNDARY + '--')
     L.append('')
     body = CRLF.join(L)
