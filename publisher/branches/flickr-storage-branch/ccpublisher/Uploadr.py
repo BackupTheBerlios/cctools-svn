@@ -1,17 +1,16 @@
-import sys, time, os, urllib2, shelve, string, xmltramp, mimetools, mimetypes, md5, webbrowser, traceback
+import sys, time, os, urllib2, shelve, string, mimetools, mimetypes, md5, webbrowser, traceback
+import elementtree.ElementTree as ET
 #
 #   Requires:
-#       xmltramp http://www.aaronsw.com/2002/xmltramp/
+#       ElementTree
 #       flickr account http://flickr.com
 #
 #    Most credit goes to: Cameron Mallory
-#    Minor changes to include with ccPublisher made by Robert Litzke (auto-licenser, etc)
+#    Minor changes to include with ccPublisher made by Robert Litzke (auto-licenser, removing xmltramp)
 #    This code has been updated to use the new Auth API from flickr.
 #
 #   You may use this code however you see fit in any form whatsoever.
-#
-#   Flickr settings
-#
+
 FLICKR = {"title": "",
         "description": "",
         "tags": "auto-upload",
@@ -19,8 +18,8 @@ FLICKR = {"title": "",
         "is_friend": "0",
         "is_family": "0" }
 
-FLICKR["secret" ] = "367567149e034a21"#"d8fb77bee73ab91b"
-FLICKR["api_key" ] = "6777b9af9f7b864b95f67c91e2c07310"#"2b22d953d654eb9e9ad25801238b4049"
+FLICKR["secret" ] = "c989a9481aa04f95"#"d8fb77bee73ab91b"#"367567149e034a21"
+FLICKR["api_key" ] = "cf402fa0fc360914cbd4f1b7ee10d0de"#"2b22d953d654eb9e9ad25801238b4049"#"6777b9af9f7b864b95f67c91e2c07310"
 class APIConstants:
     base = "http://flickr.com/services/"
     rest   = base + "rest/"
@@ -78,14 +77,13 @@ class Uploadr:
         foo = base + "?"
         foo+="method=flickr.photos.licenses.setLicense&"
         foo += self.api.key + "=" + FLICKR[ self.api.key ] + "&" + self.api.photoid + "=" + str(pho)
-        foo += "&" + self.api.licenseid + "=" + str(lic) + "&" + self.api.token + "=" + str(tok) #+ "&" +self.api.sig + "=" + sig
+        foo += "&" + self.api.licenseid + "=" + str(lic) + "&" + self.api.token + "=" + str(tok) + "&" +self.api.sig + "=" + sig
         return foo
  
     """
     Authenticate the application, and store token
     """
     def authenticate( self ):
-        print "Authenticating"
         self.getFrob()
         self.getAuthKey()
     
@@ -110,7 +108,6 @@ class Uploadr:
     Your API application key. See here for more details.     
     """
     def getFrob( self ):
-        print "getFrob"
         d = { 
             self.api.method  : "flickr.auth.getFrob"
             }
@@ -119,7 +116,7 @@ class Uploadr:
         try:
             response = self.getResponse( url )
             if ( self.isGood( response ) ):
-                FLICKR[ self.api.frob ] = str(response.frob)
+                FLICKR[ self.api.frob ] = str( response.find('frob').text )
             else:
                 self.reportError( response )
         except:
@@ -129,7 +126,8 @@ class Uploadr:
     """
     Checks to see if the user has authenticated this application
     """
-    def getAuthKey( self ): 
+    def getAuthKey( self ):
+        print "getAuthKey"
         d =  {
             self.api.frob : FLICKR[ self.api.frob ], 
             self.api.perms : "write"  
@@ -161,7 +159,6 @@ class Uploadr:
        The frob to check.         
     """   
     def getToken( self ):
-        print "getToken"
         d = {
            self.api.method : "flickr.auth.getToken",
            self.api.frob : str(FLICKR[self.api.frob ])
@@ -171,14 +168,13 @@ class Uploadr:
         try:
             res = self.getResponse( url )
             if ( self.isGood( res ) ):
-                self.token = str(res.auth.token)
-                self.perms = str(res.auth.perms)
+                self.token = str( res.find('auth').find('token').text )
+                self.perms = str( res.find('auth').find('perms').text )
                 self.cacheToken()
             else :
                 self.reportError( res )
         except:
             print str( sys.exc_info() )
-
     """
     Attempts to get the flickr token from disk.
     """
@@ -191,7 +187,6 @@ class Uploadr:
 
 
     def cacheToken( self ):
-        print "cacheToken"
         try:
             open( self.TOKEN_FILE , "w").write( str(self.token) )
         except:
@@ -224,8 +219,8 @@ class Uploadr:
             try:
                 res = self.getResponse( url ) 
                 if ( self.isGood( res ) ):
-                    self.token = res.auth.token
-                    self.perms = res.auth.perms
+                    self.token = res.find('auth').find('token').text
+                    self.perms = res.find('auth').find('perms').text
                     return True
                 else :
                     self.reportError( res )
@@ -285,14 +280,14 @@ class Uploadr:
     
     
     def isGood( self, res ):
-        if ( not res == "" and res('stat') == "ok" ):
+        if ( res.attrib['stat'] == "ok" ):
             return True
         else :
             return False            
             
     def reportError( self, res ):
         try:
-            print "Error:", str( res.err('code') + " " + res.err('msg') )
+            print "Error: ", str( res.find('err').attrib['code'] + res.find('err').attrib['msg'] )
         except:
             print "Error: " + str( res )
 
@@ -301,18 +296,18 @@ class Uploadr:
     """
     def getResponse( self, url ):
         xml = urllib2.urlopen( url ).read()
-        return xmltramp.parse( xml )
+        return ET.fromstring( xml )
     
     """
     Automatically set the license for the file online at Flickr. Flickr will display this license
     Takes the photoid (returned by upload image) and the number of the license, 1-6 for creative commons, 0 otherwise
     """
     def setLicense( self, photoid, licenseid ):
-        print "setting license"
         d= {
             self.api.method : "flickr.photos.licenses.setLicense",
             self.api.photoid : str(photoid),
-            self.api.licenseid : str(licenseid)
+            self.api.licenseid : str(licenseid),
+            self.api.token : self.token
             }
         sig = self.signCall( d )
         url = self.genLicense( self.api.rest, photoid, licenseid, sig, self.token)
@@ -321,7 +316,6 @@ class Uploadr:
             response=self.getResponse( url )
             print response
             if not ( self.isGood( response ) ):
-                print "LICENSING FAILED"
         except:
             exc, val, tb = sys.exc_info()
             logfile = open("uploadrlog.txt", "a")
@@ -350,13 +344,12 @@ class Uploadr:
                 sig = self.signCall( d )
                 d[ self.api.sig ] = sig
                 d[ self.api.key ] = FLICKR[ self.api.key ]        
-                url = self.build_request( self.api.upload, d, (photo,))    
-                xml = urllib2.urlopen( url ).read()
-                res = xmltramp.parse(xml)
+                url = self.build_request( self.api.upload, d, (photo,))
+                res=self.getResponse( url )
                 if ( self.isGood( res ) ):
-                    self.setLicense(res.photoid, license)
+                    
+                    self.setLicense(res.find('photoid').text, license)
                 else :
-                    print "problem..."
                     self.reportError( res )
             except:
                 print str(sys.exc_info())
