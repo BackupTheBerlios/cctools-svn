@@ -8,20 +8,20 @@ import wx.html
 import wx.lib.hyperlink
 from wx.xrc import XRCCTRL
 
-import ccwx
 import p6.api
+import p6.ui.wizard
 from p6.i18n import _
 
 from ccpublisher.const import version
 
-class FinalPage(ccwx.xrcwiz.XrcWizPage):
+class FinalPage(p6.ui.wizard.XRCWizardPage):
     """Final page for self-hosting storage provider"""
 
     def __init__(self, parent, storage):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, _('Complete'),
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'SELFHOST_COMPLETE', _('Complete'))
+                                        'SELFHOST_COMPLETE')
 
         # connect the Save button handler
         self.Bind(wx.EVT_BUTTON, self.onSave, XRCCTRL(self, "CMD_SAVE_RDF"))

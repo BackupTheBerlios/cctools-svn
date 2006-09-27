@@ -8,13 +8,13 @@ import wx.xrc
 from wx.xrc import XRCCTRL
 
 import zope.interface
-import ccwx.xrcwiz
 
 import p6
 import p6.api
 
 from p6.i18n import _
 from p6.ui.interfaces import ILabelText
+import p6.ui.wizard
 
 class FileDropTarget(wx.FileDropTarget):
     """ This object implements generic drop target functionality for Files """
@@ -115,7 +115,7 @@ class FileListControl(wx.ListCtrl):
         self.SetItemCount(len(self.__items))
 
     
-class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
+class FileSelectorPage(p6.ui.wizard.XRCWizardPage):
     """Page which displays a file selector and publishes events when
     items are selected or deselected.
     """
@@ -130,10 +130,10 @@ class FileSelectorPage(ccwx.xrcwiz.XrcWizPage):
         @type headline: String
         """
         
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, headline,
                                         os.path.join(p6.api.getResourceDir(),
                                                      "p6.xrc"),
-                                        "FILE_SELECTOR", headline)
+                                        "FILE_SELECTOR")
 
         # initialize the user interface
         self.__initUserInterface()

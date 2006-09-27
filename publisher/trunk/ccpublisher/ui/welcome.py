@@ -8,22 +8,22 @@ import wx.html
 import wx.lib.hyperlink
 from wx.xrc import XRCCTRL
 
-import ccwx
 import p6.api
 import p6.i18n
+import p6.ui.wizard
 
 from p6.i18n import _
 
 from ccpublisher.const import version
 
-class WelcomePage(ccwx.xrcwiz.XrcWizPage):
+class WelcomePage(p6.ui.wizard.XRCWizardPage):
     """Welcome page class."""
 
     def __init__(self, parent):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, _('Welcome'),
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'CCTAG_WELCOME', _('Welcome'))
+                                        'CCTAG_WELCOME')
 
         # connect the How Does This Work button
         self.Bind(wx.EVT_BUTTON, self.onHelp, XRCCTRL(self, "HELP_WHAT_TYPES"))

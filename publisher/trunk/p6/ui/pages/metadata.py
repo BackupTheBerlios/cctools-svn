@@ -3,13 +3,13 @@
 import weakref
 
 import wx
-import ccwx
 
 import zope.component
 import zope.interface
 
 import p6
 import p6.api
+import p6.ui.wizard
 
 import license
 
@@ -18,15 +18,15 @@ import inspect
 from p6.i18n import _
 from p6.ui.interfaces import ILabelText
 
-class MetadataPage(ccwx.xrcwiz.XrcWizPage):
+class MetadataPage(p6.ui.wizard.XRCWizardPage):
     """Basic metadata page; generated for most metadata groups."""
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, metaGroup):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, _(metaGroup.title),
                                         self.PAGE_XRC % metaGroup.id,
-                                        metaGroup.id,
-                                        _(metaGroup.title))
+                                        metaGroup.id
+                                        )
 
         self.metagroup = metaGroup
         self.initFields(metaGroup)
@@ -146,7 +146,7 @@ class MetadataPage(ccwx.xrcwiz.XrcWizPage):
 </resource>
     """
 
-class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
+class ItemMetadataPage(p6.ui.wizard.XRCWizardPage):
     """Basic metadata page for groups which apply to an IItem interface;
     this page duplicates the fields as necessary in order to show the group
     for each item the group applies to."""
@@ -154,10 +154,10 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, metaGroup):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent,
+                                        metaGroup.title,
                                         self.PAGE_XRC % metaGroup.id,
-                                        metaGroup.id,
-                                        metaGroup.title)
+                                        metaGroup.id)
 
         self.metagroup = metaGroup
         self.__items = []
@@ -175,7 +175,7 @@ class ItemMetadataPage(ccwx.xrcwiz.XrcWizPage):
             )
         
         # bind wx events
-        self.Bind(ccwx.xrcwiz.EVT_XRCWIZ_PAGE_CHANGED, self.onChanged)
+        self.Bind(wx.wizard.EVT_WIZARD_PAGE_CHANGED, self.onChanged)
 
     def onItemSelected(self, event):
         # check if this event's item should be stored here...

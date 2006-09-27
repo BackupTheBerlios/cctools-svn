@@ -3,8 +3,8 @@
 import weakref
 
 import wx
-import ccwx
-import ccwx.wraptext
+import p6.ui.wizard
+import p6.ui.wraptext
 
 import zope.component
 import zope.interface
@@ -17,7 +17,7 @@ import license
 
 from p6.i18n import _
 
-class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
+class SimpleFieldPage(p6.ui.wizard.XRCWizardPage):
     """Utility page for rendering a set of MetadataField objects independtly
     of a MetadataGroup.  Intended to be used for collecting information from
     the user in a way that is consistent with the rest of the UI, but which
@@ -29,10 +29,8 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
                  description=""):
         """Fields is a sequence of metadata fields."""
         
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC % id,
-                                        id,
-                                        headline)
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, headline,
+                                         self.PAGE_XRC % id, id)
 
         self.__fields = fields
         self.__description = description
@@ -45,7 +43,7 @@ class SimpleFieldPage(ccwx.xrcwiz.XrcWizPage):
 
         # add any description text
         self.GetSizer().Add(
-	    ccwx.wraptext.WordWrapText(self, -1, _(self.__description)), 
+	    p6.ui.wraptext.WordWrapText(self, -1, _(self.__description)), 
 	    flag=wx.EXPAND)
             
         # create the actual sizer to hold the labels and widgets

@@ -3,16 +3,16 @@ import wx.xrc
 from wx.xrc import XRCCTRL
 
 import zope.interface
-import ccwx.xrcwiz
 
 import p6
 import p6.api
 import p6.storage.interfaces
+import p6.ui.wizard
 import p6.extension.interfaces
 
 from p6.i18n import _
 
-class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
+class StorageSelectorPage(p6.ui.wizard.XRCWizardPage):
     """User interface page which displays a list of available
     storage providers and allows the user to select one or more.
     """
@@ -28,8 +28,8 @@ class StorageSelectorPage(ccwx.xrcwiz.XrcWizPage):
         @type headline: String
         """
         
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
-                                        self.PAGE_XRC, self.XRCID, headline)
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, headline,
+                                        self.PAGE_XRC, self.XRCID)
 
         self._multi = multi
         

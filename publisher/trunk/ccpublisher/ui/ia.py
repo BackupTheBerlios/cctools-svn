@@ -10,24 +10,24 @@ from wx.xrc import XRCCTRL
 
 import zope.component
 
-import ccwx
 import pyarchive.identifier
 import pyarchive.exceptions
 
 import p6
 import p6.api
 import p6.ui.pages.fieldrender
+import p6.ui.wizard
 from p6.i18n import _
 
-class IdentifierPage(ccwx.xrcwiz.XrcWizPage):
+class IdentifierPage(p6.ui.wizard.XRCWizardPage):
     """Identifier selection page class."""
 
     def __init__(self, parent, storage):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent,
+                                        _('Item Identifier'),
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
-                                        'IA_IDENTIFIER',
-                                        _('Item Identifier'))
+                                        'IA_IDENTIFIER')
 
         self.storage = storage
         self.changed = False
@@ -168,13 +168,13 @@ class ArchiveLoginPage(p6.ui.pages.fieldrender.SimpleFieldPage):
         self.storage.registerEvents()
 
                        
-class FinalPage(ccwx.xrcwiz.XrcWizPage):
+class FinalPage(p6.ui.wizard.XRCWizardPage):
     """Welcome page class."""
 
     HTTP_LINK_VALUE = None
     
     def __init__(self, parent, storage):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent,
                                         os.path.join(p6.api.getResourceDir(),
                                                      "ccpublisher.xrc"),
                                         'IA_COMPLETE', 'Upload Complete')

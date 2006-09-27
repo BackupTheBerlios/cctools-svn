@@ -11,28 +11,27 @@ import elementtree.ElementTree as etree
 import zope.interface
 import zope.component
 
-import ccwx.xrcwiz
-import ccwx.wraptext
+import p6.ui.wraptext
 import ccwsclient
 
 import p6.api
 import p6.ui
+import p6.ui.wizard
 import p6.metadata
 import p6.app.support.browser as webbrowser
 
 from p6.i18n import _
 
-class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
+class LicenseChooserPage(p6.ui.wizard.XRCWizardPage):
     """Custom wizard page which implements a license chooser based on
     CC's web service interface."""
     
     zope.interface.implements(p6.ui.interfaces.IWizardPage)
 
     def __init__(self, parent, metaGroup):
-        ccwx.xrcwiz.XrcWizPage.__init__(self, parent,
+        p6.ui.wizard.XRCWizardPage.__init__(self, parent, _('Choose A License'),
                                         self.PAGE_XRC,
-                                        'LICENSE_CHOOSER',
-                                        _('Choose A License'))
+                                        'LICENSE_CHOOSER')
 
         self.metagroup = metaGroup
 
@@ -52,7 +51,7 @@ class LicenseChooserPage(ccwx.xrcwiz.XrcWizPage):
         # create the sizer
         self.sizer = self.GetSizer()
         
-        self.sizer.Add(ccwx.wraptext.WordWrapText(self, -1, _(self.STR_INTRO_TEXT)), flag=wx.EXPAND)
+        self.sizer.Add(p6.ui.wraptext.WordWrapText(self, -1, _(self.STR_INTRO_TEXT)), flag=wx.EXPAND)
 
         # create the panel for the fields
         self.pnlFields = wx.Panel(self)
