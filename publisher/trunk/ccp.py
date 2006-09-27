@@ -40,7 +40,7 @@ def main(argv=[]):
    p6.i18n.initialize(root_dir, locale=options.locale)
    p6.i18n.loadCatalog('ccpublisher')
    
-   # create the application and execute it
+   # create the application 
    app = CcPublisher(appname = 'ccPublisher',
                      rsc_dir = root_dir,
                      filename= 'err.log',
@@ -49,12 +49,19 @@ def main(argv=[]):
                      confFile = 'app.zcml',
                      )
 
-   # Connect the crash-reporting handler
-   libfeedback.wxAddExceptHook(const.REPORTING_URL,
-                               const.REPORTING_APP,
-                               const.version())
+   # configure the application
+   app.configure()
 
-   app.MainLoop()
+   # create the main window
+   main = CcMain(app)
+   
+   # Connect the crash-reporting handler
+   ##    libfeedback.wxAddExceptHook(const.REPORTING_URL,
+   ##                                const.REPORTING_APP,
+   ##                                const.version())
+
+   # start the wizard
+   main.start()
    
 if __name__ == '__main__':           
     main(sys.argv)

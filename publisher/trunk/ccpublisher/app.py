@@ -10,7 +10,7 @@ import p6.ui.wizard
 
 class CcPublisher(p6.app.wxpy.WizApp):
     def __init__(self, appname=None, rsc_dir='.', filename=None,
-                 xrcfile=None, frameclass=p6.ui.wizard.WizFrame,
+                 xrcfile=None, frameclass=p6.ui.wizard.P6Wizard,
                  confFile='app.zcml'):
         
         # call the superclass constructor
@@ -18,23 +18,24 @@ class CcPublisher(p6.app.wxpy.WizApp):
                                     frameclass, confFile)
 
 
-class CcMain(p6.ui.wizard.WizFrame):
+class CcMain(p6.ui.wizard.P6Wizard):
     def __init__(self, app):
-        p6.ui.wizard.WizFrame.__init__(self, 'FRM_MAIN', app)
+        p6.ui.wizard.P6Wizard.__init__(self, None, -1, 'ccPublisher')
 
         # set the window icon
+        self.app = app
         self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'ccp8.ico'),
                              wx.BITMAP_TYPE_ICO))
 
         # load Mr. Publish
-        mr_publish = os.path.join(p6.api.getResourceDir(),
-                                  'publishguy_small.gif')
+        #mr_publish = os.path.join(p6.api.getResourceDir(),
+        #                          'publishguy_small.gif')
         
-        XRCCTRL(self, "IMG_PUBLISHGUY").SetBitmap(
-            wx.BitmapFromImage(
-            wx.Image(mr_publish, wx.BITMAP_TYPE_GIF)
-            )
-            )
+        #XRCCTRL(self, "IMG_PUBLISHGUY").SetBitmap(
+        #    wx.BitmapFromImage(
+        #    wx.Image(mr_publish, wx.BITMAP_TYPE_GIF)
+        #    )
+        #    )
         
 
     def getIconList(self):

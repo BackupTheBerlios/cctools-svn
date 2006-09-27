@@ -9,14 +9,17 @@ import zope.component
 import zope.configuration.xmlconfig
 
 import p6.api
+import p6.storage.events
+import p6.storage.items
 import p6.ui.wizard
+import p6.ui.pagecollection
 import p6.app.extension
 
 import support.browser as webbrowser
 import interfaces
 import bananas
 
-import ccpublisher.const
+#import ccpublisher.const
 import platform
 import libfeedback.comm
 
@@ -26,9 +29,10 @@ zope.configuration.xmlconfig.openInOrPlain = bananas.openInOrPlain
 
 class WizApp(wx.App):
     zope.interface.implements(interfaces.IWizardApp)
-    def __init__(self, appname=None, rsc_dir='.',
+    
+    def __init__(self, appname='P6 Application', rsc_dir='.',
                  errlog=None, xrcfile=None,
-                 frameclass=p6.ui.wizard.WizFrame,
+                 frameclass=p6.ui.wizard.P6Wizard,
                  confFile='app.zcml'):
 
         # initialize the metadata group list
@@ -41,7 +45,7 @@ class WizApp(wx.App):
         self.appname = appname
         self.resource_dir = rsc_dir
         self.errlog = errlog
-        self.xrcfile = os.path.join(self.resource_dir, xrcfile)
+        # self.xrcfile = os.path.join(self.resource_dir, xrcfile)
         self.__frameclass = frameclass
         self.confFile = os.path.join(self.resource_dir, confFile)
 
@@ -52,7 +56,6 @@ class WizApp(wx.App):
         # ensure support directories exist
         p6.api.checkAppDirs()
         
-        self.__configure()
         self.__loadPrefs()
         
         self.SetAppName(self.appname)
@@ -96,7 +99,7 @@ class WizApp(wx.App):
         output.write(file(os.path.join(p6.api.getResourceDir(),
                                        'extprefs.conf'), 'w'))
         
-    def __configure(self):
+    def configure(self):
         """Load the ZCML configuration for P6, the application and any
         extensions."""
 
@@ -114,7 +117,7 @@ class WizApp(wx.App):
         self.context.execute_actions()
 
         # expand any metadata page groups
-        newpages = []
+        newpages = p6.ui.pagecollection.PageCollection()
         for page in self.pages:
             if getattr(page, 'expand', False):
                 newpages = newpages + [n for n in page(None)]
@@ -161,12 +164,13 @@ class WizApp(wx.App):
         """Initialize any user interface elements -- in particular, the top
         level window and global menu bar."""
 
-        self.main = self.__frameclass(self)
-        self.main.SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE))
-        self.main.Show(True)
+        return 
+        #self.main = self.__frameclass(self)
+        #self.main.SetBackgroundColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE))
+        # self.main.Show(True)
 
         self.topmenu = self.__makeMenu()
-        self.main.SetMenuBar(self.topmenu)
+        # self.main.SetMenuBar(self.topmenu)
 
         # check if any extensions were loaded
         if len(self.prefs.keys()) == 0:
@@ -175,7 +179,7 @@ class WizApp(wx.App):
             self.topmenu.EnableTop(1, False)
         
         self.SetTopWindow(self.main)
-        self.main.SetSize(self.main.GetMinSize())
+        # self.main.SetSize(self.main.GetMinSize())
         
     def connectEvents(self):
 
@@ -200,6 +204,8 @@ class WizApp(wx.App):
         self.items.remove(event.item)
         
     def showAbout(self, event):
+        return
+    
         # load the dialog definition
         xrc_resource = wx.xrc.XmlResource(
             os.path.join(p6.api.getResourceDir(), 'ccpublisher.xrc'))

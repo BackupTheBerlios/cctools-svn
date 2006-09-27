@@ -2,6 +2,7 @@ import zope.component
 
 import p6.api
 import p6.extension
+import p6.ui.pagecollection
 
 from p6.metadata.base import metadatafield, MetadataGroup
 
@@ -99,7 +100,7 @@ class PagesDirective(object):
             p6_app.appid = appid
 
             # initialize the page registry
-            p6_app.pages = []
+            p6_app.pages = p6.ui.pagecollection.PageCollection()
 
         else:
             self.__running = False
@@ -130,7 +131,7 @@ class PagesDirective(object):
     def xrcpage(self, _context, title, xrcfile, xrcid):
         if self.__running:
             _context.action(discriminator=('RegisterPage', xrcid,
-                                           p6.ui.pages.XrcPage),
+                                           p6.ui.wizard.XRCWizardPage),
                             callable=p6.api.getApp().pages.append,
                             args=(p6.ui.pages.xrcpage(title, xrcfile, xrcid),),
                             )
