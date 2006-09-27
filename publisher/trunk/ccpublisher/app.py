@@ -22,6 +22,9 @@ class CcMain(p6.ui.wizard.P6Wizard):
     def __init__(self, app):
         p6.ui.wizard.P6Wizard.__init__(self, None, -1, 'ccPublisher')
 
+        # set the minimum size
+        self.SetMinSize((488,450))
+        
         # set the window icon
         self.app = app
         self.SetIcon(wx.Icon(os.path.join(self.app.resource_dir, 'ccp8.ico'),
