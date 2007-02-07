@@ -19,8 +19,10 @@ from xmp import XmpMetadata
 
 class Mp3Metadata(base.BaseMetadata):
     def __init__(self, filename):
-        super(self, Mp3Metadata)(filename)
+        super(Mp3Metadata, self).__init__(filename)
 
+        self.__fields = None
+        
         self.__open(filename)
 
     def __open(self, filename=None):
@@ -183,12 +185,50 @@ class Mp3Metadata(base.BaseMetadata):
     def isWritable(self):
         """Returns true if the user has permission to change the metadata."""
         return os.access(self.filename, os.W_OK)
-    
+
+
+    def __extractFields(self):
+        """Extract all the fields from the file for use when iterating
+        the metadata."""
+
+        self.__fields = {}
+        
+        try:
+            v2 = tagger.id3v2.ID3v2(self.filename,
+                                   tagger.constants.ID3_FILE_READ)
+
+            for frame in v2.frames:
+               if len(getattr(frame, 'strings', [])) > 0:
+                   oframe = frame.strings[0]
+               else:
+                   oframe = frame.output_field()
+
+               self.__fields[frame.fid] = oframe
+
+        except:
+           pass
+
+        
+    def properties(self):
+        """Return a sequence of property keys for metadata on this object."""
+
+        if self.__fields is None:
+            self.__extractFields()
+        
+        return self.__fields.keys()
+
+    def __getitem__(self, key):
+        """Return an additional metadata property for this object."""
+
+        if self.__fields is None:
+            self.__extractFields()
+
+        return self.__fields[key]
+           
 class OggMetadata(base.BaseMetadata):
     pass
 
 meta_handlers = {'mp3':Mp3Metadata,
-                 'ogg':OggMetadata,
                  }
                 
 def metadata(filename):
