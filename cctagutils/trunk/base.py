@@ -1,5 +1,5 @@
 
-class BaseMetadata:
+class BaseMetadata(object):
     def __init__(self, filename):
         self.filename = filename
 
