@@ -14,38 +14,13 @@ import eyeD3
 import os
 import cctagutils.const as const
 
+import base
 from xmp import XmpMetadata
 
-class AudioMetadata:
+class Mp3Metadata(base.BaseMetadata):
     def __init__(self, filename):
-        self.filename = filename
+        super(self, Mp3Metadata)(filename)
 
-    def getTitle(self):
-        raise NotImplementedError()
-
-    def getArtist(self):
-        raise NotImplementedError()
-
-    def getYear(self):
-        raise NotImplementedError()
-
-    def getClaim(self):
-        raise NotImplementedError()
-
-    def setClaim(self, claim):
-        raise NotImplementedError()
-    
-    def embed(self, license, verification, year, holder):
-        """Embed a license claim in the audio file."""
-        raise NotImplementedError()
-
-    def isWritable(self):
-        """Returns true if the user has permission to change the metadata."""
-        raise NotImplementedError()
-    
-class Mp3Metadata(AudioMetadata):
-    def __init__(self, filename):
-        AudioMetadata.__init__(self, filename)
         self.__open(filename)
 
     def __open(self, filename=None):
@@ -209,7 +184,7 @@ class Mp3Metadata(AudioMetadata):
         """Returns true if the user has permission to change the metadata."""
         return os.access(self.filename, os.W_OK)
     
-class OggMetadata(AudioMetadata):
+class OggMetadata(base.BaseMetadata):
     pass
 
 meta_handlers = {'mp3':Mp3Metadata,

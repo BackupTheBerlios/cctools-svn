@@ -1,9 +1,10 @@
 import os
 import ccrdf
+import base
 
 from rdflib.URIRef import URIRef
 
-class XmpMetadata:
+class XmpMetadata(base.BaseMetadata):
 
     START_STRINGS = ("<rdf:RDF", )
     END_STRINGS = ("</rdf:RDF>", )
