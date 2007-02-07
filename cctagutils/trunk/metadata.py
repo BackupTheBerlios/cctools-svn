@@ -14,6 +14,8 @@ import eyeD3
 import os
 import cctagutils.const as const
 
+from xmp import XmpMetadata
+
 class AudioMetadata:
     def __init__(self, filename):
         self.filename = filename
@@ -225,7 +227,7 @@ def metadata(filename):
     if ext in meta_handlers:
         return meta_handlers[ext](filename)
     else:
-        # fall back to AudioMetadata, which will raise NotImplementedErrors
+        # fall back to XmpMetadata, which will raise NotImplementedErrors
         # as necessary
-        return AudioMetadata(filename)
+        return XmpMetadata(filename)
 
