@@ -25,6 +25,8 @@ class XmpMetadata(base.BaseMetadata):
 
         if self.__xmp is None:
             # scan the file for XMP
+            self.__xmp = ccrdf.ccRdf()
+            self.xmp_data = ""
 
             file_contents = file(self.filename,'r').read()
 
@@ -42,7 +44,6 @@ class XmpMetadata(base.BaseMetadata):
                 self.xmp_data = rdf_string
 
                 # parse the RDF
-                self.__xmp = ccrdf.ccRdf()
                 self.__xmp.parse(rdf_string)
                     
         return self.__xmp
@@ -60,6 +61,9 @@ class XmpMetadata(base.BaseMetadata):
         # get a set of the unique subjects, ignoring "fake" ones
         subjects = set([s for s in self.xmp.store.subjects()
                     if str(s)[:2] != "_:"])
+
+	if len(subjects) == 0:
+	    return ""
 
         if len(subjects) == 1:
             # only one candidate, must be it
