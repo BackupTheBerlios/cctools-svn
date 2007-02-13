@@ -12,6 +12,10 @@ class BaseMetadata(object):
     def getYear(self):
         raise NotImplementedError()
 
+    def getMetadataUrl(self):
+        """Return the URL where more metadata on this file may be found;
+        this is provided by WCOP in ID3 and the webStatement in XMP."""
+        
     def getClaim(self):
         raise NotImplementedError()
 
