@@ -100,6 +100,11 @@ class XmpMetadata(base.BaseMetadata):
 
     def setClaim(self, claim):
         raise NotImplementedError()
+
+    def getLicense(self):
+        """Return the embedded license information."""
+        
+        return self.__getObjectStr("http://web.resource.org/cc/license")
     
     def embed(self, license, verification, year, holder):
         """Embed a license claim in the file."""
@@ -109,6 +114,12 @@ class XmpMetadata(base.BaseMetadata):
         """Returns true if the user has permission to change the metadata."""
         return os.access(self.filename, os.W_OK)
 
+    def verify(self):
+        """Attempt to verify the embedded claim.  Return one of the VERIFY_*
+        constants defined in cctagutil."""
+
+        raise NotImplementedError()
+    
     def properties(self):
         """Return a sequence of property keys for metadata on this object."""
 
