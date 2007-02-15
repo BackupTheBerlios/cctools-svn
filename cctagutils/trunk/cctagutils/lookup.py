@@ -7,8 +7,9 @@ __license__ = 'licensed under the GNU GPL2'
 
 import ccrdf
 import ccrdf.rdfextract as rdfextract
+from ccrdf.aaronrdf import cc
 
-import cctagutils.rdf
+import cctagutil
 from cctagutils.metadata import metadata
 
 def parseClaim(claim):
@@ -45,25 +46,38 @@ def verify(filename):
     0     No RDF
     -1    Work information not found (possible SHA1 mismatch)
     -2    Verification license does not match claim.
+
+    Verification is performed against an embedded "claim" as well as
+    checking the page specified by the "web statement".
     """
 
-    status = 0
+    status = cctagutil.VERIFY_NO_RDF
+
+    file_metadata = metadata(filename)
+    sha1 = 'urn:sha1:%s' % cctag.rdf.fileHash(filename)
+    rdf_urls = []
     
-    claim = metadata(filename).getClaim()
-    if claim is None:
-        raise cctag.exceptions.NotLicensedException
+    # get the claim URL if available
+    claim = file_metadata.getClaim()
+    if claim is not None:
     
-    fileinfo = parseClaim(claim)
-    fileinfo['sha'] = 'urn:sha1:%s' % cctag.rdf.fileHash(filename)
+        fileinfo = parseClaim(claim)
+        rdf_urls.append(fileinfo['verify at'])
 
-    verifyRdf = rdfextract.RdfExtractor().extractRdfText(
-        rdfextract.retrieveUrl(fileinfo['verify at'])
-        )
+    # get the web statement URL if available
+    if file_metadata.getMetadataUrl():
+        rdf_urls.append(file_metadata.getMetadataUrl())
 
-    # check if we found any RDF at all, and update the status code
-    if len(verifyRdf) > 0:
-        status = -1
+    # parse/extract the metadata
+    rdf_store = ccrdf.rdfdict.rdfStore()
+    extractor = rdfextract.RdfExtractor()
+    for u in rdf_urls:
+        extractor.extractUrlToStore(u, rdf_store)
 
+    # look for a license assertion about this file
+    license_assertions = rdf_store.store.objects(sha1, cc.license)
+
+    
     # check each block of RDF
     #  (a verification page may also have it's own license RDF embedded)
     for block in verifyRdf:
@@ -78,12 +92,12 @@ def verify(filename):
             if work.subject == fileinfo['sha']:
                 # we found the work information;
                 # only one reason left to not verify
-                status = -2
+                status = cctagutil.VERIFY_NO_MATCH
                 
                 # we found the work, now make sure the license matches
                 for license in work.licenses():
                     if license == fileinfo['license']:
-                        return 1
+                        return cctagutil.VERIFY_VERIFIED
 
     # either the file wasn't found, or the license didn't match
     return status
