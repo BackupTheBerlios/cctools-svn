@@ -1,10 +1,10 @@
 import os
 import ccrdf
-import base
+import cctagutils.handler.base
 
 from rdflib.URIRef import URIRef
 
-class XmpMetadata(base.BaseMetadata):
+class XmpMetadata(cctagutils.handler.base.BaseMetadata):
 
     START_STRINGS = ("<rdf:RDF", )
     END_STRINGS = ("</rdf:RDF>", )
@@ -114,11 +114,18 @@ class XmpMetadata(base.BaseMetadata):
         """Returns true if the user has permission to change the metadata."""
         return os.access(self.filename, os.W_OK)
 
+    def getMetadataUrl(self):
+        """Return the URL where more metadata on this file may be found;
+        this is provided by WCOP in ID3 and the webStatement in XMP."""
+
+        return self.__getObjectStr(
+            "http://ns.adobe.com/xap/1.0/rights/Copyright")
+    
     def verify(self):
         """Attempt to verify the embedded claim.  Return one of the VERIFY_*
         constants defined in cctagutil."""
 
-        raise NotImplementedError()
+        return cctagutil.lookup.verify(self.filename)
     
     def properties(self):
         """Return a sequence of property keys for metadata on this object."""
