@@ -69,6 +69,10 @@ class XmpMetadata(cctagutils.handler.base.BaseMetadata):
             # only one candidate, must be it
             return subjects.pop()
 
+        # sigh, more than one; if one of those is the empty string, use it
+        if '' in subjects:
+            return ''
+        
         # XXX absolutely no f'in idea
         raise KeyError("Unable to determine subject.")
 
@@ -119,13 +123,7 @@ class XmpMetadata(cctagutils.handler.base.BaseMetadata):
         this is provided by WCOP in ID3 and the webStatement in XMP."""
 
         return self.__getObjectStr(
-            "http://ns.adobe.com/xap/1.0/rights/Copyright")
-    
-    def verify(self):
-        """Attempt to verify the embedded claim.  Return one of the VERIFY_*
-        constants defined in cctagutil."""
-
-        return cctagutil.lookup.verify(self.filename)
+            "http://ns.adobe.com/xap/1.0/rights/WebStatement")
     
     def properties(self):
         """Return a sequence of property keys for metadata on this object."""
