@@ -7,9 +7,9 @@ __license__ = 'licensed under the GNU GPL2'
 
 import ccrdf
 import ccrdf.rdfextract as rdfextract
-from ccrdf.aaronrdf import cc
+from ccrdf.aaronrdf import cc, xhtml
 
-import cctagutil
+import cctagutils
 from cctagutils.metadata import metadata
 
 def parseClaim(claim):
@@ -51,17 +51,18 @@ def verify(filename):
     checking the page specified by the "web statement".
     """
 
-    status = cctagutil.VERIFY_NO_RDF
+    status = cctagutils.VERIFY_NO_RDF
 
     file_metadata = metadata(filename)
-    sha1 = 'urn:sha1:%s' % cctag.rdf.fileHash(filename)
+    sha1 = 'urn:sha1:%s' % cctagutils.rdf.fileHash(filename)
     rdf_urls = []
     
     # get the claim URL if available
     claim = file_metadata.getClaim()
-    if claim is not None:
-    
+    if claim: 
+
         fileinfo = parseClaim(claim)
+        
         rdf_urls.append(fileinfo['verify at'])
 
     # get the web statement URL if available
@@ -71,33 +72,42 @@ def verify(filename):
     # parse/extract the metadata
     rdf_store = ccrdf.rdfdict.rdfStore()
     extractor = rdfextract.RdfExtractor()
+
     for u in rdf_urls:
-        extractor.extractUrlToStore(u, rdf_store)
+        extractor.extractUrlToGraph(u, rdf_store.graph)
 
     # look for a license assertion about this file
-    license_assertions = rdf_store.store.objects(sha1, cc.license)
+    license_assertions = [l for l in rdf_store.graph.objects(sha1, cc.license)]
+    license_assertions += [l for l in
+                           rdf_store.graph.objects(sha1, xhtml.license)]
 
-    
-    # check each block of RDF
-    #  (a verification page may also have it's own license RDF embedded)
-    for block in verifyRdf:
-        # parse/validate the RDF
-        verifyCc = ccrdf.ccRdf()
-        verifyCc.parse(block)
+    if len(license_assertions) == 1 and \
+       license_assertions[0] == file_metadata.getLicense():
 
-        # for each work in the RDF block...
-        for work in verifyCc.works():
+        # one matching assertion, hooray!
+        return cctagutils.VERIFY_VERIFIED
+
+    elif len(license_assertions) == 0:
+        
+        # no license assertions
+        return cctagutils.VERIFY_NO_MATCH
+
+    else:
+
+        # multiple assertions... see if any of them match
+        if file_metadata.getLicense() not in license_assertions:
+            # none of them match
+            return cctagutils.VERIFY_NO_MATCH
+
+        # see if they're all the same, or if ambiguity exists
+        for l in license_assertions:
             
-            # if the subject matches...
-            if work.subject == fileinfo['sha']:
-                # we found the work information;
-                # only one reason left to not verify
-                status = cctagutil.VERIFY_NO_MATCH
-                
-                # we found the work, now make sure the license matches
-                for license in work.licenses():
-                    if license == fileinfo['license']:
-                        return cctagutil.VERIFY_VERIFIED
+            if l != file_metadata.getLicense():
+                # at least one doesn't match
+                return cctagutils.VERIFY_CONFLICTING_ASSERTIONS
+
+        # all are the same, we match
+        return cctagutils.VERIFY_VERIFIED
 
     # either the file wasn't found, or the license didn't match
     return status
