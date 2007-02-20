@@ -39,13 +39,19 @@ class BaseMetadata(object):
         """Attempt to verify the embedded claim.  Return one of the VERIFY_*
         constants defined in cctagutil."""
 
-        raise NotImplementedError()
+        # XXX import here to avoid circular imports; need to change the
+        # implementation in cctagutils.lookup to allow up to verify by
+        # passing in a metadata instance.
+        
+        import cctagutils.lookup
+
+        return cctagutils.lookup.verify(self.filename)
     
     def properties(self):
         """Return a sequence of property keys for metadata on this object."""
 
-        raise NotImplementedError()
-
+        return []
+    
     def __getitem__(self, key):
         """Return an additional metadata property for this object."""
 
