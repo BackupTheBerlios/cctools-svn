@@ -41,7 +41,8 @@ setup(
 
     entry_points = """
         [cctagutils.handler]
-        mp3 = cctagutils.handler:mp3
+        mp3 = cctagutils.handler.mp3:Mp3Metadata
+        pdf = cctagutils.handler.xmp:XmpMetadata
     """,
 
     author = 'Nathan R. Yergler',
