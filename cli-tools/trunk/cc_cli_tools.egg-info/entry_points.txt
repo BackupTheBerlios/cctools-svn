@@ -1,0 +1,5 @@
+[console_scripts]
+claim = cc_cli_tools.claim:main
+ccl = cc_cli_tools.ccl:main
+cct = cc_cli_tools.cct:main
+

@@ -1,0 +1,4 @@
+setuptools
+rdflib==2.3.3
+ccrdf>=0.6a4
+cctagutils>=0.5a1
