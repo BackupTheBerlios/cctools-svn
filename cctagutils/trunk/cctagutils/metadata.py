@@ -31,3 +31,5 @@ def metadata(filename):
 
         # no file-type specific handler found; fall back to XMP
         return XmpMetadata(filename)
+
+open = metadata
