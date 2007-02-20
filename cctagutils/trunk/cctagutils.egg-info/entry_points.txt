@@ -1,0 +1,5 @@
+
+        [cctagutils.handler]
+        mp3 = cctagutils.handler.mp3:Mp3Metadata
+        pdf = cctagutils.handler.xmp:XmpMetadata
+    

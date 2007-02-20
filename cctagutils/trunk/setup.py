@@ -47,7 +47,7 @@ setup(
 
     author = 'Nathan R. Yergler',
     author_email = 'nathan@creativecommons.org',
-    description = 'XXX.',
+    description = 'Extensible license metadata extraction and verification.',
     long_description=(
          read('README')
          + '\n' +
