@@ -21,11 +21,11 @@ def metadata(filename):
     # XXX right now we do stupid name-based type detection; a future
     # improvment might actually look at the file's contents or mime/type
     ext = filename.split('.')[-1].lower()
-
-    handlers = pkg_resources.iter_entry_points('ccrdf.extractor', ext)
+    
+    handlers = pkg_resources.iter_entry_points('cctagutils.handler', ext)
     try:
         h = handlers.next()
-        return h(filename)
+        return h.load()(filename)
 
     except StopIteration, e:
 
