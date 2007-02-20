@@ -59,10 +59,12 @@ class Mp3Metadata(base.BaseMetadata):
         frame = self._getFrame(fids)
 
         if frame is not None:
-           if isinstance(frame, eyeD3.frames.DateFrame):
-              return frame.getYear()
-           else:
-              return frame.data
+            if isinstance(frame, eyeD3.frames.DateFrame):
+                return frame.getYear()
+            elif isinstance(frame, eyeD3.frames.TextFrame):
+                return frame.text
+            else:
+                return frame.data
         
         return None
     
