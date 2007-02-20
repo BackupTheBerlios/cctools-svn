@@ -59,7 +59,8 @@ def embed(tcop, files):
             traceback.print_exc()
             sys.exit(2)
 
-if __name__ == '__main__':
+
+def main():
     parser = config_opts()
     (options, args) = parser.parse_args()
     if len(args) < 1:
@@ -68,3 +69,6 @@ if __name__ == '__main__':
 
     embed(options.tcop, cctagutils.cli.expandFiles(args))
     sys.exit(0)
+
+if __name__ == '__main__':
+    main()

@@ -81,8 +81,8 @@ def lookup(filename, displayOnly=False):
         # print a traceback to stderr and return the appropriate exit code
         pprint.pprint(sys.exc_info(), sys.stderr)
         sys.exit(3)
-        
-if __name__ == '__main__':
+
+def main():
     parser = config_opts()
     (options, args) = parser.parse_args()
     if len(args) < 1:
@@ -99,3 +99,6 @@ if __name__ == '__main__':
         sys.exit(0)
     else:
         sys.exit(1)
+
+if __name__ == '__main__':
+    main()

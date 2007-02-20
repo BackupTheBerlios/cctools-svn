@@ -94,7 +94,8 @@ def embed(options, files):
 
     return verification
 
-if __name__ == '__main__':
+
+def main():
     parser = config_opts()
     (options, args) = parser.parse_args()
     if len(args) < 1:
@@ -108,3 +109,7 @@ if __name__ == '__main__':
         
     print embed(options, args)
     sys.exit(0)
+
+if __name__ == '__main__':
+    main()
+    
