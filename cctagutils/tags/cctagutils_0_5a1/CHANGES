@@ -1,0 +1,8 @@
+Change History
+**************
+
+0.5 (TBD)
+=========
+
+* Reorganized source tree to work better with PyPI and setuptools
+* Converted to using entry points for file-type handling extensibility

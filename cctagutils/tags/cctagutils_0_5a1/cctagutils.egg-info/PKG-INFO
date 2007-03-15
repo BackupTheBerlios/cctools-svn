@@ -1,0 +1,99 @@
+Metadata-Version: 1.0
+Name: cctagutils
+Version: 0.5a1
+Summary: Extensible license metadata extraction and verification.
+Home-page: http://wiki.creativecommons.org/CcTagUtils
+Author: Nathan R. Yergler
+Author-email: nathan@creativecommons.org
+License: MIT
+Description: ==========
+        cctagutils
+        ==========
+        
+        :Date: $LastChangedDate: 2006-11-21 11:23:54 -0500 (Tue, 21 Nov 2006) $
+        :Version: $LastChangedRevision: 4737 $
+        :Author: Nathan R. Yergler <nathan@creativecommons.org>
+        :Organization: `Creative Commons <http://creativecommons.org>`_
+        :Copyright:
+        2006-2007, Nathan R. Yergler, Creative Commons;
+        licensed to the public under the `MIT license
+        <http://opensource.org/licenses/mit-license.php>`_.
+        
+        cctagutils is a package which provides a pluggable facility for retrieving
+        and verifying license metadata embedded and linked to content files.
+        Metadata may be embedded directly in the file, or provided in a web page
+        linked to the file (in this case the URL is actually embedded in the file).
+        
+        cctagutils uses *handlers* for different file types, and ships with an ID3
+        handler for MP3 files and an XMP handler for many other file types.  The
+        XMP handler is used as a default fall-back for all files.  Information
+        about embedding metadata is available in the CC wiki; see **Resources** below.
+        
+        Installation
+        ************
+        
+        cctagutils and its dependencies may be installed using `easy_install
+        <http://peak.telecommunity.com/DevCenter/EasyInstall>`_ (recommended) ::
+        
+        $ easy_install cctagutils
+        
+        or by using the standard distutils setup.py::
+        
+        $ python setup.py install
+        
+        If installing using setup.py, `ccrdf <http://python.org/pypi/ccrdf>`_
+        will also need to be installed along with its dependencies.  Using
+        easy_install will automatically download and install these dependencies.
+        
+        Usage
+        *****
+        
+        cctagutils is primarily accessed through the `metadata` module.  For
+        example:
+        
+        >>> import cctagutils
+        >>> file_info = cctagutils.metadata.open('test/test.mp3')
+        
+        The `metadata` module will use entry points to look up the best fit handler
+        for extracting metadata from the file.
+        
+        Extending cctagutils
+        ********************
+        
+        cctagutils uses entry points for providing metadata handlers for new file
+        types.  A metadata handler should subclass
+        `cctagutils.handler.base.BaseMetadata`.  The package for the handler should
+        declare that it implements the `cctagutils.handler` entry point.
+        
+        The cctagutils package declares itself as the entry points for MP3 and PDF
+        files using the ID3 and XMP implementations respectively.
+        
+        Limitations and Known Issues
+        ****************************
+        
+        * This is an alpha release of 0.5, and the API is still subject to change.
+        * Handler lookup is currently based on file extensions, and should be
+        improved to use something like the MIME type.
+        
+        Resources
+        *********
+        
+        * `CC Embedded Metadata <http://wiki.creativecommons.org/Embedded_Metadata>`_
+        * `Tagging MP3 files with license information
+        <http://wiki.creativecommons.org/MP3>`_
+        * `XMP Metadata <http://wiki.creativecommons.org/XMP>`_
+        
+        
+        Change History
+        **************
+        
+        0.5 (TBD)
+        =========
+        
+        * Reorganized source tree to work better with PyPI and setuptools
+        * Converted to using entry points for file-type handling extensibility
+        
+        Download
+        ********
+        
+Platform: UNKNOWN
