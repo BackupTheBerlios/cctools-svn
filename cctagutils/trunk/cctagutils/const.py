@@ -5,9 +5,17 @@ __version__ = "$Revision$"
 __copyright__ = '(c) 2004, Creative Commons, Nathan R. Yergler'
 __license__ = 'licensed under the GNU GPL2'
 
+import pkg_resources
+
 def version():
-	v = file('version.txt').read().strip()
-	return v
+
+	pkg_metadata = pkg_resources.get_provider("cctagutils")
+
+	for line in pkg_metadata.get_metadata_lines("PKG-INFO"):
+		if line.find('Version: ') == 0:
+			return line.split()[-1].strip()
+
+	return '-1'
 	
 TAG_MAP = {
 	'UFI':'UFID',
