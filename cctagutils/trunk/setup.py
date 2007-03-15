@@ -30,7 +30,7 @@ def read(*rnames):
 
 setup(
     name = "cctagutils",
-    version = "0.5a1",
+    version = "0.5a2",
     packages = ['cctagutils'],
 
     install_requires = ['setuptools',
