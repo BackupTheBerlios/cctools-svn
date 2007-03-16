@@ -9,13 +9,7 @@ import pkg_resources
 
 def version():
 
-	pkg_metadata = pkg_resources.get_provider("cctagutils")
-
-	for line in pkg_metadata.get_metadata_lines("PKG-INFO"):
-		if line.find('Version: ') == 0:
-			return line.split()[-1].strip()
-
-	return '-1'
+	return pkg_resources.require("cctagutils")[0].version
 	
 TAG_MAP = {
 	'UFI':'UFID',
