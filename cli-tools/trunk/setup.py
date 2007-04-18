@@ -32,7 +32,7 @@ setup(name='cc_cli_tools',
       packages = ['cc_cli_tools'],
 
       install_requires = ['setuptools',
-                          'rdflib==2.3.3',
+                          'rdflib',
                           'ccrdf>=0.6a4',
                           'cctagutils>=0.5a2',
                          ],
