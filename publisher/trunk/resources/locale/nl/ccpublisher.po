@@ -1,0 +1,347 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
+"PO-Revision-Date: 2006-07-24 14:23+0000\n"
+"Last-Translator: Bjorn Wijers <bjorn@simuze.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: xrc_pot.py\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Pootle 0.9\n"
+
+# Don't change this translation string
+msgid "appname"
+msgstr "applicatie naam"
+
+msgid "release"
+msgstr "versie"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "copyright 2004-2006, Creative Commons"
+msgstr "auteursrecht 2004-2006 Creative Commons"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "licensed under the GNU GPL version 2.0"
+msgstr "Gelicenseerd onder de GNU GPL licentie versie 2.0"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This is your verification RDF."
+msgstr "Dit is uw RDF verificatie"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Copy and paste the text below into the document at "
+msgstr "Kopieer en plak de tekst hieronder in het document bij"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
+msgstr "Nadat u de verificatie tekst in uw webpagina heeft geplaatst, is uw bestand klaar om gedeeld te worden; sleep het gewoonweg in uw deel map"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Save"
+msgstr "Bewaar"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Your work has been uploaded to the Internet Archive."
+msgstr "Uw werk is geupload naar het Internet Archive"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "You can view your work online shortly at:"
+msgstr "U kunt uw werk binnenkort hier zien:"
+
+msgid "This tool will help you put your audio and video on the\nWeb with a Creative Commons license.\n\nIt's simple:"
+msgstr "Dit programma zal je helpen met het online plaatsen van audio en video met een Creative Commons licentie.\n\nHet is heel makkelijk:"
+
+msgid "1) Drag and drop your audio or video files\n2) Choose your Creative Commons license\n3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service\n4) Get a URL where you and your friends can download your file"
+msgstr ""
+"1)Sleep en plaats uw audio of video bestanden\n"
+"2) Kies de gewenste Creative Commons licentie\n"
+"3) Optioneel: Verstuur uw Creative Commons gelicenseerde bestanden naar het Internet Archive, een gratis opslag dienst\n"
+"4) Verkrijg een URL waar u en uw vrienden uw bestand kunnen downloaden "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Click Next to get started."
+msgstr "Klik Verder om te starten"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "How does this work?"
+msgstr "Hoe werkt dit?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Is this file Creative Commons licensed?"
+msgstr "Is dit bestandd onder een Creative Commons licentie gelicenseerd"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Prev"
+msgstr "Vorige"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Next"
+msgstr "Volgende"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Delete"
+msgstr "Verwijder"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Browse..."
+msgstr "Blader..."
+
+msgid "The Internet Archive needs to know the format of your file.  Please click on the drop down box to select the format type for each file."
+msgstr "Het Internet Archive dient het formaat van uw bestand te weten. Klik alstublieft op de selectie lijst om het juiste formaat type te selecteren voor elk bestand"
+
+msgid "About ccPublisher"
+msgstr "Over ccPublisher"
+
+msgid "Select Your Files"
+msgstr "Kies Uw bestanden"
+
+msgid "Uploading"
+msgstr "Bezig met uploaden"
+
+#: /resources/app.zcml:34
+msgid "Copyright Holder"
+msgstr "Auteursrechthebbende"
+
+#: /resources/app.zcml:39
+msgid "Copyright Year"
+msgstr "Auteursrecht Jaar"
+
+#: /resources/app.zcml:44
+msgid "Title of Work"
+msgstr "Titel van het werk"
+
+#: /resources/app.zcml:51
+msgid "Work Format"
+msgstr "Type Werk"
+
+#: /resources/app.zcml:59
+msgid "Description"
+msgstr "Beschrijving"
+
+#: /resources/app.zcml:65
+msgid "Keywords"
+msgstr "Trefwoorden"
+
+#: /resources/app.zcml:65
+msgid "Keywords help users find works by topic."
+msgstr "Trefwoorden helpen gebruikers in het vinden van werken op onderwerp"
+
+#: /resources/app.zcml:65
+msgid "(separated with a comma)"
+msgstr "(comma gescheiden)"
+
+msgid "Choose A License"
+msgstr "Kies Een Licentie"
+
+msgid "Your Name"
+msgstr "Uw Naam"
+
+#: /resources/app.zcml:80
+msgid "File Format"
+msgstr "Bestands Formaat"
+
+msgid "Please enter the URL where you will host your verification metadata.\nIn most cases, this will be the page you link to your MP3 file from."
+msgstr "Vult u alstublieft de URL in waar u uw verificatie metadata plaatst.\nIn de meeste gevallen, zal dit de pagina zijn waar u vanuit uw mp3 naartoe linkt"
+
+msgid "Verification URL"
+msgstr "Verificatie URL"
+
+msgid "You must supply the verification URL."
+msgstr "U dient een verificatie URL op te geven"
+
+msgid "Other"
+msgstr "Anders"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Image"
+msgstr "Plaatjes"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "Interactive"
+msgstr "Interactief"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "Vult u alstublieft de URL in waar u uw verificatie metadata plaatst.In de meeste gevallen, zal dit de pagina zijn waar u vanuit uw mp3 naartoe linkt"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "Uw gebruikersnaam en wachtwoord opslaan?"
+
+#: /ccpublisher/ui/welcome.py:23
+msgid "Welcome"
+msgstr "Welkom"
+
+#: /ccpublisher/ia.py:204
+msgid "The selected file %s can not be found."
+msgstr "Het geselecteerde bestand %s kan niet gevonden worden."
+
+#: /ccpublisher/ia.py:226
+msgid "ccPublisher does not have sufficient permissions to read the selected files."
+msgstr "ccPublisher heeft niet voldoende rechten om de geselecteerde bestanden te lezen."
+
+#: /ccpublisher/selfhost.py:58
+msgid "Self Hosted Files"
+msgstr "Zelf Bewaarde Bestanden"
+
+#: /ccpublisher/ui/ia.py:100
+msgid "Internet Archive login"
+msgstr "Internet Archive login"
+
+#: /ccpublisher/ui/ia.py:119
+msgid "Invalid username or password."
+msgstr "Onjuiste gebruikersnaam of wachtwoord."
+
+#: /ccpublisher/ui/ia.py:122
+msgid "Unable to connect to the Internet Archive to verify username and password."
+msgstr "Onmogelijk om met het Internet Archive verbinding te maken om gebruikersnaam en wachtwoord te verifieren."
+
+#: /ccpublisher/ui/ia.py:29
+msgid "Item Identifier"
+msgstr "Item Label"
+
+#: /ccpublisher/ui/ia.py:53
+msgid "That identifier does not conform to the Internet Archive's naming standards."
+msgstr "Dit label voldoet niet aan de naamgevings standaarden van het Internet Archive."
+
+#: /ccpublisher/ui/ia.py:59
+msgid "That identifier is not available."
+msgstr "Dit label is niet aanwezig"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account."
+msgstr "Vul hier uw Internet Archive gebruikersnaam en wachtwoord in. Als u nog geen gebruikersnaam en wachtwoord heeft kunt u http://archive.org bezoeken om hier een account aan te maken."
+
+#: /ccpublisher/ui/selfhost.py:24
+msgid "Complete"
+msgstr "Compleet"
+
+#: /ccpublisher/ui/selfhost.py:53
+msgid "Unable to write to the selected file."
+msgstr "Onmogelijk om naar geselecteerd bestand te schrijven."
+
+#: /ccpublisher/validators.py:15
+msgid "You must supply a description of at least 5 words."
+msgstr "U dient een beschrijving te geven van tenminste vijf woorden."
+
+#: /ccpublisher/validators.py:6
+msgid "You must supply a title."
+msgstr "U dient een titel te geven."
+
+#: /resources/app.zcml:15
+msgid "Upload works to the Internet Archive (www.archive.org)."
+msgstr "Upload werken naar het Internet Archive (www.archive.org)."
+
+#: /resources/app.zcml:15
+msgid "Internet Archive Storage"
+msgstr "Internet Archive Opslag"
+
+#: /resources/app.zcml:21
+msgid "Create metadata suitable for use with files hosted on your web site."
+msgstr "Creëer metadata geschikt voor bestanden op uw website."
+
+#: /resources/app.zcml:21
+msgid "Self-hosted files"
+msgstr "Zelf-beheerde Bestanden"
+
+#: /resources/app.zcml:27
+msgid "Metadata helps others to find your works."
+msgstr "Metadata helpt anderen uw werk te vinden."
+
+#: /resources/app.zcml:27
+msgid "Tell Us About Your Files"
+msgstr "Vertel Ons Over Uw Bestanden"
+
+#: /resources/app.zcml:74
+msgid "Select File Formats"
+msgstr "Kies Bestands Formaten"
+
+#: /resources/app.zcml:87
+msgid "Choose Your License"
+msgstr "Kies Uw Licentie"
+
+#: /resources/app.zcml:94
+msgid "License"
+msgstr "Licentie"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "2) Choose your Creative Commons license"
+msgstr "2) Kies een Creative Commons licentie"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "OK"
+msgstr "OK"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "1) Drag and drop your audio or video files"
+msgstr "1) Sleep en plaats uw audio of video bestanden "
+
+msgid "Quit"
+msgstr "Stop"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Identifier"
+msgstr "Label"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "Het maakt het ook mogelijk uw bestanden te uploaden naar het Internet Archive om gebruik te maken van gratis opslag. ccPublisher is een programma dat u assisteert in het online plaatsen van uw audio en video met een Creative Commons licentie. Het maakt het ook mogelijk uw bestanden te uploaden naar het Internet Archive om gebruik te maken van gratis opslag.  "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "ccPublisher is een programma dat u assisteert in het online plaatsen van uw audio en video met een Creative Commons licentie. Het maakt het ook mogelijk uw bestanden te uploaden naar het Internet Archive om gebruik te maken van gratis opslag."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Filelist"
+msgstr "Bestandslijst"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service"
+msgstr "3) Optioneel: Verstuur uw Creative Commons gelicenseerde bestanden naar het Internet Archive, een gratis opslag dienst"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher 2"
+msgstr "ccPublisher 2"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "release 1.9.1"
+msgstr "release 1.9.1"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available."
+msgstr "ccPublisher heeft een label voor u samengesteld gebaseerd op de door u verschafte metadata. Labels moeten tenminste vijf karakters lang zijn en mogen alleen hoofd-, kleine letters (A-Z, a-z), cijfers (0-9), liggende streepjes (_) en punten bevatten. U kunt het nu veranderen;Klik op Verder om na te gaan of het aanwezig is. "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "4) Get a URL where you and your friends can download your file"
+msgstr "4) Verkrijg een URL waar u en uw vrienden uw bestand kunnen downloaden"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive."
+msgstr "Elk item in het Internet Archive heeft een uniek label die een deel van de URL vormt. Dit label kan niet meer verandert worden nadat u uw werk heeft toegevoegd aan het Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
+msgstr "Dit programma assisteert u met het online plaatsen van audio en video met een Creative Commons licentie. Het is heel makkelijk:"
+
+#: /resources/ccpublisher.xrc:-1
+#: /resources/ccpublisher.xrc:-1
+msgid "What is ccPublisher?"
+msgstr "Wat is ccPublisher?"

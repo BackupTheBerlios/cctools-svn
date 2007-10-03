@@ -1,24 +1,25 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ccPublisher\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-30 11:03+0000\n"
-"Last-Translator: Tomislav Medak <to-me@mi2.hr>\n"
-"Language-Team: Croatian <to-me@mi2.hr>\n"
+"Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
+"PO-Revision-Date: 2007-03-26 05:05+0000\n"
+"Last-Translator: Slaven Kosanovic <slavenkosanovic@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: Croatia\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
 
 # p6/ui/pages/license.py:320
 msgid "With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here."
-msgstr "Koristeći Creative Commons licencu zadržavate Vaša autorska prava, ali omogućujete drugima da umnožavaju i distribuiraju Vaše djelo pod uvjetom da Vam imenovanjem daju priznanje - i pod uvjetima koje ćete ovdje specificirati."
+msgstr "Sa Creative Commons licencom, Vi zadržavate autorsko pravo nad vašim delom, ali omogućavate i drugima da ga slobodno kopiraju i distribuiraju, navodeći vas kao autora dela i samo pod uslovima koje odredite ovde."
 
 # p6/ui/pages/storageselector:23
 msgid "Select Upload Destination"
-msgstr "Odaberite gdje ćete pohraniti datoteke"
+msgstr "Odaberite destinaciju na kojoj će se čuvati datoteka"
 
 #: /p6/api.py:153
 #: /p6/ui/pages/fieldrender.py:101
@@ -43,11 +44,11 @@ msgstr "verzija"
 #: /p6/configure/metadirectives.py:173
 #: /p6/zcmlsupport/metadirectives.py:356
 msgid "Interfaces"
-msgstr "Sučelja"
+msgstr "Interfejsi"
 
 #: /p6/configure/metadirectives.py:174
 msgid "The interfaces which metadata applies to."
-msgstr "Sučelja na koja su metapodaci primjenjivi."
+msgstr "Interfejsi na koje se primenjuju metapodaci."
 
 #: /p6/configure/metadirectives.py:191
 msgid "Multiple"
@@ -55,11 +56,11 @@ msgstr "Višestruko"
 
 #: /p6/configure/metadirectives.py:192
 msgid "Allow multiple storage providers to be selected."
-msgstr "Dopusti odabir više ponuđača prostora za pohranjivanje."
+msgstr "Omogući biranje više provajdera veb prostora."
 
 #: /p6/ui/pages/fileselector.py:124
 msgid "Select Your Files"
-msgstr "Odaberite Vaše datoteke"
+msgstr "Odaberite vaše datoteke"
 
 #: /p6/ui/pages/fileselector.py:205
 msgid "You must select at least one file."
@@ -67,7 +68,7 @@ msgstr "Morate odabrati barem jednu datoteku."
 
 #: /p6/ui/pages/fileselector.py:30
 msgid "Please drag and drop individual files on this window."
-msgstr "Povucite i spustite na ovaj prozor pojedinačne datoteke."
+msgstr "Molimo prenesite individualne datoteke u ovaj prozor."
 
 #: /p6/ui/pages/fileselector.py:52
 msgid "Filename"
@@ -75,27 +76,27 @@ msgstr "Ime datoteke"
 
 #: /p6/ui/pages/finalurl.py:20
 msgid "Uploading"
-msgstr "Šaljem datoteku"
+msgstr "Šaljem na server"
 
 #: /p6/ui/pages/license.py:34
 msgid "Choose A License"
-msgstr "Izaberite licencu"
+msgstr "Odaberite Licencu"
 
 #: /p6/ui/pages/license.py:72
 msgid "License Class:"
-msgstr "Klasa licenci:"
+msgstr "Klasa Licence:"
 
 #: /p6/ui/pages/license.py:83
 msgid "Selected License:"
-msgstr "Izabrana licenca:"
+msgstr "Odabrana Licenca:"
 
 #: /p6/ui/pages/license.py:87
 msgid "None selected"
-msgstr "Ništa niste odabrali"
+msgstr "Nemate ništa odabrano"
 
 #: /resources/p6.xrc:-1
 msgid "Report a bug"
-msgstr "Dojavite grešku"
+msgstr "Prijavite grešku u softveru"
 
 #: /resources/p6.xrc:-1
 msgid "Done!"
@@ -107,11 +108,11 @@ msgstr "Pomoć"
 
 #: /resources/p6.xrc:-1
 msgid "OK"
-msgstr "Uredu"
+msgstr "OK"
 
 #: /resources/p6.xrc:-1
 msgid "Preferences"
-msgstr "Postavke"
+msgstr "Podešavanja"
 
 #: /resources/p6.xrc:-1
 msgid "Browse"
@@ -119,11 +120,11 @@ msgstr "Traži"
 
 #: /resources/p6.xrc:-1
 msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
-msgstr "Povucite i spustite na ovaj prozor audio i video datoteke koje želite objaviti na webu pod Creative Commons licencom ili kliknite gumb Traži za manualni izbor Vaših datoteka."
+msgstr "Prenesite audio i video datoteke koje želite objaviti na Vebu sa Creative Commons licencom, ili kliknite na dugme Traži za ručni odabir vaših datoteka."
 
 #: /resources/p6.xrc:-1
 msgid "Working..."
-msgstr "Radim..."
+msgstr "Obavljam..."
 
 #: /resources/p6.xrc:-1
 msgid "Delete"
@@ -139,11 +140,11 @@ msgstr "Izađi"
 
 #: /resources/p6.xrc:-1
 msgid "Cancel"
-msgstr "Odustani"
+msgstr "Odbaci"
 
 #: /resources/p6.xrc:-1
 msgid "About"
-msgstr "O ccPublisheru"
+msgstr "O"
 
 #: /resources/p6.xrc:-1
 msgid "File"

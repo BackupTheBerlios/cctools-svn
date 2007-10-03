@@ -1,224 +1,260 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
-"PO-Revision-Date: 2006-06-29 15:46+0000\n"
-"Last-Translator: Chris <hostinspace@gmail.com>\n"
+"PO-Revision-Date: 2006-10-18 16:15+0000\n"
+"Last-Translator: Stephen Xin <xingzhi@cn.creativecommons.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: xrc_pot.py\n"
-"Report-Msgid-Bugs-To: \n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10< =4 && (n%100<10 or n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Audio"
+msgstr "音频作品"
+
+msgid "Video"
+msgstr "视频作品"
+
+msgid "Image"
+msgstr "图片作品"
+
+msgid "Text"
+msgstr "文字作品"
+
+msgid "Interactive"
+msgstr "互动作品"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "请输入你要保存你的许可信息元数据的网址。在多数情况下，这个网址应该是链接到你MP3的网页。"
+
+msgid "Verification URL"
+msgstr "保存许可信息的网址"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "用户名"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "密码"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "保存用户名和密码？"
 
 #: /ccpublisher/ui/welcome.py:23
 msgid "Welcome"
-msgstr "Witaj"
+msgstr "欢迎"
 
 #: /ccpublisher/ia.py:204
 msgid "The selected file %s can not be found."
-msgstr "Wybrany plik %s nie może zostać znaleziony"
+msgstr "找不到所选文件-%s"
 
 #: /ccpublisher/ia.py:226
 msgid "ccPublisher does not have sufficient permissions to read the selected files."
-msgstr "ccPublisher nie ma uprawnień, by odczytać wybrane pliki."
+msgstr "ccPulisher没有足够的权限读取选定的文件。"
 
 #: /ccpublisher/selfhost.py:58
 msgid "Self Hosted Files"
-msgstr "Pliki, które sam hostujesz"
+msgstr "放在我自己的网站空间"
 
 #: /ccpublisher/ui/ia.py:100
 msgid "Internet Archive login"
-msgstr "Nazwa użytkownika w Internet Archive"
+msgstr "登陆Internet Archive"
 
 #: /ccpublisher/ui/ia.py:119
 msgid "Invalid username or password."
-msgstr "Niepoprawna nazwa użytkownika lub hasło."
+msgstr "用户名或者密码无效。"
 
 #: /ccpublisher/ui/ia.py:122
 msgid "Unable to connect to the Internet Archive to verify username and password."
-msgstr "Nie mogę połączyć się z Internet Archive, żeby sprawdzić nazwę użytkownika i hasło."
+msgstr "不能连接到Internet Archive以验证用户名和密码。"
 
 #: /ccpublisher/ui/ia.py:29
 msgid "Item Identifier"
-msgstr "Identyifkator utworu"
+msgstr "作品标识"
 
 #: /ccpublisher/ui/ia.py:53
 msgid "That identifier does not conform to the Internet Archive's naming standards."
-msgstr "Identyfikator nie odpowiada konwencjom nazewniczym Internet Archive."
+msgstr "该标识不符合Internet Archive的命名规则。"
 
 #: /ccpublisher/ui/ia.py:59
 msgid "That identifier is not available."
-msgstr "Identyfikator jest już zajęty."
+msgstr "该标识不可用。"
 
 #: /ccpublisher/ui/ia.py:93
 msgid "Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account."
-msgstr "Podaj nazwę użytkownika i hasło w Internet Archive. Jeśli jeszcze ich nie masz, wejdź na stronę http://archive.org i załóż sobie konto."
+msgstr "请输入你的Internet Archive用户名和密码。如果你还没有，请访问http://archive.org创建一个账户。"
 
 #: /ccpublisher/ui/selfhost.py:24
 msgid "Complete"
-msgstr "Gotowe"
+msgstr "完成"
 
 #: /ccpublisher/ui/selfhost.py:53
 msgid "Unable to write to the selected file."
-msgstr "Nie mogę zapisać wybranego pliku."
+msgstr "不能写入选定文件。"
 
 #: /ccpublisher/validators.py:15
 msgid "You must supply a description of at least 5 words."
-msgstr "Musisz podać minimum 5 słów opisu."
+msgstr "你必须提供至少5个词的作品描述。"
 
 #: /ccpublisher/validators.py:6
 msgid "You must supply a title."
-msgstr "Musisz podać tytuł."
+msgstr "你必须填写标题。"
 
 #: /resources/app.zcml:59
 msgid "Description"
-msgstr "Opis"
+msgstr "作品描述"
 
 #: /resources/app.zcml:15
 msgid "Upload works to the Internet Archive (www.archive.org)."
-msgstr "Wgraj utwory do Internet Archive (www.archive.org)."
+msgstr "上传作品到Internet Archive(http://www.archive.org)。"
 
 #: /resources/app.zcml:15
 msgid "Internet Archive Storage"
-msgstr "Przechowywanie w Internet Archive"
+msgstr "Internet Archive存储库"
 
 #: /resources/app.zcml:21
 msgid "Create metadata suitable for use with files hosted on your web site."
-msgstr "Stwórz metadane, których możesz użyć dla plików przechowywanych na własnej stronie."
+msgstr "为保存在你自己网站上的文件创建元数据。"
 
 #: /resources/app.zcml:21
 msgid "Self-hosted files"
-msgstr "Pliki, które samodzielnie przechowujesz"
+msgstr "保存在你自己网站上的文件"
 
 #: /resources/app.zcml:27
 msgid "Metadata helps others to find your works."
-msgstr "Metadane ułatwiają innym znalezienie twoich utworów."
+msgstr "帮助其他人找到你的作品的元数据。"
 
 #: /resources/app.zcml:27
 msgid "Tell Us About Your Files"
-msgstr "Podaj informacje o plikach"
+msgstr "你的文件的有关信息"
 
 #: /resources/app.zcml:34
 msgid "Copyright Holder"
-msgstr "Właściciel praw autorskich"
+msgstr "著作权所有人"
 
 #: /resources/app.zcml:39
 msgid "Copyright Year"
-msgstr "Rok publikacji"
+msgstr "著作权年份"
 
 #: /resources/app.zcml:44
 msgid "Title of Work"
-msgstr "Tytuł utworu"
+msgstr "作品标题"
 
 #: /resources/app.zcml:51
 msgid "Work Format"
-msgstr "Format utworu"
+msgstr "作品格式"
 
 #: /resources/app.zcml:65
 msgid "(separated with a comma)"
-msgstr "(oddzielone przecinkiem)"
+msgstr "（用逗号(,半角)分隔不同关键词）"
 
 #: /resources/app.zcml:65
 msgid "Keywords help users find works by topic."
-msgstr "Słowa kluczowe pozwalają szukać utworów wg haseł."
+msgstr "关键词帮助使用者通过主题来查找作品。"
 
 #: /resources/app.zcml:65
 msgid "Keywords"
-msgstr "Słowa kluczowe"
+msgstr "关键词"
 
 #: /resources/app.zcml:74
 msgid "Select File Formats"
-msgstr "Wybierz format plików"
+msgstr "选择文件格式"
 
 #: /resources/app.zcml:80
 msgid "File Format"
-msgstr "Format pliku"
+msgstr "文件格式"
 
 #: /resources/app.zcml:87
 msgid "Choose Your License"
-msgstr "Wybierz licencję"
+msgstr "选择许可协议"
 
 #: /resources/app.zcml:94
 msgid "License"
-msgstr "Licencja"
+msgstr "许可协议"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "licensed under the GNU GPL version 2.0"
-msgstr "udostępniany na licencji GNU GPL wersja 2.0"
+msgstr "采用GNU GPL 2.0许可协议授权"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
-msgstr "Po wklejeniu kodu weryfikacji na swoją stronę internetową możesz zacząć udostępniać plik - wystarczy umieścić go w odpowiednim folderze."
+msgstr "在把许可信息文本粘贴到你的web页面后，你的文件就可以被共享了；只需要把它放到你的共享目录下即可。"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Prev"
-msgstr "Wróć"
+msgstr "上一步"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "2) Choose your Creative Commons license"
-msgstr "2) Wybierz licencję Creative Commons"
+msgstr "2）选择Creative Commons许可协议"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "OK"
-msgstr "OK"
+msgstr "确定"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "1) Drag and drop your audio or video files"
-msgstr "1) Przeciągnij pliki audio i wideo do okna programu"
+msgstr "1）拖放你的音频或者视频文件到本程序"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Next"
-msgstr "Dalej"
+msgstr "下一步"
 
 msgid "Quit"
-msgstr "Wyjdź"
+msgstr "退出"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Browse..."
-msgstr "Przeglądaj..."
+msgstr "浏览..."
 
 #: /resources/ccpublisher.xrc:-1
 msgid "You can view your work online shortly at:"
-msgstr "Niedługo będziesz mógł obejrzeć swój utwór pod adresem:"
+msgstr "你稍后可以在以下网址在线浏览你的作品："
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Identifier"
-msgstr "Identyfikator"
+msgstr "作品标识"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
-msgstr "ccPublisher to narzędzie, które ułatwia umieszczenie w Sieci utworów audio i wideo na licencjach Creative Commons. Możesz również wgrać swoje utwory do serwisu Internet Archive, który zapewnia darmowy hosting plików na otwartych licencjach. "
+msgstr "它也可以将你的文件上传并免费存放在Internet Archive。ccPulishe是一个帮助你用Creative Commons许可协议在互联网上发布你的音频和视频作品的工具。它也可以将你的文件上传并免费存放在Internet Archive。"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Delete"
-msgstr "Usuń"
+msgstr "删除"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Click Next to get started."
-msgstr "Naciśnij Dalej by zacząć"
+msgstr "点击“下一步”开始。"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
-msgstr "ccPublisher pozwala umieścić w sieci pliki audio lub wideo udostępnione na licencji Creative Commons. Pliki te zostają wgrane do serwisu Internet Archive, który zapewnia ich darmowy hosting. "
+msgstr "ccPulisher是一个帮助你用Creative Commons许可协议在互联网上发布你的音频和视频作品的工具。它也可以将你的文件上传并免费存放在Internet Archive。 "
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Copy and paste the text below into the document at "
-msgstr "Skopiuj i wklej poniższy tekst do dokumentu"
+msgstr "复制下列文字并粘贴到文档"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Filelist"
-msgstr "Lista plików"
+msgstr "文件列表"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "copyright 2004-2006, Creative Commons"
-msgstr "copyright 2004-2006, Creative Commons"
+msgstr "版权所有 2004-2006，知识共享组织"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service"
-msgstr "3) Jeśli chcesz, możesz umieścić utwory udostępnione na licencjach Creative Commons w Internet Archive, serwisie hostującym za darmo tego rodzaju pliki"
+msgstr "3）（可选）将用Creative Commons许可协议授权的文件发送到Internet Archive免费存放"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "ccPublisher 2"
@@ -226,81 +262,45 @@ msgstr "ccPublisher 2"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "release 1.9.1"
-msgstr "wersja 1.9.1"
+msgstr "发行版本 1.9.1"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available."
-msgstr "ccPublisher proponuje użyć identyfikatora stworzonego na podstawie podanych metadanych. Identyfikatory muszą mieć co najmniej 5 znaków, mogą zawierać duże i małe litery (A-Z, a-z), cyfry (0-9), podkreślniki (_) i kropki (.). Możesz teraz zmienić identyfikator. Kliknij dalej by sprawdzić, czy jest dostępny."
+msgstr "ccPublisher根据你提供的原数据生成了一个建议的作品标识。作品标识至少需要5个字符，可以包括大小写字母（A-Z，a-z），数字（0-9），下划线（_）和句点（.）。你现在可以修改它，或者直接点击“下一步”验证它是否可用。"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "4) Get a URL where you and your friends can download your file"
-msgstr "4) Otrzymasz URL pozwalający ściągnąć plik umieszczony w Internet Archive"
+msgstr "4）获得你和你的朋友可以下载你的文件的网址"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "This is your verification RDF."
-msgstr "Oto kod weryfikujący RDF."
+msgstr "这是你的RDF格式的许可信息。"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Save"
-msgstr "Zapisz"
+msgstr "保存"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "How does this work?"
-msgstr "Jak to działa?"
+msgstr "这是什么？"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Is this file Creative Commons licensed?"
-msgstr "Czy plik ten jest na licencji Creative Commons?"
+msgstr "这个文件采用了Creative Commons许可协议吗？"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive."
-msgstr "Każdy utwór umieszczony w archiwum posiada unikalny identyfikator, który zostaje również umieszczony w URLu. Identyfikatora nie można zmienić po zgłoszeniu pliku do hostowania w Internet Archive."
+msgstr "每个保存在Internet Archive的文件都有一个唯一的标识，这将是文件网址的一部分。在你的作品提交到Internet Archive后，这个标识是不可以更改的。"
 
 #: /resources/ccpublisher.xrc:-1
 msgid "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
-msgstr "ccPublisher pozwala umieścić w sieci pliki audio lub wideo udostępnione na licencji Creative Commons. To nic trudnego:"
+msgstr "本程序帮助你采用Creative Commons许可协议发布你的音频和视频作品到互联网。只需要简单的几步："
 
 #: /resources/ccpublisher.xrc:-1
 msgid "Your work has been uploaded to the Internet Archive."
-msgstr "Twój utwór został wgrany do Internet Archive"
+msgstr "你的作品已经上传到Internet Archive。"
 
 #: /resources/ccpublisher.xrc:-1
 #: /resources/ccpublisher.xrc:-1
 msgid "What is ccPublisher?"
-msgstr "O programie"
-
-msgid "Other"
-msgstr "Inne"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Video"
-msgstr "Wideo"
-
-msgid "Image"
-msgstr "Obrazy"
-
-msgid "Text"
-msgstr "Teksty"
-
-msgid "Interactive"
-msgstr "Interaktywny"
-
-msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
-msgstr "Proszę wprowadzić adres internetowy (URL) do miejsca przechowywania Twoich weryfikujących metadanych. W większości przypadków, będzie to adres strony, na której są linki do Twoich plików MP3."
-
-msgid "Verification URL"
-msgstr "Adres internetowy (URL) weryfikacji"
-
-#: /ccpublisher/ui/ia.py:89
-msgid "Username"
-msgstr "Użytkownik"
-
-#: /ccpublisher/ui/ia.py:91
-msgid "Password"
-msgstr "Hasło"
-
-#: /ccpublisher/ui/ia.py:93
-msgid "Save your username and password?"
-msgstr "Zachować nazwę użytkownika i hasło?"
+msgstr "ccPublisher是什么？"

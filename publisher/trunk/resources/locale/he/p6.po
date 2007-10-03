@@ -1,24 +1,25 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ccPublisher\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-30 11:03+0000\n"
-"Last-Translator: Tomislav Medak <to-me@mi2.hr>\n"
-"Language-Team: Croatian <to-me@mi2.hr>\n"
+"Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
+"PO-Revision-Date: 2006-11-11 00:04+0000\n"
+"Last-Translator: Elad Wieder <ewieder@creativecommons.org.il>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: Croatia\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
 
 # p6/ui/pages/license.py:320
 msgid "With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here."
-msgstr "Koristeći Creative Commons licencu zadržavate Vaša autorska prava, ali omogućujete drugima da umnožavaju i distribuiraju Vaše djelo pod uvjetom da Vam imenovanjem daju priznanje - i pod uvjetima koje ćete ovdje specificirati."
+msgstr "באמצעות רשיון של Creative Commons, תוכל לשמור על זכויות היוצרים שלך אך לאפשר לאנשים להעתיק ולהפיץ את יצירתך בתנאי שהם יתנו לך קרדיט -- ורק בהתאם לתנאים שתציין/י כאן."
 
 # p6/ui/pages/storageselector:23
 msgid "Select Upload Destination"
-msgstr "Odaberite gdje ćete pohraniti datoteke"
+msgstr "יש לבחור יעד להעלאה"
 
 #: /p6/api.py:153
 #: /p6/ui/pages/fieldrender.py:101
@@ -26,7 +27,7 @@ msgstr "Odaberite gdje ćete pohraniti datoteke"
 #: /p6/ui/pages/fileselector.py:206
 #: /p6/ui/pages/license.py:109
 msgid "Error"
-msgstr "Greška"
+msgstr "שגיאה"
 
 # DO NOT TRANSLATE
 #: /p6/api.py:153
@@ -38,113 +39,113 @@ msgstr "ccPublisher"
 
 #: /p6/app/wxpy.py:221
 msgid "release"
-msgstr "verzija"
+msgstr "מהדורה"
 
 #: /p6/configure/metadirectives.py:173
 #: /p6/zcmlsupport/metadirectives.py:356
 msgid "Interfaces"
-msgstr "Sučelja"
+msgstr "ממשקים"
 
 #: /p6/configure/metadirectives.py:174
 msgid "The interfaces which metadata applies to."
-msgstr "Sučelja na koja su metapodaci primjenjivi."
+msgstr "הממשקים אליהם מתייחס המידע (metadata)."
 
 #: /p6/configure/metadirectives.py:191
 msgid "Multiple"
-msgstr "Višestruko"
+msgstr "מרובים"
 
 #: /p6/configure/metadirectives.py:192
 msgid "Allow multiple storage providers to be selected."
-msgstr "Dopusti odabir više ponuđača prostora za pohranjivanje."
+msgstr "האם לאפשר בחירה של ספקי אחסון מרובים."
 
 #: /p6/ui/pages/fileselector.py:124
 msgid "Select Your Files"
-msgstr "Odaberite Vaše datoteke"
+msgstr "יש לבחור את הקבצים שלך"
 
 #: /p6/ui/pages/fileselector.py:205
 msgid "You must select at least one file."
-msgstr "Morate odabrati barem jednu datoteku."
+msgstr "עליך לבחור לפחות קובץ אחד."
 
 #: /p6/ui/pages/fileselector.py:30
 msgid "Please drag and drop individual files on this window."
-msgstr "Povucite i spustite na ovaj prozor pojedinačne datoteke."
+msgstr "יש לגרור ולהשליך קבצים יחידים לחלון זה."
 
 #: /p6/ui/pages/fileselector.py:52
 msgid "Filename"
-msgstr "Ime datoteke"
+msgstr "שם קובץ"
 
 #: /p6/ui/pages/finalurl.py:20
 msgid "Uploading"
-msgstr "Šaljem datoteku"
+msgstr "מעלה קבצים"
 
 #: /p6/ui/pages/license.py:34
 msgid "Choose A License"
-msgstr "Izaberite licencu"
+msgstr "יש לבחור רשיון"
 
 #: /p6/ui/pages/license.py:72
 msgid "License Class:"
-msgstr "Klasa licenci:"
+msgstr "סוג רשיון:"
 
 #: /p6/ui/pages/license.py:83
 msgid "Selected License:"
-msgstr "Izabrana licenca:"
+msgstr "הרשיון הנבחר:"
 
 #: /p6/ui/pages/license.py:87
 msgid "None selected"
-msgstr "Ništa niste odabrali"
+msgstr "אין בחירה"
 
 #: /resources/p6.xrc:-1
 msgid "Report a bug"
-msgstr "Dojavite grešku"
+msgstr "דיווח על באג"
 
 #: /resources/p6.xrc:-1
 msgid "Done!"
-msgstr "Gotovo!"
+msgstr "הושלם!"
 
 #: /resources/p6.xrc:-1
 msgid "Help"
-msgstr "Pomoć"
+msgstr "עזרה"
 
 #: /resources/p6.xrc:-1
 msgid "OK"
-msgstr "Uredu"
+msgstr "OK"
 
 #: /resources/p6.xrc:-1
 msgid "Preferences"
-msgstr "Postavke"
+msgstr "אפשרויות"
 
 #: /resources/p6.xrc:-1
 msgid "Browse"
-msgstr "Traži"
+msgstr "עיון"
 
 #: /resources/p6.xrc:-1
 msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
-msgstr "Povucite i spustite na ovaj prozor audio i video datoteke koje želite objaviti na webu pod Creative Commons licencom ili kliknite gumb Traži za manualni izbor Vaših datoteka."
+msgstr "יש לגרור ולהשליך את קבצי האודיו או הוידאו שברצונך לפרסם ברשת עם רשיון של Creative Commons, או ללחוץ על הכפתור \"עיון\" כדי לבחור באופן ידני את הקבצים שלך."
 
 #: /resources/p6.xrc:-1
 msgid "Working..."
-msgstr "Radim..."
+msgstr "עובד..."
 
 #: /resources/p6.xrc:-1
 msgid "Delete"
-msgstr "Obriši"
+msgstr "מחיקה"
 
 #: /resources/p6.xrc:-1
 msgid "Edit"
-msgstr "Uredi"
+msgstr "עריכה"
 
 #: /resources/p6.xrc:-1
 msgid "Exit"
-msgstr "Izađi"
+msgstr "יציאה"
 
 #: /resources/p6.xrc:-1
 msgid "Cancel"
-msgstr "Odustani"
+msgstr "ביטול"
 
 #: /resources/p6.xrc:-1
 msgid "About"
-msgstr "O ccPublisheru"
+msgstr "אודות"
 
 #: /resources/p6.xrc:-1
 msgid "File"
-msgstr "Datoteka"
+msgstr "קובץ"

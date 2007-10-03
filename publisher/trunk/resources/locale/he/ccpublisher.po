@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
+"PO-Revision-Date: 2006-11-10 23:54+0000\n"
+"Last-Translator: Elad Wieder <ewieder@creativecommons.org.il>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+msgid "Other"
+msgstr "אחר"
+
+msgid "Audio"
+msgstr "אודיו"
+
+msgid "Video"
+msgstr "וידאו"
+
+msgid "Image"
+msgstr "תמונה"
+
+msgid "Text"
+msgstr "טקסט"
+
+msgid "Interactive"
+msgstr "אינטראקטיבי"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "יש להכניס את ה-URL של המקום בו יאוחסן מידע האימות שלך. ברוב המקרים, יהיה זה העמוד ממנו יקושר קובץ ה-MP3 שלך."
+
+msgid "Verification URL"
+msgstr "URL אימות"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "שם משתמש"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "סיסמא"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "האם לשמור את שם המשתמש והסיסמא שלך?"
+
+#: /ccpublisher/ui/welcome.py:23
+msgid "Welcome"
+msgstr "ברוכים הבאים"
+
+#: /ccpublisher/ia.py:204
+msgid "The selected file %s can not be found."
+msgstr "לא ניתן למצוא את הקובץ הנבחר %s."
+
+#: /ccpublisher/ia.py:226
+msgid "ccPublisher does not have sufficient permissions to read the selected files."
+msgstr "אין ל-ccPublisher הרשאות מספיקות על-מנת לקרוא את הקבצים הנבחרים."
+
+#: /ccpublisher/selfhost.py:58
+msgid "Self Hosted Files"
+msgstr "קבצים באחסון עצמי"
+
+#: /ccpublisher/ui/ia.py:100
+msgid "Internet Archive login"
+msgstr "כניסה ל-Internet Archive"
+
+#: /ccpublisher/ui/ia.py:119
+msgid "Invalid username or password."
+msgstr "שם משתמש או סיסמא שגויים"
+
+#: /ccpublisher/ui/ia.py:122
+msgid "Unable to connect to the Internet Archive to verify username and password."
+msgstr "לא ניתן להתחבר ל-Internet Archive על-מנת לאמת את שם המשתמש והסיסמא."
+
+#: /ccpublisher/ui/ia.py:29
+msgid "Item Identifier"
+msgstr "מזהה פריט"
+
+#: /ccpublisher/ui/ia.py:53
+msgid "That identifier does not conform to the Internet Archive's naming standards."
+msgstr "מזהה זה אינו מתאים לתקן הזיהוי של ה-Internet Archive."
+
+#: /ccpublisher/ui/ia.py:59
+msgid "That identifier is not available."
+msgstr "מזהה זה אינו פנוי."
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account."
+msgstr "יש להכניס את שם המשתמש והסיסמא שלך ל-Internet Archive. אם אין לך שם משתמש וסיסמא, ניתן לבקר ב-http://archive.org על-מנת ליצור חשבון."
+
+#: /ccpublisher/ui/selfhost.py:24
+msgid "Complete"
+msgstr "הושלם"
+
+#: /ccpublisher/ui/selfhost.py:53
+msgid "Unable to write to the selected file."
+msgstr "לא ניתן לרשום לקובץ הנבחר."
+
+#: /ccpublisher/validators.py:15
+msgid "You must supply a description of at least 5 words."
+msgstr "עליך לספק תיאור של לפחות 5 מילים."
+
+#: /ccpublisher/validators.py:6
+msgid "You must supply a title."
+msgstr "עליך לספק כותרת."
+
+#: /resources/app.zcml:59
+msgid "Description"
+msgstr "תיאור"
+
+#: /resources/app.zcml:15
+msgid "Upload works to the Internet Archive (www.archive.org)."
+msgstr "העלאת יצירות ל-Internet Archive (www.archive.org)."
+
+#: /resources/app.zcml:15
+msgid "Internet Archive Storage"
+msgstr "אחסון ב-Internet Archive"
+
+#: /resources/app.zcml:21
+msgid "Create metadata suitable for use with files hosted on your web site."
+msgstr "יצירת מידע (metadata) המתאים לשימוש בקבצים המאוחסנים באתר שלך."
+
+#: /resources/app.zcml:21
+msgid "Self-hosted files"
+msgstr "קבצים באחסון עצמי"
+
+#: /resources/app.zcml:27
+msgid "Metadata helps others to find your works."
+msgstr "מידע Metadata מסייע לאחרים למצוא את היצירות שלך."
+
+#: /resources/app.zcml:27
+msgid "Tell Us About Your Files"
+msgstr "ספר/י לנו על הקבצים שלך."
+
+#: /resources/app.zcml:34
+msgid "Copyright Holder"
+msgstr "בעל זכויות היוצרים"
+
+#: /resources/app.zcml:39
+msgid "Copyright Year"
+msgstr "שנת היצירה"
+
+#: /resources/app.zcml:44
+msgid "Title of Work"
+msgstr "כותרת היצירה"
+
+#: /resources/app.zcml:51
+msgid "Work Format"
+msgstr "סוג היצירה"
+
+#: /resources/app.zcml:65
+msgid "(separated with a comma)"
+msgstr "(מופרדות בפסיקים)"
+
+#: /resources/app.zcml:65
+msgid "Keywords help users find works by topic."
+msgstr "מלות-מפתח מסייעות למשתמשים למצוא יצירות על-פי נושא."
+
+#: /resources/app.zcml:65
+msgid "Keywords"
+msgstr "מלות-מפתח"
+
+#: /resources/app.zcml:74
+msgid "Select File Formats"
+msgstr "יש לבחור את סוגי הקובץ"
+
+#: /resources/app.zcml:80
+msgid "File Format"
+msgstr "סוג הקובץ"
+
+#: /resources/app.zcml:87
+msgid "Choose Your License"
+msgstr "יש לבחור את הרשיון שלך"
+
+#: /resources/app.zcml:94
+msgid "License"
+msgstr "רשיון"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "licensed under the GNU GPL version 2.0"
+msgstr "מוצע תחת רשיון ה-GNU GPL גרסה 2.0"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
+msgstr "לאחר שהדבקת את טקסט האימות לתוך עמוד האינטרנט שלך, הקובץ שלך מוכן לשיתוף-קבצים; פשוט יש לשים אותו בתיקיית השיתוף שלך."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Prev"
+msgstr "הקודם"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "2) Choose your Creative Commons license"
+msgstr "2) בחר/י את רשיון Creative Commons שלך"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "OK"
+msgstr "OK"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "1) Drag and drop your audio or video files"
+msgstr "1) יש לגרור ולהשליך את קבצי האודיו והוידאו שלך"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Next"
+msgstr "הבא"
+
+msgid "Quit"
+msgstr "יציאה"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Browse..."
+msgstr "עיון..."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "You can view your work online shortly at:"
+msgstr "ניתן יהיה לצפות ביצירתך בעוד זמן קצר ב:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Identifier"
+msgstr "מזהה"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "כמו כן הוא יאפשר לך להעלות את הקבצים שלך ל-Internet Archive על-מנת לנצל את הייתרון של אחסון חינם. ccPublisher הוא כלי שיאפשר לך לשים את קבצי האודיו והוידאו שלך ברשת עם רשיון של Creative Commons. כמו כן הוא יאפשר לך להעלות את הקבצים שלך ל-Internet Archive על-מנת לנצל את היתרון של אחסון חינם."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Delete"
+msgstr "מחק"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Click Next to get started."
+msgstr "יש ללחוץ על \"הבא\" על-מנת להתחיל."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "ccPublisher הוא כלי שיסייע לך לשים את קבצי האודיו והוידאו שלך ברשת עם רישיון של Creative Commons. כמו כן הוא יאפשר לך להעלות את הקבצים שלך ל-Internet Archive על-מנת לנצל את הייתרון של אחסון בחינם."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Copy and paste the text below into the document at "
+msgstr "יש להעתיק ולהדביק את הטקסט שמתחת לתוך המסמך ב-"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Filelist"
+msgstr "רשימת קבצים"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "copyright 2004-2006, Creative Commons"
+msgstr "כל הזכויות שמורות 2004-2006, Creative Commons"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service"
+msgstr "3) לבחירתך, ניתן לשלוח את הקבצים שלך תחת רשיון של Creative Commons ל-Internet Archive, לשירות אחסון חינם"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher 2"
+msgstr "ccPublisher 2"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "release 1.9.1"
+msgstr "מהדורה 1.9.1"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available."
+msgstr "ccPublisher הרכיב הצעה למזהה, בהתבסס על המידע שסיפקת. מזהים חייבים להיות באורך של לפחות 5 תווים ויכולים להכיל אותיות לועזיות גדולות וקטנות (A-Z, a-z), ספרות (1-9), קווים תחתיים (_) ונקודות(.). ניתן לשנות אותו כעת; יש ללחוץ על \"הבא\" על-מנת לוודא שהוא פנוי."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "4) Get a URL where you and your friends can download your file"
+msgstr "4) קבלת כתובת URL ממנה ניתן יהיה להוריד את הקובץ שלך."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This is your verification RDF."
+msgstr "זהו RDF האימות שלך."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Save"
+msgstr "שמירה"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "How does this work?"
+msgstr "כיצד זה עובד?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Is this file Creative Commons licensed?"
+msgstr "האם הקובץ הזה מוצע תחת רשיון של Creative Commons?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive."
+msgstr "לכל פריט ב-Internet Archive יש מזהה ייחודי המהווה חלק מכתובת ה-URL. מזהה זה לא ניתן לשינוי לאחר שיצירתך מועלית ל-Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
+msgstr "כלי זה יסייע לך לשים את קבצי האודיו והוידאו שלך ברשת עם רישיון של Creative Commons. זה פשוט:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Your work has been uploaded to the Internet Archive."
+msgstr "יצירתך הועלתה ל-Internet Archive."
+
+#: /resources/ccpublisher.xrc:-1
+#: /resources/ccpublisher.xrc:-1
+msgid "What is ccPublisher?"
+msgstr "מהו ccPublisher?"

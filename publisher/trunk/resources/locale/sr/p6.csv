@@ -1,0 +1,33 @@
+comment,original,translation
+,"With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here.","Sa Creative Commons licencom, Vi zadržavate autorsko pravo nad vašim delom, ali omogućavate i drugima da ga slobodno kopiraju i distribuiraju, navodeći vas kao autora dela i samo pod uslovima koje odredite ovde."
+,Select Upload Destination,Odaberite destinaciju na kojoj će se čuvati datoteka
+/p6/api.py:153 /p6/ui/pages/fieldrender.py:101 /p6/ui/pages/fileselector.py:31 /p6/ui/pages/fileselector.py:206 /p6/ui/pages/license.py:109,Error,Greška
+/p6/api.py:153 /p6/ui/pages/fileselector.py:31 /p6/ui/pages/fileselector.py:206 /p6/ui/pages/license.py:109,appname,ccPublisher
+/p6/app/wxpy.py:221,release,verzija
+/p6/configure/metadirectives.py:173 /p6/zcmlsupport/metadirectives.py:356,Interfaces,Interfejsi
+/p6/configure/metadirectives.py:174,The interfaces which metadata applies to.,Interfejsi na koje se primenjuju metapodaci.
+/p6/configure/metadirectives.py:191,Multiple,Višestruko
+/p6/configure/metadirectives.py:192,Allow multiple storage providers to be selected.,Omogući biranje više provajdera veb prostora.
+/p6/ui/pages/fileselector.py:124,Select Your Files,Odaberite vaše datoteke
+/p6/ui/pages/fileselector.py:205,You must select at least one file.,Morate odabrati barem jednu datoteku
+/p6/ui/pages/fileselector.py:30,Please drag and drop individual files on this window.,Molimo prenesite individualne datoteke u ovaj prozor
+/p6/ui/pages/fileselector.py:52,Filename,Ime datoteke
+/p6/ui/pages/finalurl.py:20,Uploading,Šaljem na server
+/p6/ui/pages/license.py:34,Choose A License,Odaberite Licencu
+/p6/ui/pages/license.py:72,License Class:,Klasa Licence
+/p6/ui/pages/license.py:83,Selected License:,Odabrana Licenca:
+/p6/ui/pages/license.py:87,None selected,Nemate ništa odabrano
+/resources/p6.xrc:-1,Report a bug,Prijavite grešku u softveru
+/resources/p6.xrc:-1,Done!,Gotovo!
+/resources/p6.xrc:-1,Help,Pomoć
+/resources/p6.xrc:-1,OK,OK
+/resources/p6.xrc:-1,Preferences,Podešavanja
+/resources/p6.xrc:-1,Browse,Traži
+/resources/p6.xrc:-1,"Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files.","Prenesite audio i video datoteke koje želite objaviti na Vebu sa Creative Commons licencom, ili kliknite na dugme Traži za ručni odabir vaših datoteka."
+/resources/p6.xrc:-1,Working...,Obavljam...
+/resources/p6.xrc:-1,Delete,Obriši
+/resources/p6.xrc:-1,Edit,Uredi
+/resources/p6.xrc:-1,Exit,Izađi
+/resources/p6.xrc:-1,Cancel,Odbaci
+/resources/p6.xrc:-1,About,O
+/resources/p6.xrc:-1,File,Datoteka

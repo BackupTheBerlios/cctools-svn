@@ -1,0 +1,151 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
+"PO-Revision-Date: 2006-07-24 14:26+0000\n"
+"Last-Translator: Bjorn Wijers <bjorn@simuze.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: xrc_pot.py\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Pootle 0.9\n"
+
+#: /resources/p6.xrc:-1
+msgid "File"
+msgstr "Bestand"
+
+#: /resources/p6.xrc:-1
+msgid "Exit"
+msgstr "Stoppen"
+
+#: /resources/p6.xrc:-1
+msgid "Edit"
+msgstr "Wijzig"
+
+#: /resources/p6.xrc:-1
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: /resources/p6.xrc:-1
+msgid "Help"
+msgstr "Help"
+
+#: /resources/p6.xrc:-1
+msgid "About"
+msgstr "Over"
+
+#: /resources/p6.xrc:-1
+msgid "Report a bug"
+msgstr "Geef een fout door"
+
+#: /resources/p6.xrc:-1
+msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
+msgstr "Sleep en plaats de audio of video bestanden die u wilt publiceren onder een Creative Commons licentie op Internet of klik op de Blader knop om uw bestanden handmatig te kiezen"
+
+#: /resources/p6.xrc:-1
+msgid "Browse"
+msgstr "Blader"
+
+#: /resources/p6.xrc:-1
+msgid "Delete"
+msgstr "Verwijder"
+
+#: /resources/p6.xrc:-1
+msgid "Working..."
+msgstr "Bezig..."
+
+#: /resources/p6.xrc:-1
+msgid "OK"
+msgstr "OK"
+
+#: /resources/p6.xrc:-1
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: /p6/api.py:153
+#: /p6/ui/pages/fieldrender.py:101
+#: /p6/ui/pages/fileselector.py:31
+#: /p6/ui/pages/fileselector.py:206
+#: /p6/ui/pages/license.py:109
+msgid "Error"
+msgstr "Fout"
+
+#: /p6/ui/pages/fileselector.py:30
+msgid "Please drag and drop individual files on this window."
+msgstr "Sleep alstublief individuele bestanden op dit scherm"
+
+#: /p6/ui/pages/fileselector.py:205
+msgid "You must select at least one file."
+msgstr "U dient tenminste een bestand te selecteren"
+
+# p6/ui/pages/license.py:320
+msgid "With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here."
+msgstr "Met een Creative Commons licentie behoudt u uw auteursrecht, maar geeft u mensen ook de mogelijk om uw werk te kopiëren en te verspreiden mits zij uw naam als bron vermelden -- en alleen onder door uw gekozen voorwaarden."
+
+# p6/ui/pages/storageselector:23
+msgid "Select Upload Destination"
+msgstr "Kies Upload Bestemming"
+
+# DO NOT TRANSLATE
+#: /p6/api.py:153
+#: /p6/ui/pages/fileselector.py:31
+#: /p6/ui/pages/fileselector.py:206
+#: /p6/ui/pages/license.py:109
+msgid "appname"
+msgstr "programma naam"
+
+#: /p6/app/wxpy.py:221
+msgid "release"
+msgstr "uitgave"
+
+#: /p6/configure/metadirectives.py:173
+#: /p6/zcmlsupport/metadirectives.py:356
+msgid "Interfaces"
+msgstr "Interfaces"
+
+#: /p6/configure/metadirectives.py:174
+msgid "The interfaces which metadata applies to."
+msgstr "De interfaces waar de metadata toegepast kan worden"
+
+#: /p6/configure/metadirectives.py:191
+msgid "Multiple"
+msgstr "Meerdere"
+
+#: /p6/configure/metadirectives.py:192
+msgid "Allow multiple storage providers to be selected."
+msgstr "Sta het selecteren van meerdere opslag aanbieders toe."
+
+#: /p6/ui/pages/fileselector.py:124
+msgid "Select Your Files"
+msgstr "Selecteer Uw Bestanden"
+
+#: /p6/ui/pages/fileselector.py:52
+msgid "Filename"
+msgstr "Bestandsnaam"
+
+#: /p6/ui/pages/finalurl.py:20
+msgid "Uploading"
+msgstr "Bezig met uploaden"
+
+#: /p6/ui/pages/license.py:34
+msgid "Choose A License"
+msgstr "Kies Een Licentie"
+
+#: /p6/ui/pages/license.py:72
+msgid "License Class:"
+msgstr "Licentie Klasse:"
+
+#: /p6/ui/pages/license.py:83
+msgid "Selected License:"
+msgstr "Gekozen Licentie"
+
+#: /p6/ui/pages/license.py:87
+msgid "None selected"
+msgstr "Geen geselecteerd"
+
+#: /resources/p6.xrc:-1
+msgid "Done!"
+msgstr "Klaar!"

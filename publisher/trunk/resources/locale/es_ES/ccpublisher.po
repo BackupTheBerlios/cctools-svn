@@ -2,14 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Development/Revision: 68521\n"
 "POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
-"PO-Revision-Date: 2006-06-20 09:18+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2006-07-06 14:08+0000\n"
+"Last-Translator: Ignasi Labastida <ilabastida@ub.edu>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 "X-Poedit-Language: Spanish\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 0.9\n"
 
 #: /ccpublisher/ui/welcome.py:23
 msgid "Welcome"
@@ -263,6 +266,42 @@ msgid "Your work has been uploaded to the Internet Archive."
 msgstr "Se ha subido tu obra a Internet Archive."
 
 #: /resources/ccpublisher.xrc:-1
+#: /resources/ccpublisher.xrc:-1
 msgid "What is ccPublisher?"
 msgstr "¿Qué es ccPublisher?"
 
+msgid "Other"
+msgstr "Otro"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Vídeo"
+
+msgid "Image"
+msgstr "Imagen"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Interactive"
+msgstr "Interactivo"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "Por favor, introduce la URL donde alojarás los metadatos de verificación. En la mayoría de casos, ésta será la página que enlazarás desde tus ficheros MP3"
+
+msgid "Verification URL"
+msgstr "URL de verificación"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "Contraseña"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "¿Quieres guardar tu nombre de usuario y contraseña?"

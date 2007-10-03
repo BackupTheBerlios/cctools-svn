@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Fri Jun  9 10:35:47 2006\n"
+"PO-Revision-Date: 2006-08-31 11:36+0000\n"
+"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+msgid "Other"
+msgstr "Khác"
+
+msgid "Audio"
+msgstr "Âm thanh"
+
+msgid "Video"
+msgstr "Ảnh động"
+
+msgid "Image"
+msgstr "Ảnh"
+
+msgid "Text"
+msgstr "Văn bản"
+
+msgid "Interactive"
+msgstr "Tương tác"
+
+msgid "Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from."
+msgstr "Hãy nhập địa chỉ URL nơi bạn sẽ phục vụ siêu dữ liệu thẩm tra của mình. Trong phần lớn trường hợp, nó là trang từ đó bạn liên kết tới tập tin MP3."
+
+msgid "Verification URL"
+msgstr "URL thẩm tra"
+
+#: /ccpublisher/ui/ia.py:89
+msgid "Username"
+msgstr "Tên người dùng"
+
+#: /ccpublisher/ui/ia.py:91
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Save your username and password?"
+msgstr "Lưu tên người dùng và mật khẩu của bạn không?"
+
+#: /ccpublisher/ui/welcome.py:23
+msgid "Welcome"
+msgstr "Chào mừng"
+
+#: /ccpublisher/ia.py:204
+msgid "The selected file %s can not be found."
+msgstr "Không tìm thấy tập tin đã chọn %s."
+
+#: /ccpublisher/ia.py:226
+msgid "ccPublisher does not have sufficient permissions to read the selected files."
+msgstr "Phần mềm ccPublisher không có đủ quyền để đọc những tập tin đã chọn."
+
+#: /ccpublisher/selfhost.py:58
+msgid "Self Hosted Files"
+msgstr "Tập tin tự phục vụ"
+
+#: /ccpublisher/ui/ia.py:100
+msgid "Internet Archive login"
+msgstr "Đăng nhập vào Kho Mạng"
+
+#: /ccpublisher/ui/ia.py:119
+msgid "Invalid username or password."
+msgstr "Tên người dùng hay mật khẩu không hợp lệ."
+
+#: /ccpublisher/ui/ia.py:122
+msgid "Unable to connect to the Internet Archive to verify username and password."
+msgstr "Không thể kết nối đến Kho Mạng để thẩm tra tên người dùng và mật khẩu."
+
+#: /ccpublisher/ui/ia.py:29
+msgid "Item Identifier"
+msgstr "Bộ nhận diện mục"
+
+#: /ccpublisher/ui/ia.py:53
+msgid "That identifier does not conform to the Internet Archive's naming standards."
+msgstr "Bộ nhận diện đó không tuân theo tiêu chuẩn tạo tên của Kho Mạng."
+
+#: /ccpublisher/ui/ia.py:59
+msgid "That identifier is not available."
+msgstr "Bộ nhận diện đó không sẵn sàng."
+
+#: /ccpublisher/ui/ia.py:93
+msgid "Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account."
+msgstr "Hãy nhập tên người dùng và mật khẩu dành cho Kho Mạng. Nếu bạn chưa có tên người dùng và mật khẩu này, thăm địa chỉ « http://archive.org » để tạo tài khoản."
+
+#: /ccpublisher/ui/selfhost.py:24
+msgid "Complete"
+msgstr "Hoàn tất"
+
+#: /ccpublisher/ui/selfhost.py:53
+msgid "Unable to write to the selected file."
+msgstr "Không thể ghi vào tập tin đã chọn."
+
+#: /ccpublisher/validators.py:15
+msgid "You must supply a description of at least 5 words."
+msgstr "Bạn cần phải cung cấp một mô tả chứa ít nhất 5 từ."
+
+#: /ccpublisher/validators.py:6
+msgid "You must supply a title."
+msgstr "Bạn cần phải cung cấp một tựa đề."
+
+#: /resources/app.zcml:59
+msgid "Description"
+msgstr "Mô tả"
+
+#: /resources/app.zcml:15
+msgid "Upload works to the Internet Archive (www.archive.org)."
+msgstr "Tải sản phẩm lên Kho Mạng (www.archive.org)."
+
+#: /resources/app.zcml:15
+msgid "Internet Archive Storage"
+msgstr "Kho lưu Internet Archive"
+
+#: /resources/app.zcml:21
+msgid "Create metadata suitable for use with files hosted on your web site."
+msgstr "Tạo siêu dữ liệu thích hợp để sử dụng với tập tin nằm trên nơi Mạng của bạn."
+
+#: /resources/app.zcml:21
+msgid "Self-hosted files"
+msgstr "Tập tin tự phục vụ"
+
+#: /resources/app.zcml:27
+msgid "Metadata helps others to find your works."
+msgstr "Siêu dữ liệu giúp đỡ người khác tìm sản phẩm của bạn."
+
+#: /resources/app.zcml:27
+msgid "Tell Us About Your Files"
+msgstr "Diễn tả tập tin của bạn"
+
+#: /resources/app.zcml:34
+msgid "Copyright Holder"
+msgstr "Người giữ tác quyền"
+
+#: /resources/app.zcml:39
+msgid "Copyright Year"
+msgstr "Năm tác quyền"
+
+#: /resources/app.zcml:44
+msgid "Title of Work"
+msgstr "Tựa đề của sản phẩm"
+
+#: /resources/app.zcml:51
+msgid "Work Format"
+msgstr "Dạng thức của sản phẩm"
+
+#: /resources/app.zcml:65
+msgid "(separated with a comma)"
+msgstr "(định giới bằng dấu phẩy)"
+
+#: /resources/app.zcml:65
+msgid "Keywords help users find works by topic."
+msgstr "Từ khoá giúp đỡ người dùng tìm sản phẩm theo đề tài."
+
+#: /resources/app.zcml:65
+msgid "Keywords"
+msgstr "Từ khoá"
+
+#: /resources/app.zcml:74
+msgid "Select File Formats"
+msgstr "Chọn dạng thức tập tin"
+
+#: /resources/app.zcml:80
+msgid "File Format"
+msgstr "Dạng thức tập tin"
+
+#: /resources/app.zcml:87
+msgid "Choose Your License"
+msgstr "Chọn giấy phép"
+
+#: /resources/app.zcml:94
+msgid "License"
+msgstr "Giấy phép"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "licensed under the GNU GPL version 2.0"
+msgstr "được cấp dưới Giấy Phép Công Cộng GNU (GPL), phiên bản 2.0"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder."
+msgstr "Sau khi bạn dán đoạn thẩm tra vào trang Mạng của mình, tập tin của bạn sẵn sàng để chia sẻ: đơn giản thả nó vào thư mục dùng chung."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Prev"
+msgstr "Lùi"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "2) Choose your Creative Commons license"
+msgstr "2. Chọn giấy phép Dân Chúng Sáng Tạo"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "OK"
+msgstr "Được"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "1) Drag and drop your audio or video files"
+msgstr "1. Kéo và thả các tập tin âm thanh hay ảnh động của bạn"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Next"
+msgstr "Kế"
+
+msgid "Quit"
+msgstr "Thoát"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Browse..."
+msgstr "Duyệt..."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "You can view your work online shortly at:"
+msgstr "Sau một thời gian ngắn, bạn có thể xem sản phẩm của mình trực tuyến tại:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Identifier"
+msgstr "Bộ nhận diện"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "Phần mềm ccPublisher là công cụ sẽ giúp đỡ bạn chuyển âm thanh và ảnh động lên Mạng dưới giấy phép Dân Chúng Sáng Tạo. Nó sẽ cũng cho bạn có khả năng tải các tập tin của mình lên Kho Mạng để nhờ dịp dịch vụ hỗ trợ miễn phí đó."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Delete"
+msgstr "Xoá bỏ"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Click Next to get started."
+msgstr "Nhấn vào nút Kế để bắt đầu."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. "
+msgstr "Phần mềm ccPublisher là công cụ sẽ giúp đỡ bạn chuyển âm thanh và ảnh động lên Mạng dưới giấy phép Dân Chúng Sáng Tạo (Creative Commons). Nó sẽ cũng cho bạn có khả năng tải các tập tin của mình lên Kho Mạng (Internet Archive) để nhờ dịp dịch vụ hỗ trợ miễn phí đó. "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Copy and paste the text below into the document at "
+msgstr "Sao chép và dán đoạn bên dưới vào tài liệu tại "
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Filelist"
+msgstr "Danh sách tập tin"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "copyright 2004-2006, Creative Commons"
+msgstr "tác quyền © năm 2004-2006 của Dân Chúng Sáng Tạo (Creative Commons)"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service"
+msgstr "3. Tùy chọn gởi các tập tin được cấp dưới Dân Chúng Sáng Tạo (Creative Commons) cho Kho Mạng (Internet Archive), dịch vụ hỗ trợ miễn phí"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher 2"
+msgstr "ccPublisher 2"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "release 1.9.1"
+msgstr "bản phát hành 1.9.1"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available."
+msgstr "Phần mềm ccPublisher đã tạo một bộ nhận diện đã đề nghị, dựa vào siêu dữ liệu bạn đã cung cấp. Bộ nhận diện phải có độ dài ít nhất 5 ký tự, chứa chữ hoa/thường (A-Z, a-z), chữ số (0-9), dấu gạch chân (_) và dấu chấm (.). Bạn có khả năng thay đổi nó ngay bây giờ : nhấn nút Kế để kiểm tra xem nó sẵn sàng không."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "4) Get a URL where you and your friends can download your file"
+msgstr "4. Giành địa chỉ URL từ đó bạn và bạn bè có thể tải xuống tập tin của bạn"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This is your verification RDF."
+msgstr "Đây là RDF thẩm tra của bạn."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Save"
+msgstr "Lưu"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "How does this work?"
+msgstr "Cái này hoạt động như thế nào?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Is this file Creative Commons licensed?"
+msgstr "Tập tin này được cấp dưới Dân Chúng Sáng Tạo (Creative Commons) không?"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive."
+msgstr "Mọi mục nằm trong Kho Mạng có bộ nhận diện duy nhất là phần của địa chỉ URL của nó. Không thể thay đổi bộ nhận diện này sau khi đệ trình sản phẩm đó cho Kho Mạng."
+
+#: /resources/ccpublisher.xrc:-1
+msgid "This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:"
+msgstr "Công cụ này sẽ giúp đỡ bạn chuyển âm thanh và ảnh động của mình lên Mạng dưới giấy phép Dân Chúng Sáng Tạo. Thủ tục là đơn giản:"
+
+#: /resources/ccpublisher.xrc:-1
+msgid "Your work has been uploaded to the Internet Archive."
+msgstr "Sản phẩm của bạn đã được tải lên Kho Mạng."
+
+#: /resources/ccpublisher.xrc:-1
+#: /resources/ccpublisher.xrc:-1
+msgid "What is ccPublisher?"
+msgstr "ccPublisher là gì?"

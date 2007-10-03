@@ -1,0 +1,76 @@
+comment,original,translation
+,Other,Autre
+,Audio,Audio
+,Video,Vidéo
+,Image,Image
+,Text,Texte
+,Interactive,Interactif
+,"Please enter the URL where you will host your verification metadata. In most cases, this will be the page you link to your MP3 file from.","Entrez l'adresse URL où vous voulez stocker vos métadonnées de vérification. La plupart du temps, ce sera la page à partir de laquelle vous liez vos fichiers MP3."
+,Verification URL,URL de vérification
+/ccpublisher/ui/ia.py:89,Username,Nom d'utilisateur
+/ccpublisher/ui/ia.py:91,Password,Mot de passe
+/ccpublisher/ui/ia.py:93,Save your username and password?,Sauvegarder votre nom d'utilisateur et votre mot de passe ?
+/ccpublisher/ui/welcome.py:23,Welcome,Bienvenue
+/ccpublisher/ia.py:204,The selected file %s can not be found.,Le fichier sélectionné %s est introuvable.
+/ccpublisher/ia.py:226,ccPublisher does not have sufficient permissions to read the selected files.,ccPublisher n'a pas les permissions suffisantes pour lire les fichiers sélectionnés.
+/ccpublisher/selfhost.py:58,Self Hosted Files,
+/ccpublisher/ui/ia.py:100,Internet Archive login,
+/ccpublisher/ui/ia.py:119,Invalid username or password.,Utilisateur ou mot de passe incorrect.
+/ccpublisher/ui/ia.py:122,Unable to connect to the Internet Archive to verify username and password.,
+/ccpublisher/ui/ia.py:29,Item Identifier,
+/ccpublisher/ui/ia.py:53,That identifier does not conform to the Internet Archive's naming standards.,
+/ccpublisher/ui/ia.py:59,That identifier is not available.,Cet identifiant n'est pas disponible.
+/ccpublisher/ui/ia.py:93,"Enter your Internet Archive username and password.  If you do not have a username and password, visit http://archive.org to create an account.",
+/ccpublisher/ui/selfhost.py:24,Complete,
+/ccpublisher/ui/selfhost.py:53,Unable to write to the selected file.,
+/ccpublisher/validators.py:15,You must supply a description of at least 5 words.,
+/ccpublisher/validators.py:6,You must supply a title.,Vous devez fournir un titre.
+/resources/app.zcml:59,Description,Description
+/resources/app.zcml:15,Upload works to the Internet Archive (www.archive.org).,
+/resources/app.zcml:15,Internet Archive Storage,
+/resources/app.zcml:21,Create metadata suitable for use with files hosted on your web site.,
+/resources/app.zcml:21,Self-hosted files,
+/resources/app.zcml:27,Metadata helps others to find your works.,
+/resources/app.zcml:27,Tell Us About Your Files,
+/resources/app.zcml:34,Copyright Holder,
+/resources/app.zcml:39,Copyright Year,
+/resources/app.zcml:44,Title of Work,
+/resources/app.zcml:51,Work Format,Format
+/resources/app.zcml:65,(separated with a comma),(utiliser la virgule comme séparateur)
+/resources/app.zcml:65,Keywords help users find works by topic.,
+/resources/app.zcml:65,Keywords,Mots clés
+/resources/app.zcml:74,Select File Formats,
+/resources/app.zcml:80,File Format,Format de fichier
+/resources/app.zcml:87,Choose Your License,Sélectionner votre licence
+/resources/app.zcml:94,License,Licence
+/resources/ccpublisher.xrc:-1,licensed under the GNU GPL version 2.0,
+/resources/ccpublisher.xrc:-1,"After you paste the verification text into your web page, your file is ready to file share; just drop it in your shared folder.",
+/resources/ccpublisher.xrc:-1,Prev,Précédent
+/resources/ccpublisher.xrc:-1,2) Choose your Creative Commons license,2) Choisissez votre contrat Creative Commons
+/resources/ccpublisher.xrc:-1,OK,OK
+/resources/ccpublisher.xrc:-1,1) Drag and drop your audio or video files,1) Glissez-déplacez vos fichiers audio ou vidéo.
+/resources/ccpublisher.xrc:-1,Next,Suivant
+,Quit,Quitter
+/resources/ccpublisher.xrc:-1,Browse...,Parcourir...
+/resources/ccpublisher.xrc:-1,You can view your work online shortly at:,
+/resources/ccpublisher.xrc:-1,Identifier,
+/resources/ccpublisher.xrc:-1,It will also let you upload your files to the Internet Archive to take advantage of free hosting. ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. ,
+/resources/ccpublisher.xrc:-1,Delete,Effacer
+/resources/ccpublisher.xrc:-1,Click Next to get started.,"Cliquer sur ""Suivant"" pour démarrer."
+/resources/ccpublisher.xrc:-1,ccPublisher is a tool which will help you put your audio and video on the Web with a Creative Commons license. It will also let you upload your files to the Internet Archive to take advantage of free hosting. ,
+/resources/ccpublisher.xrc:-1,Copy and paste the text below into the document at ,
+/resources/ccpublisher.xrc:-1,Filelist,
+/resources/ccpublisher.xrc:-1,"copyright 2004-2006, Creative Commons",
+/resources/ccpublisher.xrc:-1,"3) Optionally send your Creative Commons licensed files to the Internet Archive, a free hosting service",
+/resources/ccpublisher.xrc:-1,ccPublisher 2,ccPublisher 2
+/resources/ccpublisher.xrc:-1,release 1.9.1,version 1.9.1
+/resources/ccpublisher.xrc:-1,"ccPublisher has assembled a suggested identifier based on the metadata you provided.  Identifiers must be at least five characters long and may contains upper and lower case letters (A-Z, a-z), digits (0-9), underscores (_) and periods(.).  You may change it now; click Next to verify it is available.",
+/resources/ccpublisher.xrc:-1,4) Get a URL where you and your friends can download your file,4) Obtenez une URL à partir de laquelle vous et vos amis pouvez accéder au fichier
+/resources/ccpublisher.xrc:-1,This is your verification RDF.,
+/resources/ccpublisher.xrc:-1,Save,Enregistrer
+/resources/ccpublisher.xrc:-1,How does this work?,Comment cela fonctionne ?
+/resources/ccpublisher.xrc:-1,Is this file Creative Commons licensed?,
+/resources/ccpublisher.xrc:-1,Every item in the Internet Archive has a unique identifier which forms a portion of the URL.  This identifier can not be changed after your work is submitted to the Internet Archive.,
+/resources/ccpublisher.xrc:-1,This tool will help you put your audio and video on the Web with a Creative Commons license.  It's simple:,
+/resources/ccpublisher.xrc:-1,Your work has been uploaded to the Internet Archive.,
+/resources/ccpublisher.xrc:-1 /resources/ccpublisher.xrc:-1,What is ccPublisher?,Qu'est ce que ccPublisher ?

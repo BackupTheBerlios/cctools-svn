@@ -1,24 +1,25 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ccPublisher\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-30 11:03+0000\n"
-"Last-Translator: Tomislav Medak <to-me@mi2.hr>\n"
-"Language-Team: Croatian <to-me@mi2.hr>\n"
+"Project-Id-Version: Development/Revision: 68521\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Fri Jun  9 10:36:07 2006\n"
+"PO-Revision-Date: 2006-10-18 16:18+0000\n"
+"Last-Translator: Stephen Xin <xingzhi@cn.creativecommons.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: Croatia\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Pootle 0.9\n"
+"Generated-By: zope/app/locales/extract.py\n"
 
 # p6/ui/pages/license.py:320
 msgid "With a Creative Commons license, you keep your copyright but allow people to copy and distribute your work provided the give you credit -- and only on the conditions you specify here."
-msgstr "Koristeći Creative Commons licencu zadržavate Vaša autorska prava, ali omogućujete drugima da umnožavaju i distribuiraju Vaše djelo pod uvjetom da Vam imenovanjem daju priznanje - i pod uvjetima koje ćete ovdje specificirati."
+msgstr "采用Creative Commons许可协议，你保留作品的著作权，但是允许人们在保留你的署名并且遵守你在这里指定的条件的前提下，复制和发行你的作品。 "
 
 # p6/ui/pages/storageselector:23
 msgid "Select Upload Destination"
-msgstr "Odaberite gdje ćete pohraniti datoteke"
+msgstr "选择上传的目的地"
 
 #: /p6/api.py:153
 #: /p6/ui/pages/fieldrender.py:101
@@ -26,7 +27,7 @@ msgstr "Odaberite gdje ćete pohraniti datoteke"
 #: /p6/ui/pages/fileselector.py:206
 #: /p6/ui/pages/license.py:109
 msgid "Error"
-msgstr "Greška"
+msgstr "错误"
 
 # DO NOT TRANSLATE
 #: /p6/api.py:153
@@ -38,113 +39,113 @@ msgstr "ccPublisher"
 
 #: /p6/app/wxpy.py:221
 msgid "release"
-msgstr "verzija"
+msgstr "发行版本"
 
 #: /p6/configure/metadirectives.py:173
 #: /p6/zcmlsupport/metadirectives.py:356
 msgid "Interfaces"
-msgstr "Sučelja"
+msgstr "接口"
 
 #: /p6/configure/metadirectives.py:174
 msgid "The interfaces which metadata applies to."
-msgstr "Sučelja na koja su metapodaci primjenjivi."
+msgstr "元数据适用的接口"
 
 #: /p6/configure/metadirectives.py:191
 msgid "Multiple"
-msgstr "Višestruko"
+msgstr "多选"
 
 #: /p6/configure/metadirectives.py:192
 msgid "Allow multiple storage providers to be selected."
-msgstr "Dopusti odabir više ponuđača prostora za pohranjivanje."
+msgstr "允许选择多个存储服务提供者"
 
 #: /p6/ui/pages/fileselector.py:124
 msgid "Select Your Files"
-msgstr "Odaberite Vaše datoteke"
+msgstr "选择文件"
 
 #: /p6/ui/pages/fileselector.py:205
 msgid "You must select at least one file."
-msgstr "Morate odabrati barem jednu datoteku."
+msgstr "至少需要选择一个文件。"
 
 #: /p6/ui/pages/fileselector.py:30
 msgid "Please drag and drop individual files on this window."
-msgstr "Povucite i spustite na ovaj prozor pojedinačne datoteke."
+msgstr "请拖放个人文件到这个窗口。"
 
 #: /p6/ui/pages/fileselector.py:52
 msgid "Filename"
-msgstr "Ime datoteke"
+msgstr "文件名"
 
 #: /p6/ui/pages/finalurl.py:20
 msgid "Uploading"
-msgstr "Šaljem datoteku"
+msgstr "正在上传"
 
 #: /p6/ui/pages/license.py:34
 msgid "Choose A License"
-msgstr "Izaberite licencu"
+msgstr "选择许可协议"
 
 #: /p6/ui/pages/license.py:72
 msgid "License Class:"
-msgstr "Klasa licenci:"
+msgstr "许可协议类型"
 
 #: /p6/ui/pages/license.py:83
 msgid "Selected License:"
-msgstr "Izabrana licenca:"
+msgstr "已选择的许可协议："
 
 #: /p6/ui/pages/license.py:87
 msgid "None selected"
-msgstr "Ništa niste odabrali"
+msgstr "还没有选择许可协议"
 
 #: /resources/p6.xrc:-1
 msgid "Report a bug"
-msgstr "Dojavite grešku"
+msgstr "报告Bug"
 
 #: /resources/p6.xrc:-1
 msgid "Done!"
-msgstr "Gotovo!"
+msgstr "完成！"
 
 #: /resources/p6.xrc:-1
 msgid "Help"
-msgstr "Pomoć"
+msgstr "帮助"
 
 #: /resources/p6.xrc:-1
 msgid "OK"
-msgstr "Uredu"
+msgstr "确定"
 
 #: /resources/p6.xrc:-1
 msgid "Preferences"
-msgstr "Postavke"
+msgstr "设置"
 
 #: /resources/p6.xrc:-1
 msgid "Browse"
-msgstr "Traži"
+msgstr "浏览"
 
 #: /resources/p6.xrc:-1
 msgid "Drag n' drop the audio or video files you want to publish to the Web with a Creative Commons license, or click the Browse button to manually select your files."
-msgstr "Povucite i spustite na ovaj prozor audio i video datoteke koje želite objaviti na webu pod Creative Commons licencom ili kliknite gumb Traži za manualni izbor Vaših datoteka."
+msgstr "将要使用Creative Commons许可协议发布的音频或视频文件拖放到这个窗口，或者点击“浏览”按钮选择文件。"
 
 #: /resources/p6.xrc:-1
 msgid "Working..."
-msgstr "Radim..."
+msgstr "正在工作，请稍候..."
 
 #: /resources/p6.xrc:-1
 msgid "Delete"
-msgstr "Obriši"
+msgstr "删除"
 
 #: /resources/p6.xrc:-1
 msgid "Edit"
-msgstr "Uredi"
+msgstr "编辑"
 
 #: /resources/p6.xrc:-1
 msgid "Exit"
-msgstr "Izađi"
+msgstr "退出"
 
 #: /resources/p6.xrc:-1
 msgid "Cancel"
-msgstr "Odustani"
+msgstr "取消"
 
 #: /resources/p6.xrc:-1
 msgid "About"
-msgstr "O ccPublisheru"
+msgstr "关于"
 
 #: /resources/p6.xrc:-1
 msgid "File"
-msgstr "Datoteka"
+msgstr "文件"
