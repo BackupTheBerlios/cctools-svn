@@ -26,6 +26,7 @@ import sys
 import os
 import optparse
 import traceback
+import pprint
 
 from cctagutils.metadata import metadata
 import cctagutils.rdf as rdf
@@ -102,11 +103,6 @@ def main():
         parser.error("You must supply at least one file to tag.")
         sys.exit(1)
 
-    if not validateOptions(options):
-        parser.error("You must supply either a copyright holder, year, "
-                     "license URL and \nverification URL.")
-        sys.exit(1)
-        
     print embed(options, args)
     sys.exit(0)
 
